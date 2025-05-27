@@ -1,0 +1,78 @@
+"use client"
+
+import Link from "next/link"
+import { Star, MapPin } from "lucide-react"
+import { OptimizedImage } from "./optimized-image"
+import { memo } from "react"
+
+interface CardProps {
+  id: string
+  name: string
+  slug: string
+  image?: string
+  location: string
+  rating: number
+  styles?: string[]
+  type: "studio" | "retreat"
+  duration?: string
+  price?: string
+}
+
+export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
+  id,
+  name,
+  slug,
+  image,
+  location,
+  rating,
+  styles,
+  type,
+  duration,
+  price,
+}: CardProps) {
+  const href = `/${type === "studio" ? "studios" : "retreats"}/${slug}`
+
+  return (
+    <div className="group overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+      <Link href={href} className="block" prefetch={false}>
+        <div className="relative h-48 w-full overflow-hidden">
+          <OptimizedImage
+            src={image || `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(name)}`}
+            alt={name}
+            fill
+            className="object-cover object-center transition-transform group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+          <div className="absolute bottom-2 right-2 rounded-full bg-white/90 backdrop-blur-sm px-2 py-1 shadow-sm">
+            <div className="flex items-center gap-1">
+              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+              <span className="text-sm font-medium">{rating}</span>
+            </div>
+          </div>
+        </div>
+        <div className="p-4">
+          <h3 className="text-lg font-semibold text-[#5d4c42] line-clamp-2">{name}</h3>
+          <div className="mt-1 flex items-center text-sm text-[#5d4c42]">
+            <MapPin className="mr-1 h-4 w-4 flex-shrink-0" />
+            <span className="truncate">{location}, Bali</span>
+          </div>
+          <div className="mt-2 flex items-center justify-between">
+            <div className="flex flex-wrap gap-1">
+              {type === "studio" &&
+                styles &&
+                styles.slice(0, 2).map((style, index) => (
+                  <span key={index} className="rounded-full bg-[#a39188] px-2 py-1 text-xs text-white">
+                    {style}
+                  </span>
+                ))}
+              {type === "retreat" && duration && (
+                <span className="rounded-full bg-[#a39188] px-2 py-1 text-xs text-white">{duration}</span>
+              )}
+            </div>
+            {type === "retreat" && price && <span className="font-medium text-[#5d4c42] text-sm">{price}</span>}
+          </div>
+        </div>
+      </Link>
+    </div>
+  )
+})
