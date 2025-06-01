@@ -6,7 +6,7 @@ export async function GET() {
     const supabase = createServerClient()
 
     // 1. Try to find all tables in the database using a different approach
-    const tableSearchResults = []
+    const tableSearchResults: any[] = []
 
     // Common table name patterns for your data
     const possibleTableNames = [
@@ -41,6 +41,7 @@ export async function GET() {
           error: error?.message,
           sampleData: data || [],
           hasData: (count || 0) > 0,
+          columns: []
         })
 
         // If we find data, also get column info
@@ -58,6 +59,7 @@ export async function GET() {
           error: error instanceof Error ? error.message : "Unknown error",
           sampleData: [],
           hasData: false,
+          columns: []
         })
       }
     }

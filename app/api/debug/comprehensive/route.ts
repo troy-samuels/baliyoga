@@ -2,13 +2,28 @@ import { NextResponse } from "next/server"
 import { createServerClient } from "@/lib/supabase"
 
 export async function GET() {
-  const debugResults = {
+  const debugResults: any = {
     timestamp: new Date().toISOString(),
     environment: {},
-    connection: {},
-    tableAccess: {},
-    dataQuery: {},
+    connection: {
+      clientCreated: false,
+      basicConnection: false,
+      rlsTest: null
+    },
+    tableAccess: {
+      variations: [],
+      workingTable: null,
+      totalRecords: 0
+    },
+    dataQuery: {
+      studios: null,
+      retreats: null,
+      allCategories: [],
+      categoryCount: 0
+    },
     errors: [],
+    summary: {},
+    recommendations: []
   }
 
   try {

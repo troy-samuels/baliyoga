@@ -12,7 +12,7 @@ export async function GET() {
     const projectRef = supabaseUrl ? supabaseUrl.match(/https:\/\/([^.]+)\.supabase\.co/)?.[1] : null
 
     // Try to get all tables in the public schema using a simpler approach
-    let tables = []
+    let tables: any[] = []
     let tablesError = null
 
     try {
