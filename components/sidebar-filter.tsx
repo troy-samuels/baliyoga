@@ -1,5 +1,6 @@
 import { Calendar } from "lucide-react"
 import { YogaFlowerIcon } from "./yoga-flower-icon"
+import { Checkbox } from "./ui/checkbox"
 
 export function SidebarFilter() {
   return (
@@ -11,19 +12,19 @@ export function SidebarFilter() {
           <div className="space-y-2 rounded-xl bg-[#a39188] p-4 text-white">
             <div className="flex items-center justify-between">
               <span>Ubud</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Canggu</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Seminyak</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Uluwatu</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
           </div>
         </div>
@@ -65,23 +66,23 @@ export function SidebarFilter() {
           <div className="space-y-2 rounded-xl bg-[#a39188] p-4 text-white">
             <div className="flex items-center justify-between">
               <span>Hatha</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Vinyasa</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Yin</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Ashtanga</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Kundalini</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
           </div>
         </div>
@@ -97,15 +98,15 @@ export function SidebarFilter() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span>Morning</span>
-                <input type="checkbox" className="h-4 w-4 rounded" />
+                <Checkbox />
               </div>
               <div className="flex items-center justify-between">
                 <span>Afternoon</span>
-                <input type="checkbox" className="h-4 w-4 rounded" />
+                <Checkbox />
               </div>
               <div className="flex items-center justify-between">
                 <span>Evening</span>
-                <input type="checkbox" className="h-4 w-4 rounded" />
+                <Checkbox />
               </div>
             </div>
           </div>
@@ -117,19 +118,19 @@ export function SidebarFilter() {
           <div className="space-y-2 rounded-xl bg-[#a39188] p-4 text-white">
             <div className="flex items-center justify-between">
               <span>Free</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>&lt;$20/day</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>$20–$100/day</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>$100+</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
           </div>
         </div>
@@ -140,23 +141,23 @@ export function SidebarFilter() {
           <div className="space-y-2 rounded-xl bg-[#a39188] p-4 text-white">
             <div className="flex items-center justify-between">
               <span>Pool</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Vegan Meals</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Wi-Fi</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Air Conditioning</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Spa</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
           </div>
         </div>
@@ -167,19 +168,19 @@ export function SidebarFilter() {
           <div className="space-y-2 rounded-xl bg-[#a39188] p-4 text-white">
             <div className="flex items-center justify-between">
               <span>Eco-friendly</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Female Instructor</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Family-friendly</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
             <div className="flex items-center justify-between">
               <span>Beginner-friendly</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+              <Checkbox />
             </div>
           </div>
         </div>

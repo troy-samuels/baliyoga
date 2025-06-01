@@ -74,6 +74,11 @@ const mapToStudio = (item: any): Studio => {
     styles.push("Pilates")
   }
 
+  // Parse images as array
+  const imagesArray = Array.isArray(item.images)
+    ? item.images
+    : (typeof item.images === 'string' ? JSON.parse(item.images) : []);
+
   return {
     id: item.id,
     name: item.name,
@@ -81,10 +86,9 @@ const mapToStudio = (item: any): Studio => {
     location: item.city || "Bali",
     rating: item.review_score || 4.5,
     reviewCount: item.review_count || 0,
-    image: item.images && item.images.length > 0
-      ? processImageUrl(item.images[0])
-      : `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(item.name)}`,
-    styles: styles,
+    image: imagesArray.length > 0 ? processImageUrl(imagesArray[0]) : `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(item.name)}`,
+    images: imagesArray.map(processImageUrl),
+    styles: styles || [],
     tagline: `Discover yoga at ${item.name}`,
     description: `Located in ${item.city || "Bali"}, ${item.name} offers various yoga classes.`,
     longDescription: `${item.name} is a welcoming yoga studio in ${item.city || "Bali"} offering a variety of classes for all levels. Join us to deepen your practice in a supportive environment.`,
@@ -149,6 +153,11 @@ const mapToRetreat = (item: any): Retreat => {
     styles.push("Healing")
   }
 
+  // Parse images as array
+  const imagesArray = Array.isArray(item.images)
+    ? item.images
+    : (typeof item.images === 'string' ? JSON.parse(item.images) : []);
+
   return {
     id: item.id,
     name: item.name,
@@ -156,15 +165,14 @@ const mapToRetreat = (item: any): Retreat => {
     location: item.city || "Bali",
     rating: item.review_score || 4.5,
     reviewCount: item.review_count || 0,
-    image: item.images && item.images.length > 0
-      ? processImageUrl(item.images[0])
-      : `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(item.name)}`,
+    image: imagesArray.length > 0 ? processImageUrl(imagesArray[0]) : `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(item.name)}`,
+    images: imagesArray.map(processImageUrl),
     duration: "7-14 days",
     price: "$1,200",
     tagline: `Experience tranquility at ${item.name}`,
     description: `Located in ${item.city || "Bali"}, ${item.name} offers a peaceful retreat experience.`,
     longDescription: `${item.name} is a beautiful retreat center located in ${item.city || "Bali"}. Offering a range of wellness activities and yoga classes, this is the perfect place to relax and rejuvenate.`,
-    styles: styles,
+    styles: styles || [],
     includes: ["Accommodation", "Daily yoga classes", "Healthy meals"],
     type: "retreat",
     location_details: {
@@ -183,33 +191,32 @@ export async function getTopSupabaseStudios(limit = 3): Promise<Studio[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
-    .from("Bali Yoga Studios and Retreats")
+    .from('v2_bali_yoga_studios_and_retreats')
     .select("*")
     .in("category_name", studioCategories)
     .not("images", "is", null)
     .not("review_score", "is", null)
     .order("review_score", { ascending: false })
     .order("review_count", { ascending: false })
-    .limit(limit * 2) // Get more to filter by image count
+    .limit(limit * 2)
 
   if (error) {
     console.error("Error fetching top studios from Supabase:", error)
     return []
   }
 
-  // Sort by image count and review quality, then take top results
   const sortedData = data
-    .filter((item) => item.images && item.images.length > 0)
+    .filter((item) => {
+      const imagesArray = Array.isArray(item.images)
+        ? item.images
+        : (typeof item.images === 'string' ? JSON.parse(item.images) : []);
+      return imagesArray.length > 0;
+    })
     .sort((a, b) => {
-      // Primary sort: review score
       const scoreDiff = (b.review_score || 0) - (a.review_score || 0)
       if (scoreDiff !== 0) return scoreDiff
-
-      // Secondary sort: number of images
-      const imageCountDiff = (b.images?.length || 0) - (a.images?.length || 0)
+      const imageCountDiff = ((Array.isArray(b.images) ? b.images.length : 0) || 0) - ((Array.isArray(a.images) ? a.images.length : 0) || 0)
       if (imageCountDiff !== 0) return imageCountDiff
-
-      // Tertiary sort: review count
       return (b.review_count || 0) - (a.review_count || 0)
     })
     .slice(0, limit)
@@ -222,33 +229,32 @@ export async function getTopSupabaseRetreats(limit = 3): Promise<Retreat[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
-    .from("Bali Yoga Studios and Retreats")
+    .from('v2_bali_yoga_studios_and_retreats')
     .select("*")
     .in("category_name", retreatCategories)
     .not("images", "is", null)
     .not("review_score", "is", null)
     .order("review_score", { ascending: false })
     .order("review_count", { ascending: false })
-    .limit(limit * 2) // Get more to filter by image count
+    .limit(limit * 2)
 
   if (error) {
     console.error("Error fetching top retreats from Supabase:", error)
     return []
   }
 
-  // Sort by image count and review quality, then take top results
   const sortedData = data
-    .filter((item) => item.images && item.images.length > 0)
+    .filter((item) => {
+      const imagesArray = Array.isArray(item.images)
+        ? item.images
+        : (typeof item.images === 'string' ? JSON.parse(item.images) : []);
+      return imagesArray.length > 0;
+    })
     .sort((a, b) => {
-      // Primary sort: review score
       const scoreDiff = (b.review_score || 0) - (a.review_score || 0)
       if (scoreDiff !== 0) return scoreDiff
-
-      // Secondary sort: number of images
-      const imageCountDiff = (b.images?.length || 0) - (a.images?.length || 0)
+      const imageCountDiff = ((Array.isArray(b.images) ? b.images.length : 0) || 0) - ((Array.isArray(a.images) ? a.images.length : 0) || 0)
       if (imageCountDiff !== 0) return imageCountDiff
-
-      // Tertiary sort: review count
       return (b.review_count || 0) - (a.review_count || 0)
     })
     .slice(0, limit)
@@ -261,7 +267,7 @@ export async function getSupabaseStudios(): Promise<Studio[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
-    .from("Bali Yoga Studios and Retreats")
+    .from('v2_bali_yoga_studios_and_retreats')
     .select("*")
     .in("category_name", studioCategories)
 
@@ -278,7 +284,7 @@ export async function getSupabaseRetreats(): Promise<Retreat[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
-    .from("Bali Yoga Studios and Retreats")
+    .from('v2_bali_yoga_studios_and_retreats')
     .select("*")
     .in("category_name", retreatCategories)
 
@@ -300,4 +306,45 @@ export async function getSupabaseStudioBySlug(slug: string): Promise<Studio | nu
 export async function getSupabaseRetreatBySlug(slug: string): Promise<Retreat | null> {
   const retreats = await getSupabaseRetreats()
   return retreats.find((retreat) => retreat.slug === slug) || null
+}
+
+// Function to get similar studios/retreats based on location
+export async function getSimilarItems(type: "studio" | "retreat", currentItem: Studio | Retreat, limit = 3): Promise<(Studio | Retreat)[]> {
+  const supabase = createServerClient()
+  const categories = type === "studio" ? studioCategories : retreatCategories
+
+  const { data, error } = await supabase
+    .from('v2_bali_yoga_studios_and_retreats')
+    .select("*")
+    .in("category_name", categories)
+    .not("id", "eq", currentItem.id)
+    .eq("city", currentItem.location)
+    .not("images", "is", null)
+    .not("review_score", "is", null)
+    .order("review_score", { ascending: false })
+    .order("review_count", { ascending: false })
+    .limit(limit * 2)
+
+  if (error) {
+    console.error(`Error fetching similar ${type}s from Supabase:`, error)
+    return []
+  }
+
+  const sortedData = data
+    .filter((item) => {
+      const imagesArray = Array.isArray(item.images)
+        ? item.images
+        : (typeof item.images === 'string' ? JSON.parse(item.images) : []);
+      return imagesArray.length > 0;
+    })
+    .sort((a, b) => {
+      const scoreDiff = (b.review_score || 0) - (a.review_score || 0)
+      if (scoreDiff !== 0) return scoreDiff
+      const imageCountDiff = ((Array.isArray(b.images) ? b.images.length : 0) || 0) - ((Array.isArray(a.images) ? a.images.length : 0) || 0)
+      if (imageCountDiff !== 0) return imageCountDiff
+      return (b.review_count || 0) - (a.review_count || 0)
+    })
+    .slice(0, limit)
+
+  return sortedData.map(item => type === "studio" ? mapToStudio(item) : mapToRetreat(item)) as (Studio | Retreat)[];
 }

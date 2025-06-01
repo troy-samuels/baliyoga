@@ -6,6 +6,7 @@ import { getSupabaseRetreats } from "@/lib/supabase-data-utils"
 import { MobileOptimizedCard } from "@/components/mobile-optimized-card"
 import { LazySection } from "@/components/lazy-section"
 import { filterRetreats, getLocationDisplayName } from "@/lib/search-utils"
+import { MobileOptimizedSidebar } from "@/components/mobile-optimized-sidebar"
 
 interface SearchParams {
   q?: string
@@ -79,62 +80,68 @@ export default async function RetreatsPage({ searchParams }: RetreatsPageProps) 
 
       {/* Main Content */}
       <div className="mx-auto max-w-7xl px-4 py-6 sm:py-12 md:px-6">
-        <div className="flex flex-col gap-6 sm:gap-8">
-          {/* Filter Tags */}
-          <div className="flex flex-wrap gap-2">
-            <span className="rounded-full bg-[#e6ceb3] px-3 py-1 text-sm font-medium text-[#5d4c42] sm:px-4 sm:py-2">
-              All Durations
-            </span>
-            {["Short (1-3 days)", "Medium (4-7 days)", "Long (8+ days)"].map((duration) => (
-              <span
-                key={duration}
-                className="rounded-full bg-white px-3 py-1 text-sm font-medium text-[#5d4c42] hover:bg-[#e6ceb3] sm:px-4 sm:py-2"
-              >
-                {duration}
+        <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
+          {/* Left Sidebar Filters */}
+          <MobileOptimizedSidebar />
+
+          {/* Right Content Area */}
+          <div className="flex-1 space-y-6">
+            {/* Filter Tags */}
+            <div className="flex flex-wrap gap-2">
+              <span className="rounded-full bg-[#e6ceb3] px-3 py-1 text-sm font-medium text-[#5d4c42] sm:px-4 sm:py-2">
+                All Durations
               </span>
-            ))}
-          </div>
-
-          {/* Retreats Count */}
-          <div className="mb-2 sm:mb-4">
-            <p className="text-sm text-[#5d4c42] sm:text-base">
-              <span className="font-medium">{filteredRetreats.length}</span> retreats found
-              {hasFilters && (
-                <span className="ml-2 text-xs text-[#5d4c42]/60">(filtered from {allRetreats.length} total)</span>
-              )}
-            </p>
-          </div>
-
-          {/* Retreats Grid */}
-          <LazySection>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-              {filteredRetreats.length > 0 ? (
-                filteredRetreats.map((retreat) => (
-                  <MobileOptimizedCard
-                    key={retreat.id}
-                    id={retreat.id}
-                    name={retreat.name}
-                    slug={retreat.slug}
-                    image={retreat.image}
-                    location={retreat.location}
-                    rating={retreat.rating}
-                    type="retreat"
-                    duration={retreat.duration}
-                    price={retreat.price}
-                  />
-                ))
-              ) : (
-                <div className="col-span-full py-8 text-center text-[#5d4c42]">
-                  <p className="text-lg font-medium">No retreats found</p>
-                  <p className="mt-2 text-sm text-[#5d4c42]/70">
-                    {hasFilters
-                      ? "Try adjusting your search criteria or browse all retreats."
-                      : "Please check back later for new listings."}
-                  </p>
-                </div>
-              )}
+              {["Short (1-3 days)", "Medium (4-7 days)", "Long (8+ days)"].map((duration) => (
+                <span
+                  key={duration}
+                  className="rounded-full bg-white px-3 py-1 text-sm font-medium text-[#5d4c42] hover:bg-[#e6ceb3] sm:px-4 sm:py-2"
+                >
+                  {duration}
+                </span>
+              ))}
             </div>
-          </LazySection>
+
+            {/* Retreats Count */}
+            <div className="mb-2 sm:mb-4">
+              <p className="text-sm text-[#5d4c42] sm:text-base">
+                <span className="font-medium">{filteredRetreats.length}</span> retreats found
+                {hasFilters && (
+                  <span className="ml-2 text-xs text-[#5d4c42]/60">(filtered from {allRetreats.length} total)</span>
+                )}
+              </p>
+            </div>
+
+            {/* Retreats Grid */}
+            <LazySection>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+                {filteredRetreats.length > 0 ? (
+                  filteredRetreats.map((retreat) => (
+                    <MobileOptimizedCard
+                      key={retreat.id}
+                      id={retreat.id}
+                      name={retreat.name}
+                      slug={retreat.slug}
+                      image={retreat.image}
+                      location={retreat.location}
+                      rating={retreat.rating}
+                      type="retreat"
+                      duration={retreat.duration}
+                      price={retreat.price}
+                    />
+                  ))
+                ) : (
+                  <div className="col-span-full py-8 text-center text-[#5d4c42]">
+                    <p className="text-lg font-medium">No retreats found</p>
+                    <p className="mt-2 text-sm text-[#5d4c42]/70">
+                      {hasFilters
+                        ? "Try adjusting your search criteria or browse all retreats."
+                        : "Please check back later for new listings."}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </LazySection>
+          </div>
         </div>
       </div>
 

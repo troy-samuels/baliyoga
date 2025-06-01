@@ -43,7 +43,7 @@ export default async function Home() {
                   {topStudios.map((studio) => (
                     <MobileOptimizedCard
                       key={studio.id}
-                      id={studio.id}
+                      id={String(studio.id)}
                       name={studio.name}
                       slug={studio.slug}
                       image={studio.image}
@@ -70,7 +70,7 @@ export default async function Home() {
                   {topRetreats.map((retreat) => (
                     <MobileOptimizedCard
                       key={retreat.id}
-                      id={retreat.id}
+                      id={String(retreat.id)}
                       name={retreat.name}
                       slug={retreat.slug}
                       image={retreat.image}

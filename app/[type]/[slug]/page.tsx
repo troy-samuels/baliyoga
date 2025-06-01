@@ -21,7 +21,8 @@ import { SiteHeader } from "@/components/site-header"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getStudioBySlug, getRetreatBySlug } from "@/lib/data-utils"
-import { getSupabaseStudioBySlug, getSupabaseRetreatBySlug } from "@/lib/supabase-data-utils"
+import { getSupabaseStudioBySlug, getSupabaseRetreatBySlug, getSimilarItems } from "@/lib/supabase-data-utils"
+import { MobileOptimizedCard } from "@/components/mobile-optimized-card"
 
 // This would normally come from a database or API
 const getMockData = (type: string, slug: string) => {
@@ -376,595 +377,274 @@ const getMockData = (type: string, slug: string) => {
 }
 
 export default async function DetailPage({ params }: { params: { type: string; slug: string } }) {
-  const { type, slug } = params
+  // Get the item data
+  const item = await (params.type === "studios"
+    ? getSupabaseStudioBySlug(params.slug)
+    : getSupabaseRetreatBySlug(params.slug))
 
-  // Try to get data from our Supabase data utility first
-  let data
-  if (type === "studios") {
-    const studio = await getSupabaseStudioBySlug(slug)
-    if (studio) {
-      data = { ...studio, type: "studio" }
-    }
-  } else if (type === "retreats") {
-    const retreat = await getSupabaseRetreatBySlug(slug)
-    if (retreat) {
-      data = { ...retreat, type: "retreat" }
-    }
-  }
-
-  // If no data found from Supabase, try the local data utility
-  if (!data) {
-    if (type === "studios") {
-      const studio = getStudioBySlug(slug)
-      if (studio) {
-        data = { ...studio, type: "studio" }
-      }
-    } else if (type === "retreats") {
-      const retreat = getRetreatBySlug(slug)
-      if (retreat) {
-        data = { ...retreat, type: "retreat" }
-      }
-    }
-  }
-
-  // If still no data found, use mock data
-  if (!data) {
-    data = getMockData(type, slug)
-  }
-
-  const isStudio = data.type === "studio"
-  const isRetreat = data.type === "retreat"
-
-  // Prepare images array
-  const images = data.images || [data.image || "/placeholder.svg?height=600&width=800&text=No+Image"]
-  if (!data.images && data.image) {
-    images.push(
-      "/placeholder.svg?height=600&width=800&text=Image+2",
-      "/placeholder.svg?height=600&width=800&text=Image+3",
-      "/placeholder.svg?height=600&width=800&text=Image+4",
+  if (!item) {
+    return (
+      <div className="min-h-screen bg-[#f9f3e9]">
+        <SiteHeader />
+        <div className="mx-auto max-w-7xl px-4 py-12 text-center">
+          <h1 className="text-2xl font-bold text-[#5d4c42]">Item not found</h1>
+          <p className="mt-2 text-[#5d4c42]/70">The item you're looking for doesn't exist.</p>
+          <Link href="/" className="mt-4 inline-block text-[#a39188] hover:text-[#8a7b73]">
+            Return to home
+          </Link>
+        </div>
+        <SiteFooter />
+      </div>
     )
   }
+
+  // Get similar items
+  const similarItems = await getSimilarItems(params.type === "studios" ? "studio" : "retreat", item)
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
       <SiteHeader />
+      <div className="mx-auto max-w-7xl px-4 py-4">
+        <Link
+          href={`/${params.type}`}
+          className="inline-flex items-center text-sm text-[#5d4c42]/70 hover:text-[#5d4c42]"
+        >
+          <ChevronLeft className="mr-1 h-4 w-4" />
+          Back to {params.type === "studios" ? "Studios" : "Retreats"}
+        </Link>
+      </div>
+      <div className="mx-auto max-w-7xl px-4 py-6">
+        {/* Image Gallery */}
+        <div className="relative">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {item.images?.map((image, index) => (
+              <div
+                key={index}
+                className={`relative overflow-hidden rounded-xl ${
+                  index === 0 ? "col-span-1 md:col-span-2 md:row-span-2" : ""
+                }`}
+              >
+                <Image
+                  src={image || "/placeholder.svg?height=600&width=800&text=No+Image"}
+                  alt={`${item.name} - Image ${index + 1}`}
+                  width={800}
+                  height={600}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
 
-      {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 py-4 md:px-6">
-        {/* Back Button */}
-        <div className="mb-4">
+        {/* Header */}
+        <div className="space-y-4">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-[#5d4c42] md:text-4xl">{item.name}</h1>
+              <p className="mt-1 text-lg text-[#5d4c42]/80">
+                {item.tagline || `Experience ${item.name} in ${item.location}`}
+              </p>
+              {/* Primary Claim Button */}
+              <div className="flex flex-col items-start mt-4">
+                <Link
+                  href={`/claim/${item.slug}`}
+                  className="rounded-xl bg-[#e6ceb3] px-6 py-2 text-[#5d4c42] font-semibold shadow hover:bg-[#d9b99a] transition"
+                >
+                  Claim this listing
+                </Link>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button className="rounded-full bg-white p-2 text-[#5d4c42] shadow-sm hover:bg-[#e6ceb3]">
+                <Heart className="h-5 w-5" />
+                <span className="sr-only">Save to favorites</span>
+              </button>
+              <button className="rounded-full bg-white p-2 text-[#5d4c42] shadow-sm hover:bg-[#e6ceb3]">
+                <Share2 className="h-5 w-5" />
+                <span className="sr-only">Share</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-4 text-[#5d4c42]">
+            <div className="flex items-center">
+              <MapPin className="mr-1 h-4 w-4" />
+              <span>{item.location_details?.area || item.location}, Bali</span>
+            </div>
+            <div className="flex items-center">
+              <span className="flex items-center font-medium text-[#5d4c42] bg-[#f2e8dc] px-2 py-1 rounded-full">
+                <span>{item.rating}</span>
+                <span className="text-[#5d4c42]/60 mx-1">/</span>
+                <span className="text-[#5d4c42]/60">5</span>
+              </span>
+              <span className="ml-2 text-[#5d4c42]/60">({item.reviewCount} reviews)</span>
+            </div>
+            {params.type === "retreats" && 'duration' in item && item.duration && (
+              <div className="flex items-center">
+                <Calendar className="mr-1 h-4 w-4" />
+                <span>{item.duration}</span>
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {item.styles &&
+              item.styles.map((style, index) => (
+                <span key={index} className="rounded-full bg-[#e6ceb3] px-3 py-1 text-sm text-[#5d4c42]">
+                  {style}
+                </span>
+              ))}
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-[#5d4c42]">About</h2>
+          <p className="mt-4 text-[#5d4c42]/80">{item.description}</p>
+          <p className="mt-4 text-[#5d4c42]/80">{item.longDescription}</p>
+        </div>
+
+        {/* Details */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-[#5d4c42]">Details</h2>
+          <div className="mt-4 space-y-6">
+            {params.type === "studios" && (
+              <div>
+                <h3 className="text-lg font-semibold text-[#5d4c42]">Pricing</h3>
+                <div className="mt-2 space-y-2">
+                  {typeof item.price === 'object' && (
+                    <>
+                      <div className="flex justify-between">
+                        <span className="text-[#5d4c42]/80">Drop-in Class</span>
+                        <span className="font-medium text-[#5d4c42]">{item.price.dropIn}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-[#5d4c42]/80">Weekly Pass</span>
+                        <span className="font-medium text-[#5d4c42]">{item.price.weekly}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-[#5d4c42]/80">Monthly Pass</span>
+                        <span className="font-medium text-[#5d4c42]">{item.price.monthly}</span>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {params.type === "retreats" && (
+              <div>
+                <h3 className="text-lg font-semibold text-[#5d4c42]">Program Details</h3>
+                <div className="mt-2 space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-[#5d4c42]/80">Duration</span>
+                    <span className="font-medium text-[#5d4c42]">{'duration' in item ? item.duration : 'N/A'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#5d4c42]/80">Price</span>
+                    <span className="font-medium text-[#5d4c42]">
+                      {typeof item.price === 'string' ? item.price : 'Contact for pricing'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {item.opening_hours && item.opening_hours.length > 0 && (
+              <div>
+                <h3 className="text-lg font-semibold text-[#5d4c42]">Opening Hours</h3>
+                <div className="mt-2 space-y-2">
+                  {item.opening_hours.map((hours, index) => (
+                    <div key={index} className="flex justify-between">
+                      {typeof hours === 'object' && hours.day && hours.hours ? (
+                        <span className="text-[#5d4c42]/80">{hours.day}: {hours.hours}</span>
+                      ) : (
+                        <span className="text-[#5d4c42]/80">{String(hours)}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Contact Information */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-[#5d4c42]">Contact Information</h2>
+          <div className="mt-4 space-y-4">
+            {item.location_details?.address && (
+              <div className="flex items-start gap-2">
+                <MapPin className="mt-1 h-5 w-5 text-[#5d4c42]" />
+                <span className="text-[#5d4c42]/80">{item.location_details.address}</span>
+              </div>
+            )}
+            {item.phone_number && (
+              <div className="flex items-center gap-2">
+                <Phone className="h-5 w-5 text-[#5d4c42]" />
+                <span className="text-[#5d4c42]/80">{item.phone_number}</span>
+              </div>
+            )}
+            {item.website && (
+              <div className="flex items-center gap-2">
+                <Globe className="h-5 w-5 text-[#5d4c42]" />
+                <a href={item.website} target="_blank" rel="noopener noreferrer" className="text-[#a39188] hover:text-[#8a7b73]">
+                  {item.website}
+                </a>
+              </div>
+            )}
+            {/* Secondary Claim Button */}
+            <div className="mt-4">
+              <Link
+                href={`/claim/${item.slug}`}
+                className="w-full block rounded-xl bg-[#f2e8dc] px-4 py-2 text-[#5d4c42] font-medium shadow hover:bg-[#e6ceb3] transition text-center"
+              >
+                Claim this listing
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Similar Items Section */}
+        {similarItems.length > 0 && (
+          <div className="mt-12">
+            <h2 className="text-2xl font-bold text-[#5d4c42]">
+              Similar {params.type === "studios" ? "Studios" : "Retreats"} in {item.location}
+            </h2>
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+              {similarItems.map((similarItem) => (
+                <MobileOptimizedCard
+                  key={String(similarItem.id)}
+                  id={String(similarItem.id)}
+                  name={similarItem.name}
+                  slug={similarItem.slug}
+                  image={similarItem.image}
+                  location={similarItem.location}
+                  rating={typeof similarItem.rating === 'string' ? parseFloat(similarItem.rating) : similarItem.rating}
+                  type={params.type === "studios" ? "studio" : "retreat"}
+                  styles={similarItem.styles}
+                  duration={'duration' in similarItem ? similarItem.duration : undefined}
+                  price={
+                    params.type === "studios"
+                      ? (typeof similarItem.price === 'object' && similarItem.price?.dropIn ? similarItem.price.dropIn : undefined)
+                      : (typeof similarItem.price === 'string' ? similarItem.price : undefined)
+                  }
+                />
+              ))}
+            </div>
+          </div>
+        )}
+        {/* Tertiary Claim Button at the bottom */}
+        <div className="text-center text-[#a39188] mt-12">
+          Are you the owner of this {params.type === "studios" ? "studio" : "retreat"}? {" "}
           <Link
-            href={isStudio ? "/studios" : isRetreat ? "/retreats" : "/"}
-            className="inline-flex items-center text-[#5d4c42] hover:text-[#a39188]"
+            href={`/claim/${item.slug}`}
+            className="underline text-[#5d4c42] hover:text-[#a39188] font-medium"
           >
-            <ChevronLeft className="mr-1 h-4 w-4" />
-            Back to {isStudio ? "Studios" : isRetreat ? "Retreats" : "Home"}
+            Claim this listing
           </Link>
         </div>
-
-        <div className="flex flex-col gap-8 lg:flex-row">
-          {/* Main Content Area */}
-          <div className="flex-1 space-y-8">
-            {/* Image Gallery */}
-            <div className="relative">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-                {images.map((image, index) => (
-                  <div
-                    key={index}
-                    className={`relative overflow-hidden rounded-xl ${
-                      index === 0 ? "col-span-1 md:col-span-2 md:row-span-2" : ""
-                    }`}
-                  >
-                    <Image
-                      src={image || "/placeholder.svg?height=600&width=800&text=No+Image"}
-                      alt={`${data.name} - Image ${index + 1}`}
-                      width={800}
-                      height={600}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Header */}
-            <div className="space-y-4">
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <h1 className="text-3xl font-bold text-[#5d4c42] md:text-4xl">{data.name}</h1>
-                  <p className="mt-1 text-lg text-[#5d4c42]/80">
-                    {data.tagline || `Experience ${data.name} in ${data.location}`}
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <button className="rounded-full bg-white p-2 text-[#5d4c42] shadow-sm hover:bg-[#e6ceb3]">
-                    <Heart className="h-5 w-5" />
-                    <span className="sr-only">Save to favorites</span>
-                  </button>
-                  <button className="rounded-full bg-white p-2 text-[#5d4c42] shadow-sm hover:bg-[#e6ceb3]">
-                    <Share2 className="h-5 w-5" />
-                    <span className="sr-only">Share</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4 text-[#5d4c42]">
-                <div className="flex items-center">
-                  <MapPin className="mr-1 h-4 w-4" />
-                  <span>{data.location_details?.area || data.location}, Bali</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="flex items-center font-medium text-[#5d4c42] bg-[#f2e8dc] px-2 py-1 rounded-full">
-                    <span>{data.rating}</span>
-                    <span className="text-[#5d4c42]/60 mx-1">/</span>
-                    <span className="text-[#5d4c42]/60">5</span>
-                  </span>
-                  <span className="ml-2 text-[#5d4c42]/60">({data.reviewCount} reviews)</span>
-                </div>
-                {isRetreat && data.duration && (
-                  <div className="flex items-center">
-                    <Calendar className="mr-1 h-4 w-4" />
-                    <span>{data.duration}</span>
-                  </div>
-                )}
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {data.styles &&
-                  data.styles.map((style, index) => (
-                    <span key={index} className="rounded-full bg-[#e6ceb3] px-3 py-1 text-sm text-[#5d4c42]">
-                      {style}
-                    </span>
-                  ))}
-              </div>
-            </div>
-
-            {/* Tabs */}
-            <Tabs defaultValue="about" className="w-full">
-              <TabsList className="w-full mb-6 grid grid-cols-5 gap-2">
-                <TabsTrigger value="about" className="px-4">
-                  About
-                </TabsTrigger>
-                {isStudio && (
-                  <TabsTrigger value="schedule" className="px-4">
-                    Schedule
-                  </TabsTrigger>
-                )}
-                {isRetreat && (
-                  <TabsTrigger value="details" className="px-4">
-                    Details
-                  </TabsTrigger>
-                )}
-                <TabsTrigger value="team" className="px-4">
-                  {isStudio ? "Instructors" : "Facilitators"}
-                </TabsTrigger>
-                <TabsTrigger value="reviews" className="px-4">
-                  Reviews
-                </TabsTrigger>
-                <TabsTrigger value="faqs" className="px-4">
-                  FAQs
-                </TabsTrigger>
-              </TabsList>
-
-              {/* About Tab */}
-              <TabsContent value="about" className="mt-6 space-y-6">
-                <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm">
-                  <h2 className="text-xl font-semibold text-[#5d4c42]">About {data.name}</h2>
-                  <div className="prose text-[#5d4c42]/80">
-                    <p>{data.longDescription || data.description}</p>
-                  </div>
-                </div>
-
-                {/* Amenities/Includes */}
-                <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm">
-                  <h2 className="text-xl font-semibold text-[#5d4c42]">{isStudio ? "Amenities" : "What's Included"}</h2>
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
-                    {(isStudio ? data.amenities : data.includes)?.map((item, index) => (
-                      <div key={index} className="flex items-center">
-                        <Check className="mr-2 h-4 w-4 text-green-500" />
-                        <span className="text-[#5d4c42]/80">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Location */}
-                <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm">
-                  <h2 className="text-xl font-semibold text-[#5d4c42]">Location</h2>
-                  <p className="text-[#5d4c42]/80">{data.location_details?.address || `${data.location}, Bali`}</p>
-                  <div className="h-64 w-full overflow-hidden rounded-lg bg-[#e6ceb3]">
-                    <Image
-                      src="/placeholder.svg?height=300&width=600&text=Map"
-                      alt="Location Map"
-                      width={600}
-                      height={300}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                </div>
-              </TabsContent>
-
-              {/* Schedule Tab (Studios) */}
-              {isStudio && (
-                <TabsContent value="schedule" className="mt-6 space-y-6">
-                  <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm">
-                    <h2 className="text-xl font-semibold text-[#5d4c42]">Class Schedule</h2>
-                    <div className="space-y-6">
-                      {data.schedule?.map((day, index) => (
-                        <div key={index} className="space-y-3">
-                          <h3 className="font-medium text-[#5d4c42]">{day.day}</h3>
-                          <div className="space-y-2">
-                            {day.classes.map((cls, idx) => (
-                              <div
-                                key={idx}
-                                className="flex flex-col justify-between rounded-lg border border-[#e6ceb3] p-3 sm:flex-row sm:items-center"
-                              >
-                                <div className="flex items-center">
-                                  <Clock className="mr-2 h-4 w-4 text-[#a39188]" />
-                                  <span className="text-sm font-medium text-[#5d4c42]">{cls.time}</span>
-                                </div>
-                                <div className="mt-2 sm:mt-0">
-                                  <span className="font-medium text-[#5d4c42]">{cls.name}</span>
-                                  <span className="mx-2 text-[#5d4c42]/60">•</span>
-                                  <span className="text-sm text-[#5d4c42]/80">{cls.style}</span>
-                                </div>
-                                <div className="mt-2 text-sm text-[#5d4c42]/80 sm:mt-0">with {cls.instructor}</div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </TabsContent>
-              )}
-
-              {/* Details Tab (Retreats) */}
-              {isRetreat && (
-                <TabsContent value="details" className="mt-6 space-y-6">
-                  {/* Upcoming Dates */}
-                  <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm">
-                    <h2 className="text-xl font-semibold text-[#5d4c42]">Upcoming Dates</h2>
-                    <div className="space-y-3">
-                      {data.dates?.map((date, index) => (
-                        <div
-                          key={index}
-                          className="flex flex-col justify-between rounded-lg border border-[#e6ceb3] p-4 sm:flex-row sm:items-center"
-                        >
-                          <div>
-                            <div className="font-medium text-[#5d4c42]">
-                              {date.start} - {date.end}
-                            </div>
-                          </div>
-                          <div className="mt-2 sm:mt-0">
-                            <span
-                              className={`rounded-full px-3 py-1 text-sm ${
-                                date.availability === "Limited"
-                                  ? "bg-yellow-100 text-yellow-800"
-                                  : "bg-green-100 text-green-800"
-                              }`}
-                            >
-                              {date.availability}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Accommodation */}
-                  <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm">
-                    <h2 className="text-xl font-semibold text-[#5d4c42]">Accommodation Options</h2>
-                    <div className="space-y-4">
-                      {data.accommodation?.map((option, index) => (
-                        <div key={index} className="rounded-lg border border-[#e6ceb3] p-4">
-                          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-                            <h3 className="font-medium text-[#5d4c42]">{option.type}</h3>
-                            <div className="text-lg font-semibold text-[#5d4c42]">{option.price}</div>
-                          </div>
-                          <p className="mt-2 text-sm text-[#5d4c42]/80">{option.description}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Daily Schedule */}
-                  <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm">
-                    <h2 className="text-xl font-semibold text-[#5d4c42]">Typical Daily Schedule</h2>
-                    <div className="space-y-2">
-                      {data.schedule?.typical.map((item, index) => (
-                        <div
-                          key={index}
-                          className="flex flex-col justify-between rounded-lg border border-[#e6ceb3] p-3 sm:flex-row sm:items-center"
-                        >
-                          <div className="font-medium text-[#5d4c42]">{item.time}</div>
-                          <div className="mt-1 text-[#5d4c42]/80 sm:mt-0">{item.activity}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </TabsContent>
-              )}
-
-              {/* Team Tab */}
-              <TabsContent value="team" className="mt-6 space-y-6">
-                <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm">
-                  <h2 className="text-xl font-semibold text-[#5d4c42]">
-                    {isStudio ? "Our Instructors" : "Retreat Facilitators"}
-                  </h2>
-                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {(isStudio ? data.instructors : data.facilitators)?.map((person, index) => (
-                      <div
-                        key={index}
-                        className="overflow-hidden rounded-xl border border-[#e6ceb3] bg-white shadow-sm"
-                      >
-                        <div className="aspect-square w-full overflow-hidden">
-                          <Image
-                            src={person.image || "/placeholder.svg?height=200&width=200&text=Instructor"}
-                            alt={person.name}
-                            width={200}
-                            height={200}
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-                        <div className="p-4">
-                          <h3 className="font-semibold text-[#5d4c42]">{person.name}</h3>
-                          {isRetreat && person.role && (
-                            <p className="mt-1 text-sm font-medium text-[#a39188]">{person.role}</p>
-                          )}
-                          {isStudio && person.styles && (
-                            <div className="mt-2 flex flex-wrap gap-1">
-                              {person.styles.map((style, idx) => (
-                                <span
-                                  key={idx}
-                                  className="rounded-full bg-[#e6ceb3] px-2 py-0.5 text-xs text-[#5d4c42]"
-                                >
-                                  {style}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                          <p className="mt-2 text-sm text-[#5d4c42]/80 line-clamp-3">{person.bio}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </TabsContent>
-
-              {/* Reviews Tab */}
-              <TabsContent value="reviews" className="mt-6 space-y-6">
-                <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold text-[#5d4c42]">Reviews</h2>
-                    <div className="flex items-center">
-                      <span className="flex items-center font-medium text-[#5d4c42] bg-[#f2e8dc] px-2 py-1 rounded-full">
-                        <span>{data.rating}</span>
-                        <span className="text-[#5d4c42]/60 mx-1">/</span>
-                        <span className="text-[#5d4c42]/60">5</span>
-                      </span>
-                      <span className="ml-2 text-[#5d4c42]/60">({data.reviewCount})</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    {data.reviews?.map((review, index) => (
-                      <div key={index} className="rounded-lg border border-[#e6ceb3] p-4">
-                        <div className="mb-2 flex items-center justify-between">
-                          <div>
-                            <span className="font-medium text-[#5d4c42]">{review.name}</span>
-                            <span className="ml-2 text-sm text-[#5d4c42]/60">{review.date}</span>
-                          </div>
-                          <div className="flex items-center bg-[#f2e8dc] px-2 py-1 rounded-full">
-                            <span className="font-medium text-[#5d4c42]">{review.rating}</span>
-                            <span className="text-[#5d4c42]/60 mx-1">/</span>
-                            <span className="text-[#5d4c42]/60">5</span>
-                          </div>
-                        </div>
-                        <p className="text-[#5d4c42]/80">{review.text}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Button className="mt-4 w-full bg-[#e6ceb3] text-[#5d4c42] hover:bg-[#d9b99a]">
-                    See All Reviews
-                  </Button>
-                </div>
-              </TabsContent>
-
-              {/* FAQs Tab */}
-              <TabsContent value="faqs" className="mt-6 space-y-6">
-                <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm">
-                  <h2 className="text-xl font-semibold text-[#5d4c42]">Frequently Asked Questions</h2>
-                  <div className="space-y-4">
-                    {data.faqs?.map((faq, index) => (
-                      <div key={index} className="rounded-lg border border-[#e6ceb3] p-4">
-                        <h3 className="font-medium text-[#5d4c42]">{faq.question}</h3>
-                        <p className="mt-2 text-[#5d4c42]/80">{faq.answer}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </TabsContent>
-            </Tabs>
-
-            {/* Similar Listings */}
-            <section>
-              <h2 className="mb-4 text-xl font-semibold text-[#5d4c42]">Similar {isStudio ? "Studios" : "Retreats"}</h2>
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-                {data.similar?.map((item, index) => (
-                  <Link
-                    key={index}
-                    href={`/${isStudio ? "studios" : "retreats"}/${item.name.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-transform hover:-translate-y-1 hover:shadow-md h-[280px]"
-                  >
-                    <div className="relative h-40 w-full overflow-hidden">
-                      <Image
-                        src={item.image || "/placeholder.svg?height=200&width=300&text=Similar"}
-                        alt={item.name}
-                        width={300}
-                        height={200}
-                        className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                      />
-                      <div className="absolute bottom-2 right-2 rounded-full bg-white px-2 py-1">
-                        <div className="flex items-center gap-1">
-                          <span className="text-sm font-medium text-[#5d4c42]">{item.rating}</span>
-                          <span className="text-xs text-[#5d4c42]/60">/5</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col justify-between p-4">
-                      <h3 className="font-semibold text-[#5d4c42] line-clamp-2">{item.name}</h3>
-                      <div className="mt-auto">
-                        <div className="flex items-center text-sm text-[#5d4c42]/80">
-                          <MapPin className="mr-1 h-4 w-4" />
-                          <span>{item.location}, Bali</span>
-                        </div>
-                        {isRetreat && item.duration && (
-                          <div className="mt-1 text-sm text-[#5d4c42]/80">
-                            <span>{item.duration}</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          </div>
-
-          {/* Right Sidebar */}
-          <div className="w-full lg:w-80">
-            <div className="sticky top-24 space-y-6">
-              {/* Booking/Pricing Card */}
-              <div className="rounded-xl bg-white p-6 shadow-sm">
-                <h3 className="mb-4 text-lg font-semibold text-[#5d4c42]">
-                  {isStudio ? "Class Pricing" : "Book This Retreat"}
-                </h3>
-
-                {isStudio && (
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span className="text-[#5d4c42]/80">Drop-in class</span>
-                      <span className="font-medium text-[#5d4c42]">{data.price?.dropIn}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-[#5d4c42]/80">Weekly pass</span>
-                      <span className="font-medium text-[#5d4c42]">{data.price?.weekly}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-[#5d4c42]/80">Monthly unlimited</span>
-                      <span className="font-medium text-[#5d4c42]">{data.price?.monthly}</span>
-                    </div>
-                    <div className="pt-4">
-                      <Button className="w-full bg-[#e6ceb3] text-[#5d4c42] hover:bg-[#d9b99a]">Book a Class</Button>
-                    </div>
-                  </div>
-                )}
-
-                {isRetreat && (
-                  <div className="space-y-4">
-                    <div className="rounded-lg bg-[#f2e8dc] p-4">
-                      <div className="mb-2 text-sm text-[#5d4c42]/80">Starting from</div>
-                      <div className="text-2xl font-bold text-[#5d4c42]">{data.price}</div>
-                      <div className="mt-1 text-sm text-[#5d4c42]/80">per person</div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex items-center">
-                        <Users className="mr-2 h-4 w-4 text-[#a39188]" />
-                        <span className="text-sm text-[#5d4c42]/80">Limited spots available</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Calendar className="mr-2 h-4 w-4 text-[#a39188]" />
-                        <span className="text-sm text-[#5d4c42]/80">Multiple dates available</span>
-                      </div>
-                    </div>
-
-                    <Button className="w-full bg-[#e6ceb3] text-[#5d4c42] hover:bg-[#d9b99a]">Reserve Your Spot</Button>
-                    <div className="text-center text-xs text-[#5d4c42]/60">Secure with deposit</div>
-                  </div>
-                )}
-              </div>
-
-              {/* Contact Card */}
-              <div className="rounded-xl bg-white p-6 shadow-sm">
-                <h3 className="mb-4 text-lg font-semibold text-[#5d4c42]">Contact</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center">
-                    <Phone className="mr-2 h-4 w-4 text-[#a39188]" />
-                    <span className="text-[#5d4c42]/80">{data.phone_number || "+62 812 3456 7890"}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Globe className="mr-2 h-4 w-4 text-[#a39188]" />
-                    <a
-                      href={data.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#5d4c42]/80 hover:text-[#5d4c42] hover:underline"
-                    >
-                      {data.website || (isStudio ? "harmonyyoga.com" : "serenitybali.com")}
-                    </a>
-                  </div>
-                  <div className="flex items-center space-x-3 pt-2">
-                    <a href="#" className="rounded-full bg-[#f2e8dc] p-2 text-[#5d4c42] hover:bg-[#e6ceb3]">
-                      <Facebook className="h-4 w-4" />
-                      <span className="sr-only">Facebook</span>
-                    </a>
-                    <a href="#" className="rounded-full bg-[#f2e8dc] p-2 text-[#5d4c42] hover:bg-[#e6ceb3]">
-                      <Instagram className="h-4 w-4" />
-                      <span className="sr-only">Instagram</span>
-                    </a>
-                    <a href="#" className="rounded-full bg-[#f2e8dc] p-2 text-[#5d4c42] hover:bg-[#e6ceb3]">
-                      <Twitter className="h-4 w-4" />
-                      <span className="sr-only">Twitter</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Message Card */}
-              <div className="rounded-xl bg-white p-6 shadow-sm">
-                <h3 className="mb-4 text-lg font-semibold text-[#5d4c42]">Send a Message</h3>
-                <form className="space-y-4">
-                  <div>
-                    <label htmlFor="name" className="mb-1 block text-sm text-[#5d4c42]/80">
-                      Your Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      className="w-full rounded-lg border border-[#e6ceb3] p-2 focus:border-[#a39188] focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="mb-1 block text-sm text-[#5d4c42]/80">
-                      Your Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      className="w-full rounded-lg border border-[#e6ceb3] p-2 focus:border-[#a39188] focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="message" className="mb-1 block text-sm text-[#5d4c42]/80">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      rows={4}
-                      className="w-full rounded-lg border border-[#e6ceb3] p-2 focus:border-[#a39188] focus:outline-none"
-                    ></textarea>
-                  </div>
-                  <Button className="w-full bg-[#e6ceb3] text-[#5d4c42] hover:bg-[#d9b99a]">Send Message</Button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-
       <SiteFooter />
     </div>
   )

@@ -43,11 +43,8 @@ export function OptimizedImage({
     ? "/placeholder.svg?height=400&width=600&text=Image+Not+Available"
     : `/placeholder.svg?height=${height || 200}&width=${width || 300}&text=Image+Not+Available`
 
-  // Check if the image URL is from Google Maps/Street View
-  const isGoogleImage = src?.includes('googleusercontent.com') || src?.includes('googleapis.com')
-  
-  // If it's a Google image, we'll use a proxy or fallback
-  const finalSrc = imageError || !isGoogleImage ? fallbackSrc : src
+  // Only use fallback if there's an error
+  const finalSrc = imageError ? fallbackSrc : src
 
   const imageProps = {
     alt,

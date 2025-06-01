@@ -1,12 +1,46 @@
 "use client"
 
 import { Filter, X, Calendar } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { YogaFlowerIcon } from "./yoga-flower-icon"
+import { Checkbox } from "./ui/checkbox"
+import { createServerClient } from "@/lib/supabase"
+
+const LOCATION_GROUPS = [
+  { label: "Ubud", value: "Ubud" },
+  { label: "Uluwatu", value: "Uluwatu" },
+  { label: "Canggu", value: "Canggu" },
+  { label: "South Bali", value: "South Bali", locations: ["Badung Regency", "Denpasar City", "Denpasar", "Uluwatu", "Padang-Padang", "Canggu"] },
+  { label: "Central Bali", value: "Central Bali", locations: ["Gianyar Regency", "Ubud", "Bangli Regency"] },
+  { label: "East Bali", value: "East Bali", locations: ["Karangasem Regency", "Abang", "Klungkung Regency"] },
+  { label: "North Bali", value: "North Bali", locations: ["Buleleng Regency"] },
+  { label: "West Bali", value: "West Bali", locations: ["Jembrana Regency", "Tabanan Regency", "Gunung"] },
+  { label: "Islands", value: "Islands", locations: ["Nusa Penida"] },
+]
 
 export function MobileOptimizedSidebar() {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [ratingFilter, setRatingFilter] = useState(3)
+  const [reviewCountFilter, setReviewCountFilter] = useState(0)
+  const [hasImages, setHasImages] = useState(false)
+  const [cities, setCities] = useState<string[]>([])
+  const [categories, setCategories] = useState<string[]>([])
+  const [postcodes, setPostcodes] = useState<string[]>([])
+
+  // Fetch filter options from Supabase
+  useEffect(() => {
+    async function fetchFilterOptions() {
+      const supabase = createServerClient()
+      const { data, error } = await supabase
+        .from('v2_bali_yoga_studios_and_retreats')
+        .select('city, category_name, postcode, images')
+      if (error) return
+      setCities(Array.from(new Set(data.map((d: any) => d.city).filter(Boolean))))
+      setCategories(Array.from(new Set(data.map((d: any) => d.category_name).filter(Boolean))))
+      setPostcodes(Array.from(new Set(data.map((d: any) => d.postcode).filter(Boolean))))
+    }
+    fetchFilterOptions()
+  }, [])
 
   return (
     <>
@@ -32,7 +66,17 @@ export function MobileOptimizedSidebar() {
                 <X className="h-5 w-5" />
               </button>
             </div>
-            <FilterContent ratingFilter={ratingFilter} setRatingFilter={setRatingFilter} />
+            <FilterContent
+              ratingFilter={ratingFilter}
+              setRatingFilter={setRatingFilter}
+              reviewCountFilter={reviewCountFilter}
+              setReviewCountFilter={setReviewCountFilter}
+              hasImages={hasImages}
+              setHasImages={setHasImages}
+              cities={cities}
+              categories={categories}
+              postcodes={postcodes}
+            />
           </div>
         </div>
       )}
@@ -40,7 +84,17 @@ export function MobileOptimizedSidebar() {
       {/* Desktop Sidebar */}
       <div className="hidden lg:sticky lg:top-24 lg:block lg:h-[calc(100vh-6rem)] lg:w-72 lg:overflow-auto">
         <div className="space-y-6 rounded-2xl bg-[#f2e8dc] p-6 shadow-sm">
-          <FilterContent ratingFilter={ratingFilter} setRatingFilter={setRatingFilter} />
+          <FilterContent
+            ratingFilter={ratingFilter}
+            setRatingFilter={setRatingFilter}
+            reviewCountFilter={reviewCountFilter}
+            setReviewCountFilter={setReviewCountFilter}
+            hasImages={hasImages}
+            setHasImages={setHasImages}
+            cities={cities}
+            categories={categories}
+            postcodes={postcodes}
+          />
         </div>
       </div>
     </>
@@ -50,117 +104,82 @@ export function MobileOptimizedSidebar() {
 interface FilterContentProps {
   ratingFilter: number
   setRatingFilter: (rating: number) => void
+  reviewCountFilter: number
+  setReviewCountFilter: (count: number) => void
+  hasImages: boolean
+  setHasImages: (val: boolean) => void
+  cities: string[]
+  categories: string[]
+  postcodes: string[]
 }
 
-function FilterContent({ ratingFilter, setRatingFilter }: FilterContentProps) {
+function FilterContent({ ratingFilter, setRatingFilter, reviewCountFilter, setReviewCountFilter, hasImages, setHasImages, cities, categories }: FilterContentProps) {
   return (
     <div className="space-y-6">
-      {/* Location Filter */}
+      {/* Location/Area Filter */}
       <div>
-        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Location</h3>
+        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Area</h3>
         <div className="space-y-3 rounded-xl bg-[#a39188] p-4 text-white">
-          {["Ubud", "Canggu", "Seminyak", "Uluwatu"].map((location) => (
-            <div key={location} className="flex items-center justify-between">
-              <span className="text-sm lg:text-base">{location}</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
+          {LOCATION_GROUPS.map((group) => (
+            <div key={group.value} className="flex items-center justify-between">
+              <span className="text-sm lg:text-base">{group.label}</span>
+              <Checkbox />
             </div>
           ))}
         </div>
       </div>
-
-      {/* Quality Rating Filter with Slider */}
+      {/* Category Filter */}
+      <div>
+        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Type</h3>
+        <div className="space-y-3 rounded-xl bg-[#a39188] p-4 text-white">
+          {categories.map((cat) => (
+            <div key={cat} className="flex items-center justify-between">
+              <span className="text-sm lg:text-base">{cat}</span>
+              <Checkbox />
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Rating Filter */}
       <div>
         <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Quality Rating</h3>
         <div className="space-y-4 rounded-xl bg-[#a39188] p-4 text-white">
           <div className="flex items-center justify-between">
-            <span className="text-sm lg:text-base">Rating: {ratingFilter}</span>
-            <div className="flex items-center gap-1">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <YogaFlowerIcon key={i} className="h-4 w-4" filled={i < Math.floor(ratingFilter)} />
-              ))}
-            </div>
+            <span className="text-sm lg:text-base">Rating: {ratingFilter}+</span>
           </div>
-          <div className="relative">
-            <input
-              type="range"
-              min="3"
-              max="5"
-              step="0.5"
-              value={ratingFilter}
-              onChange={(e) => setRatingFilter(parseFloat(e.target.value))}
-              className="w-full h-2 bg-white/30 rounded-full appearance-none cursor-pointer transition-all duration-200 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:w-6 [&::-moz-range-thumb]:h-6 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-transparent [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border-0"
-            />
-            <div 
-              className="absolute top-1/2 -translate-y-1/2 pointer-events-none transition-all duration-200"
-              style={{ 
-                left: `${((ratingFilter - 3) / 2) * 100}%`,
-                transform: 'translate(-50%, -50%)'
-              }}
-            >
-              <YogaFlowerIcon className="h-6 w-6" filled={true} />
-            </div>
-          </div>
+          <input
+            type="range"
+            min="3"
+            max="5"
+            step="0.5"
+            value={ratingFilter}
+            onChange={(e) => setRatingFilter(parseFloat(e.target.value))}
+            className="w-full h-2 bg-white/30 rounded-full appearance-none cursor-pointer"
+          />
         </div>
       </div>
-
-      {/* Yoga Style Filter */}
+      {/* Minimum Reviews Filter */}
       <div>
-        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Yoga Style</h3>
-        <div className="space-y-3 rounded-xl bg-[#a39188] p-4 text-white">
-          {["Hatha", "Vinyasa", "Yin", "Ashtanga", "Kundalini"].map((style) => (
-            <div key={style} className="flex items-center justify-between">
-              <span className="text-sm lg:text-base">{style}</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
-            </div>
-          ))}
+        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Minimum Reviews</h3>
+        <div className="space-y-4 rounded-xl bg-[#a39188] p-4 text-white">
+          <input
+            type="number"
+            min="0"
+            value={reviewCountFilter}
+            onChange={(e) => setReviewCountFilter(Number(e.target.value))}
+            className="w-full rounded px-2 py-1 text-[#5d4c42]"
+            placeholder="e.g. 10"
+          />
         </div>
       </div>
-
-      {/* Availability Filter */}
+      {/* Has Images Filter */}
       <div>
-        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Availability</h3>
-        <div className="space-y-3 rounded-xl bg-[#a39188] p-4 text-white">
-          <div className="flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            <span className="text-sm lg:text-base">Select dates</span>
-          </div>
-          <div className="space-y-2">
-            {["Morning", "Afternoon", "Evening"].map((time) => (
-              <div key={time} className="flex items-center justify-between">
-                <span className="text-sm lg:text-base">{time}</span>
-                <input type="checkbox" className="h-4 w-4 rounded" />
-              </div>
-            ))}
-          </div>
+        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Has Images</h3>
+        <div className="rounded-xl bg-[#a39188] p-4 text-white flex items-center gap-2">
+          <input type="checkbox" checked={hasImages} onChange={e => setHasImages(e.target.checked)} />
+          <span className="text-sm lg:text-base">Only show listings with images</span>
         </div>
       </div>
-
-      {/* Price Range Filter */}
-      <div>
-        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Price Range</h3>
-        <div className="space-y-3 rounded-xl bg-[#a39188] p-4 text-white">
-          {["Free", "<$20/day", "$20–$100/day", "$100+"].map((price) => (
-            <div key={price} className="flex items-center justify-between">
-              <span className="text-sm lg:text-base">{price}</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Amenities Filter */}
-      <div>
-        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Amenities</h3>
-        <div className="space-y-3 rounded-xl bg-[#a39188] p-4 text-white">
-          {["Pool", "Vegan Meals", "Wi-Fi", "Air Conditioning", "Spa"].map((amenity) => (
-            <div key={amenity} className="flex items-center justify-between">
-              <span className="text-sm lg:text-base">{amenity}</span>
-              <input type="checkbox" className="h-4 w-4 rounded" />
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Mobile Apply Button */}
       <div className="lg:hidden">
         <button className="w-full rounded-xl bg-[#e6ceb3] py-3 font-medium text-[#5d4c42]">Apply Filters</button>

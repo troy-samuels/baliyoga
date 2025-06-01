@@ -6,6 +6,7 @@ import { getSupabaseStudios } from "@/lib/supabase-data-utils"
 import { MobileOptimizedCard } from "@/components/mobile-optimized-card"
 import { LazySection } from "@/components/lazy-section"
 import { filterStudios, getLocationDisplayName } from "@/lib/search-utils"
+import { MobileOptimizedSidebar } from "@/components/mobile-optimized-sidebar"
 
 interface SearchParams {
   q?: string
@@ -79,61 +80,67 @@ export default async function StudiosPage({ searchParams }: StudiosPageProps) {
 
       {/* Main Content */}
       <div className="mx-auto max-w-7xl px-4 py-6 sm:py-12 md:px-6">
-        <div className="flex flex-col gap-6 sm:gap-8">
-          {/* Filter Tags */}
-          <div className="flex flex-wrap gap-2">
-            <span className="rounded-full bg-[#e6ceb3] px-3 py-1 text-sm font-medium text-[#5d4c42] sm:px-4 sm:py-2">
-              All Styles
-            </span>
-            {["Hatha", "Vinyasa", "Yin", "Ashtanga", "Restorative"].map((style) => (
-              <span
-                key={style}
-                className="rounded-full bg-white px-3 py-1 text-sm font-medium text-[#5d4c42] hover:bg-[#e6ceb3] sm:px-4 sm:py-2"
-              >
-                {style}
+        <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
+          {/* Left Sidebar Filters */}
+          <MobileOptimizedSidebar />
+
+          {/* Right Content Area */}
+          <div className="flex-1 space-y-6">
+            {/* Filter Tags */}
+            <div className="flex flex-wrap gap-2">
+              <span className="rounded-full bg-[#e6ceb3] px-3 py-1 text-sm font-medium text-[#5d4c42] sm:px-4 sm:py-2">
+                All Styles
               </span>
-            ))}
-          </div>
-
-          {/* Studios Count */}
-          <div className="mb-2 sm:mb-4">
-            <p className="text-sm text-[#5d4c42] sm:text-base">
-              <span className="font-medium">{filteredStudios.length}</span> studios found
-              {hasFilters && (
-                <span className="ml-2 text-xs text-[#5d4c42]/60">(filtered from {allStudios.length} total)</span>
-              )}
-            </p>
-          </div>
-
-          {/* Studios Grid */}
-          <LazySection>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-              {filteredStudios.length > 0 ? (
-                filteredStudios.map((studio) => (
-                  <MobileOptimizedCard
-                    key={studio.id}
-                    id={studio.id}
-                    name={studio.name}
-                    slug={studio.slug}
-                    image={studio.image}
-                    location={studio.location}
-                    rating={studio.rating}
-                    styles={studio.styles}
-                    type="studio"
-                  />
-                ))
-              ) : (
-                <div className="col-span-full py-8 text-center text-[#5d4c42]">
-                  <p className="text-lg font-medium">No studios found</p>
-                  <p className="mt-2 text-sm text-[#5d4c42]/70">
-                    {hasFilters
-                      ? "Try adjusting your search criteria or browse all studios."
-                      : "Please check back later for new listings."}
-                  </p>
-                </div>
-              )}
+              {["Hatha", "Vinyasa", "Yin", "Ashtanga", "Restorative"].map((style) => (
+                <span
+                  key={style}
+                  className="rounded-full bg-white px-3 py-1 text-sm font-medium text-[#5d4c42] hover:bg-[#e6ceb3] sm:px-4 sm:py-2"
+                >
+                  {style}
+                </span>
+              ))}
             </div>
-          </LazySection>
+
+            {/* Studios Count */}
+            <div className="mb-2 sm:mb-4">
+              <p className="text-sm text-[#5d4c42] sm:text-base">
+                <span className="font-medium">{filteredStudios.length}</span> studios found
+                {hasFilters && (
+                  <span className="ml-2 text-xs text-[#5d4c42]/60">(filtered from {allStudios.length} total)</span>
+                )}
+              </p>
+            </div>
+
+            {/* Studios Grid */}
+            <LazySection>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+                {filteredStudios.length > 0 ? (
+                  filteredStudios.map((studio) => (
+                    <MobileOptimizedCard
+                      key={studio.id}
+                      id={studio.id}
+                      name={studio.name}
+                      slug={studio.slug}
+                      image={studio.image}
+                      location={studio.location}
+                      rating={studio.rating}
+                      styles={studio.styles}
+                      type="studio"
+                    />
+                  ))
+                ) : (
+                  <div className="col-span-full py-8 text-center text-[#5d4c42]">
+                    <p className="text-lg font-medium">No studios found</p>
+                    <p className="mt-2 text-sm text-[#5d4c42]/70">
+                      {hasFilters
+                        ? "Try adjusting your search criteria or browse all studios."
+                        : "Please check back later for new listings."}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </LazySection>
+          </div>
         </div>
       </div>
 

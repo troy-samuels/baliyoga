@@ -5,12 +5,6 @@ const nextConfig = {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react'],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],
@@ -19,6 +13,23 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.googleapis.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.gstatic.com',
+      },
+    ],
+    domains: [
+      "dynamic-media-cdn.tripadvisor.com"
+    ],
   },
   
   // Compression

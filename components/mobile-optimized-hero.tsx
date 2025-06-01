@@ -8,16 +8,17 @@ export function MobileOptimizedHero() {
   const [searchQuery, setSearchQuery] = useState("")
 
   return (
-    <section className="relative h-[400px] w-full sm:h-[500px]">
-      <OptimizedImage
-        src="/images/hero-yoga-bali-realistic.png"
-        alt="Serene yoga setup with mat and props overlooking beautiful Balinese rice terraces, palm trees, and traditional temple architecture"
-        width={1200}
-        height={500}
-        className="h-full w-full object-cover"
-        priority={true}
-        sizes="100vw"
-      />
+    <section className="relative h-[400px] w-full sm:h-[500px] md:h-[600px]">
+      <div className="absolute inset-0 overflow-hidden">
+        <OptimizedImage
+          src="/images/hero-yoga-bali-realistic.png"
+          alt="Serene yoga setup with mat and props overlooking beautiful Balinese rice terraces, palm trees, and traditional temple architecture"
+          fill
+          className="object-cover object-center"
+          priority={true}
+          sizes="100vw"
+        />
+      </div>
       <div className="absolute inset-0 bg-black/40" />
       <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center">
         <h1 className="mb-4 text-2xl font-bold text-white sm:mb-6 sm:text-3xl md:text-4xl lg:text-5xl">
