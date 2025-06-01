@@ -87,21 +87,6 @@ export default async function RetreatsPage({
 
           {/* Right Content Area */}
           <div className="flex-1 space-y-6">
-            {/* Filter Tags */}
-            <div className="flex flex-wrap gap-2">
-              <span className="rounded-full bg-[#e6ceb3] px-3 py-1 text-sm font-medium text-[#5d4c42] sm:px-4 sm:py-2">
-                All Durations
-              </span>
-              {["Short (1-3 days)", "Medium (4-7 days)", "Long (8+ days)"].map((duration) => (
-                <span
-                  key={duration}
-                  className="rounded-full bg-white px-3 py-1 text-sm font-medium text-[#5d4c42] hover:bg-[#e6ceb3] sm:px-4 sm:py-2"
-                >
-                  {duration}
-                </span>
-              ))}
-            </div>
-
             {/* Retreats Count */}
             <div className="mb-2 sm:mb-4">
               <p className="text-sm text-[#5d4c42] sm:text-base">

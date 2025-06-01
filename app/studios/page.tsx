@@ -90,21 +90,6 @@ export default async function StudiosPage({
 
           {/* Right Content Area */}
           <div className="flex-1 space-y-6">
-            {/* Filter Tags */}
-            <div className="flex flex-wrap gap-2">
-              <span className="rounded-full bg-[#e6ceb3] px-3 py-1 text-sm font-medium text-[#5d4c42] sm:px-4 sm:py-2">
-                All Styles
-              </span>
-              {["Hatha", "Vinyasa", "Yin", "Ashtanga", "Restorative"].map((style) => (
-                <span
-                  key={style}
-                  className="rounded-full bg-white px-3 py-1 text-sm font-medium text-[#5d4c42] hover:bg-[#e6ceb3] sm:px-4 sm:py-2"
-                >
-                  {style}
-                </span>
-              ))}
-            </div>
-
             {/* Studios Count */}
             <div className="mb-2 sm:mb-4">
               <p className="text-sm text-[#5d4c42] sm:text-base">
