@@ -1,7 +1,7 @@
 "use client"
 
 import { OptimizedImage } from "./optimized-image"
-import { ChevronDown, MapPin, Search } from "lucide-react"
+import { Search } from "lucide-react"
 import { useState } from "react"
 
 export function MobileOptimizedHero() {
@@ -34,7 +34,7 @@ export function MobileOptimizedHero() {
                 <Search className="mr-3 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Search yoga studios & retreats..."
+                  placeholder="Search yoga studios and retreats"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full bg-transparent text-sm focus:outline-none"
@@ -46,33 +46,22 @@ export function MobileOptimizedHero() {
             </div>
           </div>
 
-          {/* Desktop Search - Full Featured */}
+          {/* Desktop Search - Simplified */}
           <div className="hidden rounded-full bg-white p-2 shadow-lg sm:block">
-            <div className="flex flex-col items-center gap-2 md:flex-row">
-              <div className="flex w-full flex-1 items-center rounded-full bg-gray-100 px-4 py-2">
+            <div className="flex items-center gap-2">
+              <div className="flex flex-1 items-center rounded-full bg-gray-100 px-4 py-2">
                 <Search className="mr-2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Search for yoga studios, retreats, or instructors..."
+                  placeholder="Search yoga studios and retreats"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full bg-transparent focus:outline-none"
                 />
               </div>
-              <div className="flex w-full flex-wrap gap-2 md:w-auto">
-                <div className="flex items-center rounded-full bg-gray-100 px-4 py-2">
-                  <span className="mr-2 text-sm text-gray-600">Category</span>
-                  <ChevronDown className="h-4 w-4 text-gray-400" />
-                </div>
-                <div className="flex items-center rounded-full bg-gray-100 px-4 py-2">
-                  <MapPin className="mr-2 h-4 w-4 text-gray-400" />
-                  <span className="mr-2 text-sm text-gray-600">Location</span>
-                  <ChevronDown className="h-4 w-4 text-gray-400" />
-                </div>
-                <button className="rounded-full bg-[#e6ceb3] px-6 py-2 font-medium text-[#5d4c42] transition-colors hover:bg-[#d9b99a]">
-                  Search
-                </button>
-              </div>
+              <button className="rounded-full bg-[#e6ceb3] px-6 py-2 font-medium text-[#5d4c42] transition-colors hover:bg-[#d9b99a]">
+                Search
+              </button>
             </div>
           </div>
         </div>
