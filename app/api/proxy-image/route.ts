@@ -7,7 +7,17 @@ const ALLOWED_DOMAINS = [
   'lh3.googleusercontent.com',
   'maps.googleapis.com',
   'maps.gstatic.com',
-  'streetviewpixels-pa.googleapis.com'
+  'streetviewpixels-pa.googleapis.com',
+  'photos.hotelbeds.com',
+  'images.trvl-media.com',
+  'www.iceportal.com',
+  'dynamic-media-cdn.tripadvisor.com',
+  'media-cdn.tripadvisor.com',
+  'cf.bstatic.com',
+  'q-xx.bstatic.com',
+  'pix10.agoda.net',
+  'images.unsplash.com',
+  'cdn.pixabay.com'
 ]
 
 function isValidUrl(url: string): boolean {

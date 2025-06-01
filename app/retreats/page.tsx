@@ -17,6 +17,9 @@ export default async function RetreatsPage({
   const query = typeof resolvedSearchParams.q === "string" ? resolvedSearchParams.q : undefined;
   const location = typeof resolvedSearchParams.location === "string" ? resolvedSearchParams.location : undefined;
   const type = typeof resolvedSearchParams.type === "string" ? resolvedSearchParams.type : "retreat";
+  const rating = typeof resolvedSearchParams.rating === "string" ? parseFloat(resolvedSearchParams.rating) : undefined;
+  const reviews = typeof resolvedSearchParams.reviews === "string" ? parseInt(resolvedSearchParams.reviews) : undefined;
+  const images = resolvedSearchParams.images === "true";
 
   // Get retreats data from Supabase
   const allRetreats = await getSupabaseRetreats()
@@ -26,9 +29,12 @@ export default async function RetreatsPage({
     query,
     location,
     type,
+    rating,
+    reviews,
+    images,
   })
 
-  const hasFilters = query || (location && location !== "all")
+  const hasFilters = query || (location && location !== "all") || rating || reviews || images
   const locationDisplay = location ? getLocationDisplayName(location) : null
 
   return (

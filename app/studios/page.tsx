@@ -20,6 +20,9 @@ export default async function StudiosPage({
   const query = typeof resolvedSearchParams.q === "string" ? resolvedSearchParams.q : undefined;
   const location = typeof resolvedSearchParams.location === "string" ? resolvedSearchParams.location : undefined;
   const type = typeof resolvedSearchParams.type === "string" ? resolvedSearchParams.type : "studio";
+  const rating = typeof resolvedSearchParams.rating === "string" ? parseFloat(resolvedSearchParams.rating) : undefined;
+  const reviews = typeof resolvedSearchParams.reviews === "string" ? parseInt(resolvedSearchParams.reviews) : undefined;
+  const images = resolvedSearchParams.images === "true";
 
   // Get studios data from Supabase
   const allStudios = await getSupabaseStudios()
@@ -29,9 +32,12 @@ export default async function StudiosPage({
     query,
     location,
     type,
+    rating,
+    reviews,
+    images,
   })
 
-  const hasFilters = query || (location && location !== "all")
+  const hasFilters = query || (location && location !== "all") || rating || reviews || images
   const locationDisplay = location ? getLocationDisplayName(location) : null
 
   return (

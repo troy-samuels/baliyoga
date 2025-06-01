@@ -2,14 +2,12 @@
 
 import { Filter, X, Calendar } from "lucide-react"
 import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { YogaFlowerIcon } from "./yoga-flower-icon"
 import { Checkbox } from "./ui/checkbox"
 import { createServerClient } from "@/lib/supabase"
 
 const LOCATION_GROUPS = [
-  { label: "Ubud", value: "Ubud" },
-  { label: "Uluwatu", value: "Uluwatu" },
-  { label: "Canggu", value: "Canggu" },
   { label: "South Bali", value: "South Bali", locations: ["Badung Regency", "Denpasar City", "Denpasar", "Uluwatu", "Padang-Padang", "Canggu"] },
   { label: "Central Bali", value: "Central Bali", locations: ["Gianyar Regency", "Ubud", "Bangli Regency"] },
   { label: "East Bali", value: "East Bali", locations: ["Karangasem Regency", "Abang", "Klungkung Regency"] },
@@ -19,13 +17,35 @@ const LOCATION_GROUPS = [
 ]
 
 export function MobileOptimizedSidebar() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [ratingFilter, setRatingFilter] = useState(3)
-  const [reviewCountFilter, setReviewCountFilter] = useState(0)
-  const [hasImages, setHasImages] = useState(false)
   const [cities, setCities] = useState<string[]>([])
-  const [selectedType, setSelectedType] = useState<string>("all")
   const [postcodes, setPostcodes] = useState<string[]>([])
+
+  // Get current filter values from URL
+  const selectedLocation = searchParams.get('location') || 'all'
+  const selectedType = searchParams.get('type') || 'all'
+  const ratingFilter = parseFloat(searchParams.get('rating') || '3')
+  const reviewCountFilter = parseInt(searchParams.get('reviews') || '0')
+  const hasImages = searchParams.get('images') === 'true'
+
+  // Function to update URL with new filters
+  const updateFilters = (updates: Record<string, string | null>) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()))
+    
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null || value === '' || value === 'all') {
+        current.delete(key)
+      } else {
+        current.set(key, value)
+      }
+    })
+    
+    const search = current.toString()
+    const query = search ? `?${search}` : ''
+    router.push(window.location.pathname + query)
+  }
 
   // Fetch filter options from Supabase
   useEffect(() => {
@@ -67,15 +87,13 @@ export function MobileOptimizedSidebar() {
             </div>
             <FilterContent
               ratingFilter={ratingFilter}
-              setRatingFilter={setRatingFilter}
               reviewCountFilter={reviewCountFilter}
-              setReviewCountFilter={setReviewCountFilter}
               hasImages={hasImages}
-              setHasImages={setHasImages}
               cities={cities}
               selectedType={selectedType}
-              setSelectedType={setSelectedType}
+              selectedLocation={selectedLocation}
               postcodes={postcodes}
+              updateFilters={updateFilters}
             />
           </div>
         </div>
@@ -86,15 +104,13 @@ export function MobileOptimizedSidebar() {
         <div className="space-y-6 rounded-2xl bg-[#f2e8dc] p-6 shadow-sm">
           <FilterContent
             ratingFilter={ratingFilter}
-            setRatingFilter={setRatingFilter}
             reviewCountFilter={reviewCountFilter}
-            setReviewCountFilter={setReviewCountFilter}
             hasImages={hasImages}
-            setHasImages={setHasImages}
             cities={cities}
             selectedType={selectedType}
-            setSelectedType={setSelectedType}
+            selectedLocation={selectedLocation}
             postcodes={postcodes}
+            updateFilters={updateFilters}
           />
         </div>
       </div>
@@ -104,27 +120,23 @@ export function MobileOptimizedSidebar() {
 
 interface FilterContentProps {
   ratingFilter: number
-  setRatingFilter: (rating: number) => void
   reviewCountFilter: number
-  setReviewCountFilter: (count: number) => void
   hasImages: boolean
-  setHasImages: (val: boolean) => void
   cities: string[]
   selectedType: string
-  setSelectedType: (type: string) => void
+  selectedLocation: string
   postcodes: string[]
+  updateFilters: (updates: Record<string, string | null>) => void
 }
 
 function FilterContent({ 
   ratingFilter, 
-  setRatingFilter, 
   reviewCountFilter, 
-  setReviewCountFilter, 
   hasImages, 
-  setHasImages, 
   cities,
   selectedType,
-  setSelectedType
+  selectedLocation,
+  updateFilters
 }: FilterContentProps) {
   return (
     <div className="space-y-6">
@@ -135,7 +147,14 @@ function FilterContent({
           {LOCATION_GROUPS.map((group) => (
             <div key={group.value} className="flex items-center justify-between">
               <span className="text-sm lg:text-base">{group.label}</span>
-              <Checkbox />
+              <input
+                type="radio"
+                name="location"
+                value={group.value}
+                checked={selectedLocation === group.value}
+                onChange={(e) => updateFilters({ location: e.target.value })}
+                className="h-4 w-4"
+              />
             </div>
           ))}
         </div>
@@ -151,7 +170,7 @@ function FilterContent({
               name="type"
               value="all"
               checked={selectedType === "all"}
-              onChange={(e) => setSelectedType(e.target.value)}
+              onChange={(e) => updateFilters({ type: e.target.value })}
               className="h-4 w-4"
             />
           </div>
@@ -162,7 +181,7 @@ function FilterContent({
               name="type"
               value="studio"
               checked={selectedType === "studio"}
-              onChange={(e) => setSelectedType(e.target.value)}
+              onChange={(e) => updateFilters({ type: e.target.value })}
               className="h-4 w-4"
             />
           </div>
@@ -173,7 +192,7 @@ function FilterContent({
               name="type"
               value="retreat"
               checked={selectedType === "retreat"}
-              onChange={(e) => setSelectedType(e.target.value)}
+              onChange={(e) => updateFilters({ type: e.target.value })}
               className="h-4 w-4"
             />
           </div>
@@ -192,7 +211,7 @@ function FilterContent({
             max="5"
             step="0.5"
             value={ratingFilter}
-            onChange={(e) => setRatingFilter(parseFloat(e.target.value))}
+            onChange={(e) => updateFilters({ rating: e.target.value })}
             className="w-full h-2 bg-white/30 rounded-full appearance-none cursor-pointer"
           />
         </div>
@@ -205,7 +224,7 @@ function FilterContent({
             type="number"
             min="0"
             value={reviewCountFilter}
-            onChange={(e) => setReviewCountFilter(Number(e.target.value))}
+            onChange={(e) => updateFilters({ reviews: e.target.value })}
             className="w-full rounded px-2 py-1 text-[#5d4c42]"
             placeholder="e.g. 10"
           />
@@ -215,7 +234,11 @@ function FilterContent({
       <div>
         <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Has Images</h3>
         <div className="rounded-xl bg-[#a39188] p-4 text-white flex items-center gap-2">
-          <input type="checkbox" checked={hasImages} onChange={e => setHasImages(e.target.checked)} />
+          <input 
+            type="checkbox" 
+            checked={hasImages} 
+            onChange={e => updateFilters({ images: e.target.checked ? 'true' : null })} 
+          />
           <span className="text-sm lg:text-base">Only show listings with images</span>
         </div>
       </div>

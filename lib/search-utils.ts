@@ -2,6 +2,9 @@ export interface SearchFilters {
   query?: string
   location?: string
   type?: string
+  rating?: number
+  reviews?: number
+  images?: boolean
 }
 
 // Add location group mapping for filtering
@@ -12,10 +15,6 @@ const LOCATION_GROUPS: { [key: string]: string[] } = {
   "North Bali": ["Buleleng Regency"],
   "West Bali": ["Jembrana Regency", "Tabanan Regency", "Gunung"],
   "Islands": ["Nusa Penida"],
-  // Top-level cities for direct match
-  "Ubud": ["Ubud"],
-  "Uluwatu": ["Uluwatu"],
-  "Canggu": ["Canggu"],
 }
 
 export function filterStudios(studios: any[], filters: SearchFilters) {
@@ -52,6 +51,24 @@ export function filterStudios(studios: any[], filters: SearchFilters) {
         studio.location && studio.location.toLowerCase().includes(filters.location!.toLowerCase())
       )
     }
+  }
+
+  // Filter by rating
+  if (filters.rating && filters.rating > 0) {
+    filtered = filtered.filter((studio) => (studio.rating || 0) >= filters.rating!)
+  }
+
+  // Filter by minimum review count
+  if (filters.reviews && filters.reviews > 0) {
+    filtered = filtered.filter((studio) => (studio.reviewCount || 0) >= filters.reviews!)
+  }
+
+  // Filter by has images
+  if (filters.images) {
+    filtered = filtered.filter((studio) => 
+      studio.images && studio.images.length > 0 && 
+      !studio.image.includes('placeholder.svg')
+    )
   }
 
   return filtered
@@ -91,6 +108,24 @@ export function filterRetreats(retreats: any[], filters: SearchFilters) {
         retreat.location && retreat.location.toLowerCase().includes(filters.location!.toLowerCase())
       )
     }
+  }
+
+  // Filter by rating
+  if (filters.rating && filters.rating > 0) {
+    filtered = filtered.filter((retreat) => (retreat.rating || 0) >= filters.rating!)
+  }
+
+  // Filter by minimum review count
+  if (filters.reviews && filters.reviews > 0) {
+    filtered = filtered.filter((retreat) => (retreat.reviewCount || 0) >= filters.reviews!)
+  }
+
+  // Filter by has images
+  if (filters.images) {
+    filtered = filtered.filter((retreat) => 
+      retreat.images && retreat.images.length > 0 && 
+      !retreat.image.includes('placeholder.svg')
+    )
   }
 
   return filtered

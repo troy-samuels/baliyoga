@@ -20,7 +20,8 @@ const retreatCategories = [
 const processImageUrl = (url: string | null | undefined): string => {
   if (!url) return `/placeholder.svg?height=200&width=300&text=No+Image`
   
-  if (url.includes('googleusercontent.com') || url.includes('googleapis.com')) {
+  // Route all external images through the proxy for better reliability
+  if (url.startsWith('http://') || url.startsWith('https://')) {
     return `/api/proxy-image?url=${encodeURIComponent(url)}`
   }
   

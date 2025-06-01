@@ -415,22 +415,42 @@ export default async function DetailPage({ params }: { params: { type: string; s
       </div>
       <div className="mx-auto max-w-7xl px-4 py-6">
         {/* Image Gallery */}
-        <div className="relative">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {item.images?.map((image, index) => (
-              <div
-                key={index}
-                className={`relative overflow-hidden rounded-xl ${
-                  index === 0 ? "col-span-1 md:col-span-2 md:row-span-2" : ""
-                }`}
-              >
+        <div className="relative mb-8">
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-4 md:grid-rows-2">
+            {/* Main large image */}
+            {item.images && item.images.length > 0 && (
+              <div className="relative overflow-hidden rounded-xl md:col-span-2 md:row-span-2">
                 <Image
-                  src={image || "/placeholder.svg?height=600&width=800&text=No+Image"}
-                  alt={`${item.name} - Image ${index + 1}`}
+                  src={item.images[0] || "/placeholder.svg?height=600&width=800&text=No+Image"}
+                  alt={`${item.name} - Main Image`}
                   width={800}
                   height={600}
-                  className="h-full w-full object-cover"
+                  className="h-[300px] md:h-[400px] w-full object-cover"
                 />
+              </div>
+            )}
+            
+            {/* Smaller images in 2x2 grid */}
+            {item.images && item.images.slice(1, 5).map((image, index) => (
+              <div
+                key={index + 1}
+                className="relative overflow-hidden rounded-xl"
+              >
+                <Image
+                  src={image || "/placeholder.svg?height=300&width=400&text=No+Image"}
+                  alt={`${item.name} - Image ${index + 2}`}
+                  width={400}
+                  height={300}
+                  className="h-[195px] w-full object-cover"
+                />
+                {/* Show +X more photos overlay on the last visible image if there are more images */}
+                {index === 3 && item.images && item.images.length > 5 && (
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-xl">
+                    <span className="text-white font-semibold text-lg">
+                      +{item.images.length - 5} photos
+                    </span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -444,15 +464,6 @@ export default async function DetailPage({ params }: { params: { type: string; s
               <p className="mt-1 text-lg text-[#5d4c42]/80">
                 {item.tagline || `Experience ${item.name} in ${item.location}`}
               </p>
-              {/* Primary Claim Button */}
-              <div className="flex flex-col items-start mt-4">
-                <Link
-                  href={`/claim/${item.slug}`}
-                  className="rounded-xl bg-[#e6ceb3] px-6 py-2 text-[#5d4c42] font-semibold shadow hover:bg-[#d9b99a] transition"
-                >
-                  Claim this listing
-                </Link>
-              </div>
             </div>
             <div className="flex gap-2">
               <button className="rounded-full bg-white p-2 text-[#5d4c42] shadow-sm hover:bg-[#e6ceb3]">
