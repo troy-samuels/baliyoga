@@ -8,27 +8,31 @@ import { LazySection } from "@/components/lazy-section"
 import { filterStudios, getLocationDisplayName } from "@/lib/search-utils"
 import { MobileOptimizedSidebar } from "@/components/mobile-optimized-sidebar"
 
-interface SearchParams {
-  q?: string
-  location?: string
-}
+/**
+ * @param {{ searchParams: Record<string, string | string[] | undefined> }} props
+ */
+export default async function StudiosPage({ 
+  searchParams 
+}: { 
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }> 
+}) {
+  const resolvedSearchParams = await searchParams;
+  const query = typeof resolvedSearchParams.q === "string" ? resolvedSearchParams.q : undefined;
+  const location = typeof resolvedSearchParams.location === "string" ? resolvedSearchParams.location : undefined;
+  const type = typeof resolvedSearchParams.type === "string" ? resolvedSearchParams.type : "studio";
 
-interface StudiosPageProps {
-  searchParams: SearchParams
-}
-
-export default async function StudiosPage({ searchParams }: StudiosPageProps) {
   // Get studios data from Supabase
   const allStudios = await getSupabaseStudios()
 
   // Apply filters
   const filteredStudios = filterStudios(allStudios, {
-    query: searchParams.q,
-    location: searchParams.location,
+    query,
+    location,
+    type,
   })
 
-  const hasFilters = searchParams.q || (searchParams.location && searchParams.location !== "all")
-  const locationDisplay = searchParams.location ? getLocationDisplayName(searchParams.location) : null
+  const hasFilters = query || (location && location !== "all")
+  const locationDisplay = location ? getLocationDisplayName(location) : null
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
@@ -51,8 +55,8 @@ export default async function StudiosPage({ searchParams }: StudiosPageProps) {
           {hasFilters && (
             <div className="mt-4 text-center">
               <p className="text-sm text-[#5d4c42]/70">
-                {searchParams.q && `Searching for "${searchParams.q}"`}
-                {searchParams.q && locationDisplay && locationDisplay !== "All Locations" && " in "}
+                {query && `Searching for "${query}"`}
+                {query && locationDisplay && locationDisplay !== "All Locations" && " in "}
                 {locationDisplay && locationDisplay !== "All Locations" && locationDisplay}
               </p>
             </div>
@@ -67,7 +71,7 @@ export default async function StudiosPage({ searchParams }: StudiosPageProps) {
                   type="text"
                   placeholder="Search studios by name, style, or location..."
                   className="w-full bg-transparent text-sm focus:outline-none sm:text-base"
-                  defaultValue={searchParams.q || ""}
+                  defaultValue={query || ""}
                 />
               </div>
               <button className="ml-2 rounded-xl bg-[#a39188] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#8a7b73] sm:rounded-full sm:px-6">

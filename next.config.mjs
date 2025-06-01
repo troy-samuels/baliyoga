@@ -26,6 +26,18 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.gstatic.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'photos.hotelbeds.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.trvl-media.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.iceportal.com',
+      },
     ],
     domains: [
       "dynamic-media-cdn.tripadvisor.com"

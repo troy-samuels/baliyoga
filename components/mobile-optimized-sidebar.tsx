@@ -24,7 +24,7 @@ export function MobileOptimizedSidebar() {
   const [reviewCountFilter, setReviewCountFilter] = useState(0)
   const [hasImages, setHasImages] = useState(false)
   const [cities, setCities] = useState<string[]>([])
-  const [categories, setCategories] = useState<string[]>([])
+  const [selectedType, setSelectedType] = useState<string>("all")
   const [postcodes, setPostcodes] = useState<string[]>([])
 
   // Fetch filter options from Supabase
@@ -33,10 +33,9 @@ export function MobileOptimizedSidebar() {
       const supabase = createServerClient()
       const { data, error } = await supabase
         .from('v2_bali_yoga_studios_and_retreats')
-        .select('city, category_name, postcode, images')
+        .select('city, postcode, images')
       if (error) return
       setCities(Array.from(new Set(data.map((d: any) => d.city).filter(Boolean))))
-      setCategories(Array.from(new Set(data.map((d: any) => d.category_name).filter(Boolean))))
       setPostcodes(Array.from(new Set(data.map((d: any) => d.postcode).filter(Boolean))))
     }
     fetchFilterOptions()
@@ -74,7 +73,8 @@ export function MobileOptimizedSidebar() {
               hasImages={hasImages}
               setHasImages={setHasImages}
               cities={cities}
-              categories={categories}
+              selectedType={selectedType}
+              setSelectedType={setSelectedType}
               postcodes={postcodes}
             />
           </div>
@@ -92,7 +92,8 @@ export function MobileOptimizedSidebar() {
             hasImages={hasImages}
             setHasImages={setHasImages}
             cities={cities}
-            categories={categories}
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
             postcodes={postcodes}
           />
         </div>
@@ -109,11 +110,22 @@ interface FilterContentProps {
   hasImages: boolean
   setHasImages: (val: boolean) => void
   cities: string[]
-  categories: string[]
+  selectedType: string
+  setSelectedType: (type: string) => void
   postcodes: string[]
 }
 
-function FilterContent({ ratingFilter, setRatingFilter, reviewCountFilter, setReviewCountFilter, hasImages, setHasImages, cities, categories }: FilterContentProps) {
+function FilterContent({ 
+  ratingFilter, 
+  setRatingFilter, 
+  reviewCountFilter, 
+  setReviewCountFilter, 
+  hasImages, 
+  setHasImages, 
+  cities,
+  selectedType,
+  setSelectedType
+}: FilterContentProps) {
   return (
     <div className="space-y-6">
       {/* Location/Area Filter */}
@@ -128,16 +140,43 @@ function FilterContent({ ratingFilter, setRatingFilter, reviewCountFilter, setRe
           ))}
         </div>
       </div>
-      {/* Category Filter */}
+      {/* Type Filter */}
       <div>
         <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Type</h3>
         <div className="space-y-3 rounded-xl bg-[#a39188] p-4 text-white">
-          {categories.map((cat) => (
-            <div key={cat} className="flex items-center justify-between">
-              <span className="text-sm lg:text-base">{cat}</span>
-              <Checkbox />
-            </div>
-          ))}
+          <div className="flex items-center justify-between">
+            <span className="text-sm lg:text-base">All</span>
+            <input
+              type="radio"
+              name="type"
+              value="all"
+              checked={selectedType === "all"}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="h-4 w-4"
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm lg:text-base">Yoga Studios</span>
+            <input
+              type="radio"
+              name="type"
+              value="studio"
+              checked={selectedType === "studio"}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="h-4 w-4"
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm lg:text-base">Retreats</span>
+            <input
+              type="radio"
+              name="type"
+              value="retreat"
+              checked={selectedType === "retreat"}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="h-4 w-4"
+            />
+          </div>
         </div>
       </div>
       {/* Rating Filter */}
