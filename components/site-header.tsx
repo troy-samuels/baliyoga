@@ -21,12 +21,6 @@ export function SiteHeader() {
             Contact
           </Link>
         </div>
-        <Link
-          href="/community"
-          className="rounded-full bg-[#e6ceb3] px-6 py-2 font-medium text-[#5d4c42] transition-colors hover:bg-[#d9b99a]"
-        >
-          Community
-        </Link>
       </div>
     </nav>
   )

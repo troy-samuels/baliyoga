@@ -33,14 +33,14 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
   const href = `/${type === "studio" ? "studios" : "retreats"}/${slug}`
 
   return (
-    <div className="group overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <div className="group overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-black/10 hover:scale-[1.02]">
       <Link href={href} className="block" prefetch={false}>
         <div className="relative h-48 w-full overflow-hidden">
           <OptimizedImage
             src={image || `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(name)}`}
             alt={name}
             fill
-            className="object-cover object-center transition-transform group-hover:scale-105"
+            className="object-cover object-center transition-transform duration-300 group-hover:scale-110"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           <div className="absolute bottom-2 right-2 rounded-full bg-white/90 backdrop-blur-sm px-2 py-1 shadow-sm">

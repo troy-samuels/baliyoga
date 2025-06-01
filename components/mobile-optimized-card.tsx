@@ -33,14 +33,14 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
   const href = `/${type === "studio" ? "studios" : "retreats"}/${slug}`
 
   return (
-    <div className="group overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <div className="group overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-black/10 hover:scale-[1.02]">
       <Link href={href} className="block">
         <div className="relative h-40 w-full overflow-hidden sm:h-48">
           <OptimizedImage
             src={image || `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(name)}`}
             alt={name}
             fill
-            className="object-cover object-center transition-transform group-hover:scale-105"
+            className="object-cover object-center transition-transform duration-300 group-hover:scale-110"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         </div>

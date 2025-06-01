@@ -41,14 +41,6 @@ export function MobileOptimizedHeader() {
         >
           {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
-
-        {/* Desktop Community Button */}
-        <Link
-          href="/community"
-          className="hidden rounded-full bg-[#e6ceb3] px-4 py-2 text-sm font-medium text-[#5d4c42] transition-colors hover:bg-[#d9b99a] md:block md:px-6 md:text-base"
-        >
-          Community
-        </Link>
       </div>
 
       {/* Mobile Menu */}
@@ -82,13 +74,6 @@ export function MobileOptimizedHeader() {
               onClick={() => setIsMenuOpen(false)}
             >
               Contact
-            </Link>
-            <Link
-              href="/community"
-              className="mt-2 rounded-lg bg-[#a39188] px-4 py-3 text-center font-medium text-white"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Community
             </Link>
           </div>
         </div>
