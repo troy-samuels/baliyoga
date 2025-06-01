@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Star, MapPin, Calendar } from "lucide-react"
+import { MapPin, Calendar } from "lucide-react"
 import { OptimizedImage } from "./optimized-image"
 import { memo } from "react"
 
@@ -43,12 +43,6 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
             className="object-cover object-center transition-transform group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
-          <div className="absolute bottom-2 right-2 rounded-full bg-white/90 backdrop-blur-sm px-2 py-1 shadow-sm">
-            <div className="flex items-center gap-1">
-              <Star className="h-3 w-3 fill-yellow-400 text-yellow-400 sm:h-4 sm:w-4" />
-              <span className="text-xs font-medium sm:text-sm">{rating}</span>
-            </div>
-          </div>
         </div>
 
         <div className="p-3 sm:p-4">
