@@ -67,10 +67,10 @@ const nextConfig = {
         pathname: '/**',
       }
     ],
-    domains: [
-      "dynamic-media-cdn.tripadvisor.com"
-    ],
   },
+  
+  // Fix cross-origin warnings for development
+  allowedDevOrigins: ['192.168.0.2'],
   
   // Compression
   compress: true,
