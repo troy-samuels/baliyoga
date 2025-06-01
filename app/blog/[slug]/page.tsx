@@ -124,8 +124,8 @@ const getBlogPost = (slug: string) => {
   }
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const { slug } = params
+export default async function BlogPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
   const post = getBlogPost(slug)
 
   return (

@@ -106,7 +106,7 @@ ${
 Problem: ${result.solution.problem}
 
 Steps to Fix:
-${result.solution.steps.map((step) => `  ${step}`).join("\n")}
+${result.solution.steps.map((step: string) => `  ${step}`).join("\n")}
 
 🌐 Quick Links:
   • Policies Dashboard: https://supabase.com/dashboard/project/zioqkkdhvgrkznxyxtik/auth/policies
@@ -155,7 +155,7 @@ ${result.message}`)
 ${result.error}
 
 🔧 MANUAL STEPS:
-${result.manualSteps.map((step) => `  ${step}`).join("\n")}
+${result.manualSteps.map((step: string) => `  ${step}`).join("\n")}
 
 🌐 Direct Link: https://supabase.com/dashboard/project/zioqkkdhvgrkznxyxtik/auth/policies`)
       }

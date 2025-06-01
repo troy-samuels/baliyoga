@@ -376,11 +376,13 @@ const getMockData = (type: string, slug: string) => {
   }
 }
 
-export default async function DetailPage({ params }: { params: { type: string; slug: string } }) {
+export default async function DetailPage({ params }: { params: Promise<{ type: string; slug: string }> }) {
+  const { type, slug } = await params
+  
   // Get the item data
-  const item = await (params.type === "studios"
-    ? getSupabaseStudioBySlug(params.slug)
-    : getSupabaseRetreatBySlug(params.slug))
+  const item = await (type === "studios"
+    ? getSupabaseStudioBySlug(slug)
+    : getSupabaseRetreatBySlug(slug))
 
   if (!item) {
     return (
@@ -399,18 +401,18 @@ export default async function DetailPage({ params }: { params: { type: string; s
   }
 
   // Get similar items
-  const similarItems = await getSimilarItems(params.type === "studios" ? "studio" : "retreat", item)
+  const similarItems = await getSimilarItems(type === "studios" ? "studio" : "retreat", item)
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
       <SiteHeader />
       <div className="mx-auto max-w-7xl px-4 py-4">
         <Link
-          href={`/${params.type}`}
+          href={`/${type}`}
           className="inline-flex items-center text-sm text-[#5d4c42]/70 hover:text-[#5d4c42]"
         >
           <ChevronLeft className="mr-1 h-4 w-4" />
-          Back to {params.type === "studios" ? "Studios" : "Retreats"}
+          Back to {type === "studios" ? "Studios" : "Retreats"}
         </Link>
       </div>
       <div className="mx-auto max-w-7xl px-4 py-6">
@@ -490,7 +492,7 @@ export default async function DetailPage({ params }: { params: { type: string; s
               </span>
               <span className="ml-2 text-[#5d4c42]/60">({item.reviewCount} reviews)</span>
             </div>
-            {params.type === "retreats" && 'duration' in item && item.duration && (
+            {type === "retreats" && 'duration' in item && item.duration && (
               <div className="flex items-center">
                 <Calendar className="mr-1 h-4 w-4" />
                 <span>{item.duration}</span>
@@ -519,7 +521,7 @@ export default async function DetailPage({ params }: { params: { type: string; s
         <div className="mt-8">
           <h2 className="text-2xl font-bold text-[#5d4c42]">Details</h2>
           <div className="mt-4 space-y-6">
-            {params.type === "studios" && (
+            {type === "studios" && (
               <div>
                 <h3 className="text-lg font-semibold text-[#5d4c42]">Pricing</h3>
                 <div className="mt-2 space-y-2">
@@ -543,7 +545,7 @@ export default async function DetailPage({ params }: { params: { type: string; s
               </div>
             )}
 
-            {params.type === "retreats" && (
+            {type === "retreats" && (
               <div>
                 <h3 className="text-lg font-semibold text-[#5d4c42]">Program Details</h3>
                 <div className="mt-2 space-y-2">
@@ -620,7 +622,7 @@ export default async function DetailPage({ params }: { params: { type: string; s
         {similarItems.length > 0 && (
           <div className="mt-12">
             <h2 className="text-2xl font-bold text-[#5d4c42]">
-              Similar {params.type === "studios" ? "Studios" : "Retreats"} in {item.location}
+              Similar {type === "studios" ? "Studios" : "Retreats"} in {item.location}
             </h2>
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {similarItems.map((similarItem) => (
@@ -632,11 +634,11 @@ export default async function DetailPage({ params }: { params: { type: string; s
                   image={similarItem.image}
                   location={similarItem.location}
                   rating={typeof similarItem.rating === 'string' ? parseFloat(similarItem.rating) : similarItem.rating}
-                  type={params.type === "studios" ? "studio" : "retreat"}
+                  type={type === "studios" ? "studio" : "retreat"}
                   styles={similarItem.styles}
                   duration={'duration' in similarItem ? similarItem.duration : undefined}
                   price={
-                    params.type === "studios"
+                    type === "studios"
                       ? (typeof similarItem.price === 'object' && similarItem.price?.dropIn ? similarItem.price.dropIn : undefined)
                       : (typeof similarItem.price === 'string' ? similarItem.price : undefined)
                   }
@@ -647,7 +649,7 @@ export default async function DetailPage({ params }: { params: { type: string; s
         )}
         {/* Tertiary Claim Button at the bottom */}
         <div className="text-center text-[#a39188] mt-12">
-          Are you the owner of this {params.type === "studios" ? "studio" : "retreat"}? {" "}
+          Are you the owner of this {type === "studios" ? "studio" : "retreat"}? {" "}
           <Link
             href={`/claim/${item.slug}`}
             className="underline text-[#5d4c42] hover:text-[#a39188] font-medium"

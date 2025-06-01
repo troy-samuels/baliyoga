@@ -17,12 +17,13 @@ function saveBlogPosts(posts: any[]) {
   fs.writeFileSync(BLOG_DATA_FILE, JSON.stringify(posts, null, 2))
 }
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const postData = await request.json()
     const posts = loadBlogPosts()
 
-    const index = posts.findIndex((post: any) => post.id === params.id)
+    const index = posts.findIndex((post: any) => post.id === id)
     if (index === -1) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 })
     }
@@ -41,10 +42,11 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const posts = loadBlogPosts()
-    const filteredPosts = posts.filter((post: any) => post.id !== params.id)
+    const filteredPosts = posts.filter((post: any) => post.id !== id)
 
     if (posts.length === filteredPosts.length) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 })
