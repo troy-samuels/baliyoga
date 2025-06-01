@@ -23,12 +23,8 @@ export function MobileOptimizedSidebar() {
   const [cities, setCities] = useState<string[]>([])
   const [postcodes, setPostcodes] = useState<string[]>([])
 
-  // Get current filter values from URL
+  // Get current filter values from URL (only location now)
   const selectedLocation = searchParams.get('location') || 'all'
-  const selectedType = searchParams.get('type') || 'all'
-  const ratingFilter = parseFloat(searchParams.get('rating') || '3')
-  const reviewCountFilter = parseInt(searchParams.get('reviews') || '0')
-  const hasImages = searchParams.get('images') === 'true'
 
   // Function to update URL with new filters
   const updateFilters = (updates: Record<string, string | null>) => {
@@ -86,13 +82,8 @@ export function MobileOptimizedSidebar() {
               </button>
             </div>
             <FilterContent
-              ratingFilter={ratingFilter}
-              reviewCountFilter={reviewCountFilter}
-              hasImages={hasImages}
               cities={cities}
-              selectedType={selectedType}
               selectedLocation={selectedLocation}
-              postcodes={postcodes}
               updateFilters={updateFilters}
             />
           </div>
@@ -103,13 +94,8 @@ export function MobileOptimizedSidebar() {
       <div className="hidden lg:sticky lg:top-24 lg:block lg:h-[calc(100vh-6rem)] lg:w-72 lg:overflow-auto">
         <div className="space-y-6 rounded-2xl bg-[#f2e8dc] p-6 shadow-sm">
           <FilterContent
-            ratingFilter={ratingFilter}
-            reviewCountFilter={reviewCountFilter}
-            hasImages={hasImages}
             cities={cities}
-            selectedType={selectedType}
             selectedLocation={selectedLocation}
-            postcodes={postcodes}
             updateFilters={updateFilters}
           />
         </div>
@@ -119,22 +105,13 @@ export function MobileOptimizedSidebar() {
 }
 
 interface FilterContentProps {
-  ratingFilter: number
-  reviewCountFilter: number
-  hasImages: boolean
   cities: string[]
-  selectedType: string
   selectedLocation: string
-  postcodes: string[]
   updateFilters: (updates: Record<string, string | null>) => void
 }
 
 function FilterContent({ 
-  ratingFilter, 
-  reviewCountFilter, 
-  hasImages, 
   cities,
-  selectedType,
   selectedLocation,
   updateFilters
 }: FilterContentProps) {
@@ -157,89 +134,6 @@ function FilterContent({
               />
             </div>
           ))}
-        </div>
-      </div>
-      {/* Type Filter */}
-      <div>
-        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Type</h3>
-        <div className="space-y-3 rounded-xl bg-[#a39188] p-4 text-white">
-          <div className="flex items-center justify-between">
-            <span className="text-sm lg:text-base">All</span>
-            <input
-              type="radio"
-              name="type"
-              value="all"
-              checked={selectedType === "all"}
-              onChange={(e) => updateFilters({ type: e.target.value })}
-              className="h-4 w-4"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-sm lg:text-base">Yoga Studios</span>
-            <input
-              type="radio"
-              name="type"
-              value="studio"
-              checked={selectedType === "studio"}
-              onChange={(e) => updateFilters({ type: e.target.value })}
-              className="h-4 w-4"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-sm lg:text-base">Retreats</span>
-            <input
-              type="radio"
-              name="type"
-              value="retreat"
-              checked={selectedType === "retreat"}
-              onChange={(e) => updateFilters({ type: e.target.value })}
-              className="h-4 w-4"
-            />
-          </div>
-        </div>
-      </div>
-      {/* Rating Filter */}
-      <div>
-        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Quality Rating</h3>
-        <div className="space-y-4 rounded-xl bg-[#a39188] p-4 text-white">
-          <div className="flex items-center justify-between">
-            <span className="text-sm lg:text-base">Rating: {ratingFilter}+</span>
-          </div>
-          <input
-            type="range"
-            min="3"
-            max="5"
-            step="0.5"
-            value={ratingFilter}
-            onChange={(e) => updateFilters({ rating: e.target.value })}
-            className="w-full h-2 bg-white/30 rounded-full appearance-none cursor-pointer"
-          />
-        </div>
-      </div>
-      {/* Minimum Reviews Filter */}
-      <div>
-        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Minimum Reviews</h3>
-        <div className="space-y-4 rounded-xl bg-[#a39188] p-4 text-white">
-          <input
-            type="number"
-            min="0"
-            value={reviewCountFilter}
-            onChange={(e) => updateFilters({ reviews: e.target.value })}
-            className="w-full rounded px-2 py-1 text-[#5d4c42]"
-            placeholder="e.g. 10"
-          />
-        </div>
-      </div>
-      {/* Has Images Filter */}
-      <div>
-        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Has Images</h3>
-        <div className="rounded-xl bg-[#a39188] p-4 text-white flex items-center gap-2">
-          <input 
-            type="checkbox" 
-            checked={hasImages} 
-            onChange={e => updateFilters({ images: e.target.checked ? 'true' : null })} 
-          />
-          <span className="text-sm lg:text-base">Only show listings with images</span>
         </div>
       </div>
       {/* Mobile Apply Button */}
