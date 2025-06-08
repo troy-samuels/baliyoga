@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Star, MapPin } from "lucide-react"
+import { Star, MapPin, Phone, Globe } from "lucide-react"
 import { OptimizedImage } from "./optimized-image"
 import { memo } from "react"
 
@@ -16,6 +16,8 @@ interface CardProps {
   type: "studio" | "retreat"
   duration?: string
   price?: string
+  phone_number?: string
+  website?: string
 }
 
 export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
@@ -29,6 +31,8 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
   type,
   duration,
   price,
+  phone_number,
+  website,
 }: CardProps) {
   const href = `/${type === "studio" ? "studios" : "retreats"}/${slug}`
 
@@ -56,6 +60,23 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
             <MapPin className="mr-1 h-4 w-4 flex-shrink-0" />
             <span className="truncate">{location}, Bali</span>
           </div>
+          
+          {/* Contact Information */}
+          <div className="mt-2 flex items-center gap-3">
+            {phone_number && (
+              <div className="flex items-center text-xs text-[#5d4c42]/70">
+                <Phone className="h-3 w-3 mr-1 flex-shrink-0" />
+                <span className="truncate">{phone_number}</span>
+              </div>
+            )}
+            {website && (
+              <div className="flex items-center text-xs text-[#5d4c42]/70">
+                <Globe className="h-3 w-3 mr-1 flex-shrink-0" />
+                <span className="truncate">Website</span>
+              </div>
+            )}
+          </div>
+          
           <div className="mt-2 flex items-center justify-between">
             <div className="flex flex-wrap gap-1">
               {type === "studio" &&

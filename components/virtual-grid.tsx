@@ -14,26 +14,28 @@ interface VirtualGridProps {
     styles?: string[]
     duration?: string
     price?: string
+    phone_number?: string
+    website?: string
   }>
   type: "studio" | "retreat"
   itemsPerPage?: number
 }
 
-export function VirtualGrid({ items, type, itemsPerPage = 12 }: VirtualGridProps) {
-  const [currentPage, setCurrentPage] = useState(1)
+export function VirtualGrid({ items, type, itemsPerPage = 20 }: VirtualGridProps) {
+  const [page, setPage] = useState(0)
 
   const paginatedItems = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
-    return items.slice(startIndex, endIndex)
-  }, [items, currentPage, itemsPerPage])
+    const start = page * itemsPerPage
+    const end = start + itemsPerPage
+    return items.slice(start, end)
+  }, [items, page, itemsPerPage])
 
   const totalPages = Math.ceil(items.length / itemsPerPage)
+  const hasNextPage = page < totalPages - 1
 
   return (
     <div className="space-y-6">
-      {/* Grid */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {paginatedItems.map((item) => (
           <PerformanceOptimizedCard
             key={item.id}
@@ -47,46 +49,20 @@ export function VirtualGrid({ items, type, itemsPerPage = 12 }: VirtualGridProps
             type={type}
             duration={item.duration}
             price={item.price}
+            phone_number={item.phone_number}
+            website={item.website}
           />
         ))}
       </div>
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center items-center space-x-2">
+      {/* Load More Button */}
+      {hasNextPage && (
+        <div className="text-center">
           <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-4 py-2 rounded-lg bg-[#e6ceb3] text-[#5d4c42] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#d9b99a]"
+            onClick={() => setPage(prev => prev + 1)}
+            className="rounded-xl bg-[#e6ceb3] px-6 py-3 font-medium text-[#5d4c42] transition-colors hover:bg-[#d9c1a0]"
           >
-            Previous
-          </button>
-
-          <div className="flex space-x-1">
-            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-              const pageNum = i + 1
-              return (
-                <button
-                  key={pageNum}
-                  onClick={() => setCurrentPage(pageNum)}
-                  className={`px-3 py-2 rounded-lg ${
-                    currentPage === pageNum
-                      ? "bg-[#a39188] text-white"
-                      : "bg-[#e6ceb3] text-[#5d4c42] hover:bg-[#d9b99a]"
-                  }`}
-                >
-                  {pageNum}
-                </button>
-              )
-            })}
-          </div>
-
-          <button
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 rounded-lg bg-[#e6ceb3] text-[#5d4c42] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#d9b99a]"
-          >
-            Next
+            Load More {type === "studio" ? "Studios" : "Retreats"}
           </button>
         </div>
       )}

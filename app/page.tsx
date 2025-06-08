@@ -51,6 +51,8 @@ export default async function Home() {
                       rating={studio.rating}
                       styles={studio.styles}
                       type="studio"
+                      phone_number={studio.phone_number}
+                      website={studio.website}
                     />
                   ))}
                 </div>
@@ -79,6 +81,8 @@ export default async function Home() {
                       type="retreat"
                       duration={retreat.duration}
                       price={retreat.price}
+                      phone_number={retreat.phone_number}
+                      website={retreat.website}
                     />
                   ))}
                 </div>

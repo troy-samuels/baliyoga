@@ -119,6 +119,8 @@ export default async function RetreatsPage({
                       type="retreat"
                       duration={retreat.duration}
                       price={retreat.price}
+                      phone_number={retreat.phone_number}
+                      website={retreat.website}
                     />
                   ))
                 ) : (

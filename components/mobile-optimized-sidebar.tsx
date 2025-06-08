@@ -119,7 +119,7 @@ function FilterContent({
     <div className="space-y-6">
       {/* Location/Area Filter */}
       <div>
-        <h3 className="mb-3 text-base font-cormorant font-semibold text-[#5d4c42] lg:text-lg">Area</h3>
+        <h3 className="mb-3 text-base font-raleway font-semibold text-[#5d4c42] lg:text-lg">Area</h3>
         <div className="space-y-3 rounded-xl bg-[#a39188] p-4 text-white">
           {LOCATION_GROUPS.map((group) => (
             <div key={group.value} className="flex items-center justify-between">

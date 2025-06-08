@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { MapPin, Calendar } from "lucide-react"
+import { MapPin, Calendar, Phone, Globe } from "lucide-react"
 import { OptimizedImage } from "./optimized-image"
 import { memo } from "react"
 
@@ -16,6 +16,8 @@ interface MobileCardProps {
   type: "studio" | "retreat"
   duration?: string
   price?: string
+  phone_number?: string
+  website?: string
 }
 
 export const MobileOptimizedCard = memo(function MobileOptimizedCard({
@@ -29,6 +31,8 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
   type,
   duration,
   price,
+  phone_number,
+  website,
 }: MobileCardProps) {
   const href = `/${type === "studio" ? "studios" : "retreats"}/${slug}`
 
@@ -51,6 +55,22 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
           <div className="mt-1 flex items-center text-xs text-[#5d4c42] sm:text-sm">
             <MapPin className="mr-1 h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4" />
             <span className="truncate">{location}, Bali</span>
+          </div>
+
+          {/* Contact Information */}
+          <div className="mt-1 flex items-center gap-2 sm:gap-3">
+            {phone_number && (
+              <div className="flex items-center text-xs text-[#5d4c42]/70">
+                <Phone className="h-3 w-3 mr-1 flex-shrink-0" />
+                <span className="truncate text-xs">{phone_number}</span>
+              </div>
+            )}
+            {website && (
+              <div className="flex items-center text-xs text-[#5d4c42]/70">
+                <Globe className="h-3 w-3 mr-1 flex-shrink-0" />
+                <span className="truncate text-xs">Website</span>
+              </div>
+            )}
           </div>
 
           <div className="mt-2 flex items-center justify-between">

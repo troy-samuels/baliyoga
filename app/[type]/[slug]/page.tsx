@@ -642,6 +642,8 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                       ? (typeof similarItem.price === 'object' && similarItem.price?.dropIn ? similarItem.price.dropIn : undefined)
                       : (typeof similarItem.price === 'string' ? similarItem.price : undefined)
                   }
+                  phone_number={similarItem.phone_number}
+                  website={similarItem.website}
                 />
               ))}
             </div>

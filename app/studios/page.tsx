@@ -121,6 +121,8 @@ export default async function StudiosPage({
                       rating={studio.rating}
                       styles={studio.styles}
                       type="studio"
+                      phone_number={studio.phone_number}
+                      website={studio.website}
                     />
                   ))
                 ) : (
