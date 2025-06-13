@@ -58,20 +58,16 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
           </div>
 
           {/* Contact Information */}
-          <div className="mt-1 flex items-center gap-2 sm:gap-3">
-            {phone_number && (
-              <div className="flex items-center text-xs text-[#5d4c42]/70">
-                <Phone className="h-3 w-3 mr-1 flex-shrink-0" />
-                <span className="truncate text-xs">{phone_number}</span>
-              </div>
-            )}
-            {website && (
-              <div className="flex items-center text-xs text-[#5d4c42]/70">
-                <Globe className="h-3 w-3 mr-1 flex-shrink-0" />
-                <span className="truncate text-xs">Website</span>
-              </div>
-            )}
-          </div>
+          {(phone_number || website) && (
+            <div className="mt-2 flex items-center gap-2 sm:gap-3 text-xs text-[#5d4c42] sm:text-sm">
+              {phone_number && (
+                <Phone className="h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4" />
+              )}
+              {website && (
+                <Globe className="h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4" />
+              )}
+            </div>
+          )}
 
           <div className="mt-2 flex items-center justify-between">
             <div className="flex flex-wrap gap-1">
