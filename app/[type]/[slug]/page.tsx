@@ -561,36 +561,64 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
               {/* Static Map */}
               <div className="mt-4">
                 {item.location_details?.coordinates?.lat && item.location_details?.coordinates?.lng ? (
+                  // Use coordinates if available
                   <img
-                    src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+ff0000(${item.location_details.coordinates.lng},${item.location_details.coordinates.lat})/${item.location_details.coordinates.lng},${item.location_details.coordinates.lat},14/400x200?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndjN6bWl2bWgifQ.rJcFIG214AriISLbB6B5aw`}
-                    alt="Map location"
-                    className="w-full rounded-lg border border-[#e6ceb3]"
-                    width={400}
-                    height={200}
-                  />
-                ) : item.location_details?.address ? (
-                  <img
-                    src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+ff0000/${encodeURIComponent(item.location_details.address)}/14/400x200?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndjN6bWl2bWgifQ.rJcFIG214AriISLbB6B5aw`}
+                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${item.location_details.coordinates.lat},${item.location_details.coordinates.lng}&zoom=15&size=400x200&markers=color:red%7C${item.location_details.coordinates.lat},${item.location_details.coordinates.lng}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'DEMO_KEY'}`}
                     alt="Map location"
                     className="w-full rounded-lg border border-[#e6ceb3]"
                     width={400}
                     height={200}
                     onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                      // If the map fails to load, show fallback
+                      const target = e.currentTarget as HTMLImageElement;
+                      target.style.display = 'none';
+                      const fallback = target.nextElementSibling as HTMLElement;
+                      if (fallback) {
+                        fallback.classList.remove('hidden');
+                      }
                     }}
                   />
-                ) : null}
-                {(!item.location_details?.coordinates?.lat || !item.location_details?.coordinates?.lng) && !item.location_details?.address && (
+                ) : item.location_details?.address ? (
+                  // Use address if coordinates not available
+                  <img
+                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(item.location_details.address + ', Bali, Indonesia')}&zoom=15&size=400x200&markers=color:red%7C${encodeURIComponent(item.location_details.address + ', Bali, Indonesia')}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'DEMO_KEY'}`}
+                    alt="Map location"
+                    className="w-full rounded-lg border border-[#e6ceb3]"
+                    width={400}
+                    height={200}
+                    onError={(e) => {
+                      // If the map fails to load, show fallback
+                      const target = e.currentTarget as HTMLImageElement;
+                      target.style.display = 'none';
+                      const fallback = target.nextElementSibling as HTMLElement;
+                      if (fallback) {
+                        fallback.classList.remove('hidden');
+                      }
+                    }}
+                  />
+                ) : (
+                  // No location data available
                   <div className="w-full h-[200px] flex items-center justify-center bg-[#e6ceb3] rounded-lg text-[#5d4c42]/60">
                     <MapPin className="w-6 h-6 mr-2" />
-                    Map not available
+                    <div className="text-center">
+                      <div>Map not available</div>
+                      <div className="text-xs mt-1">No location data</div>
+                    </div>
                   </div>
                 )}
-                {item.location_details?.address && (!item.location_details?.coordinates?.lat || !item.location_details?.coordinates?.lng) && (
+                
+                {/* Fallback for failed maps */}
+                {(item.location_details?.coordinates?.lat || item.location_details?.address) && (
                   <div className="w-full h-[200px] flex items-center justify-center bg-[#e6ceb3] rounded-lg text-[#5d4c42]/60 hidden">
                     <MapPin className="w-6 h-6 mr-2" />
-                    Map not available
+                    <div className="text-center">
+                      <div>Map not available</div>
+                      <div className="text-xs mt-1">
+                        {!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY 
+                          ? 'Google Maps API key required' 
+                          : 'Unable to load map'}
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>

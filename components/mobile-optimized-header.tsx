@@ -28,6 +28,9 @@ export function MobileOptimizedHeader() {
           <Link href="/blog" className="px-3 py-1 text-sm text-white hover:text-[#e6ceb3] md:px-4 md:text-base">
             Blog
           </Link>
+          <Link href="/become-a-partner" className="px-3 py-1 text-sm text-white hover:text-[#e6ceb3] md:px-4 md:text-base">
+            Become a Partner
+          </Link>
           <Link href="/contact" className="px-3 py-1 text-sm text-white hover:text-[#e6ceb3] md:px-4 md:text-base">
             Contact
           </Link>
@@ -67,6 +70,13 @@ export function MobileOptimizedHeader() {
               onClick={() => setIsMenuOpen(false)}
             >
               Blog
+            </Link>
+            <Link
+              href="/become-a-partner"
+              className="rounded-lg px-4 py-3 text-[#5d4c42] hover:bg-[#e6ceb3]"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Become a Partner
             </Link>
             <Link
               href="/contact"

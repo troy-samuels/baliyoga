@@ -7,6 +7,7 @@ import { MobileOptimizedCard } from "@/components/mobile-optimized-card"
 import { LazySection } from "@/components/lazy-section"
 import { filterRetreats, getLocationDisplayName } from "@/lib/search-utils"
 import { MobileOptimizedSidebar } from "@/components/mobile-optimized-sidebar"
+import { FunctionalSearchBar } from "@/components/functional-search-bar"
 
 export default async function RetreatsPage({
   searchParams,
@@ -67,20 +68,10 @@ export default async function RetreatsPage({
 
           {/* Mobile-Optimized Search Bar */}
           <div className="mx-auto mt-4 max-w-3xl sm:mt-6">
-            <div className="flex rounded-2xl bg-white p-2 shadow-md sm:rounded-full">
-              <div className="flex flex-1 items-center rounded-xl bg-gray-100 px-4 py-2 sm:rounded-full">
-                <Search className="mr-2 h-5 w-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search retreats by name, duration, or location..."
-                  className="w-full bg-transparent text-sm focus:outline-none sm:text-base"
-                  defaultValue={query || ""}
-                />
-              </div>
-              <button className="ml-2 rounded-xl bg-[#a39188] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#8a7b73] sm:rounded-full sm:px-6">
-                Search
-              </button>
-            </div>
+            <FunctionalSearchBar 
+              placeholder="Search retreats by name, duration, or location..."
+              type="retreat"
+            />
           </div>
         </div>
       </div>
