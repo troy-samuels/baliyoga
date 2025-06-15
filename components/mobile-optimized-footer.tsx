@@ -19,6 +19,7 @@ export function MobileOptimizedFooter() {
               {[
                 { href: "/about", label: "About Us" },
                 { href: "/contact", label: "Contact" },
+                { href: "/wishlist", label: "My Wishlist" },
                 { href: "/become-a-partner", label: "Become a Partner" },
                 { href: "/blog", label: "Blog" },
                 { href: "/faq", label: "FAQ" },

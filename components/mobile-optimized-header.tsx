@@ -2,10 +2,12 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Heart } from "lucide-react"
+import { useWishlist } from "@/contexts/wishlist-context"
 
 export function MobileOptimizedHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { wishlistCount } = useWishlist()
 
   return (
     <nav className="sticky top-0 z-50 bg-[#f9f3e9] px-4 py-4 shadow-sm md:px-6">
@@ -30,14 +32,31 @@ export function MobileOptimizedHeader() {
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="rounded-lg bg-[#e6ceb3] p-2 text-[#5d4c42] md:hidden"
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        {/* Right Side - Wishlist and Mobile Menu */}
+        <div className="flex items-center gap-3">
+          {/* Wishlist Icon */}
+          <Link 
+            href="/wishlist" 
+            className="relative rounded-lg bg-[#e6ceb3] p-2 text-[#5d4c42] transition-colors hover:bg-[#a39188] hover:text-white"
+            aria-label={`Wishlist (${wishlistCount} items)`}
+          >
+            <Heart className="h-5 w-5" />
+            {wishlistCount > 0 && (
+              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                {wishlistCount > 9 ? '9+' : wishlistCount}
+              </span>
+            )}
+          </Link>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="rounded-lg bg-[#e6ceb3] p-2 text-[#5d4c42] md:hidden"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -64,6 +83,18 @@ export function MobileOptimizedHeader() {
               onClick={() => setIsMenuOpen(false)}
             >
               Become a Partner
+            </Link>
+            <Link
+              href="/wishlist"
+              className="rounded-lg px-4 py-3 text-[#5d4c42] hover:bg-[#e6ceb3] flex items-center justify-between"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <span>My Wishlist</span>
+              {wishlistCount > 0 && (
+                <span className="rounded-full bg-red-500 px-2 py-1 text-xs font-bold text-white">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
           </div>
         </div>

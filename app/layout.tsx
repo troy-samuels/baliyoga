@@ -2,6 +2,7 @@ import type React from "react"
 import { Cormorant_Garamond, Raleway } from "next/font/google"
 import "./globals.css"
 import type { Metadata } from "next"
+import { WishlistProvider } from "@/contexts/wishlist-context"
 
 // Initialize the Cormorant Garamond font for headings
 const cormorantGaramond = Cormorant_Garamond({
@@ -32,7 +33,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${cormorantGaramond.variable} ${raleway.variable} font-raleway`}>{children}</body>
+      <body className={`${cormorantGaramond.variable} ${raleway.variable} font-raleway`}>
+        <WishlistProvider>
+          {children}
+        </WishlistProvider>
+      </body>
     </html>
   )
 }

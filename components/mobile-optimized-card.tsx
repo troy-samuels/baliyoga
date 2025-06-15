@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { MapPin, Calendar, Phone, Globe } from "lucide-react"
 import { OptimizedImage } from "./optimized-image"
+import { WishlistHeart } from "./wishlist-heart"
 import { memo } from "react"
 
 interface MobileCardProps {
@@ -38,11 +39,32 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
 }: MobileCardProps) {
   const href = `/${type === "studio" ? "studios" : "retreats"}/${slug}`
 
+  const wishlistItem = {
+    id,
+    name,
+    slug,
+    image,
+    location,
+    rating,
+    type,
+    styles,
+    duration,
+    price,
+    phone_number,
+    website,
+  }
+
   return (
     <div className={`group overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-black/10 hover:scale-[1.02] relative ${featured ? 'featured-card' : ''}`}>
       {featured && (
-        <span className="absolute top-2 right-2 z-20 rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-lg animate-pop">Featured</span>
+        <span className="absolute top-2 left-2 z-20 rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-lg animate-pop">Featured</span>
       )}
+      
+      {/* Wishlist Heart - positioned in top-right corner */}
+      <div className="absolute top-2 right-2 z-20">
+        <WishlistHeart item={wishlistItem} />
+      </div>
+
       <Link href={href} className="block relative z-10">
         <div className="relative h-40 w-full overflow-hidden sm:h-48">
           <OptimizedImage
