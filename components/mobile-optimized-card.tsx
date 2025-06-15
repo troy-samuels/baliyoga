@@ -4,6 +4,7 @@ import Link from "next/link"
 import { MapPin, Calendar, Phone, Globe } from "lucide-react"
 import { OptimizedImage } from "./optimized-image"
 import { WishlistHeart } from "./wishlist-heart"
+import { PopularityBadge } from "./popularity-badge"
 import { memo } from "react"
 
 interface MobileCardProps {
@@ -59,6 +60,11 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
       {featured && (
         <span className="absolute top-2 left-2 z-20 rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-lg animate-pop">Featured</span>
       )}
+      
+      {/* Popularity Badge - positioned below featured badge if present */}
+      <div className={`absolute ${featured ? 'top-12' : 'top-2'} left-2 z-20`}>
+        <PopularityBadge itemId={id} />
+      </div>
       
       {/* Wishlist Heart - positioned in top-right corner */}
       <div className="absolute top-2 right-2 z-20">

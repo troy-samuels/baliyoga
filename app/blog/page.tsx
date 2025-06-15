@@ -6,13 +6,27 @@ import { SiteHeader } from "@/components/site-header"
 import fs from "fs"
 import path from "path"
 
+// Blog post interface
+interface BlogPost {
+  id: string
+  title: string
+  slug: string
+  excerpt: string
+  featuredImage?: string
+  author: string
+  publishDate: string
+  readTime: string
+  categories?: string[]
+  status?: string
+}
+
 // Load blog posts from JSON file
-function loadBlogPosts() {
+function loadBlogPosts(): BlogPost[] {
   try {
     const filePath = path.join(process.cwd(), "data", "blog-posts.json")
     if (fs.existsSync(filePath)) {
       const data = fs.readFileSync(filePath, "utf8")
-      return JSON.parse(data).filter((post: any) => post.status === "published")
+      return JSON.parse(data).filter((post: BlogPost) => post.status === "published")
     }
   } catch (error) {
     console.error("Error loading blog posts:", error)

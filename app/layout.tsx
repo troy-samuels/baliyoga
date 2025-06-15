@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Raleway } from "next/font/google"
 import "./globals.css"
 import type { Metadata } from "next"
 import { WishlistProvider } from "@/contexts/wishlist-context"
+import { SecurityInitializer } from "@/components/security-initializer"
 
 // Initialize the Cormorant Garamond font for headings
 const cormorantGaramond = Cormorant_Garamond({
@@ -34,6 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${cormorantGaramond.variable} ${raleway.variable} font-raleway`}>
+        <SecurityInitializer />
         <WishlistProvider>
           {children}
         </WishlistProvider>

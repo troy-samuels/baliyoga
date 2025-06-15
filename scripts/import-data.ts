@@ -2,6 +2,25 @@ import fs from "fs"
 import path from "path"
 import { ensureDataDir, type Studio, type Retreat } from "../lib/data-utils"
 
+// Interface for the raw JSON data items
+interface RawDataItem {
+  name: string
+  category_name?: string
+  city?: string
+  review_score?: number
+  review_count?: number
+  images?: string[]
+  price?: string
+  description?: string
+  address?: string
+  phone_number?: string
+  website?: string
+  opening_hours?: Array<{
+    day: string
+    hours: string
+  }>
+}
+
 // Function to process the JSON data and save it to the data directory
 async function importBaliYogaData() {
   try {
@@ -9,7 +28,7 @@ async function importBaliYogaData() {
     ensureDataDir()
 
     // Read the JSON file - we'll use the raw JSON data directly
-    const jsonData = [
+    const jsonData: RawDataItem[] = [
       // The entire JSON content would be pasted here
       // For brevity, I'm not including the full content in this code block
     ]
@@ -21,7 +40,7 @@ async function importBaliYogaData() {
     const retreats: Retreat[] = []
 
     // Process each entry
-    jsonData.forEach((item: any, index: number) => {
+    jsonData.forEach((item: RawDataItem, index: number) => {
       // Determine if it's a studio or retreat based on category_name
       const categoryName = (item.category_name || "").toLowerCase()
 
@@ -54,7 +73,7 @@ async function importBaliYogaData() {
       // Format opening hours for display
       const formattedHours =
         item.opening_hours && item.opening_hours.length > 0
-          ? item.opening_hours.map((hour: any) => ({
+          ? item.opening_hours.map((hour) => ({
               day: hour.day,
               hours: hour.hours,
             }))

@@ -3,11 +3,12 @@ import { Search } from "lucide-react"
 import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 import { getSupabaseRetreats } from "@/lib/supabase-data-utils"
-import { MobileOptimizedCard } from "@/components/mobile-optimized-card"
 import { LazySection } from "@/components/lazy-section"
 import { filterRetreats, getLocationDisplayName } from "@/lib/search-utils"
 import { MobileOptimizedSidebar } from "@/components/mobile-optimized-sidebar"
 import { FunctionalSearchBar } from "@/components/functional-search-bar"
+import { PopularitySortedGrid } from "@/components/popularity-sorted-grid"
+import { PopularityDemo } from "@/components/popularity-demo"
 
 export default async function RetreatsPage({
   searchParams,
@@ -54,6 +55,9 @@ export default async function RetreatsPage({
           <p className="mt-2 text-center text-base text-[#5d4c42]/80 sm:text-lg">
             Immerse yourself in transformative yoga experiences
           </p>
+          <p className="mt-1 text-center text-sm text-[#5d4c42]/60">
+            Sorted by popularity and rating
+          </p>
 
           {/* Search Results Info */}
           {hasFilters && (
@@ -94,43 +98,18 @@ export default async function RetreatsPage({
               </p>
             </div>
 
-            {/* Retreats Grid */}
+            {/* Retreats Grid with Popularity Sorting */}
             <LazySection>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-                {filteredRetreats.length > 0 ? (
-                  filteredRetreats.map((retreat) => (
-                    <MobileOptimizedCard
-                      key={retreat.id}
-                      id={retreat.id}
-                      name={retreat.name}
-                      slug={retreat.slug}
-                      image={retreat.image}
-                      location={retreat.location}
-                      rating={retreat.rating}
-                      type="retreat"
-                      duration={retreat.duration}
-                      price={retreat.price}
-                      phone_number={retreat.phone_number}
-                      website={retreat.website}
-                    />
-                  ))
-                ) : (
-                  <div className="col-span-full py-8 text-center text-[#5d4c42]">
-                    <p className="text-lg font-medium">No retreats found</p>
-                    <p className="mt-2 text-sm text-[#5d4c42]/70">
-                      {hasFilters
-                        ? "Try adjusting your search criteria or browse all retreats."
-                        : "Please check back later for new listings."}
-                    </p>
-                  </div>
-                )}
-              </div>
+              <PopularitySortedGrid items={filteredRetreats} type="retreat" />
             </LazySection>
           </div>
         </div>
       </div>
 
       <MobileOptimizedFooter />
+      
+      {/* Popularity Demo Component */}
+      <PopularityDemo />
     </div>
   )
 }

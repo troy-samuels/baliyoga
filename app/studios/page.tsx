@@ -3,11 +3,12 @@ import { Search } from "lucide-react"
 import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 import { getSupabaseStudios } from "@/lib/supabase-data-utils"
-import { MobileOptimizedCard } from "@/components/mobile-optimized-card"
 import { LazySection } from "@/components/lazy-section"
 import { filterStudios, getLocationDisplayName } from "@/lib/search-utils"
 import { MobileOptimizedSidebar } from "@/components/mobile-optimized-sidebar"
 import { FunctionalSearchBar } from "@/components/functional-search-bar"
+import { PopularitySortedGrid } from "@/components/popularity-sorted-grid"
+import { PopularityDemo } from "@/components/popularity-demo"
 
 /**
  * @param {{ searchParams: Record<string, string | string[] | undefined> }} props
@@ -57,6 +58,9 @@ export default async function StudiosPage({
           <p className="mt-2 text-center text-base text-[#5d4c42]/80 sm:text-lg">
             Find the perfect studio for your practice
           </p>
+          <p className="mt-1 text-center text-sm text-[#5d4c42]/60">
+            Sorted by popularity and rating
+          </p>
 
           {/* Search Results Info */}
           {hasFilters && (
@@ -97,42 +101,18 @@ export default async function StudiosPage({
               </p>
             </div>
 
-            {/* Studios Grid */}
+            {/* Studios Grid with Popularity Sorting */}
             <LazySection>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-                {filteredStudios.length > 0 ? (
-                  filteredStudios.map((studio) => (
-                    <MobileOptimizedCard
-                      key={studio.id}
-                      id={studio.id}
-                      name={studio.name}
-                      slug={studio.slug}
-                      image={studio.image}
-                      location={studio.location}
-                      rating={studio.rating}
-                      styles={studio.styles}
-                      type="studio"
-                      phone_number={studio.phone_number}
-                      website={studio.website}
-                    />
-                  ))
-                ) : (
-                  <div className="col-span-full py-8 text-center text-[#5d4c42]">
-                    <p className="text-lg font-medium">No studios found</p>
-                    <p className="mt-2 text-sm text-[#5d4c42]/70">
-                      {hasFilters
-                        ? "Try adjusting your search criteria or browse all studios."
-                        : "Please check back later for new listings."}
-                    </p>
-                  </div>
-                )}
-              </div>
+              <PopularitySortedGrid items={filteredStudios} type="studio" />
             </LazySection>
           </div>
         </div>
       </div>
 
       <MobileOptimizedFooter />
+      
+      {/* Popularity Demo Component */}
+      <PopularityDemo />
     </div>
   )
 }

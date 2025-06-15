@@ -1,22 +1,12 @@
 import { createClient } from "@supabase/supabase-js"
 import { config, validateEnvironment } from "./config"
 
-// Create a single supabase client for the browser
-const createBrowserClient = () => {
+// Create a browser client
+export const getSupabaseBrowserClient = () => {
   // Validate environment variables first
   validateEnvironment()
-
+  
   return createClient(config.supabase.url, config.supabase.anonKey)
-}
-
-// Create a singleton instance for client-side
-let browserClient: ReturnType<typeof createClient> | null = null
-
-export const getSupabaseBrowserClient = () => {
-  if (!browserClient) {
-    browserClient = createBrowserClient()
-  }
-  return browserClient
 }
 
 // Create a server client (to be used in Server Components and Server Actions)

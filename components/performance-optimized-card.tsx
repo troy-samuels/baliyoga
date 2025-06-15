@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Star, MapPin, Phone, Globe } from "lucide-react"
 import { OptimizedImage } from "./optimized-image"
 import { WishlistHeart } from "./wishlist-heart"
+import { PopularityBadge } from "./popularity-badge"
 import { memo } from "react"
 
 interface CardProps {
@@ -54,6 +55,11 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
 
   return (
     <div className="group overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-black/10 hover:scale-[1.02] relative">
+      {/* Popularity Badge - positioned in top-left corner */}
+      <div className="absolute top-2 left-2 z-20">
+        <PopularityBadge itemId={id} />
+      </div>
+      
       {/* Wishlist Heart - positioned in top-right corner */}
       <div className="absolute top-2 right-2 z-20">
         <WishlistHeart item={wishlistItem} />
