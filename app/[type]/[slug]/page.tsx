@@ -416,50 +416,8 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
         </Link>
       </div>
       <div className="mx-auto max-w-7xl px-4 py-6">
-        {/* Image Gallery */}
-        <div className="relative mb-8">
-          <div className="grid grid-cols-1 gap-2 md:grid-cols-4 md:grid-rows-2">
-            {/* Main large image */}
-            {item.images && item.images.length > 0 && (
-              <div className="relative overflow-hidden rounded-xl md:col-span-2 md:row-span-2">
-                <Image
-                  src={item.images[0] || "/placeholder.svg?height=600&width=800&text=No+Image"}
-                  alt={`${item.name} - Main Image`}
-                  width={800}
-                  height={600}
-                  className="h-[300px] md:h-[400px] w-full object-cover"
-                />
-              </div>
-            )}
-            
-            {/* Smaller images in 2x2 grid */}
-            {item.images && item.images.slice(1, 5).map((image, index) => (
-              <div
-                key={index + 1}
-                className="relative overflow-hidden rounded-xl"
-              >
-                <Image
-                  src={image || "/placeholder.svg?height=300&width=400&text=No+Image"}
-                  alt={`${item.name} - Image ${index + 2}`}
-                  width={400}
-                  height={300}
-                  className="h-[195px] w-full object-cover"
-                />
-                {/* Show +X more photos overlay on the last visible image if there are more images */}
-                {index === 3 && item.images && item.images.length > 5 && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-xl">
-                    <span className="text-white font-semibold text-lg">
-                      +{item.images.length - 5} photos
-                    </span>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Header */}
-        <div className="space-y-4">
+        <div className="space-y-4 mb-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold text-[#5d4c42] md:text-4xl">{item.name}</h1>
@@ -507,6 +465,136 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                   {style}
                 </span>
               ))}
+          </div>
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          {/* Left Column - Images */}
+          <div className="md:col-span-2">
+            {item.images && item.images.length > 1 ? (
+              <div className="grid grid-cols-1 gap-2 md:grid-cols-4 md:grid-rows-2">
+                {/* Main large image */}
+                <div className="relative overflow-hidden rounded-xl md:col-span-2 md:row-span-2">
+                  <Image
+                    src={item.images[0] || "/placeholder.svg?height=600&width=800&text=No+Image"}
+                    alt={`${item.name} - Main Image`}
+                    width={800}
+                    height={600}
+                    className="h-[300px] md:h-[400px] w-full object-cover"
+                  />
+                </div>
+                {/* Additional smaller images */}
+                {item.images.slice(1, 5).map((image, index) => (
+                  <div
+                    key={index + 1}
+                    className="relative overflow-hidden rounded-xl"
+                  >
+                    <Image
+                      src={image || "/placeholder.svg?height=300&width=400&text=No+Image"}
+                      alt={`${item.name} - Image ${index + 2}`}
+                      width={400}
+                      height={300}
+                      className="h-[195px] w-full object-cover"
+                    />
+                    {/* Show +X more photos overlay on the last visible image if there are more images */}
+                    {index === 3 && item.images && item.images.length > 5 && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-xl">
+                        <span className="text-white font-semibold text-lg">
+                          +{item.images.length - 5} photos
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="relative overflow-hidden rounded-xl">
+                <Image
+                  src={item.image || "/placeholder.svg?height=600&width=800&text=No+Image"}
+                  alt={`${item.name} - Main Image`}
+                  width={800}
+                  height={600}
+                  className="h-[300px] md:h-[400px] w-full object-cover"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Right Column - Contact Information */}
+          <div className="md:col-span-1">
+            <div className="bg-white rounded-xl shadow-lg p-6 sticky top-4 border border-[#e6ceb3]">
+              <h2 className="text-xl font-bold text-[#5d4c42] mb-4">Contact Information</h2>
+              {item.phone_number ? (
+                <a href={`tel:${item.phone_number}`} className="block w-full mb-3 rounded-lg bg-[#5d4c42] py-3 text-center text-white font-semibold hover:bg-[#a39188] transition">
+                  <Phone className="inline-block w-4 h-4 mr-2" />
+                  Call Now
+                </a>
+              ) : (
+                <div className="block w-full mb-3 rounded-lg bg-[#e6ceb3] py-3 text-center text-[#5d4c42] font-semibold">
+                  <Phone className="inline-block w-4 h-4 mr-2" />
+                  Phone not available
+                </div>
+              )}
+              {item.website ? (
+                <a href={item.website} target="_blank" rel="noopener noreferrer" className="block w-full mb-4 rounded-lg border-2 border-[#5d4c42] py-3 text-center text-[#5d4c42] font-semibold hover:bg-[#e6ceb3] transition">
+                  <Globe className="inline-block w-4 h-4 mr-2" />
+                  Visit Website
+                </a>
+              ) : (
+                <div className="block w-full mb-4 rounded-lg border-2 border-[#e6ceb3] py-3 text-center text-[#5d4c42]/60 font-semibold">
+                  <Globe className="inline-block w-4 h-4 mr-2" />
+                  Website not available
+                </div>
+              )}
+              
+              {/* Address */}
+              <div className="mb-4 p-3 bg-[#f9f9f6] rounded-lg">
+                <div className="flex items-start gap-2">
+                  <MapPin className="mt-1 h-4 w-4 text-[#5d4c42] flex-shrink-0" />
+                  <span className="text-[#5d4c42]/80 text-sm">
+                    {item.location_details?.address || "Address not available"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Static Map */}
+              <div className="mt-4">
+                {item.location_details?.coordinates?.lat && item.location_details?.coordinates?.lng ? (
+                  <img
+                    src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+ff0000(${item.location_details.coordinates.lng},${item.location_details.coordinates.lat})/${item.location_details.coordinates.lng},${item.location_details.coordinates.lat},14/400x200?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndjN6bWl2bWgifQ.rJcFIG214AriISLbB6B5aw`}
+                    alt="Map location"
+                    className="w-full rounded-lg border border-[#e6ceb3]"
+                    width={400}
+                    height={200}
+                  />
+                ) : item.location_details?.address ? (
+                  <img
+                    src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+ff0000/${encodeURIComponent(item.location_details.address)}/14/400x200?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndjN6bWl2bWgifQ.rJcFIG214AriISLbB6B5aw`}
+                    alt="Map location"
+                    className="w-full rounded-lg border border-[#e6ceb3]"
+                    width={400}
+                    height={200}
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                    }}
+                  />
+                ) : null}
+                {(!item.location_details?.coordinates?.lat || !item.location_details?.coordinates?.lng) && !item.location_details?.address && (
+                  <div className="w-full h-[200px] flex items-center justify-center bg-[#e6ceb3] rounded-lg text-[#5d4c42]/60">
+                    <MapPin className="w-6 h-6 mr-2" />
+                    Map not available
+                  </div>
+                )}
+                {item.location_details?.address && (!item.location_details?.coordinates?.lat || !item.location_details?.coordinates?.lng) && (
+                  <div className="w-full h-[200px] flex items-center justify-center bg-[#e6ceb3] rounded-lg text-[#5d4c42]/60 hidden">
+                    <MapPin className="w-6 h-6 mr-2" />
+                    Map not available
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -579,42 +667,6 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                 </div>
               </div>
             )}
-          </div>
-        </div>
-
-        {/* Contact Information */}
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold text-[#5d4c42]">Contact Information</h2>
-          <div className="mt-4 space-y-4">
-            {item.location_details?.address && (
-              <div className="flex items-start gap-2">
-                <MapPin className="mt-1 h-5 w-5 text-[#5d4c42]" />
-                <span className="text-[#5d4c42]/80">{item.location_details.address}</span>
-              </div>
-            )}
-            {item.phone_number && (
-              <div className="flex items-center gap-2">
-                <Phone className="h-5 w-5 text-[#5d4c42]" />
-                <span className="text-[#5d4c42]/80">{item.phone_number}</span>
-              </div>
-            )}
-            {item.website && (
-              <div className="flex items-center gap-2">
-                <Globe className="h-5 w-5 text-[#5d4c42]" />
-                <a href={item.website} target="_blank" rel="noopener noreferrer" className="text-[#a39188] hover:text-[#8a7b73]">
-                  {item.website}
-                </a>
-              </div>
-            )}
-            {/* Secondary Claim Button */}
-            <div className="mt-4">
-              <Link
-                href={`/claim/${item.slug}`}
-                className="w-full block rounded-xl bg-[#f2e8dc] px-4 py-2 text-[#5d4c42] font-medium shadow hover:bg-[#e6ceb3] transition text-center"
-              >
-                Claim this listing
-              </Link>
-            </div>
           </div>
         </div>
 

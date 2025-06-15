@@ -18,6 +18,7 @@ interface MobileCardProps {
   price?: string
   phone_number?: string
   website?: string
+  featured?: boolean
 }
 
 export const MobileOptimizedCard = memo(function MobileOptimizedCard({
@@ -33,12 +34,16 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
   price,
   phone_number,
   website,
+  featured = false,
 }: MobileCardProps) {
   const href = `/${type === "studio" ? "studios" : "retreats"}/${slug}`
 
   return (
-    <div className="group overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-black/10 hover:scale-[1.02]">
-      <Link href={href} className="block">
+    <div className={`group overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-black/10 hover:scale-[1.02] relative ${featured ? 'featured-card' : ''}`}>
+      {featured && (
+        <span className="absolute top-2 right-2 z-20 rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-lg animate-pop">Featured</span>
+      )}
+      <Link href={href} className="block relative z-10">
         <div className="relative h-40 w-full overflow-hidden sm:h-48">
           <OptimizedImage
             src={image || `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(name)}`}
