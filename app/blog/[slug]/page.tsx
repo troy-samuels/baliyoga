@@ -1,9 +1,12 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, Calendar, Clock, Facebook, Linkedin, Share2, Tag, Twitter, User } from "lucide-react"
+import { notFound } from "next/navigation"
+import { ChevronLeft } from "lucide-react"
+import DOMPurify from 'isomorphic-dompurify'
 
 import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
+import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 
 // This would normally come from a CMS or database
 const getBlogPost = (slug: string) => {
@@ -130,7 +133,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
-      <SiteHeader />
+      <MobileOptimizedHeader />
 
       <article className="mx-auto max-w-4xl px-4 py-8 md:px-6">
         {/* Back Button */}
@@ -185,7 +188,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
 
         {/* Article Content */}
         <div className="prose prose-lg max-w-none prose-headings:text-[#5d4c42] prose-p:text-[#5d4c42]/90 prose-a:text-[#a39188] prose-a:no-underline prose-a:hover:text-[#5d4c42] prose-a:hover:underline">
-          <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }} />
         </div>
 
         {/* Tags */}

@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Trash2, Edit, Eye, Plus } from "lucide-react"
+import { ImageUpload } from "@/components/ui/image-upload"
 
 interface BlogPost {
   id: string
@@ -486,13 +487,10 @@ function BlogPostForm({ post, onClose }: { post: BlogPost | null; onClose: () =>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#5d4c42] mb-1">Featured Image URL</label>
-              <input
-                type="url"
-                value={formData.featuredImage}
-                onChange={(e) => setFormData((prev) => ({ ...prev, featuredImage: e.target.value }))}
-                className="w-full rounded-lg border border-[#e6ceb3] p-2 focus:border-[#a39188] focus:outline-none"
-                placeholder="https://example.com/image.jpg"
+              <label className="block text-sm font-medium text-[#5d4c42] mb-1">Featured Image</label>
+              <ImageUpload
+                currentImage={formData.featuredImage}
+                onImageChange={(url) => setFormData((prev) => ({ ...prev, featuredImage: url }))}
               />
             </div>
           </div>

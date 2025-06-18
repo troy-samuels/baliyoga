@@ -110,4 +110,28 @@ To test if maps are working:
 - ✅ **Coordinates-based maps**: Work perfectly
 - ✅ **Address-based maps**: Work with Google Maps API key
 - ✅ **Error handling**: Graceful fallbacks for all scenarios
-- ✅ **No API key**: Clear message about what's needed 
+- ✅ **No API key**: Clear message about what's needed
+
+# Google Maps Setup
+
+To enable the interactive maps on detailed view pages, you need to set up a Google Maps API key:
+
+## Steps:
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the "Maps Embed API"
+4. Create an API key
+5. Add the API key to your `.env.local` file:
+
+```bash
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_actual_api_key_here
+```
+
+## Without API Key:
+
+If no API key is provided, the map component will show a placeholder with the location name.
+
+## Security:
+
+Make sure to restrict your API key to your domain in the Google Cloud Console for security. 

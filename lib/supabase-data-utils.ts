@@ -1,20 +1,11 @@
 import { createServerClient } from "./supabase"
 import type { Studio, Retreat } from "./data-utils"
 
-// Categories that should be considered as studios
-const studioCategories = ["Yoga studio", "Pilates studio", "Fitness center", "Gym", "Meditation center"]
+// Categories that should be considered as studios - updated to match actual database data
+const studioCategories = ["Yoga studio"]
 
-// Categories that should be considered as retreats
-const retreatCategories = [
-  "Yoga retreat center",
-  "Retreat center",
-  "Wellness center",
-  "Wellness hotel",
-  "Resort hotel",
-  "Ashram",
-  "Health spa",
-  "Spa",
-]
+// Categories that should be considered as retreats - updated to match actual database data
+const retreatCategories = ["Yoga retreat center"]
 
 // Helper function to process image URLs
 const processImageUrl = (url: string | null | undefined): string => {
@@ -37,43 +28,21 @@ const mapToStudio = (item: any): Studio => {
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "")
 
-  // Extract styles based on category - no defaults
+  // Extract styles based on category - only if we have real data
   const styles: string[] = []
   const categoryName = (item.category_name || "").toLowerCase()
-  const description = (item.description || "").toLowerCase()
-  const name = (item.name || "").toLowerCase()
-
-  // Check for yoga styles in category, name, and description
-  if (categoryName.includes("hatha") || description.includes("hatha") || name.includes("hatha")) {
-    styles.push("Hatha")
-  }
-  if (categoryName.includes("vinyasa") || description.includes("vinyasa") || name.includes("vinyasa")) {
-    styles.push("Vinyasa")
-  }
-  if (categoryName.includes("yin") || description.includes("yin") || name.includes("yin")) {
-    styles.push("Yin")
-  }
-  if (categoryName.includes("meditation") || description.includes("meditation") || name.includes("meditation")) {
-    styles.push("Meditation")
-  }
-  if (categoryName.includes("ashtanga") || description.includes("ashtanga") || name.includes("ashtanga")) {
-    styles.push("Ashtanga")
-  }
-  if (categoryName.includes("bikram") || description.includes("bikram") || name.includes("bikram")) {
-    styles.push("Bikram")
-  }
-  if (categoryName.includes("hot yoga") || description.includes("hot yoga") || name.includes("hot yoga")) {
-    styles.push("Hot Yoga")
-  }
-  if (categoryName.includes("restorative") || description.includes("restorative") || name.includes("restorative")) {
-    styles.push("Restorative")
-  }
-  if (categoryName.includes("kundalini") || description.includes("kundalini") || name.includes("kundalini")) {
-    styles.push("Kundalini")
-  }
-  if (categoryName.includes("pilates") || description.includes("pilates") || name.includes("pilates")) {
-    styles.push("Pilates")
-  }
+  
+  // Only add styles if they're explicitly mentioned in the category
+  if (categoryName.includes("hatha")) styles.push("Hatha")
+  if (categoryName.includes("vinyasa")) styles.push("Vinyasa")
+  if (categoryName.includes("yin")) styles.push("Yin")
+  if (categoryName.includes("meditation")) styles.push("Meditation")
+  if (categoryName.includes("ashtanga")) styles.push("Ashtanga")
+  if (categoryName.includes("bikram")) styles.push("Bikram")
+  if (categoryName.includes("hot yoga")) styles.push("Hot Yoga")
+  if (categoryName.includes("restorative")) styles.push("Restorative")
+  if (categoryName.includes("kundalini")) styles.push("Kundalini")
+  if (categoryName.includes("pilates")) styles.push("Pilates")
 
   // Parse images as array
   const imagesArray = Array.isArray(item.images)
@@ -85,19 +54,16 @@ const mapToStudio = (item: any): Studio => {
     name: item.name,
     slug: slug,
     location: item.city || "Bali",
-    rating: item.review_score || 4.5,
+    rating: item.review_score || 0,
     reviewCount: item.review_count || 0,
     image: imagesArray.length > 0 ? processImageUrl(imagesArray[0]) : `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(item.name)}`,
     images: imagesArray.map(processImageUrl),
-    styles: styles || [],
-    tagline: `Discover yoga at ${item.name}`,
-    description: `Located in ${item.city || "Bali"}, ${item.name} offers various yoga classes.`,
-    longDescription: `${item.name} is a welcoming yoga studio in ${item.city || "Bali"} offering a variety of classes for all levels. Join us to deepen your practice in a supportive environment.`,
-    price: {
-      dropIn: "$15",
-      weekly: "$75",
-      monthly: "$220",
-    },
+    styles: styles,
+    // Only use real data - no fake descriptions or pricing
+    tagline: undefined, // Will be handled in the component
+    description: undefined, // Will be handled in the component
+    longDescription: undefined, // Will be handled in the component
+    price: undefined, // No fake pricing
     type: "studio",
     location_details: {
       address: item.address || "",
@@ -119,40 +85,20 @@ const mapToRetreat = (item: any): Retreat => {
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "")
 
-  // Extract styles based on category - no defaults
+  // Extract styles based on category - only if we have real data
   const styles: string[] = []
   const categoryName = (item.category_name || "").toLowerCase()
-  const description = (item.description || "").toLowerCase()
-  const name = (item.name || "").toLowerCase()
-
-  // Check for yoga styles in category, name, and description
-  if (categoryName.includes("hatha") || description.includes("hatha") || name.includes("hatha")) {
-    styles.push("Hatha")
-  }
-  if (categoryName.includes("vinyasa") || description.includes("vinyasa") || name.includes("vinyasa")) {
-    styles.push("Vinyasa")
-  }
-  if (categoryName.includes("yin") || description.includes("yin") || name.includes("yin")) {
-    styles.push("Yin")
-  }
-  if (categoryName.includes("meditation") || description.includes("meditation") || name.includes("meditation")) {
-    styles.push("Meditation")
-  }
-  if (categoryName.includes("ashtanga") || description.includes("ashtanga") || name.includes("ashtanga")) {
-    styles.push("Ashtanga")
-  }
-  if (categoryName.includes("wellness") || description.includes("wellness") || name.includes("wellness")) {
-    styles.push("Wellness")
-  }
-  if (categoryName.includes("detox") || description.includes("detox") || name.includes("detox")) {
-    styles.push("Detox")
-  }
-  if (categoryName.includes("spiritual") || description.includes("spiritual") || name.includes("spiritual")) {
-    styles.push("Spiritual")
-  }
-  if (categoryName.includes("healing") || description.includes("healing") || name.includes("healing")) {
-    styles.push("Healing")
-  }
+  
+  // Only add styles if they're explicitly mentioned in the category
+  if (categoryName.includes("hatha")) styles.push("Hatha")
+  if (categoryName.includes("vinyasa")) styles.push("Vinyasa")
+  if (categoryName.includes("yin")) styles.push("Yin")
+  if (categoryName.includes("meditation")) styles.push("Meditation")
+  if (categoryName.includes("ashtanga")) styles.push("Ashtanga")
+  if (categoryName.includes("wellness")) styles.push("Wellness")
+  if (categoryName.includes("detox")) styles.push("Detox")
+  if (categoryName.includes("spiritual")) styles.push("Spiritual")
+  if (categoryName.includes("healing")) styles.push("Healing")
 
   // Parse images as array
   const imagesArray = Array.isArray(item.images)
@@ -164,17 +110,19 @@ const mapToRetreat = (item: any): Retreat => {
     name: item.name,
     slug: slug,
     location: item.city || "Bali",
-    rating: item.review_score || 4.5,
+    rating: item.review_score || 0,
     reviewCount: item.review_count || 0,
     image: imagesArray.length > 0 ? processImageUrl(imagesArray[0]) : `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(item.name)}`,
     images: imagesArray.map(processImageUrl),
-    duration: "7-14 days",
-    price: "$1,200",
-    tagline: `Experience tranquility at ${item.name}`,
-    description: `Located in ${item.city || "Bali"}, ${item.name} offers a peaceful retreat experience.`,
-    longDescription: `${item.name} is a beautiful retreat center located in ${item.city || "Bali"}. Offering a range of wellness activities and yoga classes, this is the perfect place to relax and rejuvenate.`,
-    styles: styles || [],
-    includes: ["Accommodation", "Daily yoga classes", "Healthy meals"],
+    // Required fields - use empty strings if no real data
+    duration: "", // No duration data available
+    price: "", // No pricing data available
+    // Optional fields
+    tagline: undefined, // Will be handled in the component
+    description: undefined, // Will be handled in the component
+    longDescription: undefined, // Will be handled in the component
+    styles: styles,
+    includes: undefined, // No fake includes
     type: "retreat",
     location_details: {
       address: item.address || "",

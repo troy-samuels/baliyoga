@@ -3,12 +3,14 @@
 import type React from "react"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { ArrowLeft, Upload, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
-import { ArrowLeft, Send, CheckCircle } from "lucide-react"
-import Link from "next/link"
+import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
+import { Send, CheckCircle } from "lucide-react"
 
 export default function BlogSubmitPage() {
   const [formData, setFormData] = useState({
@@ -54,7 +56,7 @@ export default function BlogSubmitPage() {
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-[#f9f3e9]">
-        <SiteHeader />
+        <MobileOptimizedHeader />
         <div className="mx-auto max-w-4xl px-4 py-12 md:px-6">
           <Card className="border-[#e6ceb3] text-center">
             <CardContent className="p-12">
@@ -86,7 +88,7 @@ export default function BlogSubmitPage() {
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
-      <SiteHeader />
+      <MobileOptimizedHeader />
 
       {/* Header */}
       <div className="bg-[#e6ceb3] py-12">

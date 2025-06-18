@@ -2,12 +2,10 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { Menu, X, Heart } from "lucide-react"
-import { useWishlist } from "@/contexts/wishlist-context"
+import { Menu, X } from "lucide-react"
 
 export function MobileOptimizedHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { wishlistCount } = useWishlist()
 
   return (
     <nav className="sticky top-0 z-50 bg-[#f9f3e9] px-4 py-4 shadow-sm md:px-6">
@@ -20,32 +18,29 @@ export function MobileOptimizedHeader() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center space-x-1 rounded-full bg-[#a39188] px-4 py-2 md:flex">
-          <Link href="/studios" className="px-3 py-1 text-sm text-white hover:text-[#e6ceb3] md:px-4 md:text-base">
+        <div className="hidden items-center space-x-6 md:flex">
+          <Link href="/studios" className="text-sm font-medium text-[#5d4c42] hover:text-[#a39188] md:text-base">
             Studios
           </Link>
-          <Link href="/retreats" className="px-3 py-1 text-sm text-white hover:text-[#e6ceb3] md:px-4 md:text-base">
+          <Link href="/retreats" className="text-sm font-medium text-[#5d4c42] hover:text-[#a39188] md:text-base">
             Retreats
           </Link>
-          <Link href="/become-a-partner" className="px-3 py-1 text-sm text-white hover:text-[#e6ceb3] md:px-4 md:text-base">
-            Become a Partner
+          <Link href="/blog" className="text-sm font-medium text-[#5d4c42] hover:text-[#a39188] md:text-base">
+            Blog
+          </Link>
+          <Link href="/about" className="text-sm font-medium text-[#5d4c42] hover:text-[#a39188] md:text-base">
+            About Us
           </Link>
         </div>
 
-        {/* Right Side - Wishlist and Mobile Menu */}
+        {/* Right Side - Become a Partner and Mobile Menu */}
         <div className="flex items-center gap-3">
-          {/* Wishlist Icon */}
+          {/* Become a Partner Button - Desktop */}
           <Link 
-            href="/wishlist" 
-            className="relative rounded-lg bg-[#e6ceb3] p-2 text-[#5d4c42] transition-colors hover:bg-[#a39188] hover:text-white"
-            aria-label={`Wishlist (${wishlistCount} items)`}
+            href="/become-a-partner" 
+            className="hidden md:block rounded-lg bg-[#e6ceb3] px-4 py-2 text-sm font-medium text-[#5d4c42] transition-colors hover:bg-[#a39188] hover:text-white"
           >
-            <Heart className="h-5 w-5" />
-            {wishlistCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
-                {wishlistCount > 9 ? '9+' : wishlistCount}
-              </span>
-            )}
+            Become a Partner
           </Link>
 
           {/* Mobile Menu Button */}
@@ -78,23 +73,25 @@ export function MobileOptimizedHeader() {
               Retreats
             </Link>
             <Link
+              href="/blog"
+              className="rounded-lg px-4 py-3 text-[#5d4c42] hover:bg-[#e6ceb3]"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Blog
+            </Link>
+            <Link
+              href="/about"
+              className="rounded-lg px-4 py-3 text-[#5d4c42] hover:bg-[#e6ceb3]"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About Us
+            </Link>
+            <Link
               href="/become-a-partner"
               className="rounded-lg px-4 py-3 text-[#5d4c42] hover:bg-[#e6ceb3]"
               onClick={() => setIsMenuOpen(false)}
             >
               Become a Partner
-            </Link>
-            <Link
-              href="/wishlist"
-              className="rounded-lg px-4 py-3 text-[#5d4c42] hover:bg-[#e6ceb3] flex items-center justify-between"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <span>My Wishlist</span>
-              {wishlistCount > 0 && (
-                <span className="rounded-full bg-red-500 px-2 py-1 text-xs font-bold text-white">
-                  {wishlistCount}
-                </span>
-              )}
             </Link>
           </div>
         </div>

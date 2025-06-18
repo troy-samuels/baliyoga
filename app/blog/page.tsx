@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Calendar, ChevronRight, Clock, Search, User } from "lucide-react"
+import { Calendar, ChevronRight, Clock, Search, User, ArrowRight } from "lucide-react"
 import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
+import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 import fs from "fs"
 import path from "path"
 
@@ -92,7 +92,7 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
-      <SiteHeader />
+      <MobileOptimizedHeader />
 
       {/* Hero Section */}
       <div className="bg-[#e6ceb3] py-12">
