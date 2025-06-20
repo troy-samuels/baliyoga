@@ -70,13 +70,15 @@ export default async function RetreatsPage({
             </div>
           )}
 
-          {/* Mobile-Optimized Search Bar */}
+          {/* Mobile-Optimized Search Bar - Removed for cleaner mobile experience */}
+          {/* 
           <div className="mx-auto mt-4 max-w-3xl sm:mt-6">
             <FunctionalSearchBar 
               placeholder="Search retreats by name, duration, or location..."
               type="retreat"
             />
           </div>
+          */}
         </div>
       </div>
 

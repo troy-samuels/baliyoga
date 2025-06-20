@@ -10,6 +10,7 @@ import { getTopSupabaseStudios, getTopSupabaseRetreats } from "@/lib/supabase-da
 import type { Studio, Retreat } from "@/lib/data-utils"
 import fs from "fs"
 import path from "path"
+import { generateColorFallback } from "@/lib/image-fallback"
 
 // Blog post interface
 interface BlogPost {
@@ -136,7 +137,7 @@ export default async function Home() {
                 >
                   <div className="h-32 w-full overflow-hidden sm:h-40">
                     <Image
-                      src={blog.featuredImage || "/placeholder.svg?height=160&width=300&text=Blog+Post"}
+                      src={blog.featuredImage || generateColorFallback(300, 160, '#e6ceb3')}
                       alt={blog.title}
                       width={300}
                       height={160}

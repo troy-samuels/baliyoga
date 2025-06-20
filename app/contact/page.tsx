@@ -4,6 +4,7 @@ import { useState } from "react"
 import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import { Mail, Phone, MapPin, Clock, Send } from "lucide-react"
+import { generateColorFallback } from "@/lib/image-fallback"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -55,7 +56,7 @@ export default function ContactPage() {
       <div 
         className="relative bg-cover bg-center py-20 md:py-32"
         style={{
-          backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/placeholder.svg?height=600&width=1200&text=Contact+Bali+Yoga')"
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('${generateColorFallback(1200, 600, '#a39188')}')`
         }}
       >
         <div className="mx-auto max-w-4xl px-4 text-center text-white">

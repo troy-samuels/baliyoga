@@ -73,13 +73,15 @@ export default async function StudiosPage({
             </div>
           )}
 
-          {/* Mobile-Optimized Search Bar */}
+          {/* Mobile-Optimized Search Bar - Removed for cleaner mobile experience */}
+          {/* 
           <div className="mx-auto mt-4 max-w-3xl sm:mt-6">
             <FunctionalSearchBar 
               placeholder="Search studios by name, style, or location..."
               type="studio"
             />
           </div>
+          */}
         </div>
       </div>
 

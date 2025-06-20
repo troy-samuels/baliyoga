@@ -6,6 +6,7 @@ import { OptimizedImage } from "./optimized-image"
 import { WishlistHeart } from "./wishlist-heart"
 import { PopularityBadge } from "./popularity-badge"
 import { memo } from "react"
+import { generateColorFallback } from "@/lib/image-fallback"
 
 interface CardProps {
   id: string
@@ -68,7 +69,7 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
       <Link href={href} className="block" prefetch={false}>
         <div className="relative h-48 w-full overflow-hidden">
           <OptimizedImage
-            src={image || `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(name)}`}
+            src={image || generateColorFallback(300, 200, '#e6ceb3')}
             alt={name}
             fill
             className="object-cover object-center transition-transform duration-300 group-hover:scale-110"

@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { useState } from "react"
+import { generateColorFallback } from "@/lib/image-fallback"
 
 interface ErrorHandledImageProps {
   src: string
@@ -18,7 +19,7 @@ export function ErrorHandledImage({
   width, 
   height, 
   className = "",
-  fallbackSrc = "/placeholder.svg?height=600&width=800&text=Image+Not+Available"
+  fallbackSrc = generateColorFallback(width, height, '#e6ceb3')
 }: ErrorHandledImageProps) {
   const [imageSrc, setImageSrc] = useState(src)
   const [hasError, setHasError] = useState(false)

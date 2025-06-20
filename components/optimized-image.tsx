@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { useState } from "react"
+import { generateColorFallback } from "@/lib/image-fallback"
 
 interface OptimizedImageProps {
   src: string
@@ -40,8 +41,8 @@ export function OptimizedImage({
 
   // Fallback image for errors
   const fallbackSrc = fill
-    ? "/placeholder.svg?height=400&width=600&text=Image+Not+Available"
-    : `/placeholder.svg?height=${height || 200}&width=${width || 300}&text=Image+Not+Available`
+    ? generateColorFallback(600, 400, '#e6ceb3')
+    : generateColorFallback(width || 300, height || 200, '#e6ceb3')
 
   // Only use fallback if there's an error
   const finalSrc = imageError ? fallbackSrc : src

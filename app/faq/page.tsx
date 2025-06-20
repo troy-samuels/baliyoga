@@ -4,6 +4,7 @@ import { useState } from "react"
 import { ChevronDown, ChevronUp } from "lucide-react"
 import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
+import { generateColorFallback } from "@/lib/image-fallback"
 
 const faqCategories = [
   {
@@ -144,7 +145,7 @@ export default function FAQPage() {
       <div 
         className="relative bg-cover bg-center py-20 md:py-32"
         style={{
-          backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/placeholder.svg?height=600&width=1200&text=Bali+Yoga+FAQ')"
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('${generateColorFallback(1200, 600, '#a39188')}')`
         }}
       >
         <div className="mx-auto max-w-4xl px-4 text-center text-white">

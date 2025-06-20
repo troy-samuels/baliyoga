@@ -5,6 +5,7 @@ import { MapPin, Calendar, Phone, Globe } from "lucide-react"
 import { OptimizedImage } from "./optimized-image"
 import { WishlistHeart } from "./wishlist-heart"
 import { PopularityBadge } from "./popularity-badge"
+import { generateColorFallback } from "@/lib/image-fallback"
 import { memo } from "react"
 
 interface MobileCardProps {
@@ -74,7 +75,7 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
       <Link href={href} className="block relative z-10">
         <div className="relative h-40 w-full overflow-hidden sm:h-48">
           <OptimizedImage
-            src={image || `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(name)}`}
+            src={image || generateColorFallback(300, 200, '#e6ceb3')}
             alt={name}
             fill
             className="object-cover object-center transition-transform duration-300 group-hover:scale-110"

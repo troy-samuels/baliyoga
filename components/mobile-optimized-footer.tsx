@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react"
 
 export function MobileOptimizedFooter() {
   return (
@@ -53,24 +52,17 @@ export function MobileOptimizedFooter() {
 
           <div>
             <h3 className="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">Connect With Us</h3>
-            <div className="flex space-x-3 sm:space-x-4">
-              {[
-                { icon: Facebook, label: "Facebook" },
-                { icon: Instagram, label: "Instagram" },
-                { icon: Twitter, label: "Twitter" },
-                { icon: Youtube, label: "YouTube" },
-              ].map(({ icon: Icon, label }) => (
-                <Link key={label} href="#" className="text-white/80 hover:text-white">
-                  <Icon className="h-5 w-5" />
-                  <span className="sr-only">{label}</span>
-                </Link>
-              ))}
-            </div>
-            <p className="mt-3 text-sm text-white/80 sm:mt-4">
+            <p className="text-sm text-white/80 mb-3">
+              Follow us for the latest yoga updates and wellness tips from Bali.
+            </p>
+            <p className="text-sm text-white/80">
               Email:{" "}
               <a href="mailto:info@baliyoga.com" className="hover:text-white">
                 info@baliyoga.com
               </a>
+            </p>
+            <p className="text-xs text-white/60 mt-2">
+              Social media coming soon!
             </p>
           </div>
         </div>

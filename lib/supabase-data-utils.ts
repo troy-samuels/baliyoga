@@ -1,5 +1,6 @@
 import { createServerClient } from "./supabase"
 import type { Studio, Retreat } from "./data-utils"
+import { generateColorFallback } from "./image-fallback"
 
 // Categories that should be considered as studios - updated to match actual database data
 const studioCategories = ["Yoga studio"]
@@ -9,7 +10,7 @@ const retreatCategories = ["Yoga retreat center"]
 
 // Helper function to process image URLs
 const processImageUrl = (url: string | null | undefined): string => {
-  if (!url) return `/placeholder.svg?height=200&width=300&text=No+Image`
+  if (!url) return generateColorFallback(300, 200, '#e6ceb3')
   
   // Route all external images through the proxy for better reliability
   if (url.startsWith('http://') || url.startsWith('https://')) {
@@ -56,7 +57,7 @@ const mapToStudio = (item: any): Studio => {
     location: item.city || "Bali",
     rating: item.review_score || 0,
     reviewCount: item.review_count || 0,
-    image: imagesArray.length > 0 ? processImageUrl(imagesArray[0]) : `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(item.name)}`,
+    image: imagesArray.length > 0 ? processImageUrl(imagesArray[0]) : generateColorFallback(300, 200, '#e6ceb3'),
     images: imagesArray.map(processImageUrl),
     styles: styles,
     // Only use real data - no fake descriptions or pricing
@@ -112,7 +113,7 @@ const mapToRetreat = (item: any): Retreat => {
     location: item.city || "Bali",
     rating: item.review_score || 0,
     reviewCount: item.review_count || 0,
-    image: imagesArray.length > 0 ? processImageUrl(imagesArray[0]) : `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(item.name)}`,
+    image: imagesArray.length > 0 ? processImageUrl(imagesArray[0]) : generateColorFallback(300, 200, '#e6ceb3'),
     images: imagesArray.map(processImageUrl),
     // Required fields - use empty strings if no real data
     duration: "", // No duration data available

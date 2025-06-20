@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react"
 
 export function SiteFooter() {
   return (
@@ -64,26 +63,14 @@ export function SiteFooter() {
           </div>
           <div>
             <h3 className="mb-4 text-lg font-semibold">Connect With Us</h3>
-            <div className="flex space-x-4">
-              <Link href="#" className="text-white/80 hover:text-white">
-                <Facebook className="h-5 w-5" />
-                <span className="sr-only">Facebook</span>
-              </Link>
-              <Link href="#" className="text-white/80 hover:text-white">
-                <Instagram className="h-5 w-5" />
-                <span className="sr-only">Instagram</span>
-              </Link>
-              <Link href="#" className="text-white/80 hover:text-white">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
-              </Link>
-              <Link href="#" className="text-white/80 hover:text-white">
-                <Youtube className="h-5 w-5" />
-                <span className="sr-only">YouTube</span>
-              </Link>
-            </div>
-            <p className="mt-4 text-sm text-white/80">
+            <p className="text-sm text-white/80 mb-4">
+              Follow us for the latest yoga updates and wellness tips from Bali.
+            </p>
+            <p className="text-sm text-white/80">
               Email: <a href="mailto:info@baliyoga.com">info@baliyoga.com</a>
+            </p>
+            <p className="text-xs text-white/60 mt-2">
+              Social media coming soon!
             </p>
           </div>
         </div>

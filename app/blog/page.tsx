@@ -3,8 +3,10 @@ import Link from "next/link"
 import { Calendar, ChevronRight, Clock, Search, User, ArrowRight } from "lucide-react"
 import { SiteFooter } from "@/components/site-footer"
 import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
+import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import fs from "fs"
 import path from "path"
+import { generateColorFallback } from "@/lib/image-fallback"
 
 // Blog post interface
 interface BlogPost {
@@ -36,39 +38,39 @@ function loadBlogPosts(): BlogPost[] {
   return [
     {
       id: "1",
-      title: "The Best Time to Practice Yoga in Bali",
-      slug: "best-time-practice-yoga-bali",
-      excerpt:
-        "Discover the optimal seasons and times of day to enhance your yoga practice in Bali. Learn how the island's unique climate can influence your yoga journey.",
-      featuredImage: "/placeholder.svg?height=400&width=600&text=Yoga+in+Bali",
+      title: "The Ultimate Guide to Finding Your Perfect Yoga Studio in Bali",
+      slug: "ultimate-guide-yoga-studio-bali",
+      excerpt: "Discover the insider secrets to choosing the perfect yoga studio for your Bali retreat.",
+      featuredImage: generateColorFallback(600, 400, '#e6ceb3'),
       author: "Maya Patel",
       publishDate: "2023-06-15",
       readTime: "8 min read",
       categories: ["Yoga Practice", "Bali Travel"],
+      status: "published",
     },
     {
       id: "2",
       title: "Top 5 Vegan Cafes Near Yoga Studios in Ubud",
       slug: "top-vegan-cafes-near-yoga-studios-ubud",
-      excerpt:
-        "Explore the best plant-based dining options to complement your yoga practice in Ubud. These cafes offer nutritious and delicious meals for health-conscious yogis.",
-      featuredImage: "/placeholder.svg?height=400&width=600&text=Vegan+Food",
+      excerpt: "Explore the best plant-based dining options to complement your yoga practice in Ubud.",
+      featuredImage: generateColorFallback(600, 400, '#e6ceb3'),
       author: "David Lee",
       publishDate: "2023-05-28",
       readTime: "6 min read",
       categories: ["Food & Nutrition", "Ubud"],
+      status: "published",
     },
     {
       id: "3",
       title: "Healing Waters: Bali's Sacred Springs for Yogis",
       slug: "healing-waters-bali-sacred-springs-yogis",
-      excerpt:
-        "Learn about the spiritual and physical benefits of Bali's natural water sources. Discover how these sacred springs can enhance your yoga and meditation practice.",
-      featuredImage: "/placeholder.svg?height=400&width=600&text=Sacred+Springs",
+      excerpt: "Learn about the spiritual and physical benefits of Bali's natural water sources.",
+      featuredImage: generateColorFallback(600, 400, '#e6ceb3'),
       author: "Sarah Johnson",
       publishDate: "2023-05-10",
-      readTime: "7 min read",
+      readTime: "10 min read",
       categories: ["Spirituality", "Wellness"],
+      status: "published",
     },
   ]
 }
@@ -139,7 +141,7 @@ export default function BlogPage() {
                     <Link href={`/blog/${post.slug}`} className="block">
                       <div className="relative h-48 w-full overflow-hidden">
                         <Image
-                          src={post.featuredImage || "/placeholder.svg?height=400&width=600&text=Blog+Post"}
+                          src={post.featuredImage || generateColorFallback(600, 400, '#e6ceb3')}
                           alt={post.title}
                           width={600}
                           height={400}
@@ -219,7 +221,7 @@ export default function BlogPage() {
                     <Link href={`/blog/${post.slug}`} className="block">
                       <div className="relative h-48 w-full overflow-hidden">
                         <Image
-                          src={post.featuredImage || "/placeholder.svg?height=300&width=500&text=Blog+Post"}
+                          src={post.featuredImage || generateColorFallback(500, 300, '#e6ceb3')}
                           alt={post.title}
                           width={500}
                           height={300}
