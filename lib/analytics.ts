@@ -1,8 +1,8 @@
 // Google Analytics 4 implementation with privacy-first approach
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID
 
-// Check if GA is enabled
-export const isAnalyticsEnabled = !!GA_TRACKING_ID && process.env.NODE_ENV === 'production'
+// Check if GA is enabled - Allow in production or when GA_ID is present
+export const isAnalyticsEnabled = !!GA_TRACKING_ID && typeof window !== 'undefined'
 
 // Track page views
 export const pageview = (url: string) => {
