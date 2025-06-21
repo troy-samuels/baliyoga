@@ -131,10 +131,17 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js', { scope: '/' });
-                });
+              if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+                try {
+                  window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                      .catch(function(error) {
+                        console.warn('Service Worker registration failed:', error);
+                      });
+                  });
+                } catch (error) {
+                  console.warn('Service Worker setup error:', error);
+                }
               }
             `,
           }}

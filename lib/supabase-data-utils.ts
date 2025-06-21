@@ -48,7 +48,14 @@ const mapToStudio = (item: any): Studio => {
   // Parse images as array
   const imagesArray = Array.isArray(item.images)
     ? item.images
-    : (typeof item.images === 'string' ? JSON.parse(item.images) : []);
+    : (typeof item.images === 'string' ? (() => {
+        try {
+          return JSON.parse(item.images)
+        } catch (error) {
+          console.warn('Error parsing images JSON:', error)
+          return []
+        }
+      })() : []);
 
   return {
     id: item.id,
@@ -104,7 +111,14 @@ const mapToRetreat = (item: any): Retreat => {
   // Parse images as array
   const imagesArray = Array.isArray(item.images)
     ? item.images
-    : (typeof item.images === 'string' ? JSON.parse(item.images) : []);
+    : (typeof item.images === 'string' ? (() => {
+        try {
+          return JSON.parse(item.images)
+        } catch (error) {
+          console.warn('Error parsing retreat images JSON:', error)
+          return []
+        }
+      })() : []);
 
   return {
     id: item.id,
@@ -159,7 +173,14 @@ export async function getTopSupabaseStudios(limit = 3): Promise<Studio[]> {
     .filter((item) => {
       const imagesArray = Array.isArray(item.images)
         ? item.images
-        : (typeof item.images === 'string' ? JSON.parse(item.images) : []);
+        : (typeof item.images === 'string' ? (() => {
+            try {
+              return JSON.parse(item.images)
+            } catch (error) {
+              console.warn('Error parsing images JSON in filter:', error)
+              return []
+            }
+          })() : []);
       return imagesArray.length > 0;
     })
     .sort((a, b) => {
@@ -197,7 +218,14 @@ export async function getTopSupabaseRetreats(limit = 3): Promise<Retreat[]> {
     .filter((item) => {
       const imagesArray = Array.isArray(item.images)
         ? item.images
-        : (typeof item.images === 'string' ? JSON.parse(item.images) : []);
+        : (typeof item.images === 'string' ? (() => {
+            try {
+              return JSON.parse(item.images)
+            } catch (error) {
+              console.warn('Error parsing retreat images JSON in filter:', error)
+              return []
+            }
+          })() : []);
       return imagesArray.length > 0;
     })
     .sort((a, b) => {
@@ -284,7 +312,14 @@ export async function getSimilarItems(type: "studio" | "retreat", currentItem: S
     .filter((item) => {
       const imagesArray = Array.isArray(item.images)
         ? item.images
-        : (typeof item.images === 'string' ? JSON.parse(item.images) : []);
+        : (typeof item.images === 'string' ? (() => {
+            try {
+              return JSON.parse(item.images)
+            } catch (error) {
+              console.warn('Error parsing similar items images JSON:', error)
+              return []
+            }
+          })() : []);
       return imagesArray.length > 0;
     })
     .sort((a, b) => {

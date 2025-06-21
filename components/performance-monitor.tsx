@@ -21,93 +21,133 @@ export function PerformanceMonitor() {
   })
 
   useEffect(() => {
-    // Track page load time
-    const startTime = performance.now()
-    
-    const handleLoad = () => {
-      const loadTime = performance.now() - startTime
-      trackPageLoadTime(loadTime)
-    }
+    if (typeof window === 'undefined') return
 
-    if (document.readyState === 'complete') {
-      handleLoad()
-    } else {
-      window.addEventListener('load', handleLoad)
-    }
-
-    // Monitor Core Web Vitals
-    const observePerformance = () => {
-      try {
-        // Largest Contentful Paint (LCP)
-        new PerformanceObserver((entryList) => {
-          const entries = entryList.getEntries()
-          const lastEntry = entries[entries.length - 1] as any
-          if (lastEntry) {
-            setMetrics(prev => ({ ...prev, lcp: lastEntry.startTime }))
-          }
-        }).observe({ entryTypes: ['largest-contentful-paint'] })
-
-        // First Input Delay (FID)
-        new PerformanceObserver((entryList) => {
-          const entries = entryList.getEntries()
-          entries.forEach((entry: any) => {
-            const fid = entry.processingStart - entry.startTime
-            setMetrics(prev => ({ ...prev, fid }))
-          })
-        }).observe({ entryTypes: ['first-input'] })
-
-        // Cumulative Layout Shift (CLS)
-        let clsValue = 0
-        new PerformanceObserver((entryList) => {
-          for (const entry of entryList.getEntries() as any[]) {
-            if (!entry.hadRecentInput) {
-              clsValue += entry.value
-            }
-          }
-          setMetrics(prev => ({ ...prev, cls: clsValue }))
-        }).observe({ entryTypes: ['layout-shift'] })
-
-        // First Contentful Paint (FCP)
-        new PerformanceObserver((entryList) => {
-          const entries = entryList.getEntries()
-          const fcpEntry = entries.find(entry => entry.name === 'first-contentful-paint') as any
-          if (fcpEntry) {
-            setMetrics(prev => ({ ...prev, fcp: fcpEntry.startTime }))
-          }
-        }).observe({ entryTypes: ['paint'] })
-
-        // Time to First Byte (TTFB)
-        const navEntry = performance.getEntriesByType('navigation')[0] as any
-        if (navEntry) {
-          const ttfb = navEntry.responseStart - navEntry.requestStart
-          setMetrics(prev => ({ ...prev, ttfb }))
+    try {
+      // Track page load time
+      const startTime = performance.now()
+      
+      const handleLoad = () => {
+        try {
+          const loadTime = performance.now() - startTime
+          trackPageLoadTime(loadTime)
+        } catch (error) {
+          console.warn('Error tracking page load time:', error)
         }
-
-      } catch (error) {
-        console.warn('Performance monitoring not supported:', error)
-        trackError(`Performance monitoring error: ${error}`)
       }
-    }
 
-    // Start monitoring
-    observePerformance()
+      if (document.readyState === 'complete') {
+        handleLoad()
+      } else {
+        window.addEventListener('load', handleLoad)
+      }
 
-    // Error boundary for JavaScript errors
-    const handleError = (event: ErrorEvent) => {
-      trackError(`${event.error?.name || 'Unknown Error'}: ${event.message}`, window.location.pathname)
-    }
+      // Monitor Core Web Vitals
+      const observePerformance = () => {
+        try {
+          // Largest Contentful Paint (LCP)
+          new PerformanceObserver((entryList) => {
+            try {
+              const entries = entryList.getEntries()
+              const lastEntry = entries[entries.length - 1] as any
+              if (lastEntry) {
+                setMetrics(prev => ({ ...prev, lcp: lastEntry.startTime }))
+              }
+            } catch (error) {
+              console.warn('LCP measurement error:', error)
+            }
+          }).observe({ entryTypes: ['largest-contentful-paint'] })
 
-    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      trackError(`Unhandled Promise Rejection: ${event.reason}`, window.location.pathname)
-    }
+          // First Input Delay (FID)
+          new PerformanceObserver((entryList) => {
+            try {
+              const entries = entryList.getEntries()
+              entries.forEach((entry: any) => {
+                const fid = entry.processingStart - entry.startTime
+                setMetrics(prev => ({ ...prev, fid }))
+              })
+            } catch (error) {
+              console.warn('FID measurement error:', error)
+            }
+          }).observe({ entryTypes: ['first-input'] })
 
-    window.addEventListener('error', handleError)
-    window.addEventListener('unhandledrejection', handleUnhandledRejection)
+          // Cumulative Layout Shift (CLS)
+          let clsValue = 0
+          new PerformanceObserver((entryList) => {
+            try {
+              for (const entry of entryList.getEntries() as any[]) {
+                if (!entry.hadRecentInput) {
+                  clsValue += entry.value
+                }
+              }
+              setMetrics(prev => ({ ...prev, cls: clsValue }))
+            } catch (error) {
+              console.warn('CLS measurement error:', error)
+            }
+          }).observe({ entryTypes: ['layout-shift'] })
 
-    return () => {
-      window.removeEventListener('load', handleLoad)
-      window.removeEventListener('error', handleError)
-      window.removeEventListener('unhandledrejection', handleUnhandledRejection)
+          // First Contentful Paint (FCP)
+          new PerformanceObserver((entryList) => {
+            try {
+              const entries = entryList.getEntries()
+              const fcpEntry = entries.find(entry => entry.name === 'first-contentful-paint') as any
+              if (fcpEntry) {
+                setMetrics(prev => ({ ...prev, fcp: fcpEntry.startTime }))
+              }
+            } catch (error) {
+              console.warn('FCP measurement error:', error)
+            }
+          }).observe({ entryTypes: ['paint'] })
+
+          // Time to First Byte (TTFB)
+          const navEntry = performance.getEntriesByType('navigation')[0] as any
+          if (navEntry) {
+            const ttfb = navEntry.responseStart - navEntry.requestStart
+            setMetrics(prev => ({ ...prev, ttfb }))
+          }
+
+        } catch (error) {
+          console.warn('Performance monitoring not supported:', error)
+          trackError(`Performance monitoring error: ${error}`)
+        }
+      }
+
+      // Start monitoring
+      observePerformance()
+
+      // Error boundary for JavaScript errors
+      const handleError = (event: ErrorEvent) => {
+        try {
+          const pathname = typeof window !== 'undefined' ? window.location.pathname : 'unknown'
+          trackError(`${event.error?.name || 'Unknown Error'}: ${event.message}`, pathname)
+        } catch (error) {
+          console.warn('Error in error handler:', error)
+        }
+      }
+
+      const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+        try {
+          const pathname = typeof window !== 'undefined' ? window.location.pathname : 'unknown'
+          trackError(`Unhandled Promise Rejection: ${event.reason}`, pathname)
+        } catch (error) {
+          console.warn('Error in rejection handler:', error)
+        }
+      }
+
+      window.addEventListener('error', handleError)
+      window.addEventListener('unhandledrejection', handleUnhandledRejection)
+
+      return () => {
+        try {
+          window.removeEventListener('load', handleLoad)
+          window.removeEventListener('error', handleError)
+          window.removeEventListener('unhandledrejection', handleUnhandledRejection)
+        } catch (error) {
+          console.warn('Error removing performance listeners:', error)
+        }
+      }
+    } catch (error) {
+      console.warn('Error setting up performance monitoring:', error)
     }
   }, [])
 

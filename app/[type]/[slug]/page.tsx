@@ -96,18 +96,18 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
     <div className="min-h-screen bg-[#f9f3e9]">
       <MobileOptimizedHeader />
       <div className="mx-auto max-w-7xl px-4 py-4">
-        <Link
+          <Link
           href={`/${type}`}
           className="inline-flex items-center text-sm text-[#5d4c42]/70 hover:text-[#5d4c42]"
-        >
-          <ChevronLeft className="mr-1 h-4 w-4" />
+          >
+            <ChevronLeft className="mr-1 h-4 w-4" />
           Back to {type === "studios" ? "Studios" : "Retreats"}
-        </Link>
-      </div>
+          </Link>
+        </div>
       <div className="mx-auto max-w-7xl px-4 py-6">
-        {/* Header */}
+            {/* Header */}
         <div className="space-y-4 mb-8">
-          <div className="flex flex-wrap items-start justify-between gap-4">
+              <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="flex-1">
               <div className="flex items-start gap-3">
                 <div className="flex-1">
@@ -120,19 +120,19 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                   <PopularityBadge itemId={String(item.id)} />
                 </div>
               </div>
-            </div>
-            <div className="flex gap-2">
+                </div>
+                <div className="flex gap-2">
               <WishlistHeart item={wishlistItem} className="rounded-full bg-white p-2 shadow-sm hover:bg-[#e6ceb3]" />
-              <button className="rounded-full bg-white p-2 text-[#5d4c42] shadow-sm hover:bg-[#e6ceb3]">
-                <Share2 className="h-5 w-5" />
-                <span className="sr-only">Share</span>
-              </button>
-            </div>
-          </div>
+                  <button className="rounded-full bg-white p-2 text-[#5d4c42] shadow-sm hover:bg-[#e6ceb3]">
+                    <Share2 className="h-5 w-5" />
+                    <span className="sr-only">Share</span>
+                  </button>
+                </div>
+              </div>
 
-          <div className="flex flex-wrap items-center gap-4 text-[#5d4c42]">
-            <div className="flex items-center">
-              <MapPin className="mr-1 h-4 w-4" />
+              <div className="flex flex-wrap items-center gap-4 text-[#5d4c42]">
+                <div className="flex items-center">
+                  <MapPin className="mr-1 h-4 w-4" />
               <span>{item.location_details?.area || item.location}, Bali</span>
             </div>
             {item.rating > 0 && (
@@ -167,7 +167,7 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                   {/* Star Rating and Score */}
                   <div className="flex items-center gap-1">
                     <span className="font-semibold text-gray-900">{item.rating}</span>
-                    <div className="flex items-center">
+                                <div className="flex items-center">
                       {[...Array(5)].map((_, i) => (
                         <svg
                           key={i}
@@ -182,30 +182,30 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                       ))}
                     </div>
                   </div>
-                  
+
                   {/* Review Count */}
                   <span className="text-sm text-gray-600">({item.reviewCount})</span>
-                </div>
-              </div>
+                    </div>
+                  </div>
             )}
             {type === "retreats" && 'duration' in item && item.duration && (
               <div className="flex items-center">
                 <Calendar className="mr-1 h-4 w-4" />
                 <span>{item.duration}</span>
-              </div>
+                  </div>
             )}
-          </div>
+                        </div>
 
           {item.styles && item.styles.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {item.styles.map((style, index) => (
                 <span key={index} className="rounded-full bg-[#e6ceb3] px-3 py-1 text-sm text-[#5d4c42]">
-                  {style}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
+                                  {style}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                  </div>
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
@@ -243,9 +243,9 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                         <span className="text-white font-semibold text-lg">
                           +{item.images.length - 5} photos
                         </span>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
                 ))}
               </div>
             ) : (
@@ -274,7 +274,7 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                 <div className="block w-full mb-3 rounded-lg bg-[#e6ceb3] py-3 text-center text-[#5d4c42] font-semibold">
                   <Phone className="inline-block w-4 h-4 mr-2" />
                   Phone not available
-                </div>
+                    </div>
               )}
               {item.website ? (
                 <a href={item.website} target="_blank" rel="noopener noreferrer" className="block w-full mb-4 rounded-lg border-2 border-[#5d4c42] py-3 text-center text-[#5d4c42] font-semibold hover:bg-[#e6ceb3] transition">
@@ -285,7 +285,7 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                 <div className="block w-full mb-4 rounded-lg border-2 border-[#e6ceb3] py-3 text-center text-[#5d4c42]/60 font-semibold">
                   <Globe className="inline-block w-4 h-4 mr-2" />
                   Website not available
-                </div>
+                    </div>
               )}
               
               {/* Address */}
@@ -297,8 +297,8 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                       {item.location_details.address}
                     </span>
                   </div>
-                </div>
-              )}
+                  </div>
+                )}
 
               {/* Location Map */}
               <div className="mt-4">
@@ -310,7 +310,7 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
               </div>
             </div>
           </div>
-        </div>
+                    </div>
 
         {/* Only show sections if we have real data */}
         {(type === "retreats" && 'duration' in item && item.duration) || 
@@ -349,14 +349,14 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                             </li>
                           ))}
                         </ul>
-                      </div>
-                    )}
+                  </div>
+                )}
                   </div>
                 </div>
               )}
 
               {item.opening_hours && item.opening_hours.length > 0 && (
-                <div>
+                  <div>
                   <h3 className="text-lg font-semibold text-[#5d4c42]">Opening Hours</h3>
                   <div className="mt-2 space-y-2">
                     {item.opening_hours.map((hours, index) => {
@@ -376,10 +376,10 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                       }
                     })}
                   </div>
-                </div>
+                  </div>
               )}
-            </div>
-          </div>
+                  </div>
+              </div>
         ) : null}
 
         {/* Similar Items Section */}

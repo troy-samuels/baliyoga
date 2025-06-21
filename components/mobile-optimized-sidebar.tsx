@@ -28,19 +28,29 @@ export function MobileOptimizedSidebar() {
 
   // Function to update URL with new filters
   const updateFilters = (updates: Record<string, string | null>) => {
-    const current = new URLSearchParams(Array.from(searchParams.entries()))
-    
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '' || value === 'all') {
-        current.delete(key)
+    try {
+      const current = new URLSearchParams(Array.from(searchParams.entries()))
+      
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '' || value === 'all') {
+          current.delete(key)
+        } else {
+          current.set(key, value)
+        }
+      })
+      
+      const search = current.toString()
+      const query = search ? `?${search}` : ''
+      
+      if (typeof window !== 'undefined') {
+        router.push(window.location.pathname + query)
       } else {
-        current.set(key, value)
+        // Fallback for SSR
+        router.push(query)
       }
-    })
-    
-    const search = current.toString()
-    const query = search ? `?${search}` : ''
-    router.push(window.location.pathname + query)
+    } catch (error) {
+      console.warn('Error updating filters:', error)
+    }
   }
 
   // Fetch filter options from Supabase

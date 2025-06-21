@@ -231,9 +231,17 @@ export function PrivacyBanner() {
   
   useEffect(() => {
     // Show banner if no consent decision has been made
-    const consent = localStorage.getItem('analytics_consent')
-    if (!consent && isAnalyticsEnabled) {
-      setShowBanner(true)
+    try {
+      const consent = localStorage.getItem('analytics_consent')
+      if (!consent && isAnalyticsEnabled) {
+        setShowBanner(true)
+      }
+    } catch (error) {
+      console.warn('Error accessing analytics consent from localStorage:', error)
+      // If we can't access localStorage, show the banner to be safe
+      if (isAnalyticsEnabled) {
+        setShowBanner(true)
+      }
     }
   }, [])
   
