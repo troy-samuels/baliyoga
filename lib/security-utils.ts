@@ -197,11 +197,25 @@ export function cleanupRateLimits(): void {
 
 // Initialize security utilities
 export function initializeSecurity(): void {
-  // Clean up old rate limits on initialization
-  cleanupRateLimits()
-  
-  // Set up periodic cleanup (every 5 minutes)
-  if (typeof window !== 'undefined') {
-    setInterval(cleanupRateLimits, 5 * 60 * 1000)
+  try {
+    // Clean up old rate limits on initialization
+    cleanupRateLimits()
+    
+    // Set up periodic cleanup (every 5 minutes)
+    if (typeof window !== 'undefined') {
+      try {
+        setInterval(() => {
+          try {
+            cleanupRateLimits()
+          } catch (error) {
+            console.warn('Rate limit cleanup error during interval:', error)
+          }
+        }, 5 * 60 * 1000)
+      } catch (error) {
+        console.warn('Could not set up rate limit cleanup interval:', error)
+      }
+    }
+  } catch (error) {
+    console.warn('Security initialization error:', error)
   }
 } 

@@ -116,49 +116,103 @@ export function Analytics() {
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
-            // Track Core Web Vitals
-            if (typeof window !== 'undefined' && window.gtag) {
-              // LCP - Largest Contentful Paint
-              new PerformanceObserver((entryList) => {
-                const entries = entryList.getEntries();
-                const lastEntry = entries[entries.length - 1];
-                window.gtag('event', 'core_web_vitals', {
-                  event_category: 'Performance',
-                  metric_name: 'LCP',
-                  metric_value: Math.round(lastEntry.startTime),
-                  metric_rating: lastEntry.startTime > 4000 ? 'poor' : lastEntry.startTime > 2500 ? 'needs-improvement' : 'good'
-                });
-              }).observe({entryTypes: ['largest-contentful-paint']});
+            // Track Core Web Vitals with error handling
+            (function() {
+              if (typeof window === 'undefined' || !window.gtag || !window.PerformanceObserver) {
+                return;
+              }
               
-              // FID - First Input Delay
-              new PerformanceObserver((entryList) => {
-                const entries = entryList.getEntries();
-                entries.forEach((entry) => {
-                  window.gtag('event', 'core_web_vitals', {
-                    event_category: 'Performance',
-                    metric_name: 'FID',
-                    metric_value: Math.round(entry.processingStart - entry.startTime),
-                    metric_rating: entry.processingStart - entry.startTime > 300 ? 'poor' : entry.processingStart - entry.startTime > 100 ? 'needs-improvement' : 'good'
-                  });
-                });
-              }).observe({entryTypes: ['first-input']});
+              const observers = [];
               
-              // CLS - Cumulative Layout Shift
-              let clsValue = 0;
-              new PerformanceObserver((entryList) => {
-                for (const entry of entryList.getEntries()) {
-                  if (!entry.hadRecentInput) {
-                    clsValue += entry.value;
+              try {
+                // LCP - Largest Contentful Paint
+                const lcpObserver = new PerformanceObserver((entryList) => {
+                  try {
+                    const entries = entryList.getEntries();
+                    const lastEntry = entries[entries.length - 1];
+                    if (lastEntry && window.gtag) {
+                      window.gtag('event', 'core_web_vitals', {
+                        event_category: 'Performance',
+                        metric_name: 'LCP',
+                        metric_value: Math.round(lastEntry.startTime),
+                        metric_rating: lastEntry.startTime > 4000 ? 'poor' : lastEntry.startTime > 2500 ? 'needs-improvement' : 'good'
+                      });
+                    }
+                  } catch (e) {
+                    console.warn('LCP tracking error:', e);
                   }
-                }
-                window.gtag('event', 'core_web_vitals', {
-                  event_category: 'Performance',
-                  metric_name: 'CLS',
-                  metric_value: Math.round(clsValue * 1000),
-                  metric_rating: clsValue > 0.25 ? 'poor' : clsValue > 0.1 ? 'needs-improvement' : 'good'
                 });
-              }).observe({entryTypes: ['layout-shift']});
-            }
+                lcpObserver.observe({entryTypes: ['largest-contentful-paint']});
+                observers.push(lcpObserver);
+              } catch (e) {
+                console.warn('LCP observer not supported:', e);
+              }
+              
+              try {
+                // FID - First Input Delay
+                const fidObserver = new PerformanceObserver((entryList) => {
+                  try {
+                    const entries = entryList.getEntries();
+                    entries.forEach((entry) => {
+                      if (entry && window.gtag) {
+                        window.gtag('event', 'core_web_vitals', {
+                          event_category: 'Performance',
+                          metric_name: 'FID',
+                          metric_value: Math.round(entry.processingStart - entry.startTime),
+                          metric_rating: entry.processingStart - entry.startTime > 300 ? 'poor' : entry.processingStart - entry.startTime > 100 ? 'needs-improvement' : 'good'
+                        });
+                      }
+                    });
+                  } catch (e) {
+                    console.warn('FID tracking error:', e);
+                  }
+                });
+                fidObserver.observe({entryTypes: ['first-input']});
+                observers.push(fidObserver);
+              } catch (e) {
+                console.warn('FID observer not supported:', e);
+              }
+              
+              try {
+                // CLS - Cumulative Layout Shift
+                let clsValue = 0;
+                const clsObserver = new PerformanceObserver((entryList) => {
+                  try {
+                    for (const entry of entryList.getEntries()) {
+                      if (entry && !entry.hadRecentInput) {
+                        clsValue += entry.value;
+                      }
+                    }
+                    if (window.gtag) {
+                      window.gtag('event', 'core_web_vitals', {
+                        event_category: 'Performance',
+                        metric_name: 'CLS',
+                        metric_value: Math.round(clsValue * 1000),
+                        metric_rating: clsValue > 0.25 ? 'poor' : clsValue > 0.1 ? 'needs-improvement' : 'good'
+                      });
+                    }
+                  } catch (e) {
+                    console.warn('CLS tracking error:', e);
+                  }
+                });
+                clsObserver.observe({entryTypes: ['layout-shift']});
+                observers.push(clsObserver);
+              } catch (e) {
+                console.warn('CLS observer not supported:', e);
+              }
+              
+              // Cleanup observers after 10 minutes to prevent memory leaks
+              setTimeout(() => {
+                observers.forEach(observer => {
+                  try {
+                    observer.disconnect();
+                  } catch (e) {
+                    console.warn('Error disconnecting observer:', e);
+                  }
+                });
+              }, 10 * 60 * 1000);
+              
+            })();
           `,
         }}
       />
