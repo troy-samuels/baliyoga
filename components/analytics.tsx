@@ -186,8 +186,20 @@ export function PrivacyBanner() {
   const handleAccept = () => {
     grantConsent()
     setShowBanner(false)
-    // Reload to start tracking
-    window.location.reload()
+    
+    // Trigger analytics initialization without page reload
+    if (window.gtag) {
+      window.gtag('consent', 'update', {
+        analytics_storage: 'granted',
+        ad_storage: 'denied',
+      })
+      
+      // Track the consent acceptance event
+      window.gtag('event', 'consent_granted', {
+        event_category: 'Privacy',
+        event_label: 'Analytics Consent Granted'
+      })
+    }
   }
   
   const handleDecline = () => {
