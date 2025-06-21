@@ -22,19 +22,26 @@ export function FunctionalSearchBar({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Get current search params
-    const params = new URLSearchParams(searchParams.toString())
-    
-    // Update or remove the query parameter
-    if (query.trim()) {
-      params.set("q", query.trim())
-    } else {
-      params.delete("q")
+    try {
+      // Get current search params
+      const params = new URLSearchParams(searchParams.toString())
+      
+      // Update or remove the query parameter
+      if (query.trim()) {
+        params.set("q", query.trim())
+      } else {
+        params.delete("q")
+      }
+      
+      // Navigate to the same page with updated search params
+      const pathname = typeof window !== 'undefined' ? window.location.pathname : `/${type}s`
+      const newUrl = `${pathname}?${params.toString()}`
+      router.push(newUrl)
+    } catch (error) {
+      console.warn('Error handling search submit:', error)
+      // Fallback navigation
+      router.push(`/${type}s?q=${encodeURIComponent(query.trim())}`)
     }
-    
-    // Navigate to the same page with updated search params
-    const newUrl = `${window.location.pathname}?${params.toString()}`
-    router.push(newUrl)
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

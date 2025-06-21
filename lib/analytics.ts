@@ -8,13 +8,17 @@ export const isAnalyticsEnabled = !!GA_TRACKING_ID && typeof window !== 'undefin
 export const pageview = (url: string) => {
   if (!isAnalyticsEnabled) return
   
-  window.gtag('config', GA_TRACKING_ID!, {
-    page_location: url,
-    // Privacy-first settings
-    anonymize_ip: true,
-    allow_google_signals: false,
-    allow_ad_personalization_signals: false,
-  })
+  try {
+    window.gtag('config', GA_TRACKING_ID!, {
+      page_location: url,
+      // Privacy-first settings
+      anonymize_ip: true,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+    })
+  } catch (error) {
+    console.warn('Error tracking pageview:', error)
+  }
 }
 
 // Track custom events
@@ -29,12 +33,16 @@ interface EventParams {
 export const event = ({ action, category, label, value, ...params }: EventParams) => {
   if (!isAnalyticsEnabled) return
   
-  window.gtag('event', action, {
-    event_category: category,
-    event_label: label,
-    value: value,
-    ...params,
-  })
+  try {
+    window.gtag('event', action, {
+      event_category: category,
+      event_label: label,
+      value: value,
+      ...params,
+    })
+  } catch (error) {
+    console.warn('Error tracking event:', error)
+  }
 }
 
 // Predefined events for common actions
@@ -131,12 +139,19 @@ export const trackScrollDepth = (percentage: number) => {
 
 // Error tracking
 export const trackError = (error: string, page?: string) => {
-  event({
-    action: 'javascript_error',
-    category: 'Error',
-    label: error,
-    page: page || window.location.pathname,
-  })
+  if (!isAnalyticsEnabled) return
+  
+  try {
+    const pathname = page || (typeof window !== 'undefined' ? window.location.pathname : 'unknown')
+    event({
+      action: 'javascript_error',
+      category: 'Error',
+      label: error,
+      page: pathname,
+    })
+  } catch (err) {
+    console.warn('Error tracking analytics error:', err)
+  }
 }
 
 // Enhanced ecommerce tracking for retreat bookings
@@ -156,31 +171,47 @@ export const trackRetreatBookingStart = (retreatName: string, retreatId: string,
 // GDPR compliance helper
 export const hasConsent = (): boolean => {
   if (typeof window === 'undefined') return false
-  return localStorage.getItem('analytics_consent') === 'granted'
+  
+  try {
+    return localStorage.getItem('analytics_consent') === 'granted'
+  } catch (error) {
+    console.warn('Error checking analytics consent:', error)
+    return false
+  }
 }
 
 export const grantConsent = () => {
   if (typeof window === 'undefined') return
-  localStorage.setItem('analytics_consent', 'granted')
   
-  // Update gtag consent
-  if (window.gtag) {
-    window.gtag('consent', 'update', {
-      analytics_storage: 'granted',
-      ad_storage: 'denied', // Keep ads denied for privacy
-    })
+  try {
+    localStorage.setItem('analytics_consent', 'granted')
+    
+    // Update gtag consent
+    if (window.gtag) {
+      window.gtag('consent', 'update', {
+        analytics_storage: 'granted',
+        ad_storage: 'denied', // Keep ads denied for privacy
+      })
+    }
+  } catch (error) {
+    console.warn('Error granting analytics consent:', error)
   }
 }
 
 export const denyConsent = () => {
   if (typeof window === 'undefined') return
-  localStorage.setItem('analytics_consent', 'denied')
   
-  // Update gtag consent
-  if (window.gtag) {
-    window.gtag('consent', 'update', {
-      analytics_storage: 'denied',
-      ad_storage: 'denied',
-    })
+  try {
+    localStorage.setItem('analytics_consent', 'denied')
+    
+    // Update gtag consent
+    if (window.gtag) {
+      window.gtag('consent', 'update', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+      })
+    }
+  } catch (error) {
+    console.warn('Error denying analytics consent:', error)
   }
 } 

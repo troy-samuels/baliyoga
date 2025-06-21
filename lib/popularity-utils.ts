@@ -23,13 +23,21 @@ export function getPopularityScores(): Record<string, number> {
     const scores = secureGetItem('bali-yoga-popularity-scores')
     if (!scores) return {}
     
-    const parsed = JSON.parse(scores)
+    let parsed: any
+    try {
+      parsed = JSON.parse(scores)
+    } catch (parseError) {
+      console.warn('Error parsing popularity scores JSON:', parseError)
+      return {}
+    }
     
     // Validate and sanitize the data
     const sanitized: Record<string, number> = {}
-    for (const [key, value] of Object.entries(parsed)) {
-      if (isValidItemId(key)) {
-        sanitized[key] = validatePopularityScore(value)
+    if (parsed && typeof parsed === 'object') {
+      for (const [key, value] of Object.entries(parsed)) {
+        if (isValidItemId(key)) {
+          sanitized[key] = validatePopularityScore(value)
+        }
       }
     }
     

@@ -42,7 +42,14 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     try {
       const savedWishlist = secureGetItem('bali-yoga-wishlist')
       if (savedWishlist) {
-        const parsed = JSON.parse(savedWishlist)
+        let parsed: any
+        try {
+          parsed = JSON.parse(savedWishlist)
+        } catch (parseError) {
+          console.warn('Error parsing wishlist JSON:', parseError)
+          setIsLoaded(true)
+          return
+        }
         
         // Validate and sanitize wishlist items
         const validatedItems: WishlistItem[] = []
