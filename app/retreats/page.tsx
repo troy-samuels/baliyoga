@@ -55,9 +55,7 @@ export default async function RetreatsPage({
           <p className="mt-2 text-center text-base text-[#5d4c42]/80 sm:text-lg">
             Immerse yourself in transformative yoga experiences
           </p>
-          <p className="mt-1 text-center text-sm text-[#5d4c42]/60">
-            Sorted by popularity and rating
-          </p>
+          {/* Removed popularity sorting text to keep algorithm hidden from users */}
 
           {/* Search Results Info */}
           {hasFilters && (

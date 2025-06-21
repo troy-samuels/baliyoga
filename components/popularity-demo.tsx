@@ -55,7 +55,10 @@ export function PopularityDemo() {
     { id: 'demo-retreat-1', name: 'Jungle Wellness Retreat', type: 'retreat' },
   ]
 
-  if (!isClient) return null
+  // Only show in development
+  if (process.env.NODE_ENV !== 'development' || !isClient) {
+    return null
+  }
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
