@@ -140,12 +140,25 @@ export function filterRetreats(retreats: any[], filters: SearchFilters) {
 }
 
 export function getLocationDisplayName(location: string): string {
-  const locationMap: { [key: string]: string } = {
+  // Handle location groups
+  const locationGroupMap: { [key: string]: string } = {
+    "South Bali": "South Bali",
+    "Central Bali": "Central Bali", 
+    "East Bali": "East Bali",
+    "North Bali": "North Bali",
+    "West Bali": "West Bali",
+    "Islands": "Islands",
+    all: "All Locations",
+  }
+  
+  // Handle individual locations
+  const individualLocationMap: { [key: string]: string } = {
     ubud: "Ubud",
     canggu: "Canggu",
     seminyak: "Seminyak",
     uluwatu: "Uluwatu",
-    all: "All Locations",
   }
-  return locationMap[location] || location
+  
+  // First check location groups, then individual locations, then return as-is
+  return locationGroupMap[location] || individualLocationMap[location.toLowerCase()] || location
 }

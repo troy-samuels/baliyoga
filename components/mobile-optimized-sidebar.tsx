@@ -8,6 +8,7 @@ import { Checkbox } from "./ui/checkbox"
 import { createServerClient } from "@/lib/supabase"
 
 const LOCATION_GROUPS = [
+  { label: "All Locations", value: "all", locations: [] },
   { label: "South Bali", value: "South Bali", locations: ["Badung Regency", "Denpasar City", "Denpasar", "Uluwatu", "Padang-Padang", "Canggu"] },
   { label: "Central Bali", value: "Central Bali", locations: ["Gianyar Regency", "Ubud", "Bangli Regency"] },
   { label: "East Bali", value: "East Bali", locations: ["Karangasem Regency", "Abang", "Klungkung Regency"] },
@@ -22,9 +23,15 @@ export function MobileOptimizedSidebar() {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [cities, setCities] = useState<string[]>([])
   const [postcodes, setPostcodes] = useState<string[]>([])
+  const [tempLocation, setTempLocation] = useState<string>("")
 
   // Get current filter values from URL (only location now)
   const selectedLocation = searchParams.get('location') || 'all'
+
+  // Initialize temp location when component mounts or selectedLocation changes
+  useEffect(() => {
+    setTempLocation(selectedLocation)
+  }, [selectedLocation])
 
   // Function to update URL with new filters
   const updateFilters = (updates: Record<string, string | null>) => {
@@ -53,16 +60,39 @@ export function MobileOptimizedSidebar() {
     }
   }
 
+  // Apply filters function for mobile
+  const applyFilters = () => {
+    updateFilters({ location: tempLocation })
+    setIsFilterOpen(false)
+  }
+
+  // Handle location change for mobile (temporary state)
+  const handleLocationChange = (value: string) => {
+    setTempLocation(value)
+  }
+
+  // Handle location change for desktop (immediate update)
+  const handleDesktopLocationChange = (value: string) => {
+    updateFilters({ location: value })
+  }
+
   // Fetch filter options from Supabase
   useEffect(() => {
     async function fetchFilterOptions() {
-      const supabase = createServerClient()
-      const { data, error } = await supabase
-        .from('v2_bali_yoga_studios_and_retreats')
-        .select('city, postcode, images')
-      if (error) return
-      setCities(Array.from(new Set(data.map((d: any) => d.city).filter(Boolean))))
-      setPostcodes(Array.from(new Set(data.map((d: any) => d.postcode).filter(Boolean))))
+      try {
+        const supabase = createServerClient()
+        const { data, error } = await supabase
+          .from('v2_bali_yoga_studios_and_retreats')
+          .select('city, postcode, images')
+        if (error) {
+          console.warn('Error fetching filter options:', error)
+          return
+        }
+        setCities(Array.from(new Set(data.map((d: any) => d.city).filter(Boolean))))
+        setPostcodes(Array.from(new Set(data.map((d: any) => d.postcode).filter(Boolean))))
+      } catch (error) {
+        console.warn('Error in fetchFilterOptions:', error)
+      }
     }
     fetchFilterOptions()
   }, [])
@@ -93,8 +123,10 @@ export function MobileOptimizedSidebar() {
             </div>
             <FilterContent
               cities={cities}
-              selectedLocation={selectedLocation}
-              updateFilters={updateFilters}
+              selectedLocation={tempLocation}
+              updateFilters={handleLocationChange}
+              isMobile={true}
+              onApplyFilters={applyFilters}
             />
           </div>
         </div>
@@ -106,7 +138,8 @@ export function MobileOptimizedSidebar() {
           <FilterContent
             cities={cities}
             selectedLocation={selectedLocation}
-            updateFilters={updateFilters}
+            updateFilters={handleDesktopLocationChange}
+            isMobile={false}
           />
         </div>
       </div>
@@ -117,13 +150,17 @@ export function MobileOptimizedSidebar() {
 interface FilterContentProps {
   cities: string[]
   selectedLocation: string
-  updateFilters: (updates: Record<string, string | null>) => void
+  updateFilters: (value: string) => void
+  isMobile: boolean
+  onApplyFilters?: () => void
 }
 
 function FilterContent({ 
   cities,
   selectedLocation,
-  updateFilters
+  updateFilters,
+  isMobile,
+  onApplyFilters
 }: FilterContentProps) {
   return (
     <div className="space-y-6">
@@ -136,20 +173,28 @@ function FilterContent({
               <span className="text-sm lg:text-base">{group.label}</span>
               <input
                 type="radio"
-                name="location"
+                name={isMobile ? "mobile-location" : "desktop-location"}
                 value={group.value}
                 checked={selectedLocation === group.value}
-                onChange={(e) => updateFilters({ location: e.target.value })}
-                className="h-4 w-4"
+                onChange={(e) => updateFilters(e.target.value)}
+                className="h-4 w-4 cursor-pointer"
               />
             </div>
           ))}
         </div>
       </div>
+      
       {/* Mobile Apply Button */}
-      <div className="lg:hidden">
-        <button className="w-full rounded-xl bg-[#e6ceb3] py-3 font-medium text-[#5d4c42]">Apply Filters</button>
-      </div>
+      {isMobile && (
+        <div className="lg:hidden">
+          <button 
+            onClick={onApplyFilters}
+            className="w-full rounded-xl bg-[#e6ceb3] py-3 font-medium text-[#5d4c42] hover:bg-[#d9b99a] transition-colors"
+          >
+            Apply Filters
+          </button>
+        </div>
+      )}
     </div>
   )
 }
