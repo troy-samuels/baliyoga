@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, Calendar, Clock, Facebook, Linkedin, Share2, Tag, Twitter, User } from "lucide-react"
@@ -171,27 +173,30 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
         </div>
 
         {/* Share Buttons */}
-        <div className="mb-8 rounded-xl bg-[#f2e8dc] p-4">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <span className="font-medium text-[#5d4c42]">Share this article:</span>
-            <div className="flex gap-2">
-              <button className="rounded-full bg-[#e6ceb3] p-2 text-[#5d4c42] hover:bg-[#d9b99a]">
-                <Facebook className="h-5 w-5" />
-                <span className="sr-only">Share on Facebook</span>
-              </button>
-              <button className="rounded-full bg-[#e6ceb3] p-2 text-[#5d4c42] hover:bg-[#d9b99a]">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Share on Twitter</span>
-              </button>
-              <button className="rounded-full bg-[#e6ceb3] p-2 text-[#5d4c42] hover:bg-[#d9b99a]">
-                <Linkedin className="h-5 w-5" />
-                <span className="sr-only">Share on LinkedIn</span>
-              </button>
-              <button className="rounded-full bg-[#e6ceb3] p-2 text-[#5d4c42] hover:bg-[#d9b99a]">
-                <Share2 className="h-5 w-5" />
-                <span className="sr-only">Copy Link</span>
-              </button>
-            </div>
+        <div className="my-8 rounded-xl bg-[#f2e8dc] p-6">
+          <h3 className="mb-4 text-lg font-semibold text-[#5d4c42]">Share this article</h3>
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => {
+                if (navigator.share) {
+                  navigator.share({
+                    title: post.title,
+                    text: post.excerpt,
+                    url: window.location.href,
+                  })
+                } else {
+                  navigator.clipboard.writeText(window.location.href)
+                  alert('Link copied to clipboard!')
+                }
+              }}
+              className="flex items-center gap-2 rounded-full bg-[#a39188] px-4 py-2 text-white transition-colors hover:bg-[#8a7b73]"
+            >
+              <Share2 className="h-5 w-5" />
+              Share Article
+            </button>
+            <span className="text-sm text-[#5d4c42]/70">
+              Share this article with friends or save the link
+            </span>
           </div>
         </div>
 

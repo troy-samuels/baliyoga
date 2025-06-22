@@ -9,12 +9,12 @@ export interface SearchFilters {
 
 // Add location group mapping for filtering
 const LOCATION_GROUPS: { [key: string]: string[] } = {
-  "South Bali": ["Badung Regency", "Denpasar City", "Denpasar", "Uluwatu", "Padang-Padang", "Canggu"],
-  "Central Bali": ["Gianyar Regency", "Ubud", "Bangli Regency"],
-  "East Bali": ["Karangasem Regency", "Abang", "Klungkung Regency"],
-  "North Bali": ["Buleleng Regency"],
-  "West Bali": ["Jembrana Regency", "Tabanan Regency", "Gunung"],
-  "Islands": ["Nusa Penida"],
+  "South Bali": ["Badung Regency", "Denpasar City", "Denpasar", "Uluwatu", "Padang-Padang", "Canggu", "Seminyak", "Sanur"],
+  "Central Bali": ["Gianyar Regency", "Ubud", "Bangli Regency", "Gianyar"],
+  "East Bali": ["Karangasem Regency", "Abang", "Klungkung Regency", "Karangasem", "Klungkung"],
+  "North Bali": ["Buleleng Regency", "Buleleng", "Singaraja", "Lovina"],
+  "West Bali": ["Jembrana Regency", "Tabanan Regency", "Gunung", "Jembrana", "Tabanan", "Bedugul"],
+  "Islands": ["Nusa Penida", "Nusa Lembongan", "Nusa Ceningan"],
 }
 
 export function filterStudios(studios: any[], filters: SearchFilters) {
@@ -37,19 +37,23 @@ export function filterStudios(studios: any[], filters: SearchFilters) {
     )
   }
 
-  // Filter by location (support group and city)
+  // Filter by location (support group and city) - Fixed to work with Supabase data
   if (filters.location && filters.location !== "all") {
     const groupCities = LOCATION_GROUPS[filters.location]
     if (groupCities) {
-      filtered = filtered.filter((studio) =>
-        groupCities.some((city) =>
-          studio.location && studio.location.toLowerCase().includes(city.toLowerCase())
+      filtered = filtered.filter((studio) => {
+        const studioLocation = studio.location || studio.city || ""
+        return groupCities.some((city) =>
+          studioLocation.toLowerCase().includes(city.toLowerCase()) ||
+          studioLocation.toLowerCase() === city.toLowerCase()
         )
-      )
+      })
     } else {
-      filtered = filtered.filter((studio) =>
-        studio.location && studio.location.toLowerCase().includes(filters.location!.toLowerCase())
-      )
+      // Direct location match
+      filtered = filtered.filter((studio) => {
+        const studioLocation = studio.location || studio.city || ""
+        return studioLocation.toLowerCase().includes(filters.location!.toLowerCase())
+      })
     }
   }
 
@@ -94,19 +98,23 @@ export function filterRetreats(retreats: any[], filters: SearchFilters) {
     )
   }
 
-  // Filter by location (support group and city)
+  // Filter by location (support group and city) - Fixed to work with Supabase data
   if (filters.location && filters.location !== "all") {
     const groupCities = LOCATION_GROUPS[filters.location]
     if (groupCities) {
-      filtered = filtered.filter((retreat) =>
-        groupCities.some((city) =>
-          retreat.location && retreat.location.toLowerCase().includes(city.toLowerCase())
+      filtered = filtered.filter((retreat) => {
+        const retreatLocation = retreat.location || retreat.city || ""
+        return groupCities.some((city) =>
+          retreatLocation.toLowerCase().includes(city.toLowerCase()) ||
+          retreatLocation.toLowerCase() === city.toLowerCase()
         )
-      )
+      })
     } else {
-      filtered = filtered.filter((retreat) =>
-        retreat.location && retreat.location.toLowerCase().includes(filters.location!.toLowerCase())
-      )
+      // Direct location match
+      filtered = filtered.filter((retreat) => {
+        const retreatLocation = retreat.location || retreat.city || ""
+        return retreatLocation.toLowerCase().includes(filters.location!.toLowerCase())
+      })
     }
   }
 

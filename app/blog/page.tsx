@@ -28,26 +28,20 @@ function loadBlogPosts(): BlogPost[] {
     const filePath = path.join(process.cwd(), "data", "blog-posts.json")
     if (fs.existsSync(filePath)) {
       const data = fs.readFileSync(filePath, "utf8")
-      return JSON.parse(data).filter((post: BlogPost) => post.status === "published")
+      const posts = JSON.parse(data).filter((post: BlogPost) => post.status === "published")
+      // Filter out posts without proper featured images
+      return posts.filter((post: BlogPost) => 
+        post.featuredImage && 
+        post.featuredImage.trim() !== "" && 
+        !post.featuredImage.includes('placeholder')
+      )
     }
   } catch (error) {
     console.error("Error loading blog posts:", error)
   }
 
-  // Return mock data if no posts exist
-  return [
-    {
-      id: "1",
-      title: "The Ultimate Guide to Finding Your Perfect Yoga Studio in Bali",
-      slug: "ultimate-guide-yoga-studio-bali",
-      excerpt: "Discover the insider secrets to choosing the perfect yoga studio for your Bali retreat.",
-      featuredImage: generateColorFallback(600, 400, '#e6ceb3'),
-      author: "Maya Patel",
-      publishDate: "2023-06-15",
-      readTime: "8 min read",
-      categories: ["Yoga Practice", "Bali Travel"],
-      status: "published",
-    },
+  // Return mock data if no posts exist - but filter out the problematic article
+  const mockPosts = [
     {
       id: "2",
       title: "Top 5 Vegan Cafes Near Yoga Studios in Ubud",
@@ -73,12 +67,18 @@ function loadBlogPosts(): BlogPost[] {
       status: "published",
     },
   ]
+  
+  // Filter out any posts without proper images
+  return mockPosts.filter((post: BlogPost) => 
+    post.featuredImage && 
+    post.featuredImage.trim() !== "" && 
+    !post.featuredImage.includes('placeholder')
+  )
 }
 
 export default function BlogPage() {
   const blogPosts = loadBlogPosts()
-  const featuredPosts = blogPosts.slice(0, 3)
-  const recentPosts = blogPosts.slice(3)
+  const recentPosts = blogPosts
 
   const categories = [
     { name: "Yoga Practice", count: 15 },
@@ -128,84 +128,6 @@ export default function BlogPage() {
       {/* Main Content */}
       <div className="mx-auto max-w-7xl px-4 py-12 md:px-6">
         <div className="space-y-12">
-          {/* Featured Posts */}
-          {featuredPosts.length > 0 && (
-            <section>
-              <h2 className="mb-6 text-2xl font-bold text-[#5d4c42]">Featured Articles</h2>
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-                {featuredPosts.map((post) => (
-                  <article
-                    key={post.id}
-                    className="group overflow-hidden rounded-2xl bg-white shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg"
-                  >
-                    <Link href={`/blog/${post.slug}`} className="block">
-                      <div className="relative h-48 w-full overflow-hidden">
-                        <Image
-                          src={post.featuredImage || generateColorFallback(600, 400, '#e6ceb3')}
-                          alt={post.title}
-                          width={600}
-                          height={400}
-                          className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                        />
-                        <div className="absolute top-2 right-2 rounded-full bg-[#e6ceb3] px-3 py-1 text-xs font-medium text-[#5d4c42]">
-                          Featured
-                        </div>
-                      </div>
-                      <div className="p-5">
-                        <div className="mb-2 flex flex-wrap gap-2">
-                          {post.categories?.map((category: string, index: number) => (
-                            <span key={index} className="rounded-full bg-[#f2e8dc] px-2 py-0.5 text-xs text-[#5d4c42]">
-                              {category}
-                            </span>
-                          ))}
-                        </div>
-                        <h3 className="mb-2 text-xl font-semibold text-[#5d4c42] line-clamp-2">{post.title}</h3>
-                        <p className="mb-4 text-sm text-[#5d4c42]/80 line-clamp-3">{post.excerpt}</p>
-                        <div className="flex items-center justify-between text-xs text-[#5d4c42]/70">
-                          <div className="flex items-center">
-                            <User className="mr-1 h-3 w-3" />
-                            <span>{post.author}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <Calendar className="mr-1 h-3 w-3" />
-                            <span>{new Date(post.publishDate).toLocaleDateString()}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <Clock className="mr-1 h-3 w-3" />
-                            <span>{post.readTime}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </article>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Category Tabs */}
-          <section className="rounded-2xl bg-[#f2e8dc] p-6 shadow-sm">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-[#5d4c42]">Explore by Category</h2>
-              <Link href="/admin/blog" className="text-sm font-medium text-[#5d4c42] hover:text-[#a39188]">
-                Manage Blog
-              </Link>
-            </div>
-            <div className="mb-6 flex flex-wrap gap-2">
-              {categories.slice(0, 6).map((category, index) => (
-                <Link
-                  key={index}
-                  href={`/blog/category/${category.name.toLowerCase().replace(/\s+/g, "-")}`}
-                  className={`rounded-full px-4 py-2 text-sm font-medium ${
-                    index === 0 ? "bg-[#e6ceb3] text-[#5d4c42]" : "bg-white text-[#5d4c42] hover:bg-[#e6ceb3]"
-                  }`}
-                >
-                  {category.name}
-                </Link>
-              ))}
-            </div>
-          </section>
-
           {/* Latest Articles */}
           {recentPosts.length > 0 && (
             <section>

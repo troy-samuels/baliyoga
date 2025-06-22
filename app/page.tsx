@@ -8,37 +8,6 @@ import { MobileOptimizedCard } from "@/components/mobile-optimized-card"
 import { LazySection } from "@/components/lazy-section"
 import { getTopSupabaseStudios, getTopSupabaseRetreats } from "@/lib/supabase-data-utils"
 import type { Studio, Retreat } from "@/lib/data-utils"
-import fs from "fs"
-import path from "path"
-import { generateColorFallback } from "@/lib/image-fallback"
-
-// Blog post interface
-interface BlogPost {
-  id: string
-  title: string
-  slug: string
-  excerpt: string
-  featuredImage?: string
-  author: string
-  publishDate: string
-  readTime: string
-  categories?: string[]
-  status?: string
-}
-
-// Load blog posts from JSON file
-function loadBlogPosts(): BlogPost[] {
-  try {
-    const filePath = path.join(process.cwd(), "data", "blog-posts.json")
-    if (fs.existsSync(filePath)) {
-      const data = fs.readFileSync(filePath, "utf8")
-      return JSON.parse(data).filter((post: BlogPost) => post.status === "published")
-    }
-  } catch (error) {
-    console.error("Error loading blog posts:", error)
-  }
-  return []
-}
 
 export default async function Home() {
   // Get top rated data with most images from Supabase
@@ -46,10 +15,6 @@ export default async function Home() {
     getTopSupabaseStudios(4),
     getTopSupabaseRetreats(4),
   ])
-
-  // Load real blog posts
-  const blogPosts = loadBlogPosts()
-  const featuredBlogs = blogPosts.slice(0, 3)
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
@@ -119,43 +84,6 @@ export default async function Home() {
               </div>
             </section>
           </LazySection>
-
-          {/* Blog Section */}
-          <section className="rounded-2xl bg-[#f2e8dc] p-4 shadow-sm sm:p-6">
-            <div className="mb-4 flex items-center justify-between sm:mb-6">
-              <h2 className="text-xl font-bold text-[#5d4c42] sm:text-2xl">Yoga & Wellness Insights from Bali</h2>
-              <Link href="/blog" className="text-sm font-medium text-[#5d4c42] hover:text-[#a39188]">
-                View All
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
-              {featuredBlogs.map((blog) => (
-                <Link
-                  key={blog.id}
-                  href={`/blog/${blog.slug}`}
-                  className="group overflow-hidden rounded-xl bg-white shadow-sm transition-transform hover:-translate-y-1 hover:shadow-md"
-                >
-                  <div className="h-32 w-full overflow-hidden sm:h-40">
-                    <Image
-                      src={blog.featuredImage || generateColorFallback(300, 160, '#e6ceb3')}
-                      alt={blog.title}
-                      width={300}
-                      height={160}
-                      className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-3 sm:p-4">
-                    <h3 className="mb-2 text-base font-semibold text-[#5d4c42] sm:text-lg line-clamp-2">{blog.title}</h3>
-                    <p className="text-sm text-[#5d4c42]/80 line-clamp-2">{blog.excerpt}</p>
-                    <div className="mt-2 flex items-center justify-between text-xs text-[#5d4c42]/70 sm:mt-3">
-                      <span>{blog.author}</span>
-                      <span>{blog.readTime}</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
 
           {/* Testimonials Section */}
           <section className="rounded-2xl bg-[#f2e8dc] p-4 shadow-sm sm:p-6">

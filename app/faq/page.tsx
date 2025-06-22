@@ -145,12 +145,12 @@ export default function FAQPage() {
       <div 
         className="relative bg-cover bg-center py-20 md:py-32"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('${generateColorFallback(1200, 600, '#a39188')}')`
+          backgroundImage: `linear-gradient(rgba(233, 206, 179, 0.8), rgba(233, 206, 179, 0.8)), url('${generateColorFallback(1200, 600, '#a39188')}')`
         }}
       >
-        <div className="mx-auto max-w-4xl px-4 text-center text-white">
-          <h1 className="text-4xl font-bold md:text-6xl">Frequently Asked Questions</h1>
-          <p className="mt-4 text-lg md:text-xl opacity-90">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <h1 className="text-4xl font-bold md:text-6xl text-[#5d4c42]">Frequently Asked Questions</h1>
+          <p className="mt-4 text-lg md:text-xl text-[#5d4c42]/80">
             We're here to help with any questions you have about plans, pricing, and supported features.
           </p>
         </div>
