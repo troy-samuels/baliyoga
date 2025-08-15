@@ -36,6 +36,11 @@ export type Studio = {
   website?: string
   opening_hours?: any[]
   category?: string
+  // AI-enhanced fields
+  business_description?: string
+  languages_spoken?: string[]
+  drop_in_price_usd?: number | null
+  price_range?: string
 }
 
 export type Retreat = {
@@ -76,6 +81,12 @@ export type Retreat = {
   website?: string
   opening_hours?: any[]
   category?: string
+  // AI-enhanced fields
+  business_description?: string
+  amenities?: string[]
+  languages_spoken?: string[]
+  drop_in_price_usd?: number | null
+  price_range?: string
 }
 
 // Update the mockStudios array to include more detailed information

@@ -95,6 +95,44 @@ const mapToStudio = (item: any): Studio => {
         }
       })() : []);
 
+  // Parse amenities array
+  let amenities: string[] = []
+  if (item.amenities) {
+    try {
+      if (Array.isArray(item.amenities)) {
+        amenities = item.amenities
+      } else if (typeof item.amenities === 'string') {
+        try {
+          amenities = JSON.parse(item.amenities)
+        } catch {
+          amenities = item.amenities.split(',').map((s: string) => s.trim()).filter((s: string) => s.length > 0)
+        }
+      }
+    } catch (error) {
+      console.warn('Error parsing amenities:', error)
+      amenities = []
+    }
+  }
+
+  // Parse languages spoken array
+  let languagesSpoken: string[] = []
+  if (item.languages_spoken) {
+    try {
+      if (Array.isArray(item.languages_spoken)) {
+        languagesSpoken = item.languages_spoken
+      } else if (typeof item.languages_spoken === 'string') {
+        try {
+          languagesSpoken = JSON.parse(item.languages_spoken)
+        } catch {
+          languagesSpoken = item.languages_spoken.split(',').map((s: string) => s.trim()).filter((s: string) => s.length > 0)
+        }
+      }
+    } catch (error) {
+      console.warn('Error parsing languages_spoken:', error)
+      languagesSpoken = []
+    }
+  }
+
   return {
     id: item.id,
     name: item.name,
@@ -105,6 +143,12 @@ const mapToStudio = (item: any): Studio => {
     image: imagesArray.length > 0 ? processImageUrl(imagesArray[0]) : generateColorFallback(300, 200, '#e6ceb3'),
     images: imagesArray.map(processImageUrl),
     styles: styles,
+    // AI-enhanced fields
+    business_description: item.business_description || "",
+    amenities: amenities,
+    languages_spoken: languagesSpoken,
+    drop_in_price_usd: item.drop_in_price_usd || null,
+    price_range: item.price_range || "",
     // Only use real data - no fake descriptions or pricing
     tagline: undefined, // Will be handled in the component
     description: undefined, // Will be handled in the component
@@ -161,6 +205,44 @@ const mapToRetreat = (item: any): Retreat => {
         }
       })() : []);
 
+  // Parse amenities array
+  let amenities: string[] = []
+  if (item.amenities) {
+    try {
+      if (Array.isArray(item.amenities)) {
+        amenities = item.amenities
+      } else if (typeof item.amenities === 'string') {
+        try {
+          amenities = JSON.parse(item.amenities)
+        } catch {
+          amenities = item.amenities.split(',').map((s: string) => s.trim()).filter((s: string) => s.length > 0)
+        }
+      }
+    } catch (error) {
+      console.warn('Error parsing amenities:', error)
+      amenities = []
+    }
+  }
+
+  // Parse languages spoken array
+  let languagesSpoken: string[] = []
+  if (item.languages_spoken) {
+    try {
+      if (Array.isArray(item.languages_spoken)) {
+        languagesSpoken = item.languages_spoken
+      } else if (typeof item.languages_spoken === 'string') {
+        try {
+          languagesSpoken = JSON.parse(item.languages_spoken)
+        } catch {
+          languagesSpoken = item.languages_spoken.split(',').map((s: string) => s.trim()).filter((s: string) => s.length > 0)
+        }
+      }
+    } catch (error) {
+      console.warn('Error parsing languages_spoken:', error)
+      languagesSpoken = []
+    }
+  }
+
   return {
     id: item.id,
     name: item.name,
@@ -173,6 +255,12 @@ const mapToRetreat = (item: any): Retreat => {
     // Required fields - use empty strings if no real data
     duration: "", // No duration data available
     price: "", // No pricing data available
+    // AI-enhanced fields
+    business_description: item.business_description || "",
+    amenities: amenities,
+    languages_spoken: languagesSpoken,
+    drop_in_price_usd: item.drop_in_price_usd || null,
+    price_range: item.price_range || "",
     // Optional fields
     tagline: undefined, // Will be handled in the component
     description: undefined, // Will be handled in the component

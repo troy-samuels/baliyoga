@@ -296,7 +296,7 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                     <span className="text-[#5d4c42]/80 text-sm">
                       {item.location_details.address}
                     </span>
-                  </div>
+                    </div>
                   </div>
                 )}
 
@@ -307,6 +307,76 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                   name={item.name}
                   city={item.location}
                 />
+              </div>
+
+              {/* Enhanced Information Panel */}
+              <div className="mt-6 space-y-4">
+                {/* Business Description */}
+                {'business_description' in item && item.business_description && (
+                  <div>
+                    <h3 className="text-sm font-medium text-[#5d4c42] mb-2">About</h3>
+                    <p className="text-sm text-[#5d4c42]/80 leading-relaxed">
+                      {item.business_description}
+                    </p>
+                  </div>
+                )}
+
+                {/* Amenities */}
+                {'amenities' in item && item.amenities && item.amenities.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-medium text-[#5d4c42] mb-2">Amenities</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {item.amenities.map((amenity, index) => (
+                        <span 
+                          key={index}
+                          className="inline-flex items-center gap-1 px-2 py-1 bg-[#f9f9f6] rounded-lg text-xs text-[#5d4c42]"
+                        >
+                          <div className="w-1.5 h-1.5 bg-[#5d4c42] rounded-full"></div>
+                          {amenity}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Languages Spoken */}
+                {'languages_spoken' in item && item.languages_spoken && item.languages_spoken.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-medium text-[#5d4c42] mb-2">Languages</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {item.languages_spoken.map((language, index) => (
+                        <span 
+                          key={index}
+                          className="inline-flex items-center gap-1 px-2 py-1 bg-[#e6ceb3] rounded-lg text-xs text-[#5d4c42] font-medium"
+                        >
+                          🗣️ {language}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Drop-in Pricing - Only show if available */}
+                {'drop_in_price_usd' in item && item.drop_in_price_usd && (
+                  <div>
+                    <h3 className="text-sm font-medium text-[#5d4c42] mb-2">Drop-in Classes</h3>
+                    <div className="bg-[#e6ceb3] rounded-lg p-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-[#5d4c42]">Drop-in Rate</span>
+                        <span className="font-semibold text-[#5d4c42]">
+                          ${item.drop_in_price_usd} USD
+                        </span>
+                      </div>
+                      {'price_range' in item && item.price_range && (
+                        <div className="mt-1">
+                          <span className="text-xs text-[#5d4c42]/70 capitalize">
+                            {item.price_range} pricing
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
