@@ -6,6 +6,7 @@ import { MobileOptimizedHero } from "@/components/mobile-optimized-hero"
 import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import { MobileOptimizedCard } from "@/components/mobile-optimized-card"
 import { LazySection } from "@/components/lazy-section"
+import { HomepageSchema } from "@/components/homepage-schema"
 import { getTopSupabaseStudios, getTopSupabaseRetreats } from "@/lib/supabase-data-utils"
 import type { Studio, Retreat } from "@/lib/data-utils"
 
@@ -18,6 +19,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
+      <HomepageSchema />
       <MobileOptimizedHeader />
       <MobileOptimizedHero />
 

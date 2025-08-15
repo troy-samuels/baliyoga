@@ -9,6 +9,7 @@ import { MobileOptimizedSidebar } from "@/components/mobile-optimized-sidebar"
 import { FunctionalSearchBar } from "@/components/functional-search-bar"
 import { PopularitySortedGrid } from "@/components/popularity-sorted-grid"
 import { PopularityDemo } from "@/components/popularity-demo"
+import { CategorySchema } from "@/components/category-schema"
 
 export default async function RetreatsPage({
   searchParams,
@@ -41,6 +42,7 @@ export default async function RetreatsPage({
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
+      <CategorySchema type="retreats" items={filteredRetreats} totalCount={allRetreats.length} />
       <MobileOptimizedHeader />
 
       {/* Header */}

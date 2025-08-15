@@ -27,6 +27,7 @@ import { WishlistHeart } from "@/components/wishlist-heart"
 import { PopularityBadge } from "@/components/popularity-badge"
 import { ErrorHandledImage } from "@/components/error-handled-image"
 import { LocationMap } from "@/components/location-map"
+import { SchemaMarkup } from "@/components/schema-markup"
 import { generateColorFallback } from "@/lib/image-fallback"
 
 export async function generateMetadata({ params }: { params: Promise<{ type: string; slug: string }> }) {
@@ -94,6 +95,7 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
+      <SchemaMarkup item={item} type={type === "studios" ? "studio" : "retreat"} />
       <MobileOptimizedHeader />
       <div className="mx-auto max-w-7xl px-4 py-4">
           <Link
