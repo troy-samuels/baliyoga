@@ -24,18 +24,18 @@ export default async function Home() {
       <MobileOptimizedHero />
 
       {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:py-8 md:px-6">
-        <div className="space-y-8 lg:space-y-12">
+      <div className="mx-auto max-w-7xl px-4 py-4 safe-left safe-right xs:py-6 sm:py-8 md:px-6">
+        <div className="space-y-6 xs:space-y-8 lg:space-y-12">
           {/* Top Rated Yoga Studios */}
           <LazySection>
             <section>
-              <div className="mb-4 flex items-center justify-between sm:mb-6">
-                <h2 className="text-xl font-bold text-[#5d4c42] sm:text-2xl">Top Rated Yoga Studios</h2>
-                <Link href="/studios" className="text-sm font-medium text-[#5d4c42] hover:text-[#a39188]">
+              <div className="mb-4 flex items-center justify-between xs:mb-5 sm:mb-6">
+                <h2 className="text-lg font-bold text-[#5d4c42] xs:text-xl sm:text-2xl">Top Rated Yoga Studios</h2>
+                <Link href="/studios" className="text-sm font-medium text-[#5d4c42] hover:text-[#a39188] touch-manipulation">
                   View All
                 </Link>
               </div>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-3 xs:gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 card-grid">
                 {topStudios.map((studio: Studio, idx: number) => (
                   <MobileOptimizedCard
                     key={studio.id}
@@ -59,13 +59,13 @@ export default async function Home() {
           {/* Top Rated Yoga Retreats */}
           <LazySection>
             <section>
-              <div className="mb-4 flex items-center justify-between sm:mb-6">
-                <h2 className="text-xl font-bold text-[#5d4c42] sm:text-2xl">Top Rated Yoga Retreats</h2>
-                <Link href="/retreats" className="text-sm font-medium text-[#5d4c42] hover:text-[#a39188]">
+              <div className="mb-4 flex items-center justify-between xs:mb-5 sm:mb-6">
+                <h2 className="text-lg font-bold text-[#5d4c42] xs:text-xl sm:text-2xl">Top Rated Yoga Retreats</h2>
+                <Link href="/retreats" className="text-sm font-medium text-[#5d4c42] hover:text-[#a39188] touch-manipulation">
                   View All
                 </Link>
               </div>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-3 xs:gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 card-grid">
                 {topRetreats.map((retreat: Retreat, idx: number) => (
                   <MobileOptimizedCard
                     key={retreat.id}
@@ -88,11 +88,11 @@ export default async function Home() {
           </LazySection>
 
           {/* Testimonials Section */}
-          <section className="rounded-2xl bg-[#f2e8dc] p-4 shadow-sm sm:p-6">
-            <div className="mb-4 sm:mb-6">
-              <h2 className="text-xl font-bold text-[#5d4c42] sm:text-2xl">What Our Community Says</h2>
+          <section className="rounded-xl bg-[#f2e8dc] p-4 shadow-sm xs:p-5 sm:p-6 safe-left safe-right">
+            <div className="mb-4 xs:mb-5 sm:mb-6">
+              <h2 className="text-lg font-bold text-[#5d4c42] xs:text-xl sm:text-2xl">What Our Community Says</h2>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 xs:gap-4 sm:gap-6 md:grid-cols-2">
               {[
                 {
                   name: "Sarah M.",

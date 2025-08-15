@@ -7,6 +7,7 @@ import { SecurityInitializer } from "@/components/security-initializer"
 import { Analytics, PrivacyBanner } from "@/components/analytics"
 import { PerformanceMonitor } from "@/components/performance-monitor"
 import { PerformanceOptimizer } from "@/components/performance-optimizer"
+import { MobileTouchOptimizer } from "@/components/mobile-touch-optimizer"
 
 // Initialize the Cormorant Garamond font for headings with optimizations
 const cormorantGaramond = Cormorant_Garamond({
@@ -86,6 +87,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorantGaramond.variable} ${inter.variable}`}>
       <head>
+        {/* Mobile-first viewport configuration */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="theme-color" content="#f9f3e9" />
+        
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -111,6 +119,9 @@ export default function RootLayout({
               -moz-osx-font-smoothing: grayscale;
               text-rendering: optimizeSpeed;
               background-color: #f9f3e9;
+              -webkit-tap-highlight-color: transparent;
+              -webkit-text-size-adjust: 100%;
+              -ms-text-size-adjust: 100%;
             }
             
             /* Performance optimizations */
@@ -118,10 +129,30 @@ export default function RootLayout({
               box-sizing: border-box;
             }
             
+            /* Mobile-first optimizations */
+            html {
+              -webkit-text-size-adjust: 100%;
+              height: 100%;
+            }
+            
+            /* Touch interactions */
+            .touch-manipulation {
+              touch-action: manipulation;
+              -webkit-touch-callout: none;
+              -webkit-user-select: none;
+              user-select: none;
+            }
+            
+            /* Safe area support */
+            .safe-top { padding-top: max(1rem, env(safe-area-inset-top)); }
+            .safe-bottom { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+            .safe-left { padding-left: max(1rem, env(safe-area-inset-left)); }
+            .safe-right { padding-right: max(1rem, env(safe-area-inset-right)); }
+            
             /* Prevent flash of unstyled content */
-            .header-nav { min-height: 80px; }
-            .hero-section { min-height: 400px; }
-            .card-grid { min-height: 300px; }
+            .header-nav { min-height: 70px; }
+            .hero-section { min-height: 350px; }
+            .card-grid { min-height: 280px; }
             
             /* Loading skeleton animation */
             @keyframes pulse {
@@ -129,12 +160,33 @@ export default function RootLayout({
               50% { opacity: 0.5; }
             }
             .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+            
+            /* Mobile scroll optimizations */
+            @media (max-width: 768px) {
+              body {
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+              }
+              
+              /* Improved text legibility on mobile */
+              h1, h2, h3, h4, h5, h6 {
+                -webkit-font-smoothing: antialiased;
+                line-height: 1.2;
+              }
+              
+              /* Better button touch targets */
+              button, a {
+                min-height: 44px;
+                min-width: 44px;
+              }
+            }
           `
         }} />
       </head>
       <body className="font-inter">
         <SecurityInitializer />
         <PerformanceOptimizer />
+        <MobileTouchOptimizer />
         <WishlistProvider>
           {children}
         </WishlistProvider>

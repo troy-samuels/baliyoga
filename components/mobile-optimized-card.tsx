@@ -57,7 +57,8 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
   }
 
   return (
-    <div className={`group overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-black/10 hover:scale-[1.02] relative ${featured ? 'featured-card' : ''}`}>
+    <div className={`group overflow-hidden rounded-xl bg-white shadow-sm border border-[#e6ceb3]/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5 active:scale-[0.98] relative touch-manipulation ${featured ? 'featured-card ring-2 ring-green-500/20' : ''}`}
+         style={{ minHeight: '280px' }}>
       {featured && (
         <span className="absolute top-2 left-2 z-20 rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-lg animate-pop">Featured</span>
       )}
@@ -72,58 +73,64 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
         <WishlistHeart item={wishlistItem} />
       </div>
 
-      <Link href={href} className="block relative z-10">
-        <div className="relative h-40 w-full overflow-hidden sm:h-48">
+      <Link href={href} className="block relative z-10 touch-manipulation">
+        <div className="relative h-36 w-full overflow-hidden xs:h-40 sm:h-48">
           <OptimizedImage
             src={image || generateColorFallback(300, 200, '#e6ceb3')}
             alt={name}
             fill
-            className="object-cover object-center transition-transform duration-300 group-hover:scale-110"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 475px) 100vw, (max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           />
+          {/* Gradient overlay for better text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
 
-        <div className="p-3 sm:p-4">
-          <h3 className="text-base font-semibold text-[#5d4c42] line-clamp-2 sm:text-lg">{name}</h3>
+        <div className="p-3 xs:p-4 sm:p-4">
+          <h3 className="text-sm font-semibold text-[#5d4c42] line-clamp-2 leading-tight xs:text-base sm:text-lg">{name}</h3>
 
-          <div className="mt-1 flex items-center text-xs text-[#5d4c42] sm:text-sm">
-            <MapPin className="mr-1 h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4" />
+          <div className="mt-1.5 flex items-center text-xs text-[#5d4c42]/80 xs:text-sm">
+            <MapPin className="mr-1 h-3 w-3 flex-shrink-0 xs:h-3.5 xs:w-3.5 sm:h-4 sm:w-4" />
             <span className="truncate">{location}, Bali</span>
           </div>
 
           {/* Contact Information - Icons only as visual indicators */}
           {(phone_number?.trim() || website?.trim()) && (
-            <div className="mt-2 flex items-center gap-2 sm:gap-3">
+            <div className="mt-2 flex items-center gap-2">
               {phone_number?.trim() && (
-                <Phone className="h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4 text-[#5d4c42]" />
+                <div className="rounded-full bg-[#e6ceb3] p-1">
+                  <Phone className="h-2.5 w-2.5 text-[#5d4c42] xs:h-3 xs:w-3" />
+                </div>
               )}
               {website?.trim() && (
-                <Globe className="h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4 text-[#5d4c42]" />
+                <div className="rounded-full bg-[#e6ceb3] p-1">
+                  <Globe className="h-2.5 w-2.5 text-[#5d4c42] xs:h-3 xs:w-3" />
+                </div>
               )}
             </div>
           )}
 
-          <div className="mt-2 flex items-center justify-between">
-            <div className="flex flex-wrap gap-1">
+          <div className="mt-3 flex items-center justify-between gap-2">
+            <div className="flex flex-wrap gap-1 min-w-0 flex-1">
               {type === "studio" &&
                 styles &&
                 styles.slice(0, 2).map((style, index) => (
                   <span
                     key={index}
-                    className="rounded-full bg-[#a39188] px-2 py-0.5 text-xs text-white sm:px-2 sm:py-1"
+                    className="rounded-full bg-[#a39188] px-2 py-1 text-xs text-white font-medium truncate xs:px-2.5"
                   >
                     {style}
                   </span>
                 ))}
               {type === "retreat" && duration && (
-                <div className="flex items-center gap-1">
-                  <Calendar className="h-3 w-3 text-[#a39188] sm:h-4 sm:w-4" />
-                  <span className="text-xs text-[#5d4c42]/80 sm:text-sm">{duration}</span>
+                <div className="flex items-center gap-1 min-w-0">
+                  <Calendar className="h-3 w-3 text-[#a39188] flex-shrink-0 xs:h-3.5 xs:w-3.5" />
+                  <span className="text-xs text-[#5d4c42]/80 xs:text-sm truncate">{duration}</span>
                 </div>
               )}
             </div>
             {type === "retreat" && price && (
-              <span className="text-xs font-medium text-[#5d4c42] sm:text-sm">{price}</span>
+              <span className="text-xs font-semibold text-[#5d4c42] xs:text-sm whitespace-nowrap">{price}</span>
             )}
           </div>
         </div>

@@ -104,7 +104,7 @@ export function MobileOptimizedSidebar() {
       <div className="mb-4 lg:hidden">
         <button
           onClick={() => setIsFilterOpen(true)}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#e6ceb3] px-4 py-3 font-medium text-[#5d4c42]"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#e6ceb3] px-4 py-3.5 font-semibold text-[#5d4c42] transition-all duration-200 hover:bg-[#d4c1a1] active:scale-[0.98] touch-manipulation shadow-sm"
         >
           <Filter className="h-5 w-5" />
           Filters
@@ -114,11 +114,16 @@ export function MobileOptimizedSidebar() {
       {/* Mobile Filter Overlay */}
       {isFilterOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setIsFilterOpen(false)} />
-          <div className="absolute bottom-0 left-0 right-0 max-h-[80vh] overflow-y-auto rounded-t-2xl bg-[#f2e8dc] p-6">
-            <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-[#5d4c42]">Filters</h3>
-              <button onClick={() => setIsFilterOpen(false)} className="rounded-full bg-[#a39188] p-2 text-white">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsFilterOpen(false)} />
+          <div className="absolute bottom-0 left-0 right-0 max-h-[85vh] overflow-y-auto rounded-t-3xl bg-[#f2e8dc] p-6 shadow-2xl transform transition-transform duration-300"
+               style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}>
+            <div className="mb-6 flex items-center justify-between">
+              <h3 className="text-xl font-bold text-[#5d4c42]">Filters</h3>
+              <button 
+                onClick={() => setIsFilterOpen(false)} 
+                className="rounded-full bg-[#a39188] p-2.5 text-white transition-all duration-200 hover:bg-[#8a7b73] active:scale-90 touch-manipulation"
+                aria-label="Close filters"
+              >
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -187,12 +192,21 @@ function FilterContent({
       
       {/* Mobile Apply Button */}
       {isMobile && (
-        <div className="lg:hidden">
+        <div className="lg:hidden space-y-3">
           <button 
             onClick={onApplyFilters}
-            className="w-full rounded-xl bg-[#e6ceb3] py-3 font-medium text-[#5d4c42] hover:bg-[#d9b99a] transition-colors"
+            className="w-full rounded-xl bg-[#e6ceb3] py-4 font-bold text-[#5d4c42] transition-all duration-200 hover:bg-[#d9b99a] active:scale-[0.98] touch-manipulation shadow-sm"
           >
             Apply Filters
+          </button>
+          <button 
+            onClick={() => {
+              updateFilters('all')
+              onApplyFilters?.()
+            }}
+            className="w-full rounded-xl border-2 border-[#a39188] py-3 font-medium text-[#a39188] transition-all duration-200 hover:bg-[#a39188] hover:text-white active:scale-[0.98] touch-manipulation"
+          >
+            Clear All
           </button>
         </div>
       )}
