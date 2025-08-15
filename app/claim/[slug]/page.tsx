@@ -6,7 +6,7 @@ export default async function ClaimPage({ params }: { params: Promise<{ slug: st
   // Fetch business info from Supabase
   const supabase = createServerClient()
   const { data, error } = await supabase
-    .from('v2_bali_yoga_studios_and_retreats')
+    .from('v3_bali_yoga_studios_and_retreats')
     .select('name')
     .eq('slug', slug)
     .single()

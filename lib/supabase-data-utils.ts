@@ -1,6 +1,7 @@
 import { createServerClient } from "./supabase"
 import type { Studio, Retreat } from "./data-utils"
 import { generateColorFallback } from "./image-fallback"
+import { withCache, CACHE_CONFIG, createCacheKey } from "./cache-utils"
 
 // Categories that should be considered as studios - updated to match actual database data
 const studioCategories = ["Yoga studio"]
@@ -279,8 +280,8 @@ const mapToRetreat = (item: any): Retreat => {
   }
 }
 
-// Function to get top studios by reviews and images
-export async function getTopSupabaseStudios(limit = 3): Promise<Studio[]> {
+// Function to get top studios by reviews and images (cached)
+async function _getTopSupabaseStudios(limit = 3): Promise<Studio[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
@@ -324,8 +325,14 @@ export async function getTopSupabaseStudios(limit = 3): Promise<Studio[]> {
   return sortedData.map(mapToStudio)
 }
 
-// Function to get top retreats by reviews and images
-export async function getTopSupabaseRetreats(limit = 3): Promise<Retreat[]> {
+export const getTopSupabaseStudios = withCache(
+  _getTopSupabaseStudios,
+  'top-studios',
+  CACHE_CONFIG.MEDIUM
+)
+
+// Function to get top retreats by reviews and images (cached)
+async function _getTopSupabaseRetreats(limit = 3): Promise<Retreat[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
@@ -369,8 +376,14 @@ export async function getTopSupabaseRetreats(limit = 3): Promise<Retreat[]> {
   return sortedData.map(mapToRetreat)
 }
 
-// Function to fetch studios from Supabase
-export async function getSupabaseStudios(): Promise<Studio[]> {
+export const getTopSupabaseRetreats = withCache(
+  _getTopSupabaseRetreats,
+  'top-retreats',
+  CACHE_CONFIG.MEDIUM
+)
+
+// Function to fetch studios from Supabase (cached)
+async function _getSupabaseStudios(): Promise<Studio[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
@@ -386,8 +399,14 @@ export async function getSupabaseStudios(): Promise<Studio[]> {
   return data.map(mapToStudio)
 }
 
-// Function to fetch retreats from Supabase
-export async function getSupabaseRetreats(): Promise<Retreat[]> {
+export const getSupabaseStudios = withCache(
+  _getSupabaseStudios,
+  'all-studios',
+  CACHE_CONFIG.LONG
+)
+
+// Function to fetch retreats from Supabase (cached)
+async function _getSupabaseRetreats(): Promise<Retreat[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
@@ -403,20 +422,38 @@ export async function getSupabaseRetreats(): Promise<Retreat[]> {
   return data.map(mapToRetreat)
 }
 
-// Function to fetch a studio by slug
-export async function getSupabaseStudioBySlug(slug: string): Promise<Studio | null> {
+export const getSupabaseRetreats = withCache(
+  _getSupabaseRetreats,
+  'all-retreats',
+  CACHE_CONFIG.LONG
+)
+
+// Function to fetch a studio by slug (cached)
+async function _getSupabaseStudioBySlug(slug: string): Promise<Studio | null> {
   const studios = await getSupabaseStudios()
   return studios.find((studio) => studio.slug === slug) || null
 }
 
-// Function to fetch a retreat by slug
-export async function getSupabaseRetreatBySlug(slug: string): Promise<Retreat | null> {
+export const getSupabaseStudioBySlug = withCache(
+  _getSupabaseStudioBySlug,
+  'studio-by-slug',
+  CACHE_CONFIG.LONG
+)
+
+// Function to fetch a retreat by slug (cached)
+async function _getSupabaseRetreatBySlug(slug: string): Promise<Retreat | null> {
   const retreats = await getSupabaseRetreats()
   return retreats.find((retreat) => retreat.slug === slug) || null
 }
 
-// Function to get similar studios/retreats based on location
-export async function getSimilarItems(type: "studio" | "retreat", currentItem: Studio | Retreat, limit = 3): Promise<(Studio | Retreat)[]> {
+export const getSupabaseRetreatBySlug = withCache(
+  _getSupabaseRetreatBySlug,
+  'retreat-by-slug',
+  CACHE_CONFIG.LONG
+)
+
+// Function to get similar studios/retreats based on location (cached)
+async function _getSimilarItems(type: "studio" | "retreat", currentItem: Studio | Retreat, limit = 3): Promise<(Studio | Retreat)[]> {
   const supabase = createServerClient()
   const categories = type === "studio" ? studioCategories : retreatCategories
 
@@ -461,4 +498,9 @@ export async function getSimilarItems(type: "studio" | "retreat", currentItem: S
     .slice(0, limit)
 
   return sortedData.map(item => type === "studio" ? mapToStudio(item) : mapToRetreat(item)) as (Studio | Retreat)[];
+}
+
+export function getSimilarItems(type: "studio" | "retreat", currentItem: Studio | Retreat, limit = 3): Promise<(Studio | Retreat)[]> {
+  const cacheKey = createCacheKey('similar-items', { type, itemId: currentItem.id, location: currentItem.location, limit })
+  return withCache(_getSimilarItems, cacheKey, CACHE_CONFIG.MEDIUM)(type, currentItem, limit)
 }

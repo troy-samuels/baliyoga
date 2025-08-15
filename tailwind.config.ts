@@ -11,7 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         cormorant: ["var(--font-cormorant)", "serif"],
-        raleway: ["var(--font-raleway)", "sans-serif"],
+        inter: ["var(--font-inter)", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",

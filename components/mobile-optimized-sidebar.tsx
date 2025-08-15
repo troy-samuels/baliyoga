@@ -81,15 +81,16 @@ export function MobileOptimizedSidebar() {
     async function fetchFilterOptions() {
       try {
         const supabase = createServerClient()
-        const { data, error } = await supabase
-          .from('v2_bali_yoga_studios_and_retreats')
-          .select('city, postcode, images')
+        const { data: locations, error } = await supabase
+          .from('v3_bali_yoga_studios_and_retreats')
+          .select('city, postcode')
+          .not('city', 'is', null)
         if (error) {
           console.warn('Error fetching filter options:', error)
           return
         }
-        setCities(Array.from(new Set(data.map((d: any) => d.city).filter(Boolean))))
-        setPostcodes(Array.from(new Set(data.map((d: any) => d.postcode).filter(Boolean))))
+        setCities(Array.from(new Set(locations.map((d: any) => d.city).filter(Boolean))))
+        setPostcodes(Array.from(new Set(locations.map((d: any) => d.postcode).filter(Boolean))))
       } catch (error) {
         console.warn('Error in fetchFilterOptions:', error)
       }
@@ -166,7 +167,7 @@ function FilterContent({
     <div className="space-y-6">
       {/* Location/Area Filter */}
       <div>
-        <h3 className="mb-3 text-base font-raleway font-semibold text-[#5d4c42] lg:text-lg">Area</h3>
+        <h3 className="mb-3 text-base font-inter font-semibold text-[#5d4c42] lg:text-lg">Area</h3>
         <div className="space-y-3 rounded-xl bg-[#a39188] p-4 text-white">
           {LOCATION_GROUPS.map((group) => (
             <div key={group.value} className="flex items-center justify-between">

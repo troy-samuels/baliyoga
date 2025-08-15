@@ -71,11 +71,51 @@ const nextConfig = {
   // Compress responses
   compress: true,
   
-  // Image optimization security
+  // Image optimization security and performance
   images: {
     domains: [],
     dangerouslyAllowSVG: false,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 86400, // 24 hours
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+  },
+  
+  // Performance optimizations
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
+  
+  // Bundle optimization
+  webpack: (config, { isServer }) => {
+    // Optimize bundle splitting
+    if (!isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+          radix: {
+            test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
+            name: 'radix',
+            chunks: 'all',
+            priority: 10,
+          },
+          supabase: {
+            test: /[\\/]node_modules[\\/]@supabase[\\/]/,
+            name: 'supabase',
+            chunks: 'all',
+            priority: 10,
+          },
+        },
+      }
+    }
+    
+    return config
   }
 }
 
