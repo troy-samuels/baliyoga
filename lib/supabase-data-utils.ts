@@ -20,30 +20,68 @@ const processImageUrl = (url: string | null | undefined): string => {
   return url
 }
 
+// Helper function to create SEO-optimized slugs
+const createSEOSlug = (name: string, city: string, type: 'studio' | 'retreat'): string => {
+  // Clean and normalize the name - be more selective about word removal
+  const cleanName = name
+    .toLowerCase()
+    .replace(/\b(center|centre)\b/gi, '') // Remove center/centre but keep yoga/studio/retreat if part of unique name
+    .replace(/\bbali\b/gi, '') // Remove standalone 'bali' 
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/\s+/g, ' ') // Normalize spaces
+    .trim()
+  
+  // Clean and normalize the city
+  const cleanCity = city
+    .toLowerCase()
+    .replace(/\b(regency|city)\b/gi, '') // Remove administrative suffixes
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .trim()
+  
+  // Build SEO-friendly slug: name-yoga-studio-city-bali or name-yoga-retreat-city-bali
+  const parts = [
+    cleanName,
+    'yoga',
+    type,
+    cleanCity !== 'bali' ? cleanCity : null, // Don't duplicate if city is already 'bali'
+    'bali'
+  ].filter(Boolean)
+  
+  return parts
+    .join('-')
+    .replace(/[\s_-]+/g, '-') // Normalize separators
+    .replace(/^-+|-+$/g, '') // Remove leading/trailing dashes
+    .replace(/-{2,}/g, '-') // Replace multiple dashes with single dash
+    .substring(0, 100) // Limit length for SEO
+}
+
 // Function to convert raw data to Studio type
 const mapToStudio = (item: any): Studio => {
-  // Create a slug from the name
-  const slug = item.name
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "")
+  // Create SEO-optimized slug
+  const slug = createSEOSlug(item.name, item.city || "Bali", "studio")
 
-  // Extract styles based on category - only if we have real data
-  const styles: string[] = []
-  const categoryName = (item.category_name || "").toLowerCase()
+  // Extract styles from the yoga_styles field (enhanced data)
+  let styles: string[] = []
   
-  // Only add styles if they're explicitly mentioned in the category
-  if (categoryName.includes("hatha")) styles.push("Hatha")
-  if (categoryName.includes("vinyasa")) styles.push("Vinyasa")
-  if (categoryName.includes("yin")) styles.push("Yin")
-  if (categoryName.includes("meditation")) styles.push("Meditation")
-  if (categoryName.includes("ashtanga")) styles.push("Ashtanga")
-  if (categoryName.includes("bikram")) styles.push("Bikram")
-  if (categoryName.includes("hot yoga")) styles.push("Hot Yoga")
-  if (categoryName.includes("restorative")) styles.push("Restorative")
-  if (categoryName.includes("kundalini")) styles.push("Kundalini")
-  if (categoryName.includes("pilates")) styles.push("Pilates")
+  if (item.yoga_styles) {
+    try {
+      if (Array.isArray(item.yoga_styles)) {
+        styles = item.yoga_styles
+      } else if (typeof item.yoga_styles === 'string') {
+        // Try parsing as JSON first, if that fails, split by comma
+        try {
+          styles = JSON.parse(item.yoga_styles)
+        } catch {
+          // If JSON parsing fails, treat as comma-separated string
+          styles = item.yoga_styles.split(',').map((s: string) => s.trim()).filter((s: string) => s.length > 0)
+        }
+      }
+    } catch (error) {
+      console.warn('Error parsing yoga_styles:', error)
+      styles = []
+    }
+  }
 
   // Parse images as array
   const imagesArray = Array.isArray(item.images)
@@ -86,27 +124,30 @@ const mapToStudio = (item: any): Studio => {
 
 // Function to convert raw data to Retreat type
 const mapToRetreat = (item: any): Retreat => {
-  // Create a slug from the name
-  const slug = item.name
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "")
+  // Create SEO-optimized slug
+  const slug = createSEOSlug(item.name, item.city || "Bali", "retreat")
 
-  // Extract styles based on category - only if we have real data
-  const styles: string[] = []
-  const categoryName = (item.category_name || "").toLowerCase()
+  // Extract styles from the yoga_styles field (enhanced data)
+  let styles: string[] = []
   
-  // Only add styles if they're explicitly mentioned in the category
-  if (categoryName.includes("hatha")) styles.push("Hatha")
-  if (categoryName.includes("vinyasa")) styles.push("Vinyasa")
-  if (categoryName.includes("yin")) styles.push("Yin")
-  if (categoryName.includes("meditation")) styles.push("Meditation")
-  if (categoryName.includes("ashtanga")) styles.push("Ashtanga")
-  if (categoryName.includes("wellness")) styles.push("Wellness")
-  if (categoryName.includes("detox")) styles.push("Detox")
-  if (categoryName.includes("spiritual")) styles.push("Spiritual")
-  if (categoryName.includes("healing")) styles.push("Healing")
+  if (item.yoga_styles) {
+    try {
+      if (Array.isArray(item.yoga_styles)) {
+        styles = item.yoga_styles
+      } else if (typeof item.yoga_styles === 'string') {
+        // Try parsing as JSON first, if that fails, split by comma
+        try {
+          styles = JSON.parse(item.yoga_styles)
+        } catch {
+          // If JSON parsing fails, treat as comma-separated string
+          styles = item.yoga_styles.split(',').map((s: string) => s.trim()).filter((s: string) => s.length > 0)
+        }
+      }
+    } catch (error) {
+      console.warn('Error parsing yoga_styles:', error)
+      styles = []
+    }
+  }
 
   // Parse images as array
   const imagesArray = Array.isArray(item.images)
@@ -155,7 +196,7 @@ export async function getTopSupabaseStudios(limit = 3): Promise<Studio[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
-    .from('v2_bali_yoga_studios_and_retreats')
+    .from('v3_bali_yoga_studios_and_retreats')
     .select("*")
     .in("category_name", studioCategories)
     .not("images", "is", null)
@@ -200,7 +241,7 @@ export async function getTopSupabaseRetreats(limit = 3): Promise<Retreat[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
-    .from('v2_bali_yoga_studios_and_retreats')
+    .from('v3_bali_yoga_studios_and_retreats')
     .select("*")
     .in("category_name", retreatCategories)
     .not("images", "is", null)
@@ -245,7 +286,7 @@ export async function getSupabaseStudios(): Promise<Studio[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
-    .from('v2_bali_yoga_studios_and_retreats')
+    .from('v3_bali_yoga_studios_and_retreats')
     .select("*")
     .in("category_name", studioCategories)
 
@@ -262,7 +303,7 @@ export async function getSupabaseRetreats(): Promise<Retreat[]> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase
-    .from('v2_bali_yoga_studios_and_retreats')
+    .from('v3_bali_yoga_studios_and_retreats')
     .select("*")
     .in("category_name", retreatCategories)
 
@@ -292,7 +333,7 @@ export async function getSimilarItems(type: "studio" | "retreat", currentItem: S
   const categories = type === "studio" ? studioCategories : retreatCategories
 
   const { data, error } = await supabase
-    .from('v2_bali_yoga_studios_and_retreats')
+    .from('v3_bali_yoga_studios_and_retreats')
     .select("*")
     .in("category_name", categories)
     .not("id", "eq", currentItem.id)

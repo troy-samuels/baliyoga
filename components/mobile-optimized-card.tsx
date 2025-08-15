@@ -91,14 +91,14 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
             <span className="truncate">{location}, Bali</span>
           </div>
 
-          {/* Contact Information */}
-          {(phone_number || website) && (
-            <div className="mt-2 flex items-center gap-2 sm:gap-3 text-xs text-[#5d4c42] sm:text-sm">
-              {phone_number && (
-                <Phone className="h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4" />
+          {/* Contact Information - Icons only as visual indicators */}
+          {(phone_number?.trim() || website?.trim()) && (
+            <div className="mt-2 flex items-center gap-2 sm:gap-3">
+              {phone_number?.trim() && (
+                <Phone className="h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4 text-[#5d4c42]" />
               )}
-              {website && (
-                <Globe className="h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4" />
+              {website?.trim() && (
+                <Globe className="h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4 text-[#5d4c42]" />
               )}
             </div>
           )}
