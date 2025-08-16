@@ -253,7 +253,34 @@ ${retreats
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Supabase Debugger</h1>
+      <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+      
+      {/* Quick Links */}
+      <div className="mb-6 p-4 rounded-lg bg-blue-50 border border-blue-200">
+        <h3 className="font-semibold text-blue-800 mb-2">📊 Analytics & Management</h3>
+        <div className="flex flex-wrap gap-3">
+          <a 
+            href="/admin/analytics" 
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            📈 Analytics Dashboard
+          </a>
+          <a 
+            href="/admin/blog" 
+            className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+          >
+            📝 Blog Management
+          </a>
+          <button 
+            onClick={checkSupabaseDashboard}
+            className="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            🌐 Supabase Dashboard
+          </button>
+        </div>
+      </div>
+
+      <h2 className="text-xl font-semibold mb-4">Database Debugger</h2>
 
       <div className="mt-4 p-4 rounded-lg bg-red-50 border border-red-200">
         <h3 className="font-semibold text-red-800 mb-2">🚨 Most Likely Issue: Row Level Security (RLS)</h3>

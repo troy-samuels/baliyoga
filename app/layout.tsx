@@ -8,6 +8,7 @@ import { Analytics, PrivacyBanner } from "@/components/analytics"
 import { PerformanceMonitor } from "@/components/performance-monitor"
 import { PerformanceOptimizer } from "@/components/performance-optimizer"
 import { MobileTouchOptimizer } from "@/components/mobile-touch-optimizer"
+import { AnalyticsTracker } from "@/components/analytics-tracker"
 
 // Initialize the Cormorant Garamond font for headings with optimizations
 const cormorantGaramond = Cormorant_Garamond({
@@ -188,6 +189,7 @@ export default function RootLayout({
         <PerformanceOptimizer />
         <MobileTouchOptimizer />
         <WishlistProvider>
+          <AnalyticsTracker />
           {children}
         </WishlistProvider>
         <Analytics />

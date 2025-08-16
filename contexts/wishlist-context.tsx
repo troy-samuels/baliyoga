@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { incrementPopularityScore, decrementPopularityScore } from '@/lib/popularity-utils'
 import { isValidItemId, sanitizeString, secureGetItem, secureSetItem, isRateLimited, getRemainingActions } from '@/lib/security-utils'
+import { trackWishlistAction } from '@/lib/analytics-utils'
 
 export interface WishlistItem {
   id: string
@@ -137,6 +138,8 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
       success = incrementPopularityScore(item.id)
       
       if (success) {
+        // Track wishlist add action for analytics
+        trackWishlistAction(item.id, item.name, item.type, 'add')
         return [sanitizedItem, ...prev]
       } else {
         return prev
@@ -162,12 +165,14 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     let success = false
     
     setWishlistItems(prev => {
-      const itemExists = prev.some(item => item.id === id)
-      if (itemExists) {
+      const existingItem = prev.find(item => item.id === id)
+      if (existingItem) {
         // Decrement popularity score when removing from wishlist
         success = decrementPopularityScore(id)
         
         if (success) {
+          // Track wishlist remove action for analytics
+          trackWishlistAction(id, existingItem.name, existingItem.type, 'remove')
           return prev.filter(item => item.id !== id)
         }
       }
