@@ -271,6 +271,18 @@ ${retreats
           >
             📝 Blog Management
           </a>
+          <a 
+            href="/admin/reviews" 
+            className="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            ⭐ Review Moderation
+          </a>
+          <a 
+            href="/admin/featured" 
+            className="inline-flex items-center px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors"
+          >
+            👑 Featured Listings
+          </a>
           <button 
             onClick={checkSupabaseDashboard}
             className="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"

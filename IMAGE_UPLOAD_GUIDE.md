@@ -2,18 +2,18 @@
 
 ## 🎯 Quick Setup Complete!
 
-Your blog system now has **comprehensive image upload functionality** with multiple options for adding images from your Downloads folder.
+Your blog system now has **comprehensive image upload functionality** with multiple options for adding images from your local files.
 
 ## 🚀 How to Add Your PNG Image
 
-### **Method 1: Copy from Downloads Folder (Recommended)**
+### **Method 1: Copy from Local Files (Recommended)**
 
 1. **Go to Blog Admin**: http://localhost:3000/admin/blog
 2. **Click "New Blog Post"** or **Edit existing post**
-3. **In the Featured Image section**, look for "Copy from Downloads Folder"
+3. **In the Featured Image section**, look for "Copy from Local Files"
 4. **Enter the full path** to your PNG file:
    ```
-   /Users/troysamuels/Downloads/your-image.png
+   /Users/troysamuels/your-image.png
    ```
 5. **Click "Copy File"** - the image will be automatically copied and optimized
 6. **Preview appears instantly** when successful
@@ -22,13 +22,13 @@ Your blog system now has **comprehensive image upload functionality** with multi
 
 1. **Go to Blog Admin**: http://localhost:3000/admin/blog
 2. **Open the image upload area**
-3. **Drag your PNG** from Downloads folder directly into the upload zone
+3. **Drag your PNG** from your local files directly into the upload zone
 4. **Automatic processing** - image gets optimized and saved
 
 ### **Method 3: File Browser**
 
 1. **Click "Browse Files"** in the upload area
-2. **Navigate to Downloads folder**
+2. **Navigate to your file location**
 3. **Select your PNG image**
 4. **Automatic upload and optimization**
 
@@ -50,7 +50,7 @@ Your blog system now has **comprehensive image upload functionality** with multi
 ## 🔧 Image Features
 
 - ✅ **Drag & Drop support**
-- ✅ **Downloads folder integration**
+- ✅ **Local file integration**
 - ✅ **Image preview**
 - ✅ **File validation**
 - ✅ **Size optimization**
@@ -70,8 +70,8 @@ Once uploaded, your image will:
 
 ## 🎯 Next Steps
 
-1. **Find your PNG** in Downloads folder
-2. **Get the full file path**: `/Users/troysamuels/Downloads/filename.png`
+1. **Find your PNG** in your local files
+2. **Get the full file path**: `/Users/troysamuels/filename.png`
 3. **Go to admin**: http://localhost:3000/admin/blog
 4. **Upload your image** using any method above
 5. **Publish your post** with the beautiful featured image!

@@ -2,6 +2,8 @@ import { createServerClient } from "./supabase"
 import type { Studio, Retreat } from "./data-utils"
 import { generateColorFallback } from "./image-fallback"
 import { withCache, CACHE_CONFIG, createCacheKey } from "./cache-utils"
+import { generateRetreatTypeSlug, generateLocationSlug } from "./retreat-types"
+import { generateStudioTypeSlug, generateStudioLocationSlug } from "./studio-types"
 
 // Categories that should be considered as studios - updated to match actual database data
 const studioCategories = ["Yoga studio"]
@@ -134,6 +136,15 @@ const mapToStudio = (item: any): Studio => {
     }
   }
 
+  // Generate studio-specific URL components
+  const locationSlug = generateStudioLocationSlug(item.city)
+  const typeSlug = generateStudioTypeSlug({
+    name: item.name,
+    business_description: item.business_description,
+    yoga_styles: styles,
+    amenities: amenities
+  })
+
   return {
     id: item.id,
     name: item.name,
@@ -164,6 +175,10 @@ const mapToStudio = (item: any): Studio => {
     website: item.website || "",
     opening_hours: item.opening_hours || [],
     category: item.category_name || "Yoga studio",
+    // New URL structure fields
+    locationSlug: locationSlug,
+    typeSlug: typeSlug,
+    urlPath: `/studios/${locationSlug}/${typeSlug}`,
   }
 }
 
@@ -244,6 +259,15 @@ const mapToRetreat = (item: any): Retreat => {
     }
   }
 
+  // Generate retreat-specific URL components
+  const locationSlug = generateLocationSlug(item.city)
+  const typeSlug = generateRetreatTypeSlug({
+    name: item.name,
+    business_description: item.business_description,
+    yoga_styles: styles,
+    amenities: amenities
+  })
+
   return {
     id: item.id,
     name: item.name,
@@ -277,6 +301,10 @@ const mapToRetreat = (item: any): Retreat => {
     website: item.website || "",
     opening_hours: item.opening_hours || [],
     category: item.category_name || "Retreat center",
+    // New URL structure fields
+    locationSlug: locationSlug,
+    typeSlug: typeSlug,
+    urlPath: `/retreats/${locationSlug}/${typeSlug}`,
   }
 }
 
@@ -504,3 +532,99 @@ export function getSimilarItems(type: "studio" | "retreat", currentItem: Studio 
   const cacheKey = createCacheKey('similar-items', { type, itemId: currentItem.id, location: currentItem.location, limit })
   return withCache(_getSimilarItems, cacheKey, CACHE_CONFIG.MEDIUM)(type, currentItem, limit)
 }
+
+// Function to get retreats by location slug (cached)
+async function _getSupabaseRetreatsByLocation(locationSlug: string): Promise<Retreat[]> {
+  const allRetreats = await getSupabaseRetreats()
+  return allRetreats.filter(retreat => retreat.locationSlug === locationSlug)
+}
+
+export const getSupabaseRetreatsByLocation = withCache(
+  _getSupabaseRetreatsByLocation,
+  'retreats-by-location',
+  CACHE_CONFIG.LONG
+)
+
+// Function to get retreats by location and type (cached)
+async function _getSupabaseRetreatsByLocationAndType(locationSlug: string, typeSlug: string): Promise<Retreat[]> {
+  const locationRetreats = await getSupabaseRetreatsByLocation(locationSlug)
+  return locationRetreats.filter(retreat => retreat.typeSlug === typeSlug)
+}
+
+export const getSupabaseRetreatsByLocationAndType = withCache(
+  _getSupabaseRetreatsByLocationAndType,
+  'retreats-by-location-type',
+  CACHE_CONFIG.LONG
+)
+
+// Function to get unique location and type combinations
+async function _getRetreatLocationTypeCombinations(): Promise<Array<{location: string, type: string, count: number}>> {
+  const allRetreats = await getSupabaseRetreats()
+  const combinations = new Map<string, number>()
+  
+  allRetreats.forEach(retreat => {
+    if (retreat.locationSlug && retreat.typeSlug) {
+      const key = `${retreat.locationSlug}:${retreat.typeSlug}`
+      combinations.set(key, (combinations.get(key) || 0) + 1)
+    }
+  })
+  
+  return Array.from(combinations.entries()).map(([key, count]) => {
+    const [location, type] = key.split(':')
+    return { location, type, count }
+  })
+}
+
+export const getRetreatLocationTypeCombinations = withCache(
+  _getRetreatLocationTypeCombinations,
+  'retreat-combinations',
+  CACHE_CONFIG.LONG
+)
+
+// Function to get studios by location slug (cached)
+async function _getSupabaseStudiosByLocation(locationSlug: string): Promise<Studio[]> {
+  const allStudios = await getSupabaseStudios()
+  return allStudios.filter(studio => studio.locationSlug === locationSlug)
+}
+
+export const getSupabaseStudiosByLocation = withCache(
+  _getSupabaseStudiosByLocation,
+  'studios-by-location',
+  CACHE_CONFIG.LONG
+)
+
+// Function to get studios by location and type (cached)
+async function _getSupabaseStudiosByLocationAndType(locationSlug: string, typeSlug: string): Promise<Studio[]> {
+  const locationStudios = await getSupabaseStudiosByLocation(locationSlug)
+  return locationStudios.filter(studio => studio.typeSlug === typeSlug)
+}
+
+export const getSupabaseStudiosByLocationAndType = withCache(
+  _getSupabaseStudiosByLocationAndType,
+  'studios-by-location-type',
+  CACHE_CONFIG.LONG
+)
+
+// Function to get unique studio location and type combinations
+async function _getStudioLocationTypeCombinations(): Promise<Array<{location: string, type: string, count: number}>> {
+  const allStudios = await getSupabaseStudios()
+  const combinations = new Map<string, number>()
+  
+  allStudios.forEach(studio => {
+    if (studio.locationSlug && studio.typeSlug) {
+      const key = `${studio.locationSlug}:${studio.typeSlug}`
+      combinations.set(key, (combinations.get(key) || 0) + 1)
+    }
+  })
+  
+  return Array.from(combinations.entries()).map(([key, count]) => {
+    const [location, type] = key.split(':')
+    return { location, type, count }
+  })
+}
+
+export const getStudioLocationTypeCombinations = withCache(
+  _getStudioLocationTypeCombinations,
+  'studio-combinations',
+  CACHE_CONFIG.LONG
+)

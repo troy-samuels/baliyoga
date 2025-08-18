@@ -44,7 +44,7 @@ export function ImageUpload({ currentImage, onImageChange }: ImageUploadProps) {
     }
   }
 
-  const handleDownloadsCopy = async () => {
+  const handleLocalFileCopy = async () => {
     if (!downloadPath.trim()) {
       setUploadError("Please enter a file path")
       return
@@ -168,11 +168,11 @@ export function ImageUpload({ currentImage, onImageChange }: ImageUploadProps) {
           />
         </div>
 
-        {/* Downloads Folder Integration */}
+        {/* Local File Integration */}
         <div className="border border-[#e6ceb3] rounded-lg p-4 bg-[#f9f7f4]">
           <div className="flex items-center gap-2 mb-3">
             <FolderOpen className="h-4 w-4 text-[#5d4c42]" />
-            <span className="font-medium text-[#5d4c42]">Copy from Downloads Folder</span>
+            <span className="font-medium text-[#5d4c42]">Copy from Local Files</span>
           </div>
           
           <div className="space-y-3">
@@ -184,20 +184,20 @@ export function ImageUpload({ currentImage, onImageChange }: ImageUploadProps) {
                 type="text"
                 value={downloadPath}
                 onChange={(e) => setDownloadPath(e.target.value)}
-                placeholder="/Users/username/Downloads/my-image.png"
+                placeholder="/Users/username/my-image.png"
                 className="w-full rounded-lg border border-[#e6ceb3] p-2 focus:border-[#a39188] focus:outline-none text-sm"
               />
             </div>
             
             <div className="text-xs text-[#5d4c42]/60">
               <p><strong>Example paths:</strong></p>
-              <p>• macOS: <code>/Users/yourname/Downloads/image.png</code></p>
-              <p>• Windows: <code>C:\Users\yourname\Downloads\image.png</code></p>
+              <p>• macOS: <code>/Users/yourname/image.png</code></p>
+              <p>• Windows: <code>C:\Users\yourname\image.png</code></p>
             </div>
 
             <Button
               type="button"
-              onClick={handleDownloadsCopy}
+              onClick={handleLocalFileCopy}
               disabled={isUploading || !downloadPath.trim()}
               className="bg-[#e6ceb3] text-[#5d4c42] hover:bg-[#d9b99a]"
             >

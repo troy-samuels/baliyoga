@@ -1,10 +1,11 @@
 "use client"
 
 import Link from "next/link"
-import { Star, MapPin, Phone, Globe } from "lucide-react"
+import { MapPin, Phone, Globe } from "lucide-react"
 import { OptimizedImage } from "./optimized-image"
 import { WishlistHeart } from "./wishlist-heart"
 import { PopularityBadge } from "./popularity-badge"
+import { StarRatingCompact } from "./ui/star-rating"
 import { memo } from "react"
 import { generateColorFallback } from "@/lib/image-fallback"
 
@@ -15,6 +16,7 @@ interface CardProps {
   image?: string
   location: string
   rating: number
+  reviewCount?: number
   styles?: string[]
   type: "studio" | "retreat"
   duration?: string
@@ -30,6 +32,7 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
   image,
   location,
   rating,
+  reviewCount = 0,
   styles,
   type,
   duration,
@@ -75,12 +78,6 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
             className="object-cover object-center transition-transform duration-300 group-hover:scale-110"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
-          <div className="absolute bottom-2 right-2 rounded-full bg-white/90 backdrop-blur-sm px-2 py-1 shadow-sm">
-            <div className="flex items-center gap-1">
-              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="text-sm font-medium">{rating}</span>
-            </div>
-          </div>
         </div>
         <div className="p-4">
           <h3 className="text-lg font-semibold text-[#5d4c42] line-clamp-2">{name}</h3>
@@ -88,6 +85,13 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
             <MapPin className="mr-1 h-4 w-4 flex-shrink-0" />
             <span className="truncate">{location}, Bali</span>
           </div>
+          
+          {/* Rating Display */}
+          {rating > 0 && (
+            <div className="mt-2">
+              <StarRatingCompact rating={rating} reviewCount={reviewCount} />
+            </div>
+          )}
           
           {/* Contact Information */}
           {(phone_number || website) && (

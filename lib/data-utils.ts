@@ -41,6 +41,10 @@ export type Studio = {
   languages_spoken?: string[]
   drop_in_price_usd?: number | null
   price_range?: string
+  // New URL structure fields
+  locationSlug?: string
+  typeSlug?: string
+  urlPath?: string
 }
 
 export type Retreat = {
@@ -87,6 +91,10 @@ export type Retreat = {
   languages_spoken?: string[]
   drop_in_price_usd?: number | null
   price_range?: string
+  // New URL structure fields
+  locationSlug?: string
+  typeSlug?: string
+  urlPath?: string
 }
 
 // Update the mockStudios array to include more detailed information

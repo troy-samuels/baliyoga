@@ -5,6 +5,7 @@ import { MapPin, Calendar, Phone, Globe } from "lucide-react"
 import { OptimizedImage } from "./optimized-image"
 import { WishlistHeart } from "./wishlist-heart"
 import { PopularityBadge } from "./popularity-badge"
+import { StarRatingCompact } from "./ui/star-rating"
 import { generateColorFallback } from "@/lib/image-fallback"
 import { memo } from "react"
 
@@ -15,6 +16,7 @@ interface MobileCardProps {
   image?: string
   location: string
   rating: number
+  reviewCount?: number
   styles?: string[]
   type: "studio" | "retreat"
   duration?: string
@@ -31,6 +33,7 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
   image,
   location,
   rating,
+  reviewCount = 0,
   styles,
   type,
   duration,
@@ -93,6 +96,13 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
             <MapPin className="mr-1 h-3 w-3 flex-shrink-0 xs:h-3.5 xs:w-3.5 sm:h-4 sm:w-4" />
             <span className="truncate">{location}, Bali</span>
           </div>
+
+          {/* Rating Display */}
+          {rating > 0 && (
+            <div className="mt-1.5">
+              <StarRatingCompact rating={rating} reviewCount={reviewCount} />
+            </div>
+          )}
 
           {/* Contact Information - Icons only as visual indicators */}
           {(phone_number?.trim() || website?.trim()) && (

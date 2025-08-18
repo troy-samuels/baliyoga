@@ -28,6 +28,7 @@ import { PopularityBadge } from "@/components/popularity-badge"
 import { ErrorHandledImage } from "@/components/error-handled-image"
 import { LocationMap } from "@/components/location-map"
 import { SchemaMarkup } from "@/components/schema-markup"
+import { ReviewSection } from "@/components/review-section"
 import { generateColorFallback } from "@/lib/image-fallback"
 
 export async function generateMetadata({ params }: { params: Promise<{ type: string; slug: string }> }) {
@@ -453,6 +454,13 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                   </div>
               </div>
         ) : null}
+
+        {/* Reviews Section */}
+        <ReviewSection 
+          itemId={String(item.id)}
+          itemType={type === "studios" ? "studio" : "retreat"}
+          itemName={item.name}
+        />
 
         {/* Similar Items Section */}
         {similarItems.length > 0 && (
