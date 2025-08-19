@@ -1,0 +1,57 @@
+# Robots.txt for Bali Yoga
+# https://baliyoga.com/
+
+User-agent: *
+Allow: /
+Allow: /blog/
+Allow: /studios/
+Allow: /retreats/
+Allow: /locations/
+
+# Optimize crawl rate
+Crawl-delay: 1
+
+# Sitemap locations
+Sitemap: https://baliyoga.com/sitemap.xml
+Sitemap: https://baliyoga.com/blog/sitemap.xml
+
+# Block admin and API routes
+Disallow: /admin/
+Disallow: /api/
+Disallow: /claim/
+
+# Block search and filter pages from indexing
+Disallow: /*?*search=
+Disallow: /*?*filter=
+Disallow: /*?*sort=
+
+# Allow search engines to index images
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.webp$
+
+# Specific bot instructions
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /

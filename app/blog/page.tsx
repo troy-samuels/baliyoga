@@ -7,6 +7,7 @@ import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import fs from "fs"
 import path from "path"
 import { generateColorFallback } from "@/lib/image-fallback"
+import { Metadata } from "next"
 
 // Blog post interface
 interface BlogPost {
@@ -76,6 +77,43 @@ function loadBlogPosts(): BlogPost[] {
   )
 }
 
+// SEO Metadata
+export const metadata: Metadata = {
+  title: "Yoga & Wellness Blog - Insights from Bali | Bali Yoga",
+  description: "Discover yoga tips, wellness insights, and Bali travel guides. Expert articles on yoga retreats, meditation practices, spiritual healing, and healthy living in Bali.",
+  keywords: "bali yoga blog, yoga articles, wellness tips, meditation guides, spiritual healing, bali travel, yoga retreats, healthy living",
+  openGraph: {
+    title: "Yoga & Wellness Blog - Insights from Bali",
+    description: "Expert articles on yoga, meditation, wellness, and spiritual living in Bali",
+    type: "website",
+    siteName: "Bali Yoga",
+    images: [{
+      url: "/images/blog-hero.jpg",
+      width: 1200,
+      height: 630,
+      alt: "Bali Yoga Blog",
+    }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Yoga & Wellness Blog - Bali Yoga",
+    description: "Expert articles on yoga, meditation, wellness, and spiritual living in Bali",
+  },
+  alternates: {
+    canonical: "/blog",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+}
+
 export default function BlogPage() {
   const blogPosts = loadBlogPosts()
   const recentPosts = blogPosts
@@ -95,6 +133,28 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
       <MobileOptimizedHeader />
+
+      {/* Structured Data for Blog */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            "name": "Bali Yoga Blog",
+            "description": "Yoga and wellness insights from the beautiful island of Bali",
+            "url": "https://baliyoga.com/blog",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Bali Yoga",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://baliyoga.com/logo.png",
+              },
+            },
+          }),
+        }}
+      />
 
       {/* Hero Section */}
       <div className="bg-[#e6ceb3] py-12">
@@ -148,6 +208,7 @@ export default function BlogPage() {
                           width={500}
                           height={300}
                           className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                          loading="lazy"
                         />
                       </div>
                       <div className="p-5">
