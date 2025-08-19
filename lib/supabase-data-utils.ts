@@ -15,11 +15,8 @@ const retreatCategories = ["Yoga retreat center"]
 const processImageUrl = (url: string | null | undefined): string => {
   if (!url) return generateColorFallback(300, 200, '#e6ceb3')
   
-  // Route all external images through the proxy for better reliability
-  if (url.startsWith('http://') || url.startsWith('https://')) {
-    return `/api/proxy-image?url=${encodeURIComponent(url)}`
-  }
-  
+  // Use direct URLs since we've configured remotePatterns in next.config.mjs
+  // This is MUCH faster than proxying
   return url
 }
 

@@ -84,6 +84,7 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
             fill
             className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 475px) 100vw, (max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            priority={featured}
           />
           {/* Gradient overlay for better text contrast */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

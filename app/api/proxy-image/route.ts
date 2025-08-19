@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024 // 5MB
+const CACHE_DURATION = 60 * 60 * 24 * 365 // 1 year in seconds
 const ALLOWED_DOMAINS = [
   'googleusercontent.com',
   'googleapis.com',
@@ -72,8 +73,10 @@ export async function GET(request: Request) {
     return new NextResponse(buffer, {
       headers: {
         'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=31536000',
+        'Cache-Control': `public, max-age=${CACHE_DURATION}, immutable`,
         'Content-Security-Policy': "default-src 'self'",
+        'X-Content-Type-Options': 'nosniff',
+        'Vary': 'Accept-Encoding',
       },
     })
   } catch (error) {

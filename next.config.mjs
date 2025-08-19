@@ -114,6 +114,12 @@ const nextConfig = {
         hostname: 'media-cdn.tripadvisor.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.worldota.net',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
