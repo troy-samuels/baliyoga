@@ -126,6 +126,7 @@ const getBlogPost = (slug: string) => {
       image: generateColorFallback(200, 200, '#a39188'),
     },
     publishDate: "2023-06-15",
+    updatedAt: "2023-06-15",
     readTime: "8 min read",
     categories: ["Yoga Practice", "Bali Travel"],
     tags: ["yoga", "bali", "wellness", "travel", "meditation"],

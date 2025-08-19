@@ -17,7 +17,8 @@ const ALLOWED_DOMAINS = [
   'q-xx.bstatic.com',
   'pix10.agoda.net',
   'images.unsplash.com',
-  'cdn.pixabay.com'
+  'cdn.pixabay.com',
+  'cdn.worldota.net'
 ]
 
 function isValidUrl(url: string): boolean {
