@@ -33,6 +33,12 @@ export function OptimizedImage({
   
   // Use Intersection Observer for lazy loading non-priority images
   useEffect(() => {
+    // Always show images immediately for now to fix loading issues
+    setIsInView(true)
+    return
+    
+    // TODO: Re-enable lazy loading after fixing intersection observer
+    /*
     if (priority) {
       setIsInView(true)
       return
@@ -57,6 +63,7 @@ export function OptimizedImage({
         observer.unobserve(element)
       }
     }
+    */
   }, [src, priority])
 
   const handleError = () => {
@@ -73,8 +80,8 @@ export function OptimizedImage({
     ? generateColorFallback(600, 400, '#e6ceb3')
     : generateColorFallback(width || 300, height || 200, '#e6ceb3')
 
-  // Only use fallback if there's an error or not in view yet
-  const finalSrc = imageError ? fallbackSrc : (isInView ? src : fallbackSrc)
+  // Only use fallback if there's an error
+  const finalSrc = imageError ? fallbackSrc : src
 
   const imageProps = {
     alt,

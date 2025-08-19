@@ -24,16 +24,16 @@ export function MobileOptimizedHero() {
         <h2 className="mb-6 text-sm text-white/90 leading-relaxed xs:text-base xs:mb-8 sm:text-lg md:text-xl lg:text-2xl max-w-4xl">
           Find authentic yoga experiences, world-class instructors, and transformative retreats across the Island of the Gods
         </h2>
-        <div className="flex flex-col gap-3 w-full max-w-sm xs:gap-4 sm:flex-row sm:gap-6 sm:max-w-none">
+        <div className="flex flex-col gap-3 w-full max-w-sm items-center xs:gap-4 sm:flex-row sm:gap-6 sm:max-w-none sm:justify-center">
           <a
             href="/studios"
-            className="rounded-full bg-[#e6ceb3] px-6 py-3 font-semibold text-[#5d4c42] transition-all duration-200 hover:bg-[#d9b99a] active:scale-95 touch-manipulation xs:px-8 sm:px-10 sm:py-4"
+            className="rounded-full bg-[#e6ceb3] px-6 py-3 font-semibold text-[#5d4c42] transition-all duration-200 hover:bg-[#d9b99a] active:scale-95 touch-manipulation text-center xs:px-8 sm:px-10 sm:py-4"
           >
             Explore Studios
           </a>
           <a
             href="/retreats"
-            className="rounded-full border-2 border-white px-6 py-3 font-semibold text-white transition-all duration-200 hover:bg-white hover:text-[#5d4c42] active:scale-95 touch-manipulation xs:px-8 sm:px-10 sm:py-4"
+            className="rounded-full border-2 border-white px-6 py-3 font-semibold text-white transition-all duration-200 hover:bg-white hover:text-[#5d4c42] active:scale-95 touch-manipulation text-center xs:px-8 sm:px-10 sm:py-4"
           >
             Find Retreats
           </a>
