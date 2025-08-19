@@ -130,6 +130,7 @@ const getBlogPost = (slug: string) => {
     readTime: "8 min read",
     categories: ["Yoga Practice", "Bali Travel"],
     tags: ["yoga", "bali", "wellness", "travel", "meditation"],
+    keywords: ["yoga studio bali", "best yoga bali", "ubud yoga", "canggu yoga", "bali wellness"],
     relatedPosts: [
       {
         id: "2",
