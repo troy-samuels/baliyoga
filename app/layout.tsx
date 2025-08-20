@@ -100,6 +100,9 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://maps.googleapis.com" />
         <link rel="dns-prefetch" href="https://maps.gstatic.com" />
         
+        {/* Preload critical hero image for fastest LCP */}
+        <link rel="preload" as="image" href="/images/hero-yoga-bali-realistic.png" fetchPriority="high" />
+        
         {/* Critical CSS for font loading and performance */}
         <style dangerouslySetInnerHTML={{
           __html: `

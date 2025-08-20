@@ -97,6 +97,7 @@ export function MobileOptimizedHeader() {
             { href: '/retreats', label: 'Retreats' },
             { href: '/blog', label: 'Blog' },
             { href: '/about', label: 'About Us' },
+            { href: '/contact', label: 'Contact' },
             { href: '/become-a-partner', label: 'Become a Partner' }
           ].map((item, index) => (
             <Link

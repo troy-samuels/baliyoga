@@ -245,13 +245,12 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
         <header className="mb-8">
           <div className="mb-4 flex flex-wrap gap-2">
             {post.categories?.map((category, index) => (
-              <Link
+              <span
                 key={index}
-                href={`/blog/category/${category.toLowerCase().replace(/\s+/g, "-")}`}
-                className="rounded-full bg-[#e6ceb3] px-3 py-1 text-sm text-[#5d4c42] hover:bg-[#d9b99a]"
+                className="rounded-full bg-[#e6ceb3] px-3 py-1 text-sm text-[#5d4c42]"
               >
                 {category}
-              </Link>
+              </span>
             ))}
           </div>
           <h1 className="mb-4 text-3xl font-bold text-[#5d4c42] md:text-4xl lg:text-5xl">{post.title}</h1>
@@ -326,13 +325,12 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
         <div className="my-8 flex flex-wrap items-center gap-2">
           <Tag className="h-4 w-4 text-[#5d4c42]" />
           {post.tags?.map((tag, index) => (
-            <Link
+            <span
               key={index}
-              href={`/blog/tag/${tag}`}
-              className="rounded-full bg-[#f2e8dc] px-3 py-1 text-sm text-[#5d4c42] hover:bg-[#e6ceb3]"
+              className="rounded-full bg-[#f2e8dc] px-3 py-1 text-sm text-[#5d4c42]"
             >
               {tag}
-            </Link>
+            </span>
           ))}
         </div>
 
@@ -385,12 +383,9 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
                   ? 'Experienced yoga practitioner and wellness expert sharing insights from the beautiful island of Bali.' 
                   : post.author.bio}
               </p>
-              <Link
-                href={`/blog/author/${(typeof post.author === 'string' ? post.author : post.author.name).toLowerCase().replace(/\s+/g, "-")}`}
-                className="mt-2 inline-block font-medium text-[#a39188] hover:text-[#5d4c42] hover:underline"
-              >
-                View all posts by {typeof post.author === 'string' ? post.author : post.author.name}
-              </Link>
+              <span className="mt-2 inline-block text-sm text-[#a39188]">
+                Author: {typeof post.author === 'string' ? post.author : post.author.name}
+              </span>
             </div>
           </div>
         </div>
