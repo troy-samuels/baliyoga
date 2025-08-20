@@ -1,12 +1,12 @@
 // Google Analytics 4 implementation with privacy-first approach
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID
 
-// Check if GA is enabled - Allow in production or when GA_ID is present
-export const isAnalyticsEnabled = !!GA_TRACKING_ID && typeof window !== 'undefined'
+// Check if GA is enabled - GA_ID must be present
+export const isAnalyticsEnabled = !!GA_TRACKING_ID
 
 // Track page views
 export const pageview = (url: string) => {
-  if (!isAnalyticsEnabled) return
+  if (!isAnalyticsEnabled || typeof window === 'undefined') return
   
   try {
     window.gtag('config', GA_TRACKING_ID!, {
@@ -171,6 +171,19 @@ export const trackRetreatBookingStart = (retreatName: string, retreatId: string,
 // GDPR compliance helper
 export const hasConsent = (): boolean => {
   if (typeof window === 'undefined') return false
+  
+  // Auto-grant consent in development mode for testing
+  if (process.env.NODE_ENV === 'development') {
+    try {
+      if (!localStorage.getItem('analytics_consent')) {
+        localStorage.setItem('analytics_consent', 'granted')
+      }
+      return true
+    } catch (error) {
+      console.warn('Error auto-granting dev consent:', error)
+      return true // Allow analytics in dev even if localStorage fails
+    }
+  }
   
   try {
     return localStorage.getItem('analytics_consent') === 'granted'
