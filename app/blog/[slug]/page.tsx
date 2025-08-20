@@ -4,6 +4,7 @@ import { ArrowLeft, Calendar, Clock, Facebook, Linkedin, Share2, Tag, Twitter, U
 import { notFound } from "next/navigation"
 import { ChevronLeft } from "lucide-react"
 import { generateColorFallback } from "@/lib/image-fallback"
+import { sanitizeHtml } from "@/lib/sanitize"
 import { Metadata } from "next"
 import fs from "fs"
 import path from "path"
@@ -318,7 +319,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
         
         {/* Article Content */}
         <div className="prose prose-lg max-w-none prose-headings:text-[#5d4c42] prose-p:text-[#5d4c42]/90 prose-a:text-[#a39188] prose-a:no-underline prose-a:hover:text-[#5d4c42] prose-a:hover:underline prose-ul:text-[#5d4c42]/90 prose-ol:text-[#5d4c42]/90 prose-li:text-[#5d4c42]/90 prose-strong:text-[#5d4c42] prose-blockquote:text-[#5d4c42]/80 prose-blockquote:border-l-[#a39188] prose-code:text-[#5d4c42] prose-code:bg-[#f2e8dc] prose-pre:bg-[#f2e8dc]">
-          <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }} />
         </div>
 
         {/* Tags */}

@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server"
 
 export async function GET() {
+  // Disable debug endpoints in production for security
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  }
+  
   try {
     const envVars = {
       NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL ? "✅ Set" : "❌ Missing",

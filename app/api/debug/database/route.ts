@@ -2,6 +2,10 @@ import { NextResponse } from "next/server"
 import { createServerClient } from "@/lib/supabase"
 
 export async function GET() {
+  // Disable debug endpoints in production for security
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  }
   try {
     const supabase = createServerClient()
 

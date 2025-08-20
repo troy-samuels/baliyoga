@@ -71,12 +71,27 @@ export async function PUT(request: Request) {
   try {
     const { filePath, newName } = await request.json()
     
-    if (!filePath || !fs.existsSync(filePath)) {
+    // Validate and sanitize file path to prevent directory traversal
+    if (!filePath || typeof filePath !== 'string') {
+      return NextResponse.json({ error: "Invalid file path" }, { status: 400 })
+    }
+    
+    // Resolve the file path and ensure it's within allowed directories
+    const resolvedPath = path.resolve(filePath)
+    const allowedUploadDir = path.resolve(process.cwd(), 'public', 'images')
+    const tempDir = path.resolve('/tmp')
+    
+    // Check if file is in allowed directories
+    if (!resolvedPath.startsWith(allowedUploadDir) && !resolvedPath.startsWith(tempDir)) {
+      return NextResponse.json({ error: "Access denied: Invalid file location" }, { status: 403 })
+    }
+    
+    if (!fs.existsSync(resolvedPath)) {
       return NextResponse.json({ error: "Source file not found" }, { status: 400 })
     }
 
     // Validate file type
-    const ext = path.extname(filePath).toLowerCase()
+    const ext = path.extname(resolvedPath).toLowerCase()
     const allowedExts = [".jpg", ".jpeg", ".png", ".webp"]
     if (!allowedExts.includes(ext)) {
       return NextResponse.json(
@@ -85,20 +100,33 @@ export async function PUT(request: Request) {
       )
     }
 
-    // Generate filename
+    // Generate safe filename
     const timestamp = Date.now()
-    const cleanName = (newName || path.basename(filePath)).replace(/[^a-zA-Z0-9.-]/g, "_")
+    const baseName = newName || path.basename(resolvedPath)
+    const cleanName = baseName.replace(/[^a-zA-Z0-9.-]/g, "_")
     const filename = `${timestamp}_${cleanName}`
     
-    // Create upload directory
+    // Validate filename doesn't contain path traversal
+    if (filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
+      return NextResponse.json({ error: "Invalid filename" }, { status: 400 })
+    }
+    
+    // Create upload directory securely
     const uploadDir = path.join(process.cwd(), "public", "images", "blog")
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true })
     }
 
-    // Copy file
+    // Copy file securely
     const destPath = path.join(uploadDir, filename)
-    fs.copyFileSync(filePath, destPath)
+    const resolvedDestPath = path.resolve(destPath)
+    
+    // Ensure destination is within the upload directory
+    if (!resolvedDestPath.startsWith(path.resolve(uploadDir))) {
+      return NextResponse.json({ error: "Invalid destination path" }, { status: 400 })
+    }
+    
+    fs.copyFileSync(resolvedPath, resolvedDestPath)
 
     const publicUrl = `/images/blog/${filename}`
     

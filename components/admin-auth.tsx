@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Lock, Eye, EyeOff } from 'lucide-react'
 
-const ADMIN_PASSWORD = 'baliyoga2024'
+const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || ''
 const AUTH_KEY = 'bali-yoga-admin-auth'
 const AUTH_EXPIRY = 24 * 60 * 60 * 1000 // 24 hours
 
