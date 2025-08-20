@@ -14,8 +14,6 @@ const SecurityInitializer = dynamic(() => import("@/components/security-initiali
 export function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <SecurityInitializer />
-      <MobileTouchOptimizer />
       {children}
     </>
   )
