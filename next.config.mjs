@@ -29,6 +29,11 @@ const nextConfig = {
       }
     }
     
+    // Prevent any potential service worker imports from being processed
+    if (isServer) {
+      config.externals = [...(config.externals || []), 'sw.js']
+    }
+    
     // Split chunks for better caching
     config.optimization = {
       ...config.optimization,
