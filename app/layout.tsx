@@ -166,7 +166,14 @@ export default function RootLayout({
             @media (max-width: 768px) {
               body {
                 overflow-x: hidden;
+                overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
+                height: 100%;
+              }
+              
+              html {
+                height: 100%;
+                overflow-y: auto;
               }
               
               /* Improved text legibility on mobile */

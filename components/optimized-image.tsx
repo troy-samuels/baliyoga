@@ -33,14 +33,15 @@ export function OptimizedImage({
   
   // Use Intersection Observer for lazy loading non-priority images
   useEffect(() => {
-    // Always show images immediately for now to fix loading issues
-    setIsInView(true)
-    return
-    
-    // TODO: Re-enable lazy loading after fixing intersection observer
-    /*
     if (priority) {
       setIsInView(true)
+      return
+    }
+    
+    // Use a ref-based approach for intersection observer
+    const imageElement = document.querySelector(`[data-image-src="${src}"]`) as HTMLElement
+    if (!imageElement) {
+      setIsInView(true) // Fallback to show image immediately
       return
     }
     
@@ -48,22 +49,18 @@ export function OptimizedImage({
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true)
+          observer.disconnect()
         }
       },
-      { rootMargin: '50px' }
+      { 
+        rootMargin: '50px',
+        threshold: 0.1
+      }
     )
     
-    const element = document.querySelector(`[data-image-src="${src}"]`)
-    if (element) {
-      observer.observe(element)
-    }
+    observer.observe(imageElement)
     
-    return () => {
-      if (element) {
-        observer.unobserve(element)
-      }
-    }
-    */
+    return () => observer.disconnect()
   }, [src, priority])
 
   const handleError = () => {
@@ -97,7 +94,9 @@ export function OptimizedImage({
     return (
       <div className="relative w-full h-full" data-image-src={src}>
         {isLoading && <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />}
-        <Image {...imageProps} src={finalSrc} fill loading={priority ? "eager" : "lazy"} />
+        {isInView && (
+          <Image {...imageProps} src={finalSrc} fill loading={priority ? "eager" : "lazy"} />
+        )}
       </div>
     )
   }
@@ -105,7 +104,9 @@ export function OptimizedImage({
   return (
     <div className="relative" style={{ width, height }} data-image-src={src}>
       {isLoading && <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" style={{ width, height }} />}
-      <Image {...imageProps} src={finalSrc} width={width || 300} height={height || 200} loading={priority ? "eager" : "lazy"} />
+      {isInView && (
+        <Image {...imageProps} src={finalSrc} width={width || 300} height={height || 200} loading={priority ? "eager" : "lazy"} />
+      )}
     </div>
   )
 }
