@@ -1,5 +1,5 @@
 import type React from "react"
-import { Cormorant_Garamond, Inter } from "next/font/google"
+import { Cormorant_Garamond, Raleway } from "next/font/google"
 import "./globals.css"
 import type { Metadata } from "next"
 import { WishlistProvider } from "@/contexts/wishlist-context"
@@ -16,12 +16,12 @@ const cormorantGaramond = Cormorant_Garamond({
   adjustFontFallback: false, // Disable automatic font fallback adjustment for better performance
 })
 
-// Initialize the Inter font for body text (Airbnb-style) with optimizations
-const inter = Inter({
+// Initialize the Raleway font for body text with optimizations
+const raleway = Raleway({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],  // Reduced weights
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-raleway",
   preload: true,
   fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
   adjustFontFallback: false, // Disable automatic font fallback adjustment for better performance
@@ -81,7 +81,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${cormorantGaramond.variable} ${inter.variable}`}>
+    <html lang="en" className={`${cormorantGaramond.variable} ${raleway.variable}`}>
       <head>
         {/* Mobile-first viewport configuration */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
@@ -104,13 +104,13 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             /* Font loading optimization */
-            .font-inter { font-family: var(--font-inter), system-ui, -apple-system, sans-serif; }
+            .font-raleway { font-family: var(--font-raleway), system-ui, -apple-system, sans-serif; }
             .font-cormorant { font-family: var(--font-cormorant), Georgia, serif; }
             
             /* Critical above-the-fold styles */
             body { 
               margin: 0; 
-              font-family: var(--font-cormorant), Georgia, serif;
+              font-family: var(--font-raleway), system-ui, -apple-system, sans-serif;
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale;
               text-rendering: optimizeSpeed;
@@ -186,7 +186,7 @@ export default function RootLayout({
           `
         }} />
       </head>
-      <body className="font-cormorant">
+      <body className="font-raleway">
         <WishlistProvider>
           <ClientProviders>
             {children}

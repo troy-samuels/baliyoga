@@ -11,8 +11,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         cormorant: ["var(--font-cormorant)", "serif"],
-        inter: ["var(--font-inter)", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
-        sans: ["var(--font-cormorant)", "Georgia", "serif"], // Make Cormorant the default
+        raleway: ["var(--font-raleway)", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        sans: ["var(--font-raleway)", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"], // Make Raleway the default
       },
       screens: {
         'xs': '475px',
