@@ -47,7 +47,7 @@ export function WishlistHeart({ item, className = '' }: WishlistHeartProps) {
   return (
     <button
       onClick={handleToggle}
-      className={`group relative z-20 rounded-full bg-white/90 backdrop-blur-sm p-2 shadow-sm transition-all duration-200 hover:bg-white hover:scale-110 ${className}`}
+      className={`group relative z-20 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm p-2 shadow-sm transition-all duration-200 hover:bg-white hover:scale-110 ${className}`}
       aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
     >
       <Heart

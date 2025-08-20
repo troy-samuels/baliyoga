@@ -115,7 +115,7 @@ export default function RootLayout({
             /* Critical above-the-fold styles */
             body { 
               margin: 0; 
-              font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+              font-family: var(--font-cormorant), Georgia, serif;
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale;
               text-rendering: optimizeSpeed;
@@ -191,7 +191,7 @@ export default function RootLayout({
           `
         }} />
       </head>
-      <body className="font-inter">
+      <body className="font-cormorant">
         <SecurityInitializer />
         <PerformanceOptimizer />
         <MobileTouchOptimizer />

@@ -12,6 +12,7 @@ const config: Config = {
       fontFamily: {
         cormorant: ["var(--font-cormorant)", "serif"],
         inter: ["var(--font-inter)", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        sans: ["var(--font-cormorant)", "Georgia", "serif"], // Make Cormorant the default
       },
       screens: {
         'xs': '475px',

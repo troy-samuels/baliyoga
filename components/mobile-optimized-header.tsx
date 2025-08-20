@@ -76,7 +76,7 @@ export function MobileOptimizedHeader() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="rounded-lg bg-[#e6ceb3] p-2.5 text-[#5d4c42] transition-all duration-200 hover:bg-[#d4c1a1] active:scale-95 md:hidden touch-manipulation"
+            className="flex items-center justify-center rounded-lg bg-[#e6ceb3] p-2.5 text-[#5d4c42] transition-all duration-200 hover:bg-[#d4c1a1] active:scale-95 md:hidden touch-manipulation"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
           >
