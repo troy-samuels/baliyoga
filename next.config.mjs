@@ -1,4 +1,5 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
+import './lib/server-polyfills.js'
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -29,7 +30,7 @@ const nextConfig = {
       }
     }
     
-    // Prevent any potential service worker imports from being processed
+    // Prevent service worker from being processed on server
     if (isServer) {
       config.externals = [...(config.externals || []), 'sw.js']
     }
