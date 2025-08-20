@@ -1,3 +1,16 @@
+// Polyfill browser globals for server-side rendering
+if (typeof globalThis !== 'undefined') {
+  if (typeof globalThis.self === 'undefined') {
+    globalThis.self = globalThis;
+  }
+  if (typeof globalThis.window === 'undefined') {
+    globalThis.window = globalThis;
+  }
+  if (typeof globalThis.document === 'undefined') {
+    globalThis.document = {};
+  }
+}
+
 import bundleAnalyzer from '@next/bundle-analyzer'
 
 const withBundleAnalyzer = bundleAnalyzer({
@@ -18,9 +31,12 @@ const nextConfig = {
     webVitalsAttribution: ['CLS', 'LCP'],
   },
   
+  // Disable static optimization temporarily to avoid SSR issues
+  output: 'standalone',
+  
   // Webpack optimizations
   webpack: (config, { isServer }) => {
-    // Optimize bundle size
+    // Optimize bundle size for client
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -29,7 +45,7 @@ const nextConfig = {
       }
     }
     
-    // Prevent service worker from being processed on server
+    // Externalize service worker on server
     if (isServer) {
       config.externals = [...(config.externals || []), 'sw.js'];
     }

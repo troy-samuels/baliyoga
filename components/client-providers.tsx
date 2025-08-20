@@ -15,13 +15,8 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SecurityInitializer />
-      <PerformanceOptimizer />
       <MobileTouchOptimizer />
-      <AnalyticsTracker />
       {children}
-      <Analytics />
-      <PrivacyBanner />
-      <PerformanceMonitor />
     </>
   )
 }
