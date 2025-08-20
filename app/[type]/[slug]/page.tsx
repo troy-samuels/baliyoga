@@ -21,7 +21,7 @@ import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getStudioBySlug, getRetreatBySlug } from "@/lib/data-utils"
-import { getSupabaseStudioBySlug, getSupabaseRetreatBySlug, getSimilarItems } from "@/lib/supabase-data-utils"
+import { getSupabaseStudioBySlug, getSupabaseRetreatBySlug, getSimilarItems, getSupabaseStudios, getSupabaseRetreats } from "@/lib/supabase-data-utils"
 import { MobileOptimizedCard } from "@/components/mobile-optimized-card"
 import { WishlistHeart } from "@/components/wishlist-heart"
 import { PopularityBadge } from "@/components/popularity-badge"
@@ -30,6 +30,34 @@ import { LocationMap } from "@/components/location-map"
 import { SchemaMarkup } from "@/components/schema-markup"
 import { ReviewSection } from "@/components/review-section"
 import { generateColorFallback } from "@/lib/image-fallback"
+
+export async function generateStaticParams() {
+  // Get all studios and retreats to generate static params
+  const [studios, retreats] = await Promise.all([
+    getSupabaseStudios(),
+    getSupabaseRetreats()
+  ])
+  
+  const params = []
+  
+  // Add studio params
+  for (const studio of studios) {
+    params.push({
+      type: 'studios',
+      slug: studio.slug
+    })
+  }
+  
+  // Add retreat params
+  for (const retreat of retreats) {
+    params.push({
+      type: 'retreats', 
+      slug: retreat.slug
+    })
+  }
+  
+  return params
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ type: string; slug: string }> }) {
   const { type, slug } = await params
@@ -428,7 +456,7 @@ export default async function DetailPage({ params }: { params: Promise<{ type: s
                 </div>
               )}
 
-              {item.opening_hours && item.opening_hours.length > 0 && (
+              {Array.isArray(item.opening_hours) && item.opening_hours.length > 0 && (
                   <div>
                   <h3 className="text-lg font-semibold text-[#5d4c42]">Opening Hours</h3>
                   <div className="mt-2 space-y-2">

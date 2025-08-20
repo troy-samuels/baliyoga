@@ -70,7 +70,7 @@ export function SchemaMarkup({ item, type }: SchemaMarkupProps) {
       } : undefined,
       "sport": "Yoga",
       "activity": item.styles || ["Yoga"],
-      "openingHoursSpecification": item.opening_hours?.map((hours: any) => {
+      "openingHoursSpecification": Array.isArray(item.opening_hours) ? item.opening_hours.map((hours: any) => {
         if (typeof hours === 'object' && hours.day && hours.hours) {
           return {
             "@type": "OpeningHoursSpecification",
@@ -80,7 +80,7 @@ export function SchemaMarkup({ item, type }: SchemaMarkupProps) {
           }
         }
         return null
-      }).filter(Boolean) || undefined
+      }).filter(Boolean) : undefined
     }
   } else {
     // Schema for Yoga Retreats (Event + TouristAttraction)

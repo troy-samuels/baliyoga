@@ -58,8 +58,8 @@ const createSEOSlug = (name: string, city: string, type: 'studio' | 'retreat'): 
 
 // Function to convert raw data to Studio type
 const mapToStudio = (item: any): Studio => {
-  // Create SEO-optimized slug
-  const slug = createSEOSlug(item.name, item.city || "Bali", "studio")
+  // Use database slug if available, otherwise create SEO-optimized slug
+  const slug = item.slug || createSEOSlug(item.name, item.city || "Bali", "studio")
 
   // Extract styles from the yoga_styles field (enhanced data)
   let styles: string[] = []
@@ -181,8 +181,8 @@ const mapToStudio = (item: any): Studio => {
 
 // Function to convert raw data to Retreat type
 const mapToRetreat = (item: any): Retreat => {
-  // Create SEO-optimized slug
-  const slug = createSEOSlug(item.name, item.city || "Bali", "retreat")
+  // Use database slug if available, otherwise create SEO-optimized slug
+  const slug = item.slug || createSEOSlug(item.name, item.city || "Bali", "retreat")
 
   // Extract styles from the yoga_styles field (enhanced data)
   let styles: string[] = []
