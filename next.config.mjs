@@ -1,5 +1,4 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
-import './lib/server-polyfills.js'
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -20,7 +19,7 @@ const nextConfig = {
   },
   
   // Webpack optimizations
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, webpack }) => {
     // Optimize bundle size
     if (!isServer) {
       config.resolve.fallback = {
@@ -30,8 +29,18 @@ const nextConfig = {
       }
     }
     
-    // Prevent service worker from being processed on server
+    // Fix server-side issues
     if (isServer) {
+      // Define global polyfills for server
+      config.plugins.push(
+        new webpack.DefinePlugin({
+          'typeof self': JSON.stringify('undefined'),
+          'typeof window': JSON.stringify('undefined'),
+          'typeof document': JSON.stringify('undefined'),
+        })
+      )
+      
+      // Externalize problematic modules
       config.externals = [...(config.externals || []), 'sw.js']
     }
     
