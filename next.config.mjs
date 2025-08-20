@@ -19,7 +19,7 @@ const nextConfig = {
   },
   
   // Webpack optimizations
-  webpack: (config, { isServer, webpack }) => {
+  webpack: (config, { isServer }) => {
     // Optimize bundle size
     if (!isServer) {
       config.resolve.fallback = {
@@ -29,19 +29,9 @@ const nextConfig = {
       }
     }
     
-    // Fix server-side issues
+    // Prevent service worker from being processed on server
     if (isServer) {
-      // Define global polyfills for server
-      config.plugins.push(
-        new webpack.DefinePlugin({
-          'typeof self': JSON.stringify('undefined'),
-          'typeof window': JSON.stringify('undefined'),
-          'typeof document': JSON.stringify('undefined'),
-        })
-      )
-      
-      // Externalize problematic modules
-      config.externals = [...(config.externals || []), 'sw.js']
+      config.externals = [...(config.externals || []), 'sw.js'];
     }
     
     // Split chunks for better caching
