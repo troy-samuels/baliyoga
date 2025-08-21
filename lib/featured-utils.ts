@@ -98,6 +98,11 @@ export async function getCurrentWeeklyFeatured(): Promise<CurrentWeeklyFeatured>
     console.log('No weekly rotation found, using high-rated items as fallback')
     const fallbackData = await getFallbackFeaturedItems()
     
+    console.log('Fallback data retrieved:', {
+      studiosCount: fallbackData.studios.length,
+      retreatsCount: fallbackData.retreats.length
+    })
+    
     return {
       week_start: weekStart.toISOString(),
       week_end: weekEnd.toISOString(),

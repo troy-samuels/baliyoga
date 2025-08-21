@@ -1,10 +1,8 @@
 "use client"
 
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { incrementPopularityScore, decrementPopularityScore } from '@/lib/popularity-utils'
-import { isValidItemId, sanitizeString, secureGetItem, secureSetItem, isRateLimited, getRemainingActions } from '@/lib/security-utils'
-import { trackWishlistAction } from '@/lib/analytics-utils'
+import React, { createContext, useContext, useEffect, useReducer, useCallback, useMemo } from 'react'
 
+// Types
 export interface WishlistItem {
   id: string
   name: string
@@ -21,6 +19,18 @@ export interface WishlistItem {
   addedAt: string
 }
 
+interface WishlistState {
+  items: WishlistItem[]
+  isHydrated: boolean
+}
+
+type WishlistAction = 
+  | { type: 'HYDRATE'; payload: WishlistItem[] }
+  | { type: 'ADD_ITEM'; payload: WishlistItem }
+  | { type: 'REMOVE_ITEM'; payload: string }
+  | { type: 'CLEAR' }
+  | { type: 'SET_HYDRATED' }
+
 interface WishlistContextType {
   wishlistItems: WishlistItem[]
   addToWishlist: (item: Omit<WishlistItem, 'addedAt'>) => boolean
@@ -28,184 +38,172 @@ interface WishlistContextType {
   isInWishlist: (id: string) => boolean
   clearWishlist: () => void
   wishlistCount: number
-  remainingActions: number
-  isRateLimited: boolean
+  isHydrated: boolean
 }
 
+// Constants
+const WISHLIST_KEY = 'bali-yoga-wishlist'
+const MAX_WISHLIST_ITEMS = 50
+
+// Context
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined)
 
-export function WishlistProvider({ children }: { children: React.ReactNode }) {
-  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([])
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  // Load wishlist from localStorage on mount
-  useEffect(() => {
-    try {
-      const savedWishlist = secureGetItem('bali-yoga-wishlist')
-      if (savedWishlist) {
-        let parsed: any
-        try {
-          parsed = JSON.parse(savedWishlist)
-        } catch (parseError) {
-          console.warn('Error parsing wishlist JSON:', parseError)
-          setIsLoaded(true)
-          return
-        }
-        
-        // Validate and sanitize wishlist items
-        const validatedItems: WishlistItem[] = []
-        if (Array.isArray(parsed)) {
-          for (const item of parsed) {
-            if (item && typeof item === 'object' && isValidItemId(item.id)) {
-              validatedItems.push({
-                id: item.id,
-                name: sanitizeString(item.name, 100),
-                slug: sanitizeString(item.slug, 100),
-                image: item.image ? sanitizeString(item.image, 500) : undefined,
-                location: sanitizeString(item.location, 100),
-                rating: typeof item.rating === 'number' ? Math.max(0, Math.min(5, item.rating)) : 0,
-                type: (item.type === 'studio' || item.type === 'retreat') ? item.type : 'studio',
-                styles: Array.isArray(item.styles) ? item.styles.map((s: any) => sanitizeString(s, 50)).slice(0, 10) : undefined,
-                duration: item.duration ? sanitizeString(item.duration, 50) : undefined,
-                price: item.price ? sanitizeString(item.price, 50) : undefined,
-                phone_number: item.phone_number ? sanitizeString(item.phone_number, 50) : undefined,
-                website: item.website ? sanitizeString(item.website, 200) : undefined,
-                addedAt: item.addedAt || new Date().toISOString()
-              })
-            }
-          }
-        }
-        
-        setWishlistItems(validatedItems)
+// Reducer for state management
+function wishlistReducer(state: WishlistState, action: WishlistAction): WishlistState {
+  switch (action.type) {
+    case 'HYDRATE':
+      return {
+        ...state,
+        items: action.payload,
+        isHydrated: true,
       }
+    case 'ADD_ITEM':
+      // Prevent duplicates and enforce max items
+      if (state.items.some(item => item.id === action.payload.id)) {
+        return state
+      }
+      if (state.items.length >= MAX_WISHLIST_ITEMS) {
+        // Remove oldest item if at max capacity
+        return {
+          ...state,
+          items: [action.payload, ...state.items.slice(0, -1)],
+        }
+      }
+      return {
+        ...state,
+        items: [action.payload, ...state.items],
+      }
+    case 'REMOVE_ITEM':
+      return {
+        ...state,
+        items: state.items.filter(item => item.id !== action.payload),
+      }
+    case 'CLEAR':
+      return {
+        ...state,
+        items: [],
+      }
+    case 'SET_HYDRATED':
+      return {
+        ...state,
+        isHydrated: true,
+      }
+    default:
+      return state
+  }
+}
+
+// Storage utilities with error handling
+const storage = {
+  get: (): WishlistItem[] => {
+    if (typeof window === 'undefined') return []
+    
+    try {
+      const stored = localStorage.getItem(WISHLIST_KEY)
+      if (!stored) return []
+      
+      const parsed = JSON.parse(stored)
+      if (!Array.isArray(parsed)) return []
+      
+      // Validate and filter items
+      return parsed.filter(item => 
+        item && 
+        typeof item === 'object' && 
+        typeof item.id === 'string' &&
+        typeof item.name === 'string' &&
+        typeof item.slug === 'string'
+      ).slice(0, MAX_WISHLIST_ITEMS)
     } catch (error) {
-      console.error('Error loading wishlist from localStorage:', error)
-    } finally {
-      setIsLoaded(true)
+      console.error('Failed to load wishlist:', error)
+      return []
     }
+  },
+  
+  set: (items: WishlistItem[]): void => {
+    if (typeof window === 'undefined') return
+    
+    try {
+      localStorage.setItem(WISHLIST_KEY, JSON.stringify(items))
+    } catch (error) {
+      console.error('Failed to save wishlist:', error)
+    }
+  },
+  
+  clear: (): void => {
+    if (typeof window === 'undefined') return
+    
+    try {
+      localStorage.removeItem(WISHLIST_KEY)
+    } catch (error) {
+      console.error('Failed to clear wishlist:', error)
+    }
+  }
+}
+
+// Provider component
+export function WishlistProvider({ children }: { children: React.ReactNode }) {
+  const [state, dispatch] = useReducer(wishlistReducer, {
+    items: [],
+    isHydrated: false,
+  })
+
+  // Hydrate from localStorage on mount
+  useEffect(() => {
+    const items = storage.get()
+    dispatch({ type: 'HYDRATE', payload: items })
   }, [])
 
-  // Save wishlist to localStorage whenever it changes
+  // Persist to localStorage when items change (after hydration)
   useEffect(() => {
-    if (isLoaded) {
-      try {
-        secureSetItem('bali-yoga-wishlist', JSON.stringify(wishlistItems))
-      } catch (error) {
-        console.error('Error saving wishlist to localStorage:', error)
-      }
+    if (state.isHydrated) {
+      storage.set(state.items)
     }
-  }, [wishlistItems, isLoaded])
+  }, [state.items, state.isHydrated])
 
-  const addToWishlist = (item: Omit<WishlistItem, 'addedAt'>): boolean => {
-    // Validate input
-    if (!isValidItemId(item.id)) {
-      console.warn('Invalid item ID for wishlist:', item.id)
+  // Memoized actions
+  const addToWishlist = useCallback((item: Omit<WishlistItem, 'addedAt'>): boolean => {
+    const newItem: WishlistItem = {
+      ...item,
+      addedAt: new Date().toISOString(),
+    }
+    
+    // Check if already exists
+    if (state.items.some(existing => existing.id === item.id)) {
       return false
     }
     
-    // Check rate limiting
-    if (isRateLimited('WISHLIST_ACTIONS')) {
-      console.warn('Rate limit exceeded for wishlist actions')
+    dispatch({ type: 'ADD_ITEM', payload: newItem })
+    return true
+  }, [state.items])
+
+  const removeFromWishlist = useCallback((id: string): boolean => {
+    if (!state.items.some(item => item.id === id)) {
       return false
     }
     
-    // Sanitize item data
-    const sanitizedItem: WishlistItem = {
-      id: item.id,
-      name: sanitizeString(item.name, 100),
-      slug: sanitizeString(item.slug, 100),
-      image: item.image ? sanitizeString(item.image, 500) : undefined,
-      location: sanitizeString(item.location, 100),
-      rating: typeof item.rating === 'number' ? Math.max(0, Math.min(5, item.rating)) : 0,
-      type: (item.type === 'studio' || item.type === 'retreat') ? item.type : 'studio',
-      styles: Array.isArray(item.styles) ? item.styles.map(s => sanitizeString(s, 50)).slice(0, 10) : undefined,
-      duration: item.duration ? sanitizeString(item.duration, 50) : undefined,
-      price: item.price ? sanitizeString(item.price, 50) : undefined,
-      phone_number: item.phone_number ? sanitizeString(item.phone_number, 50) : undefined,
-      website: item.website ? sanitizeString(item.website, 200) : undefined,
-      addedAt: new Date().toISOString()
-    }
-    
-    let success = false
-    
-    setWishlistItems(prev => {
-      // Check if item already exists
-      if (prev.some(existingItem => existingItem.id === item.id)) {
-        return prev
-      }
-      
-      // Increment popularity score when adding to wishlist
-      success = incrementPopularityScore(item.id)
-      
-      if (success) {
-        // Track wishlist add action for analytics
-        trackWishlistAction(item.id, item.name, item.type, 'add')
-        return [sanitizedItem, ...prev]
-      } else {
-        return prev
-      }
-    })
-    
-    return success
-  }
+    dispatch({ type: 'REMOVE_ITEM', payload: id })
+    return true
+  }, [state.items])
 
-  const removeFromWishlist = (id: string): boolean => {
-    // Validate input
-    if (!isValidItemId(id)) {
-      console.warn('Invalid item ID for wishlist removal:', id)
-      return false
-    }
-    
-    // Check rate limiting
-    if (isRateLimited('WISHLIST_ACTIONS')) {
-      console.warn('Rate limit exceeded for wishlist actions')
-      return false
-    }
-    
-    let success = false
-    
-    setWishlistItems(prev => {
-      const existingItem = prev.find(item => item.id === id)
-      if (existingItem) {
-        // Decrement popularity score when removing from wishlist
-        success = decrementPopularityScore(id)
-        
-        if (success) {
-          // Track wishlist remove action for analytics
-          trackWishlistAction(id, existingItem.name, existingItem.type, 'remove')
-          return prev.filter(item => item.id !== id)
-        }
-      }
-      return prev
-    })
-    
-    return success
-  }
+  const isInWishlist = useCallback((id: string): boolean => {
+    return state.items.some(item => item.id === id)
+  }, [state.items])
 
-  const isInWishlist = (id: string) => {
-    if (!isValidItemId(id)) return false
-    return wishlistItems.some(item => item.id === id)
-  }
+  const clearWishlist = useCallback(() => {
+    dispatch({ type: 'CLEAR' })
+    storage.clear()
+  }, [])
 
-  const clearWishlist = () => {
-    // Remove popularity scores for all items
-    wishlistItems.forEach(item => {
-      decrementPopularityScore(item.id)
-    })
-    
-    setWishlistItems([])
-  }
-
-  const value: WishlistContextType = {
-    wishlistItems,
+  // Memoized context value
+  const value = useMemo<WishlistContextType>(() => ({
+    wishlistItems: state.items,
     addToWishlist,
     removeFromWishlist,
     isInWishlist,
     clearWishlist,
-    wishlistCount: wishlistItems.length,
-    remainingActions: getRemainingActions('WISHLIST_ACTIONS'),
-    isRateLimited: isRateLimited('WISHLIST_ACTIONS')
-  }
+    wishlistCount: state.items.length,
+    isHydrated: state.isHydrated,
+  }), [state, addToWishlist, removeFromWishlist, isInWishlist, clearWishlist])
 
   return (
     <WishlistContext.Provider value={value}>
@@ -214,10 +212,11 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
+// Hook to use wishlist context
 export function useWishlist() {
   const context = useContext(WishlistContext)
   if (context === undefined) {
     throw new Error('useWishlist must be used within a WishlistProvider')
   }
   return context
-} 
+}

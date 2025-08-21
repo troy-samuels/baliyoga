@@ -19,10 +19,20 @@ export function LazySection({
   rootMargin = "50px",
   fallback = null,
 }: LazySectionProps) {
+  // Use consistent initial state to avoid hydration mismatch
   const [isVisible, setIsVisible] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    setIsMounted(true)
+    // For debugging, show content immediately after mount
+    setIsVisible(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isMounted) return
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -41,7 +51,16 @@ export function LazySection({
     }
 
     return () => observer.disconnect()
-  }, [threshold, rootMargin])
+  }, [threshold, rootMargin, isMounted])
+
+  // Prevent hydration mismatch by showing fallback until mounted
+  if (!isMounted) {
+    return (
+      <div ref={ref} className={className}>
+        {fallback}
+      </div>
+    )
+  }
 
   return (
     <div ref={ref} className={className}>

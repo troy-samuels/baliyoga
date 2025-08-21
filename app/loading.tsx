@@ -1,3 +1,5 @@
+import { PageLoading } from '@/components/loading-states'
+
 export default function Loading() {
-  return null
+  return <PageLoading message="Loading page..." />
 }

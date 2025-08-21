@@ -2,7 +2,7 @@ import { Search } from "lucide-react"
 
 import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
-import { getSupabaseRetreats } from "@/lib/supabase-data-utils"
+import { getAllRetreats } from "@/lib/supabase-server"
 import { LazySection } from "@/components/lazy-section"
 import { filterRetreats, getLocationDisplayName } from "@/lib/search-utils"
 import { MobileOptimizedSidebar } from "@/components/mobile-optimized-sidebar"
@@ -24,8 +24,8 @@ export default async function RetreatsPage({
   const reviews = typeof resolvedSearchParams.reviews === "string" ? parseInt(resolvedSearchParams.reviews) : undefined;
   const images = resolvedSearchParams.images === "true";
 
-  // Get retreats data from Supabase
-  const allRetreats = await getSupabaseRetreats()
+  // Server-side data fetching with cached results
+  const allRetreats = await getAllRetreats()
 
   // Apply filters
   const filteredRetreats = filterRetreats(allRetreats, {

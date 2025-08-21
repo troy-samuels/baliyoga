@@ -8,7 +8,7 @@ export function MobileTouchOptimizer() {
     let lastTouchEnd = 0
     const preventZoom = (e: TouchEvent) => {
       const target = e.target as HTMLElement
-      const now = Date.now()
+      const now = performance.now()
       
       // Only prevent zoom on specific elements, not all elements
       if (target.tagName === 'BUTTON' || target.closest('button') || target.closest('[role="button"]')) {

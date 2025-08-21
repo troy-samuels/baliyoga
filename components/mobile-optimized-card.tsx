@@ -7,6 +7,7 @@ import { WishlistHeart } from "./wishlist-heart"
 import { PopularityBadge } from "./popularity-badge"
 import { StarRatingCompact } from "./ui/star-rating"
 import { generateColorFallback } from "@/lib/image-fallback"
+import { ROUTE_PATTERNS } from "@/lib/slug-utils"
 import { memo } from "react"
 
 interface MobileCardProps {
@@ -42,7 +43,9 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
   website,
   featured = false,
 }: MobileCardProps) {
-  const href = `/${type}/${slug}`
+  const href = type === 'studio' 
+    ? ROUTE_PATTERNS.studio(slug)
+    : ROUTE_PATTERNS.retreat(slug)
 
   const wishlistItem = {
     id,

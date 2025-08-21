@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next"
-import { getSupabaseStudios, getSupabaseRetreats, getRetreatLocationTypeCombinations, getStudioLocationTypeCombinations } from "@/lib/supabase-data-utils"
+import { getAllStudios, getAllRetreats } from "@/lib/supabase-server"
 import { withCache, CACHE_CONFIG } from "@/lib/cache-utils"
-import { getAllLocationSlugs, getAllRetreatTypeSlugs, RETREAT_TYPE_MAPPING } from "@/lib/retreat-types"
-import { getAllStudioLocationSlugs, getAllStudioTypeSlugs, STUDIO_TYPE_MAPPING } from "@/lib/studio-types"
+import { ROUTE_PATTERNS, generateSitemapEntry, getCanonicalUrl } from "@/lib/slug-utils"
 
 // Cached sitemap generation function
 async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
@@ -10,11 +9,9 @@ async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
   const currentDate = new Date()
 
   // Get dynamic content with caching
-  const [studios, retreats, retreatCombinations, studioCombinations] = await Promise.all([
-    getSupabaseStudios(),
-    getSupabaseRetreats(),
-    getRetreatLocationTypeCombinations(),
-    getStudioLocationTypeCombinations()
+  const [studios, retreats] = await Promise.all([
+    getAllStudios(),
+    getAllRetreats()
   ])
 
   // Static pages with proper priorities and change frequencies
@@ -109,12 +106,12 @@ async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
     if (isPopularLocation && hasHighRating) priority = 0.9
     else if (isPopularLocation || hasHighRating) priority = 0.8
 
-    return {
-      url: `${baseUrl}/studios/${studio.slug}`,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority,
-    }
+    return generateSitemapEntry(
+      getCanonicalUrl('studio', studio.slug, baseUrl),
+      currentDate,
+      'weekly',
+      priority
+    )
   })
 
   // Dynamic retreat pages with similar logic
@@ -126,87 +123,15 @@ async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
     if (isPopularLocation && hasHighRating) priority = 0.9
     else if (isPopularLocation || hasHighRating) priority = 0.8
 
-    return {
-      url: `${baseUrl}/retreats/${retreat.slug}`,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority,
-    }
+    return generateSitemapEntry(
+      getCanonicalUrl('retreat', retreat.slug, baseUrl),
+      currentDate,
+      'weekly',
+      priority
+    )
   })
 
-  // New structured retreat URL pages - /retreats/[location]/[type] 
-  const structuredRetreatPages: MetadataRoute.Sitemap = retreatCombinations.map(({ location, type, count }) => {
-    const retreatType = Object.values(RETREAT_TYPE_MAPPING).find(t => t.slug === type)
-    if (!retreatType) return null
-    
-    // Higher priority for popular locations and types with more retreats
-    const isPopularLocation = ['ubud', 'canggu', 'seminyak', 'denpasar'].includes(location)
-    let priority = 0.6
-    if (isPopularLocation && count > 5) priority = 0.8
-    else if (isPopularLocation || count > 3) priority = 0.7
-
-    return {
-      url: `${baseUrl}/retreats/${location}/${type}`,
-      lastModified: currentDate,
-      changeFrequency: "weekly" as const,
-      priority,
-    }
-  }).filter(Boolean) as MetadataRoute.Sitemap
-
-  // Location-only retreat pages - /retreats/[location]
-  const locationRetreatPages: MetadataRoute.Sitemap = getAllLocationSlugs().map(location => {
-    const locationRetreats = retreats.filter(r => r.locationSlug === location)
-    if (locationRetreats.length === 0) return null
-    
-    const isPopularLocation = ['ubud', 'canggu', 'seminyak', 'denpasar'].includes(location)
-    let priority = 0.6
-    if (isPopularLocation && locationRetreats.length > 10) priority = 0.8
-    else if (isPopularLocation || locationRetreats.length > 5) priority = 0.7
-
-    return {
-      url: `${baseUrl}/retreats/${location}`,
-      lastModified: currentDate,
-      changeFrequency: "weekly" as const,
-      priority,
-    }
-  }).filter(Boolean) as MetadataRoute.Sitemap
-
-  // New structured studio URL pages - /studios/[location]/[type]
-  const structuredStudioPages: MetadataRoute.Sitemap = studioCombinations.map(({ location, type, count }) => {
-    const studioType = Object.values(STUDIO_TYPE_MAPPING).find(t => t.slug === type)
-    if (!studioType) return null
-    
-    // Higher priority for popular locations and types with more studios
-    const isPopularLocation = ['ubud', 'canggu', 'seminyak', 'denpasar'].includes(location)
-    let priority = 0.6
-    if (isPopularLocation && count > 10) priority = 0.8
-    else if (isPopularLocation || count > 5) priority = 0.7
-
-    return {
-      url: `${baseUrl}/studios/${location}/${type}`,
-      lastModified: currentDate,
-      changeFrequency: "weekly" as const,
-      priority,
-    }
-  }).filter(Boolean) as MetadataRoute.Sitemap
-
-  // Location-only studio pages - /studios/[location]
-  const locationStudioPages: MetadataRoute.Sitemap = getAllStudioLocationSlugs().map(location => {
-    const locationStudios = studios.filter(s => s.locationSlug === location)
-    if (locationStudios.length === 0) return null
-    
-    const isPopularLocation = ['ubud', 'canggu', 'seminyak', 'denpasar'].includes(location)
-    let priority = 0.6
-    if (isPopularLocation && locationStudios.length > 15) priority = 0.8
-    else if (isPopularLocation || locationStudios.length > 8) priority = 0.7
-
-    return {
-      url: `${baseUrl}/studios/${location}`,
-      lastModified: currentDate,
-      changeFrequency: "weekly" as const,
-      priority,
-    }
-  }).filter(Boolean) as MetadataRoute.Sitemap
+  // Future: Add location and type-based routes here when needed
 
   // Claim pages for each listing
   const claimPages: MetadataRoute.Sitemap = [
@@ -224,9 +149,9 @@ async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   ]
 
-  console.log(`Generated sitemap with ${staticPages.length} static pages, ${studioPages.length} studios, ${retreatPages.length} retreats, ${structuredStudioPages.length} structured studio pages, ${locationStudioPages.length} studio location pages, ${structuredRetreatPages.length} structured retreat pages, ${locationRetreatPages.length} retreat location pages, ${claimPages.length} claim pages`)
+  console.log(`Generated sitemap with ${staticPages.length} static pages, ${studioPages.length} studios, ${retreatPages.length} retreats, ${claimPages.length} claim pages`)
 
-  return [...staticPages, ...studioPages, ...retreatPages, ...structuredStudioPages, ...locationStudioPages, ...structuredRetreatPages, ...locationRetreatPages, ...claimPages]
+  return [...staticPages, ...studioPages, ...retreatPages, ...claimPages]
 }
 
 // Export cached sitemap function

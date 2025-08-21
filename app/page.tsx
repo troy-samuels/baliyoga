@@ -7,30 +7,21 @@ import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import { MobileOptimizedCard } from "@/components/mobile-optimized-card"
 import { LazySection } from "@/components/lazy-section"
 import { HomepageSchema } from "@/components/homepage-schema"
-import { getTopSupabaseStudios, getTopSupabaseRetreats } from "@/lib/supabase-data-utils"
-import { getCurrentWeeklyFeatured } from "@/lib/featured-utils"
-import type { Studio, Retreat } from "@/lib/data-utils"
+import { getFeaturedStudios, getFeaturedRetreats } from "@/lib/supabase-server"
+import type { Studio, Retreat } from "@/lib/types"
 
 export default async function Home() {
   try {
-    // Get top rated data with most images from Supabase and weekly featured
-    const [topStudios, topRetreats, weeklyFeatured] = await Promise.all([
-      getTopSupabaseStudios(4),
-      getTopSupabaseRetreats(4),
-      getCurrentWeeklyFeatured(),
+    // Server-side data fetching with cached results
+    const [topStudios, topRetreats] = await Promise.all([
+      getFeaturedStudios(4),
+      getFeaturedRetreats(4),
     ])
 
-    // Combine featured studios and retreats for display
-    const allFeaturedItems = [
-      ...(weeklyFeatured.studios_data || []).map(studio => ({ ...studio, type: 'studio' as const })),
-      ...(weeklyFeatured.retreats_data || []).map(retreat => ({ ...retreat, type: 'retreat' as const }))
-    ]
-
-    // Create a set of featured item IDs for easy lookup
-    const featuredItemIds = new Set([
-      ...(weeklyFeatured.featured_studios || []),
-      ...(weeklyFeatured.featured_retreats || [])
-    ])
+    console.log('Homepage data loaded:', {
+      studiosCount: topStudios.length,
+      retreatsCount: topRetreats.length
+    })
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
@@ -41,40 +32,6 @@ export default async function Home() {
       {/* Main Content */}
       <div className="mx-auto max-w-7xl px-4 py-4 safe-left safe-right xs:py-6 sm:py-8 md:px-6">
         <div className="space-y-6 xs:space-y-8 lg:space-y-12">
-          {/* Featured This Week */}
-          {allFeaturedItems.length > 0 && (
-            <LazySection>
-              <section>
-                <div className="mb-4 flex items-center justify-between xs:mb-5 sm:mb-6">
-                  <h2 className="text-lg font-bold text-[#5d4c42] xs:text-xl sm:text-2xl">Featured This Week</h2>
-                  <div className="text-sm text-[#5d4c42]/70">
-                    {weeklyFeatured.week_start ? new Date(weeklyFeatured.week_start).toLocaleDateString() : ''} - {weeklyFeatured.week_end ? new Date(weeklyFeatured.week_end).toLocaleDateString() : ''}
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 gap-3 xs:gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 card-grid">
-                  {allFeaturedItems.map((item: any) => (
-                    <MobileOptimizedCard
-                      key={item.id}
-                      id={String(item.id)}
-                      name={item.name}
-                      slug={item.slug}
-                      image={item.image}
-                      location={item.location}
-                      rating={item.rating}
-                      reviewCount={item.reviewCount}
-                      styles={item.styles}
-                      type={item.type}
-                      duration={item.type === 'retreat' ? item.duration : undefined}
-                      price={item.type === 'retreat' ? item.price : undefined}
-                      phone_number={item.phone_number}
-                      website={item.website}
-                      featured={true}
-                    />
-                  ))}
-                </div>
-              </section>
-            </LazySection>
-          )}
 
           {/* Top Rated Yoga Studios */}
           <LazySection>
@@ -100,7 +57,7 @@ export default async function Home() {
                     type="studio"
                     phone_number={studio.phone_number}
                     website={studio.website}
-                    featured={featuredItemIds.has(String(studio.id))}
+                    featured={false}
                   />
                 ))}
               </div>
@@ -132,7 +89,7 @@ export default async function Home() {
                     price={retreat.price}
                     phone_number={retreat.phone_number}
                     website={retreat.website}
-                    featured={featuredItemIds.has(String(retreat.id))}
+                    featured={false}
                   />
                 ))}
               </div>

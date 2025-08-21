@@ -118,7 +118,7 @@ export function Analytics() {
           __html: `
             // Track Core Web Vitals with error handling
             (function() {
-              if (typeof window === 'undefined' || !window.gtag || !window.PerformanceObserver) {
+              if (!window.gtag || !window.PerformanceObserver) {
                 return;
               }
               

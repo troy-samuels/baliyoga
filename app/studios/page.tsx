@@ -2,7 +2,7 @@ import { Search } from "lucide-react"
 
 import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
-import { getSupabaseStudios } from "@/lib/supabase-data-utils"
+import { getAllStudios } from "@/lib/supabase-server"
 import { LazySection } from "@/components/lazy-section"
 import { filterStudios, getLocationDisplayName } from "@/lib/search-utils"
 import { MobileOptimizedSidebar } from "@/components/mobile-optimized-sidebar"
@@ -27,8 +27,8 @@ export default async function StudiosPage({
   const reviews = typeof resolvedSearchParams.reviews === "string" ? parseInt(resolvedSearchParams.reviews) : undefined;
   const images = resolvedSearchParams.images === "true";
 
-  // Get studios data from Supabase
-  const allStudios = await getSupabaseStudios()
+  // Server-side data fetching with cached results
+  const allStudios = await getAllStudios()
 
   // Apply filters
   const filteredStudios = filterStudios(allStudios, {
