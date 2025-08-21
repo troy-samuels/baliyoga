@@ -1,6 +1,7 @@
 "use client"
 
 import { Suspense, lazy, useState, useEffect, useRef } from 'react'
+import { ClientOnly } from './client-only'
 
 interface OptimizedLazySectionProps {
   children: React.ReactNode
@@ -68,13 +69,15 @@ export function OptimizedLazySection({
 
   return (
     <div ref={ref} className={className}>
-      {isVisible ? (
-        <Suspense fallback={fallback}>
-          {children}
-        </Suspense>
-      ) : (
-        fallback
-      )}
+      <ClientOnly fallback={fallback}>
+        {isVisible ? (
+          <Suspense fallback={fallback}>
+            {children}
+          </Suspense>
+        ) : (
+          fallback
+        )}
+      </ClientOnly>
     </div>
   )
 }

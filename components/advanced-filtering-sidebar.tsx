@@ -100,9 +100,7 @@ export function AdvancedFilteringSidebar({ type = "studio" }: { type?: "studio" 
       const search = current.toString()
       const query = search ? `?${search}` : ''
       
-      if (typeof window !== 'undefined') {
-        router.push(window.location.pathname + query)
-      }
+      router.push(window.location.pathname + query)
     } catch (error) {
       console.warn('Error updating filters:', error)
     }

@@ -4,7 +4,7 @@ import { ChevronLeft, MapPin, Phone, Globe, Calendar, Users, Star, Clock, Dollar
 import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import GoogleMapWrapper from "@/components/google-maps-wrapper"
-import { WishlistHeart } from "@/components/wishlist-heart"
+import { WishlistHeartWrapper } from "@/components/wishlist-heart-wrapper"
 import { PopularityBadge } from "@/components/popularity-badge"
 import { ErrorHandledImage } from "@/components/error-handled-image"
 import type { Retreat } from "@/lib/types"
@@ -67,7 +67,7 @@ export function RetreatDetailContent({ retreat }: RetreatDetailContentProps) {
               </div>
               
               <div className="absolute top-4 right-4 z-10">
-                <WishlistHeart item={retreat} />
+                <WishlistHeartWrapper item={retreat} />
               </div>
             </div>
 

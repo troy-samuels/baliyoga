@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Raleway, Cormorant_Garamond } from "next/font/google"
 import "./globals.css"
+import { ClientProviders } from "@/components/client-providers"
 
 // Font configurations with proper optimization
 const raleway = Raleway({
@@ -91,7 +92,9 @@ export default function RootLayout({
         className={`${raleway.className} antialiased bg-[#f9f3e9] text-[#5d4c42] min-h-screen`}
         suppressHydrationWarning
       >
-        {children}
+        <ClientProviders>
+          {children}
+        </ClientProviders>
       </body>
     </html>
   )

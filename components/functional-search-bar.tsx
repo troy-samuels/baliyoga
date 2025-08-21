@@ -34,7 +34,7 @@ export function FunctionalSearchBar({
       }
       
       // Navigate to the same page with updated search params
-      const pathname = typeof window !== 'undefined' ? window.location.pathname : `/${type}s`
+      const pathname = window.location.pathname
       const newUrl = `${pathname}?${params.toString()}`
       router.push(newUrl)
     } catch (error) {

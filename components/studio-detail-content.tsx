@@ -4,7 +4,7 @@ import { ChevronLeft, MapPin, Phone, Globe, Clock, Users, Star } from "lucide-re
 import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import GoogleMapWrapper from "@/components/google-maps-wrapper"
-import { WishlistHeart } from "@/components/wishlist-heart"
+import { WishlistHeartWrapper } from "@/components/wishlist-heart-wrapper"
 import { PopularityBadge } from "@/components/popularity-badge"
 import { ErrorHandledImage } from "@/components/error-handled-image"
 import type { Studio } from "@/lib/types"
@@ -66,7 +66,7 @@ export function StudioDetailContent({ studio }: StudioDetailContentProps) {
               </div>
               
               <div className="absolute top-4 right-4 z-10">
-                <WishlistHeart item={wishlistItem} />
+                <WishlistHeartWrapper item={wishlistItem} />
               </div>
             </div>
 

@@ -21,7 +21,6 @@ export function PerformanceMonitor() {
   })
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
 
     try {
       // Track page load time
@@ -118,7 +117,7 @@ export function PerformanceMonitor() {
       // Error boundary for JavaScript errors
       const handleError = (event: ErrorEvent) => {
         try {
-          const pathname = typeof window !== 'undefined' ? window.location.pathname : 'unknown'
+          const pathname = window.location.pathname
           trackError(`${event.error?.name || 'Unknown Error'}: ${event.message}`, pathname)
         } catch (error) {
           console.warn('Error in error handler:', error)
@@ -127,7 +126,7 @@ export function PerformanceMonitor() {
 
       const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
         try {
-          const pathname = typeof window !== 'undefined' ? window.location.pathname : 'unknown'
+          const pathname = window.location.pathname
           trackError(`Unhandled Promise Rejection: ${event.reason}`, pathname)
         } catch (error) {
           console.warn('Error in rejection handler:', error)

@@ -49,12 +49,7 @@ export function MobileOptimizedSidebar() {
       const search = current.toString()
       const query = search ? `?${search}` : ''
       
-      if (typeof window !== 'undefined') {
-        router.push(window.location.pathname + query)
-      } else {
-        // Fallback for SSR
-        router.push(query)
-      }
+      router.push(window.location.pathname + query)
     } catch (error) {
       console.warn('Error updating filters:', error)
     }

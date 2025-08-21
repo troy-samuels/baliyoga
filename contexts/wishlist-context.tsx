@@ -212,11 +212,26 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
-// Hook to use wishlist context
+// Hook to use wishlist context with error boundary
 export function useWishlist() {
   const context = useContext(WishlistContext)
   if (context === undefined) {
-    throw new Error('useWishlist must be used within a WishlistProvider')
+    // In development, throw an error to help developers identify the issue
+    if (process.env.NODE_ENV === 'development') {
+      throw new Error('useWishlist must be used within a WishlistProvider')
+    }
+    
+    // In production, return a fallback context to prevent crashes
+    console.warn('useWishlist used outside WishlistProvider, returning fallback')
+    return {
+      wishlistItems: [],
+      addToWishlist: () => false,
+      removeFromWishlist: () => false,
+      isInWishlist: () => false,
+      clearWishlist: () => {},
+      wishlistCount: 0,
+      isHydrated: false,
+    }
   }
   return context
 }

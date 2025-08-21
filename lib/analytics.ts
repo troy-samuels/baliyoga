@@ -168,28 +168,26 @@ export const trackRetreatBookingStart = (retreatName: string, retreatId: string,
   })
 }
 
-// GDPR compliance helper
+// GDPR compliance helper - hydration safe
 export const hasConsent = (): boolean => {
   if (typeof window === 'undefined') return false
   
-  // Auto-grant consent in development mode for testing
-  if (process.env.NODE_ENV === 'development') {
-    try {
-      if (!localStorage.getItem('analytics_consent')) {
+  try {
+    const consent = localStorage.getItem('analytics_consent')
+    
+    // Auto-grant consent in development mode for testing
+    if (process.env.NODE_ENV === 'development') {
+      if (!consent) {
         localStorage.setItem('analytics_consent', 'granted')
       }
       return true
-    } catch (error) {
-      console.warn('Error auto-granting dev consent:', error)
-      return true // Allow analytics in dev even if localStorage fails
     }
-  }
-  
-  try {
-    return localStorage.getItem('analytics_consent') === 'granted'
+    
+    return consent === 'granted'
   } catch (error) {
     console.warn('Error checking analytics consent:', error)
-    return false
+    // Return false in production, true in development to allow testing
+    return process.env.NODE_ENV === 'development'
   }
 }
 
