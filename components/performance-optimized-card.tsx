@@ -40,7 +40,7 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
   phone_number,
   website,
 }: CardProps) {
-  const href = `/${type === "studio" ? "studios" : "retreats"}/${slug}`
+  const href = `/${type}/${slug}`
 
   const wishlistItem = {
     id,

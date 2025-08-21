@@ -42,7 +42,7 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
   website,
   featured = false,
 }: MobileCardProps) {
-  const href = `/${type === "studio" ? "studios" : "retreats"}/${slug}`
+  const href = `/${type}/${slug}`
 
   const wishlistItem = {
     id,

@@ -11,10 +11,10 @@ export function SchemaMarkup({ item, type }: SchemaMarkupProps) {
   // Base schema properties common to both studios and retreats
   const baseSchema = {
     "@context": "https://schema.org",
-    "@id": `https://baliyoga.com/${type === "studio" ? "studios" : "retreats"}/${item.slug}`,
+    "@id": `https://baliyoga.com/${type}/${item.slug}`,
     "name": item.name,
     "description": item.business_description || `${item.name} is a ${item.category} located in ${item.location}, Bali.`,
-    "url": `https://baliyoga.com/${type === "studio" ? "studios" : "retreats"}/${item.slug}`,
+    "url": `https://baliyoga.com/${type}/${item.slug}`,
     "image": item.images && item.images.length > 0 ? item.images : [item.image],
     "telephone": item.phone_number || undefined,
     "sameAs": item.website ? [item.website] : undefined,

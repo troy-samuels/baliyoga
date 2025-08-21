@@ -26,6 +26,9 @@ export function LocationMap({ address, name, city }: LocationMapProps) {
   // Get the API key and check if it's properly configured
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
   const hasValidApiKey = apiKey && apiKey !== 'YOUR_GOOGLE_MAPS_API_KEY_HERE'
+  
+  // Debug logging (remove in production)
+  console.log('LocationMap Debug:', { apiKey: apiKey ? `${apiKey.substring(0, 15)}...` : 'undefined', hasValidApiKey })
 
   // Create Google Maps link for external viewing
   const searchQuery = address || `${city}, Bali, Indonesia`

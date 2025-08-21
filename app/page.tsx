@@ -12,24 +12,25 @@ import { getCurrentWeeklyFeatured } from "@/lib/featured-utils"
 import type { Studio, Retreat } from "@/lib/data-utils"
 
 export default async function Home() {
-  // Get top rated data with most images from Supabase and weekly featured
-  const [topStudios, topRetreats, weeklyFeatured] = await Promise.all([
-    getTopSupabaseStudios(4),
-    getTopSupabaseRetreats(4),
-    getCurrentWeeklyFeatured(),
-  ])
+  try {
+    // Get top rated data with most images from Supabase and weekly featured
+    const [topStudios, topRetreats, weeklyFeatured] = await Promise.all([
+      getTopSupabaseStudios(4),
+      getTopSupabaseRetreats(4),
+      getCurrentWeeklyFeatured(),
+    ])
 
-  // Combine featured studios and retreats for display
-  const allFeaturedItems = [
-    ...weeklyFeatured.studios_data.map(studio => ({ ...studio, type: 'studio' as const })),
-    ...weeklyFeatured.retreats_data.map(retreat => ({ ...retreat, type: 'retreat' as const }))
-  ]
+    // Combine featured studios and retreats for display
+    const allFeaturedItems = [
+      ...(weeklyFeatured.studios_data || []).map(studio => ({ ...studio, type: 'studio' as const })),
+      ...(weeklyFeatured.retreats_data || []).map(retreat => ({ ...retreat, type: 'retreat' as const }))
+    ]
 
-  // Create a set of featured item IDs for easy lookup
-  const featuredItemIds = new Set([
-    ...weeklyFeatured.featured_studios,
-    ...weeklyFeatured.featured_retreats
-  ])
+    // Create a set of featured item IDs for easy lookup
+    const featuredItemIds = new Set([
+      ...(weeklyFeatured.featured_studios || []),
+      ...(weeklyFeatured.featured_retreats || [])
+    ])
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
@@ -47,7 +48,7 @@ export default async function Home() {
                 <div className="mb-4 flex items-center justify-between xs:mb-5 sm:mb-6">
                   <h2 className="text-lg font-bold text-[#5d4c42] xs:text-xl sm:text-2xl">Featured This Week</h2>
                   <div className="text-sm text-[#5d4c42]/70">
-                    {new Date(weeklyFeatured.week_start).toLocaleDateString()} - {new Date(weeklyFeatured.week_end).toLocaleDateString()}
+                    {weeklyFeatured.week_start ? new Date(weeklyFeatured.week_start).toLocaleDateString() : ''} - {weeklyFeatured.week_end ? new Date(weeklyFeatured.week_end).toLocaleDateString() : ''}
                   </div>
                 </div>
                 <div className="grid grid-cols-1 gap-3 xs:gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 card-grid">
@@ -220,6 +221,38 @@ export default async function Home() {
       </div>
 
       <MobileOptimizedFooter />
-    </div>
-  )
+      </div>
+    )
+  } catch (error) {
+    console.error('Error rendering Home page:', error)
+    
+    // Return a fallback UI if there's an error
+    return (
+      <div className="min-h-screen bg-[#f9f3e9]">
+        <HomepageSchema />
+        <MobileOptimizedHeader />
+        <MobileOptimizedHero />
+
+        {/* Error Fallback Content */}
+        <div className="mx-auto max-w-7xl px-4 py-4 safe-left safe-right xs:py-6 sm:py-8 md:px-6">
+          <div className="space-y-6 xs:space-y-8 lg:space-y-12">
+            <section className="text-center py-12">
+              <h2 className="text-2xl font-bold text-[#5d4c42] mb-4">Welcome to Bali Yoga</h2>
+              <p className="text-[#5d4c42]/80 mb-8">We're currently updating our featured content. Please check back soon or explore our full directory.</p>
+              <div className="flex gap-4 justify-center">
+                <a href="/studios" className="bg-[#5d4c42] text-white px-6 py-3 rounded-lg hover:bg-[#a39188] transition-colors">
+                  View All Studios
+                </a>
+                <a href="/retreats" className="bg-[#a39188] text-white px-6 py-3 rounded-lg hover:bg-[#5d4c42] transition-colors">
+                  View All Retreats
+                </a>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <MobileOptimizedFooter />
+      </div>
+    )
+  }
 }

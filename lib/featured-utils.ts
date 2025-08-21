@@ -1,5 +1,6 @@
 import { createServerClient } from './supabase'
 import type { Studio, Retreat } from './data-utils'
+import { getSupabaseStudios, getSupabaseRetreats } from './supabase-data-utils'
 
 export interface FeaturedListing {
   id: string
@@ -36,31 +37,93 @@ export interface CurrentWeeklyFeatured {
 
 // Get current week's featured items
 export async function getCurrentWeeklyFeatured(): Promise<CurrentWeeklyFeatured> {
-  const supabase = createServerClient()
+  try {
+    const supabase = createServerClient()
 
-  const { data, error } = await supabase
-    .rpc('get_current_weekly_featured')
+    // First, try to get from the RPC function (if it exists)
+    const { data: rpcData, error: rpcError } = await supabase
+      .rpc('get_current_weekly_featured')
 
-  if (error) {
-    console.error('Error fetching current weekly featured:', error)
+    // If RPC works, use its data
+    if (!rpcError && rpcData) {
+      const result = rpcData?.[0]
+      return {
+        week_start: result?.week_start || '',
+        week_end: result?.week_end || '',
+        featured_studios: result?.featured_studios || [],
+        featured_retreats: result?.featured_retreats || [],
+        studios_data: result?.studios_data || [],
+        retreats_data: result?.retreats_data || []
+      }
+    }
+
+    // If RPC function doesn't exist, fall back to direct queries
+    console.log('RPC function not found, falling back to direct queries:', rpcError)
+    
+    // Get current week dates
+    const now = new Date()
+    const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay())
+    const weekEnd = new Date(weekStart)
+    weekEnd.setDate(weekEnd.getDate() + 6)
+    
+    // Try to get from weekly_featured_rotations table
+    const { data: rotationData, error: rotationError } = await supabase
+      .from('weekly_featured_rotations')
+      .select('*')
+      .gte('week_start_date', weekStart.toISOString().split('T')[0])
+      .lte('week_start_date', weekEnd.toISOString().split('T')[0])
+      .single()
+
+    if (!rotationError && rotationData) {
+      // Get actual studio and retreat data
+      const studioIds = rotationData.featured_studios || []
+      const retreatIds = rotationData.featured_retreats || []
+      
+      const [studiosData, retreatsData] = await Promise.all([
+        studioIds.length > 0 ? getItemsByIds(studioIds, 'studio') : Promise.resolve([]),
+        retreatIds.length > 0 ? getItemsByIds(retreatIds, 'retreat') : Promise.resolve([])
+      ])
+
+      return {
+        week_start: rotationData.week_start_date,
+        week_end: rotationData.week_end_date,
+        featured_studios: studioIds,
+        featured_retreats: retreatIds,
+        studios_data: studiosData,
+        retreats_data: retreatsData
+      }
+    }
+
+    // Final fallback: return a few high-rated items from the main table
+    console.log('No weekly rotation found, using high-rated items as fallback')
+    const fallbackData = await getFallbackFeaturedItems()
+    
     return {
-      week_start: '',
-      week_end: '',
+      week_start: weekStart.toISOString(),
+      week_end: weekEnd.toISOString(),
+      featured_studios: fallbackData.studios.map(s => s.id),
+      featured_retreats: fallbackData.retreats.map(r => r.id),
+      studios_data: fallbackData.studios,
+      retreats_data: fallbackData.retreats
+    }
+
+  } catch (error) {
+    console.error('Error in getCurrentWeeklyFeatured:', error)
+    
+    // Ultimate fallback - return empty data with current week dates
+    const now = new Date()
+    const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay())
+    const weekEnd = new Date(weekStart)
+    weekEnd.setDate(weekEnd.getDate() + 6)
+    
+    return {
+      week_start: weekStart.toISOString(),
+      week_end: weekEnd.toISOString(),
       featured_studios: [],
       featured_retreats: [],
       studios_data: [],
       retreats_data: []
     }
-  }
-
-  const result = data?.[0]
-  return {
-    week_start: result?.week_start || '',
-    week_end: result?.week_end || '',
-    featured_studios: result?.featured_studios || [],
-    featured_retreats: result?.featured_retreats || [],
-    studios_data: result?.studios_data || [],
-    retreats_data: result?.retreats_data || []
   }
 }
 
@@ -375,4 +438,57 @@ function createSlug(name: string, city: string, type: 'studio' | 'retreat'): str
     .replace(/^-+|-+$/g, '')
     .replace(/-{2,}/g, '-')
     .substring(0, 100)
+}
+
+// Helper function to get items by IDs
+async function getItemsByIds(ids: string[], type: 'studio' | 'retreat'): Promise<(Studio | Retreat)[]> {
+  try {
+    // For now, use the existing functions to get all items and filter by IDs
+    // This is less efficient but works with the existing architecture
+    if (type === 'studio') {
+      const allStudios = await getSupabaseStudios()
+      return allStudios.filter(studio => ids.includes(studio.id))
+    } else {
+      const allRetreats = await getSupabaseRetreats()
+      return allRetreats.filter(retreat => ids.includes(retreat.id))
+    }
+    
+  } catch (error) {
+    console.error(`Error in getItemsByIds for ${type}:`, error)
+    return []
+  }
+}
+
+// Helper function to get fallback featured items (high-rated items)
+async function getFallbackFeaturedItems(): Promise<{studios: Studio[], retreats: Retreat[]}> {
+  try {
+    // Get a few high-rated studios and retreats as fallback
+    const [allStudios, allRetreats] = await Promise.all([
+      getSupabaseStudios(),
+      getSupabaseRetreats()
+    ])
+    
+    // Sort by rating and take top 3 of each
+    const topStudios = allStudios
+      .filter(studio => studio.rating > 0)
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, 3)
+    
+    const topRetreats = allRetreats
+      .filter(retreat => retreat.rating > 0)
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, 3)
+    
+    return {
+      studios: topStudios,
+      retreats: topRetreats
+    }
+    
+  } catch (error) {
+    console.error('Error in getFallbackFeaturedItems:', error)
+    return {
+      studios: [],
+      retreats: []
+    }
+  }
 }
