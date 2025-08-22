@@ -7,6 +7,7 @@ import GoogleMapWrapper from "@/components/google-maps-wrapper"
 import { WishlistHeartWrapper } from "@/components/wishlist-heart-wrapper"
 import { PopularityBadge } from "@/components/popularity-badge"
 import { ErrorHandledImage } from "@/components/error-handled-image"
+import { HydrationSafeDate } from "@/lib/date-utils"
 import type { Retreat } from "@/lib/types"
 
 interface RetreatDetailContentProps {
@@ -242,9 +243,9 @@ export function RetreatDetailContent({ retreat }: RetreatDetailContentProps) {
                       <div>
                         <span className="text-sm text-[#5d4c42]/70">Dates:</span>
                         <div className="text-sm text-[#5d4c42]">
-                          {retreat.start_date && new Date(retreat.start_date).toLocaleDateString()}
+                          <HydrationSafeDate date={retreat.start_date} />
                           {retreat.start_date && retreat.end_date && ' - '}
-                          {retreat.end_date && new Date(retreat.end_date).toLocaleDateString()}
+                          <HydrationSafeDate date={retreat.end_date} />
                         </div>
                       </div>
                     </div>

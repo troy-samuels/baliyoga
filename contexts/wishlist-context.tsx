@@ -194,14 +194,14 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     storage.clear()
   }, [])
 
-  // Memoized context value
+  // Memoized context value - return empty state during SSR to prevent hydration mismatch
   const value = useMemo<WishlistContextType>(() => ({
-    wishlistItems: state.items,
+    wishlistItems: state.isHydrated ? state.items : [],
     addToWishlist,
     removeFromWishlist,
-    isInWishlist,
+    isInWishlist: state.isHydrated ? isInWishlist : () => false,
     clearWishlist,
-    wishlistCount: state.items.length,
+    wishlistCount: state.isHydrated ? state.items.length : 0,
     isHydrated: state.isHydrated,
   }), [state, addToWishlist, removeFromWishlist, isInWishlist, clearWishlist])
 

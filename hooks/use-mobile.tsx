@@ -3,11 +3,14 @@ import * as React from "react"
 const MOBILE_BREAKPOINT = 768
 
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+  // Start with false to ensure consistent server/client rendering
+  const [isMobile, setIsMobile] = React.useState<boolean>(false)
+  const [isHydrated, setIsHydrated] = React.useState(false)
 
   React.useEffect(() => {
-    if (typeof window === 'undefined') return
-
+    // Mark as hydrated first
+    setIsHydrated(true)
+    
     try {
       const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
       const onChange = () => {
@@ -30,10 +33,10 @@ export function useIsMobile() {
       }
     } catch (error) {
       console.warn('Error setting up mobile detection:', error)
-      // Fallback to false for mobile on error
       setIsMobile(false)
     }
   }, [])
 
-  return !!isMobile
+  // Return false during SSR and before hydration to prevent mismatch
+  return isHydrated ? isMobile : false
 }

@@ -341,15 +341,17 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
           <div className="flex items-center gap-4">
             <button 
               onClick={() => {
-                if (typeof window !== 'undefined' && navigator.share) {
+                // Hydration-safe: these APIs are only available in browser
+                if (navigator?.share) {
                   navigator.share({
                     title: post.title,
                     text: post.excerpt,
                     url: window.location.href,
-                  })
-                } else if (typeof window !== 'undefined') {
+                  }).catch(console.error)
+                } else if (navigator?.clipboard) {
                   navigator.clipboard.writeText(window.location.href)
-                  alert('Link copied to clipboard!')
+                    .then(() => alert('Link copied to clipboard!'))
+                    .catch(console.error)
                 }
               }}
               className="flex items-center gap-2 rounded-full bg-[#a39188] px-4 py-2 text-white transition-colors hover:bg-[#8a7b73]"

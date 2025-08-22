@@ -1,7 +1,7 @@
 "use client"
 
 import dynamic from 'next/dynamic'
-import { MapPin, ExternalLink } from "lucide-react"
+import { Suspense } from 'react'
 
 interface GoogleMapWrapperProps {
   address: string
@@ -10,13 +10,7 @@ interface GoogleMapWrapperProps {
   className?: string
 }
 
-// Dynamic import with SSR disabled to prevent hydration issues
-const GoogleMapClient = dynamic(() => import('./google-maps-client'), { 
-  ssr: false,
-  loading: () => <GoogleMapLoading />
-})
-
-// Loading component that matches server-side rendering
+// SSR-safe loading component
 function GoogleMapLoading() {
   return (
     <div className="w-full">
@@ -38,6 +32,17 @@ function GoogleMapLoading() {
   )
 }
 
+// Dynamic import with SSR completely disabled
+const GoogleMapClient = dynamic(() => import('./google-maps-client'), { 
+  ssr: false,
+  loading: () => <GoogleMapLoading />
+})
+
+// Client component wrapper
 export default function GoogleMapWrapper(props: GoogleMapWrapperProps) {
-  return <GoogleMapClient {...props} />
+  return (
+    <Suspense fallback={<GoogleMapLoading />}>
+      <GoogleMapClient {...props} />
+    </Suspense>
+  )
 }

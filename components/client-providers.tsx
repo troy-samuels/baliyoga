@@ -9,7 +9,7 @@ const ClientOnlyComponents = dynamic(
   () => import("./client-enhancements"),
   { 
     ssr: false,
-    loading: () => null
+    loading: () => <div style={{ display: 'none' }} />
   }
 )
 
@@ -18,7 +18,7 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
     <WishlistProvider>
       {children}
-      <Suspense fallback={null}>
+      <Suspense fallback={<div style={{ display: 'none' }} />}>
         <ClientOnlyComponents />
       </Suspense>
     </WishlistProvider>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 
 // All client-side features loaded dynamically with SSR disabled
@@ -30,11 +30,18 @@ function ServiceWorkerManager() {
 }
 
 export default function ClientEnhancements() {
-  // Client-side initialization
+  const [isHydrated, setIsHydrated] = React.useState(false)
+  
+  // Client-side initialization - follows CLAUDE.md "proper loading states" pattern
   useEffect(() => {
-    // Set a flag that client has loaded to prevent hydration mismatches
+    setIsHydrated(true)
     document.documentElement.setAttribute('data-client-loaded', 'true')
   }, [])
+
+  // Return consistent empty state during SSR - no typeof window check
+  if (!isHydrated) {
+    return null
+  }
 
   return (
     <>

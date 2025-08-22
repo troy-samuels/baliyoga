@@ -650,13 +650,8 @@ const SidebarMenuSkeleton = React.forwardRef<
     showIcon?: boolean
   }
 >(({ className, showIcon = false, ...props }, ref) => {
-  // Fixed width to prevent hydration mismatch
-  const [width, setWidth] = React.useState('70%')
-  
-  React.useEffect(() => {
-    // Set random width only on client side
-    setWidth(`${Math.floor(Math.random() * 40) + 50}%`)
-  }, [])
+  // Use fixed width to prevent hydration mismatch - follows CLAUDE.md guidelines
+  const fixedWidth = '65%'
 
   return (
     <div
@@ -676,7 +671,7 @@ const SidebarMenuSkeleton = React.forwardRef<
         data-sidebar="menu-skeleton-text"
         style={
           {
-            "--skeleton-width": width,
+            "--skeleton-width": fixedWidth,
           } as React.CSSProperties
         }
       />
