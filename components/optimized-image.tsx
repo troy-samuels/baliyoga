@@ -30,6 +30,7 @@ export function OptimizedImage({
   const [imageError, setImageError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [isInView, setIsInView] = useState(false)
+  const [retryCount, setRetryCount] = useState(0)
   
   // Use Intersection Observer for lazy loading non-priority images
   useEffect(() => {
@@ -64,12 +65,24 @@ export function OptimizedImage({
   }, [src, priority])
 
   const handleError = () => {
-    setImageError(true)
-    setIsLoading(false)
+    console.warn(`Image failed to load: ${src}, retry count: ${retryCount}`)
+    
+    // Retry logic - try up to 2 times
+    if (retryCount < 2 && src && !src.startsWith('data:')) {
+      setTimeout(() => {
+        setRetryCount(prev => prev + 1)
+        setImageError(false)
+        setIsLoading(true)
+      }, 1000 * (retryCount + 1)) // Exponential backoff
+    } else {
+      setImageError(true)
+      setIsLoading(false)
+    }
   }
 
   const handleLoad = () => {
     setIsLoading(false)
+    setRetryCount(0) // Reset retry count on successful load
   }
 
   // Fallback image for errors
@@ -77,8 +90,8 @@ export function OptimizedImage({
     ? generateColorFallback(600, 400, '#e6ceb3')
     : generateColorFallback(width || 300, height || 200, '#e6ceb3')
 
-  // Only use fallback if there's an error
-  const finalSrc = imageError ? fallbackSrc : src
+  // Use fallback if there's an error or if src is invalid
+  const finalSrc = (!src || imageError) ? fallbackSrc : src
 
   const imageProps = {
     alt,
@@ -95,7 +108,7 @@ export function OptimizedImage({
       <div className="relative w-full h-full" data-image-src={src}>
         {isLoading && <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />}
         {isInView && (
-          <Image {...imageProps} src={finalSrc} fill loading={priority ? "eager" : "lazy"} />
+          <Image {...imageProps} key={`${finalSrc}-${retryCount}`} src={finalSrc} fill loading={priority ? "eager" : "lazy"} />
         )}
       </div>
     )
@@ -105,7 +118,7 @@ export function OptimizedImage({
     <div className="relative" style={{ width, height }} data-image-src={src}>
       {isLoading && <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" style={{ width, height }} />}
       {isInView && (
-        <Image {...imageProps} src={finalSrc} width={width || 300} height={height || 200} loading={priority ? "eager" : "lazy"} />
+        <Image {...imageProps} key={`${finalSrc}-${retryCount}`} src={finalSrc} width={width || 300} height={height || 200} loading={priority ? "eager" : "lazy"} />
       )}
     </div>
   )

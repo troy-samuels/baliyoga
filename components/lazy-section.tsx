@@ -26,8 +26,6 @@ export function LazySection({
 
   useEffect(() => {
     setIsMounted(true)
-    // For debugging, show content immediately after mount
-    setIsVisible(true)
   }, [])
 
   useEffect(() => {

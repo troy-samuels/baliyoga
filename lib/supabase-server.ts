@@ -30,6 +30,19 @@ function transformStudio(dbStudio: DatabaseStudio): Studio {
   const location = dbStudio.city || 'Bali'
   const slug = generateSlug(dbStudio.name, location, 'studio')
   
+  // Parse images if they're stored as JSON string
+  let parsedImages: string[] = []
+  try {
+    if (typeof dbStudio.images === 'string') {
+      parsedImages = JSON.parse(dbStudio.images)
+    } else if (Array.isArray(dbStudio.images)) {
+      parsedImages = dbStudio.images
+    }
+  } catch (error) {
+    console.error('Error parsing studio images:', error, 'for studio:', dbStudio.name)
+    parsedImages = []
+  }
+  
   return {
     id: dbStudio.id,
     name: dbStudio.name,
@@ -38,8 +51,8 @@ function transformStudio(dbStudio: DatabaseStudio): Studio {
     location,
     rating: dbStudio.review_score || 0,
     reviewCount: dbStudio.review_count || 0,
-    image: dbStudio.images?.[0],
-    images: dbStudio.images || [],
+    image: parsedImages[0] || undefined,
+    images: parsedImages,
     business_description: dbStudio.business_description || '',
     phone_number: dbStudio.phone_number,
     website: dbStudio.website,
@@ -67,6 +80,19 @@ function transformRetreat(dbRetreat: DatabaseRetreat): Retreat {
   const location = dbRetreat.city || 'Bali'
   const slug = generateSlug(dbRetreat.name, location, 'retreat')
   
+  // Parse images if they're stored as JSON string
+  let parsedImages: string[] = []
+  try {
+    if (typeof dbRetreat.images === 'string') {
+      parsedImages = JSON.parse(dbRetreat.images)
+    } else if (Array.isArray(dbRetreat.images)) {
+      parsedImages = dbRetreat.images
+    }
+  } catch (error) {
+    console.error('Error parsing retreat images:', error, 'for retreat:', dbRetreat.name)
+    parsedImages = []
+  }
+  
   return {
     id: dbRetreat.id,
     name: dbRetreat.name,
@@ -75,8 +101,8 @@ function transformRetreat(dbRetreat: DatabaseRetreat): Retreat {
     location,
     rating: dbRetreat.review_score || 0,
     reviewCount: dbRetreat.review_count || 0,
-    image: dbRetreat.images?.[0],
-    images: dbRetreat.images || [],
+    image: parsedImages[0] || undefined,
+    images: parsedImages,
     business_description: dbRetreat.business_description || '',
     phone_number: dbRetreat.phone_number,
     website: dbRetreat.website,
@@ -107,7 +133,7 @@ export const getAllStudios = cache(async (): Promise<Studio[]> => {
       .from('v3_bali_yoga_studios_and_retreats')
       .select('*')
       .eq('category_name', 'Yoga studio')
-      .order('review_score', { ascending: false, nullsLast: true })
+      .order('review_score', { ascending: false })
       .limit(100)
 
     if (error) {
@@ -127,8 +153,8 @@ export const getAllRetreats = cache(async (): Promise<Retreat[]> => {
     const { data, error } = await supabase
       .from('v3_bali_yoga_studios_and_retreats')
       .select('*')
-      .eq('category_name', 'Yoga retreat')
-      .order('review_score', { ascending: false, nullsLast: true })
+      .eq('category_name', 'Yoga retreat center')
+      .order('review_score', { ascending: false })
       .limit(100)
 
     if (error) {
@@ -165,10 +191,22 @@ export const getRetreatBySlug = cache(async (slug: string): Promise<Retreat | nu
 
 export const getFeaturedStudios = cache(async (limit: number = 6): Promise<Studio[]> => {
   try {
+    console.log(`Fetching featured studios with limit: ${limit}`)
     const studios = await getAllStudios()
-    return studios
-      .filter(studio => studio.rating >= 4.5 && studio.images.length > 0)
+    console.log(`Total studios fetched: ${studios.length}`)
+    
+    const featured = studios
+      .filter(studio => {
+        const hasGoodRating = studio.rating >= 4.5
+        const hasImages = studio.images && studio.images.length > 0
+        if (!hasGoodRating) console.log(`Studio ${studio.name} excluded - low rating: ${studio.rating}`)
+        if (!hasImages) console.log(`Studio ${studio.name} excluded - no images`)
+        return hasGoodRating && hasImages
+      })
       .slice(0, limit)
+    
+    console.log(`Featured studios returned: ${featured.length}`)
+    return featured
   } catch (error) {
     console.error('Failed to fetch featured studios:', error)
     return []
@@ -177,10 +215,22 @@ export const getFeaturedStudios = cache(async (limit: number = 6): Promise<Studi
 
 export const getFeaturedRetreats = cache(async (limit: number = 6): Promise<Retreat[]> => {
   try {
+    console.log(`Fetching featured retreats with limit: ${limit}`)
     const retreats = await getAllRetreats()
-    return retreats
-      .filter(retreat => retreat.rating >= 4.5 && retreat.images.length > 0)
+    console.log(`Total retreats fetched: ${retreats.length}`)
+    
+    const featured = retreats
+      .filter(retreat => {
+        const hasGoodRating = retreat.rating >= 4.5
+        const hasImages = retreat.images && retreat.images.length > 0
+        if (!hasGoodRating) console.log(`Retreat ${retreat.name} excluded - low rating: ${retreat.rating}`)
+        if (!hasImages) console.log(`Retreat ${retreat.name} excluded - no images`)
+        return hasGoodRating && hasImages
+      })
       .slice(0, limit)
+    
+    console.log(`Featured retreats returned: ${featured.length}`)
+    return featured
   } catch (error) {
     console.error('Failed to fetch featured retreats:', error)
     return []
@@ -194,7 +244,7 @@ export const searchStudios = cache(async (query: string): Promise<Studio[]> => {
       .select('*')
       .eq('category_name', 'Yoga studio')
       .or(`name.ilike.%${query}%,city.ilike.%${query}%,business_description.ilike.%${query}%`)
-      .order('review_score', { ascending: false, nullsLast: true })
+      .order('review_score', { ascending: false })
       .limit(20)
 
     if (error) {
@@ -214,9 +264,9 @@ export const searchRetreats = cache(async (query: string): Promise<Retreat[]> =>
     const { data, error } = await supabase
       .from('v3_bali_yoga_studios_and_retreats')
       .select('*')
-      .eq('category_name', 'Yoga retreat')
+      .eq('category_name', 'Yoga retreat center')
       .or(`name.ilike.%${query}%,city.ilike.%${query}%,business_description.ilike.%${query}%`)
-      .order('review_score', { ascending: false, nullsLast: true })
+      .order('review_score', { ascending: false })
       .limit(20)
 
     if (error) {
