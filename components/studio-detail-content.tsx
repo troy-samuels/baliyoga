@@ -53,10 +53,9 @@ export function StudioDetailContent({ studio }: StudioDetailContentProps) {
                 <ErrorHandledImage
                   src={studio.image}
                   alt={`${studio.name} yoga studio in ${studio.location}`}
-                  fill
-                  className="object-cover"
-                  priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 66vw, 50vw"
+                  width={800}
+                  height={450}
+                  className="object-cover w-full h-full"
                 />
               )}
               
@@ -123,9 +122,9 @@ export function StudioDetailContent({ studio }: StudioDetailContentProps) {
                       <ErrorHandledImage
                         src={image}
                         alt={`${studio.name} image ${index + 2}`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 50vw, 33vw"
+                        width={300}
+                        height={300}
+                        className="object-cover w-full h-full"
                       />
                     </div>
                   ))}

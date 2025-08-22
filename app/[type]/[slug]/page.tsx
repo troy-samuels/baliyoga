@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { Metadata } from 'next/metadata'
+import { Metadata } from 'next'
 import { StudioDetailContent } from '@/components/studio-detail-content'
 import { RetreatDetailContent } from '@/components/retreat-detail-content'
 import { getAllStudios, getAllRetreats, getStudioBySlug, getRetreatBySlug } from '@/lib/supabase-server'

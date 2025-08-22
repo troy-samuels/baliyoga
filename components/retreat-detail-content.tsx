@@ -54,10 +54,9 @@ export function RetreatDetailContent({ retreat }: RetreatDetailContentProps) {
                 <ErrorHandledImage
                   src={retreat.image}
                   alt={`${retreat.name} yoga retreat in ${retreat.location}`}
-                  fill
-                  className="object-cover"
-                  priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 66vw, 50vw"
+                  width={800}
+                  height={450}
+                  className="object-cover w-full h-full"
                 />
               )}
               
@@ -127,9 +126,9 @@ export function RetreatDetailContent({ retreat }: RetreatDetailContentProps) {
                       <ErrorHandledImage
                         src={image}
                         alt={`${retreat.name} image ${index + 2}`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 50vw, 33vw"
+                        width={300}
+                        height={300}
+                        className="object-cover w-full h-full"
                       />
                     </div>
                   ))}

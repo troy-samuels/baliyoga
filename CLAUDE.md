@@ -1,134 +1,91 @@
-# Bali Yoga Directory - Project Context
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
-A Next.js 15 application helping users discover yoga studios and retreats across Bali. Users can search, filter, compare locations, leave reviews, and save favorites. Aimed at tourists and yoga enthusiasts visiting Bali.
+A Next.js 15 application for discovering yoga studios and retreats across Bali. Mobile-first design with SSR architecture, Supabase backend, and comprehensive filtering/search capabilities.
 
-**Core Features**: Studio/retreat discovery, advanced filtering, wishlist system, reviews/ratings, mobile-first design, Google Maps integration, blog content for SEO.
+## Common Development Commands
 
-## Tech Stack
-- **Frontend**: Next.js 15.2.4, React 19.1.0, TypeScript 5.8.3
-- **Styling**: Tailwind CSS 3.4.17, Radix UI components, Lucide React icons
-- **Database**: Supabase (PostgreSQL) with real-time features
-- **Architecture**: SSR-first with strategic client-side hydration
-- **Development**: Started with v0, moved to Cursor and Claude Code
+```bash
+npm run dev              # Start development server on localhost:3000
+npm run build           # Build for production
+npm run start           # Start production server
+npm run lint            # Run ESLint checks
+npm run analyze         # Analyze bundle size (opens in browser)
+npm run import-csv      # Import CSV data to Supabase
+```
 
-## Key Areas Covered
-**Locations**: All major Bali areas (Ubud, Canggu, Seminyak, Sanur, Uluwatu, etc.)
-**Content**: Studios and retreats with Google Maps-style data plus social handles
-**Booking**: Currently contact info only, booking system planned for later
-**Reviews**: Star ratings and written experiences
+## Architecture & Code Organization
 
-## Current Priorities (Critical - Follow This Order)
-1. **Bug Fixes**: Fix bugs without breaking the system - test thoroughly before changes
-2. **Systematic Feature Addition**: Add features incrementally with proper testing
-3. **Performance**: Improve load speeds and ensure images load correctly
-4. **Mobile Optimization**: Enhance mobile experience (already mobile-first but needs improvement)
+### SSR-First Pattern with Zero Hydration Issues
+```
+Server Components (default) → Static Rendering → Client Hydration (minimal)
+```
+- **Server Components by default** - Only use "use client" when interactivity is required
+- **Data fetching** - Use `lib/supabase-server.ts` with React `cache()` for deduplication
+- **Client state** - React Context in `contexts/` (e.g., wishlist-context.tsx)
+- **No hydration mismatches** - Avoid `typeof window` checks, use proper loading states
 
-## Development Guidelines
+### Key File Locations
+- **Types**: `lib/types.ts` - All TypeScript interfaces/types go here
+- **Database**: `lib/supabase-server.ts` - Server-side Supabase operations  
+- **Components**: `components/ui/` - Radix UI base components
+- **Utils**: `lib/*-utils.ts` - Domain-specific utilities (slug, security, analytics)
+- **Routes**: `app/` - Next.js App Router structure
+
+### Database Schema
+- **Main table**: `v3_bali_yoga_studios_and_retreats`
+- **Featured tables**: `featured_studios`, `featured_retreats`
+- **Reviews table**: `reviews`
+- Always use Row Level Security (RLS) and handle errors with try/catch
+
+## Critical Development Rules
+
+### Performance & Mobile-First
+1. Always use Next.js `Image` component with width/height attributes
+2. Test on mobile viewport (320px-768px) with touch interactions
+3. Optimize for slow Indonesian internet - use loading states
+4. 44px minimum touch targets for all interactive elements
+5. Use `remotePatterns` in next.config.mjs for external images
 
 ### Bug Fixing Protocol
-- Always test changes in isolation first
-- Use plan mode for complex bug fixes to avoid system breakage
-- Check both server and client components when fixing hydration issues
-- Test mobile and desktop versions after any UI changes
-- Verify Supabase queries work properly before implementing
-- Use error boundaries to contain potential issues
+1. Test changes in isolation before implementing
+2. Verify both server and client components work
+3. Check mobile and desktop views
+4. Test Supabase queries before deploying
+5. Use error boundaries to contain issues
 
-### Feature Development Workflow
-1. **Plan First**: Use plan mode to design feature architecture
-2. **Incremental Development**: Build features in small, testable pieces
-3. **Mobile-First**: Always consider mobile experience in feature design
-4. **Performance Impact**: Consider load speed impact of new features
-5. **SEO Consideration**: Ensure new features don't hurt SEO performance
+### Code Standards
+- Follow existing patterns in neighboring files
+- Use Tailwind utilities (no custom CSS)
+- Import Radix components from `components/ui/`
+- Add proper TypeScript types in `lib/types.ts`
+- Use existing utility functions (don't recreate)
 
-### Performance Optimization Rules
-- Use Next.js Image component for all images with WebP/AVIF formats
-- Implement proper loading states to prevent layout shifts
-- Use React cache() for server-side data deduplication
-- Dynamic imports for client-only components
-- Optimize Supabase queries - limit data fetching and use proper indexing
-- Monitor bundle size with webpack analyzer
+## Environment Variables
+Required in `.env.local`:
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_maps_key (optional)
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 
-### Mobile Optimization Standards
-- Touch-friendly interactions (44px minimum touch targets)
-- Optimize for slower Indonesian internet connections
-- Test on various screen sizes (320px to 768px)
-- Ensure maps and interactive elements work on touch devices
-- Optimize image sizes for mobile data usage
-- Use mobile-optimized components (already in codebase)
+## Testing Checklist
+Before completing any task:
+- [ ] Mobile view works correctly (test at 375px width)
+- [ ] No console errors or warnings
+- [ ] Images load with proper fallbacks
+- [ ] Supabase queries return expected data
+- [ ] No hydration mismatch errors
+- [ ] Loading states prevent layout shifts
 
-### Code Conventions
-- **File Structure**: Follow existing Next.js App Router structure
-- **Components**: Server components by default, "use client" only when needed
-- **Styling**: Use Tailwind utility classes, avoid custom CSS
-- **TypeScript**: Use existing types in lib/types.ts, add new types there
-- **Data Fetching**: Server-side with cache() for static data, client-side for interactions
-- **Error Handling**: Use error boundaries and graceful degradation
-- **State Management**: React Context for global state, local state for components
+## Deployment
+Optimized for Vercel deployment. Use `npm run build` to test production build locally.
 
-### Supabase Best Practices
-- Use lib/supabase-server.ts for server-side operations
-- Always handle errors gracefully with try/catch
-- Use Row Level Security (RLS) for data protection
-- Optimize queries with proper select statements and limits
-- Use the existing table: 'v3_bali_yoga_studios_and_retreats'
-- Cache frequently accessed data with React cache()
-
-### Component Development
-- Follow existing mobile-optimized patterns in components folder
-- Use Radix UI components from components/ui/ folder
-- Implement proper loading states using components/loading-states.tsx
-- Add error handling with components/error-boundary.tsx
-- Ensure server/client compatibility (no hydration mismatches)
-
-### Image Optimization
-- Always use Next.js Image component
-- Set proper width/height attributes
-- Use remotePatterns in next.config.mjs for external images
-- Implement lazy loading for better performance
-- Consider different image sizes for mobile vs desktop
-- Use WebP/AVIF formats when possible
-
-### Common Patterns to Follow
-- **Data Fetching**: Use getFeaturedStudios/getFeaturedRetreats patterns from lib/supabase-server.ts
-- **URL Generation**: Use slug-utils.ts for consistent URL handling
-- **Security**: Use security-utils.ts for input sanitization
-- **Analytics**: Use lib/analytics.ts for tracking implementations
-- **Wishlist**: Follow wishlist-context.tsx patterns for state management
-
-### Testing Before Deployment
-- Test on mobile devices (or browser dev tools mobile view)
-- Verify images load correctly across different screen sizes
-- Check performance with Network tab (simulate slow connections)
-- Test wishlist functionality works across sessions
-- Verify Supabase queries return expected data
-- Ensure no console errors or warnings
-- Test navigation between pages works smoothly
-
-### Environment Setup
-- All environment variables are in .env.local
-- Key variables: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY
-- Optional: Google Maps API key for enhanced map features
-- Use Vercel for deployment (optimized for Next.js)
-
-### When Adding New Features
-- Review ARCHITECTURE.md first to understand system design
-- Start with plan mode to architect the feature properly
-- Consider impact on existing mobile optimization
-- Ensure feature works with current Supabase schema
-- Add proper TypeScript types in lib/types.ts
-- Test feature on both mobile and desktop
-- Consider SEO implications for new pages/routes
-
-### Performance Monitoring
-- Use Next.js built-in Web Vitals reporting
-- Monitor bundle size with npm run analyze
-- Check Core Web Vitals scores regularly
-- Optimize images and components based on performance data
-
-## Important Notes
-- **Non-technical user**: Explain technical concepts clearly when needed
-- **Mobile-first**: Always prioritize mobile experience
-- **Bali focus**: Consider local internet speeds and user behavior
-- **Tourism context**: Users are often traveling with limited data/wifi
-- **Gradual improvement**: Build incrementally rather than major overhauls
+## Important Context
+- **User is non-technical** - Explain technical concepts clearly
+- **Tourism focus** - Users often have limited data/wifi while traveling
+- **Gradual improvement** - Build incrementally, don't break existing features
+- **Bali-specific** - Consider local internet speeds and user behavior patterns

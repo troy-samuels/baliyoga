@@ -8,6 +8,9 @@ import type {
 } from './types'
 import { generateSlug } from './slug-utils'
 
+// Re-export types for convenience
+export type { Studio, Retreat } from './types'
+
 // Server-side Supabase client configuration
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
