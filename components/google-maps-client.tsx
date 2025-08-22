@@ -92,7 +92,17 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
 
   // Get the API key
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-  const hasValidApiKey = apiKey && apiKey !== 'YOUR_GOOGLE_MAPS_API_KEY_HERE'
+  const hasValidApiKey = apiKey && apiKey !== 'YOUR_GOOGLE_MAPS_API_KEY_HERE' && apiKey.startsWith('AIza')
+  
+  // Debug logging (remove in production)
+  if (isMounted && process.env.NODE_ENV === 'development') {
+    console.log('🗺️ Google Maps Debug:', {
+      hasApiKey: !!apiKey,
+      apiKeyStart: apiKey?.substring(0, 8),
+      hasValidApiKey,
+      isMounted
+    })
+  }
 
   // Create Google Maps URL for external viewing
   const searchQuery = address || `${name}, ${city}, Bali, Indonesia`
@@ -117,6 +127,15 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
         return
       }
 
+      // Set timeout to prevent infinite loading
+      const timeout = setTimeout(() => {
+        setError({
+          code: 'TIMEOUT_ERROR',
+          message: 'Google Maps API failed to load (timeout)'
+        })
+        setIsLoading(false)
+      }, 10000) // 10 second timeout
+
       // Load the Google Maps script
       const script = document.createElement('script')
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=geometry&loading=async`
@@ -124,11 +143,13 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
       script.defer = true
 
       script.onload = () => {
+        clearTimeout(timeout)
         setIsLoaded(true)
         setIsLoading(false)
       }
 
       script.onerror = () => {
+        clearTimeout(timeout)
         setError({
           code: 'SCRIPT_LOAD_ERROR',
           message: 'Failed to load Google Maps API'
@@ -291,7 +312,9 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
         {error && (
           <div className="text-xs mt-2 bg-orange-100 text-orange-700 px-2 py-1 rounded flex items-center gap-1">
             <AlertCircle className="w-3 h-3" aria-hidden="true" />
-            {error.code === 'NO_API_KEY' ? 'Maps not available' : 'Map error'}
+            {error.code === 'NO_API_KEY' ? 'Maps API key missing' : 
+             error.code === 'TIMEOUT_ERROR' ? 'Maps failed to load' :
+             error.code === 'SCRIPT_LOAD_ERROR' ? 'Maps API error' : 'Map error'}
           </div>
         )}
         
