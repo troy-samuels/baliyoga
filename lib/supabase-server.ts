@@ -123,7 +123,7 @@ function transformRetreat(dbRetreat: DatabaseRetreat): Retreat {
     meals_included: dbRetreat.meals_included,
     transportation_included: dbRetreat.transportation_included,
     certification_offered: dbRetreat.certification_offered,
-    level_requirements: dbRetreat.level_requirements,
+    level_requirements: dbRetreat.level_requirements || undefined,
     createdAt: dbRetreat.created_at,
     updatedAt: dbRetreat.updated_at,
   }
@@ -137,7 +137,7 @@ export const getAllStudios = cache(async (): Promise<Studio[]> => {
       .select('*')
       .eq('category_name', 'Yoga studio')
       .order('review_score', { ascending: false })
-      .limit(100)
+      .limit(500)
 
     if (error) {
       console.error('Error fetching studios:', error)
@@ -158,7 +158,7 @@ export const getAllRetreats = cache(async (): Promise<Retreat[]> => {
       .select('*')
       .eq('category_name', 'Yoga retreat center')
       .order('review_score', { ascending: false })
-      .limit(100)
+      .limit(500)
 
     if (error) {
       console.error('Error fetching retreats:', error)
@@ -201,10 +201,8 @@ export const getFeaturedStudios = cache(async (limit: number = 6): Promise<Studi
     const featured = studios
       .filter(studio => {
         const hasGoodRating = studio.rating >= 4.5
-        const hasImages = studio.images && studio.images.length > 0
         if (!hasGoodRating) console.log(`Studio ${studio.name} excluded - low rating: ${studio.rating}`)
-        if (!hasImages) console.log(`Studio ${studio.name} excluded - no images`)
-        return hasGoodRating && hasImages
+        return hasGoodRating
       })
       .slice(0, limit)
     
@@ -225,10 +223,8 @@ export const getFeaturedRetreats = cache(async (limit: number = 6): Promise<Retr
     const featured = retreats
       .filter(retreat => {
         const hasGoodRating = retreat.rating >= 4.5
-        const hasImages = retreat.images && retreat.images.length > 0
         if (!hasGoodRating) console.log(`Retreat ${retreat.name} excluded - low rating: ${retreat.rating}`)
-        if (!hasImages) console.log(`Retreat ${retreat.name} excluded - no images`)
-        return hasGoodRating && hasImages
+        return hasGoodRating
       })
       .slice(0, limit)
     

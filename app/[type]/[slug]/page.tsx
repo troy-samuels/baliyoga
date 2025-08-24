@@ -72,8 +72,8 @@ export async function generateMetadata({ params }: ItemDetailPageProps): Promise
     ? `${item.name} - Yoga Studio in ${item.location}, Bali`
     : `${item.name} - Yoga Retreat in ${item.location}, Bali`
   
-  const description = item.description 
-    ? `${item.description.substring(0, 150)}...` 
+  const description = item.business_description 
+    ? `${item.business_description.substring(0, 150)}...` 
     : `Experience authentic yoga at ${item.name} in ${item.location}, Bali. Rated ${item.rating}/5 stars with ${item.reviewCount} reviews.`
 
   const keywords = [

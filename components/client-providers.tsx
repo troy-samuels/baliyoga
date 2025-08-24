@@ -4,23 +4,25 @@ import { WishlistProvider } from "@/contexts/wishlist-context"
 import dynamic from "next/dynamic"
 import { Suspense } from "react"
 
-// Lazy load client-only components to prevent SSR issues
-const ClientOnlyComponents = dynamic(
-  () => import("./client-enhancements"),
-  { 
-    ssr: false,
-    loading: () => <div style={{ display: 'none' }} />
-  }
-)
+// Temporarily disabled dynamic components to fix SSR issues
+// const ClientOnlyComponents = dynamic(
+//   () => import("./client-enhancements"),
+//   { 
+//     ssr: false,
+//     loading: () => <div style={{ display: 'none' }} />
+//   }
+// )
 
 // Main providers wrapper - handles all client-side state
 export function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
     <WishlistProvider>
       {children}
+      {/* Temporarily disabled to fix SSR issues
       <Suspense fallback={<div style={{ display: 'none' }} />}>
         <ClientOnlyComponents />
       </Suspense>
+      */}
     </WishlistProvider>
   )
 }

@@ -12,7 +12,16 @@ interface LocationMapProps {
 // Declare global google types
 declare global {
   interface Window {
-    google: any
+    google: {
+      maps: {
+        Map: new (element: HTMLElement, options: any) => any
+        Marker: new (options: any) => any
+        Geocoder: new () => any
+        SymbolPath: {
+          CIRCLE: any
+        }
+      }
+    }
     initMap: () => void
   }
 }

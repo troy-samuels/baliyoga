@@ -89,8 +89,8 @@ export async function getCurrentWeeklyFeatured(): Promise<CurrentWeeklyFeatured>
         week_end: rotationData.week_end_date,
         featured_studios: studioIds,
         featured_retreats: retreatIds,
-        studios_data: studiosData,
-        retreats_data: retreatsData
+        studios_data: studiosData as Studio[],
+        retreats_data: retreatsData as Retreat[]
       }
     }
 
@@ -106,8 +106,8 @@ export async function getCurrentWeeklyFeatured(): Promise<CurrentWeeklyFeatured>
     return {
       week_start: weekStart.toISOString(),
       week_end: weekEnd.toISOString(),
-      featured_studios: fallbackData.studios.map(s => s.id),
-      featured_retreats: fallbackData.retreats.map(r => r.id),
+      featured_studios: fallbackData.studios.map(s => String(s.id)),
+      featured_retreats: fallbackData.retreats.map(r => String(r.id)),
       studios_data: fallbackData.studios,
       retreats_data: fallbackData.retreats
     }
@@ -452,10 +452,10 @@ async function getItemsByIds(ids: string[], type: 'studio' | 'retreat'): Promise
     // This is less efficient but works with the existing architecture
     if (type === 'studio') {
       const allStudios = await getSupabaseStudios()
-      return allStudios.filter(studio => ids.includes(studio.id))
+      return allStudios.filter(studio => ids.includes(String(studio.id)))
     } else {
       const allRetreats = await getSupabaseRetreats()
-      return allRetreats.filter(retreat => ids.includes(retreat.id))
+      return allRetreats.filter(retreat => ids.includes(String(retreat.id)))
     }
     
   } catch (error) {

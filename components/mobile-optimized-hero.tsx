@@ -14,7 +14,6 @@ export function MobileOptimizedHero() {
           className="object-cover object-center"
           priority={true}
           sizes="100vw"
-          placeholder="blur"
         />
       </div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50" />

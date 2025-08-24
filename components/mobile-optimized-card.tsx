@@ -84,6 +84,7 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
             studioName={name}
             studioId={id}
             location={location}
+            type={type}
             alt={name}
             fill
             className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
