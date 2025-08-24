@@ -2,11 +2,10 @@
 
 import Link from "next/link"
 import { MapPin, Calendar, Phone, Globe } from "lucide-react"
-import { OptimizedImage } from "./optimized-image"
+import { CachedImage } from "./cached-image"
 import { WishlistHeart } from "./wishlist-heart"
 import { PopularityBadge } from "./popularity-badge"
 import { StarRatingCompact } from "./ui/star-rating"
-import { generateColorFallback } from "@/lib/image-fallback"
 import { ROUTE_PATTERNS } from "@/lib/slug-utils"
 import { memo } from "react"
 
@@ -81,8 +80,10 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
 
       <Link href={href} className="block relative z-10 touch-manipulation">
         <div className="relative h-36 w-full overflow-hidden xs:h-40 sm:h-48">
-          <OptimizedImage
-            src={image || generateColorFallback(300, 200, '#e6ceb3')}
+          <CachedImage
+            studioName={name}
+            studioId={id}
+            location={location}
             alt={name}
             fill
             className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
