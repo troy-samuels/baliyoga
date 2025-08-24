@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { MapPin, Calendar, Phone, Globe } from "lucide-react"
-import { CachedImage } from "./cached-image"
+import { SimpleImage } from "./simple-image"
 import { WishlistHeart } from "./wishlist-heart"
 import { PopularityBadge } from "./popularity-badge"
 import { StarRatingCompact } from "./ui/star-rating"
@@ -80,11 +80,8 @@ export const MobileOptimizedCard = memo(function MobileOptimizedCard({
 
       <Link href={href} className="block relative z-10 touch-manipulation">
         <div className="relative h-36 w-full overflow-hidden xs:h-40 sm:h-48">
-          <CachedImage
-            studioName={name}
-            studioId={id}
-            location={location}
-            type={type}
+          <SimpleImage
+            src={image}
             alt={name}
             fill
             className="object-cover object-center transition-transform duration-500 group-hover:scale-105"

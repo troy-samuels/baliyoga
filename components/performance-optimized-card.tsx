@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { MapPin, Phone, Globe } from "lucide-react"
-import { CachedImage } from "./cached-image"
+import { SimpleImage } from "./simple-image"
 import { WishlistHeart } from "./wishlist-heart"
 import { PopularityBadge } from "./popularity-badge"
 import { StarRatingCompact } from "./ui/star-rating"
@@ -70,11 +70,8 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
 
       <Link href={href} className="block" prefetch={false}>
         <div className="relative h-48 w-full overflow-hidden">
-          <CachedImage
-            studioName={name}
-            studioId={id}
-            location={location}
-            type={type}
+          <SimpleImage
+            src={image}
             alt={name}
             fill
             className="object-cover object-center transition-transform duration-300 group-hover:scale-110"

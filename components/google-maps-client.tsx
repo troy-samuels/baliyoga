@@ -136,17 +136,21 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
         setIsLoading(false)
       }, 10000) // 10 second timeout
 
-      // Load the Google Maps script
-      const script = document.createElement('script')
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=geometry&loading=async`
-      script.async = true
-      script.defer = true
-
-      script.onload = () => {
+      // Load the Google Maps script with callback
+      const callbackName = 'initGoogleMaps_' + Math.random().toString(36).substr(2, 9)
+      
+      // Create callback function
+      ;(window as any)[callbackName] = () => {
         clearTimeout(timeout)
         setIsLoaded(true)
         setIsLoading(false)
+        delete (window as any)[callbackName]
       }
+
+      const script = document.createElement('script')
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=geometry&callback=${callbackName}&loading=async`
+      script.async = true
+      script.defer = true
 
       script.onerror = () => {
         clearTimeout(timeout)
@@ -155,6 +159,7 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
           message: 'Failed to load Google Maps API'
         })
         setIsLoading(false)
+        delete (window as any)[callbackName]
       }
 
       document.head.appendChild(script)
@@ -176,11 +181,18 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
 
   // Geocode address and create map
   const initializeMap = useCallback(async () => {
-    if (!window.google || !mapRef.current || !isLoaded || !isMounted) {
+    if (!window.google?.maps?.Geocoder || !mapRef.current || !isLoaded || !isMounted) {
       return
     }
 
     try {
+      // Wait a bit to ensure Google Maps is fully loaded
+      await new Promise(resolve => setTimeout(resolve, 100))
+      
+      if (!window.google?.maps?.Geocoder) {
+        throw new Error('Google Maps Geocoder not available')
+      }
+
       const geocoder = new window.google.maps.Geocoder()
       const query = address || `${name}, ${city}, Bali, Indonesia`
 
@@ -188,7 +200,7 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
       geocoder.geocode({ address: query }, (results: any[], status: string) => {
         let location: Coordinates
 
-        if (status === 'OK' && results[0]) {
+        if (status === 'OK' && results && results[0]) {
           location = {
             lat: results[0].geometry.location.lat(),
             lng: results[0].geometry.location.lng()
@@ -203,10 +215,10 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
       })
     } catch (err) {
       console.error('Error initializing map:', err)
-      setError({
-        code: 'INIT_ERROR',
-        message: 'Failed to initialize map'
-      })
+      // Use fallback coordinates instead of showing error
+      const fallbackLocation = { lat: -8.4095, lng: 115.1889 }
+      setCoordinates(fallbackLocation)
+      createMap(fallbackLocation)
     }
   }, [address, name, city, isLoaded, isMounted])
 

@@ -1,0 +1,1416 @@
+🚀 MIGRATING REMAINING LEGACY CACHED IMAGES
+============================================================
+🔍 Finding studios that need migration...
+
+📊 Database records: 450
+📂 Already migrated: 111
+🔄 Need migration check: 339
+
+📋 Processing 339 studios...
+
+📁 Migrating studio: Krisnal Inti (189c3312-2cf2-4c33-a6eb-5064327586ed)
+   Found 0 legacy images
+   ⚠️  No legacy images found
+
+📁 Migrating studio: Yttc Bali (1e2c458f-c4b4-4ff0-9a48-c97b90747acd)
+   Found 0 legacy images
+   ⚠️  No legacy images found
+
+📁 Migrating studio: Tanah Hyang Yoga Centre (2bbfc0ad-3a7b-49f9-903f-a34f5f5019a1)
+   Found 0 legacy images
+   ⚠️  No legacy images found
+
+📁 Migrating retreat: Blooming Lotus Yoga Kedonganan (2c60ca88-673b-4b4d-9301-aa5aac1e86dc)
+   Found 0 legacy images
+   ⚠️  No legacy images found
+
+📁 Migrating studio: Ayutyas (2dc99f1e-bdf1-48e7-b341-f6007736b961)
+   Found 0 legacy images
+   ⚠️  No legacy images found
+
+📁 Migrating retreat: Blooming Lotus Yoga Canggu (33e62b15-e027-4d53-a71c-9938892c82a6)
+   Found 0 legacy images
+   ⚠️  No legacy images found
+
+📁 Migrating retreat: Blooming Lotus Yoga Amed (4cc2193f-bfd1-42e0-b8ae-66148621ed37)
+   Found 1 legacy images
+   📄 4cc2193f-bfd1-42e0-b8ae-66148621ed37-2034692e3f7141b076ec60148a487690-0.jpg → retreats/4cc2193f-bfd1-42e0-b8ae-66148621ed37/image-0.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Escape Haven Bali Retreat (4de83f1f-2528-43ef-b46a-b61fe6ce1668)
+   Found 10 legacy images
+   📄 4de83f1f-2528-43ef-b46a-b61fe6ce1668-762bd251ca97677d5760047211d8bf1e-0.jpg → retreats/4de83f1f-2528-43ef-b46a-b61fe6ce1668/image-0.jpg
+   ✅ Migrated successfully
+   📄 4de83f1f-2528-43ef-b46a-b61fe6ce1668-762bd251ca97677d5760047211d8bf1e-1.jpg → retreats/4de83f1f-2528-43ef-b46a-b61fe6ce1668/image-1.jpg
+   ✅ Migrated successfully
+   📄 4de83f1f-2528-43ef-b46a-b61fe6ce1668-762bd251ca97677d5760047211d8bf1e-2.jpg → retreats/4de83f1f-2528-43ef-b46a-b61fe6ce1668/image-2.jpg
+   ✅ Migrated successfully
+   📄 4de83f1f-2528-43ef-b46a-b61fe6ce1668-762bd251ca97677d5760047211d8bf1e-3.jpg → retreats/4de83f1f-2528-43ef-b46a-b61fe6ce1668/image-3.jpg
+   ✅ Migrated successfully
+   📄 4de83f1f-2528-43ef-b46a-b61fe6ce1668-762bd251ca97677d5760047211d8bf1e-4.jpg → retreats/4de83f1f-2528-43ef-b46a-b61fe6ce1668/image-4.jpg
+   ✅ Migrated successfully
+   📄 4de83f1f-2528-43ef-b46a-b61fe6ce1668-762bd251ca97677d5760047211d8bf1e-5.jpg → retreats/4de83f1f-2528-43ef-b46a-b61fe6ce1668/image-5.jpg
+   ✅ Migrated successfully
+   📄 4de83f1f-2528-43ef-b46a-b61fe6ce1668-762bd251ca97677d5760047211d8bf1e-6.jpg → retreats/4de83f1f-2528-43ef-b46a-b61fe6ce1668/image-6.jpg
+   ✅ Migrated successfully
+   📄 4de83f1f-2528-43ef-b46a-b61fe6ce1668-762bd251ca97677d5760047211d8bf1e-7.jpg → retreats/4de83f1f-2528-43ef-b46a-b61fe6ce1668/image-7.jpg
+   ✅ Migrated successfully
+   📄 4de83f1f-2528-43ef-b46a-b61fe6ce1668-762bd251ca97677d5760047211d8bf1e-8.jpg → retreats/4de83f1f-2528-43ef-b46a-b61fe6ce1668/image-8.jpg
+   ✅ Migrated successfully
+   📄 4de83f1f-2528-43ef-b46a-b61fe6ce1668-762bd251ca97677d5760047211d8bf1e-9.jpg → retreats/4de83f1f-2528-43ef-b46a-b61fe6ce1668/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Sava Eco Retreat (4d408c68-b724-4a86-a005-3b9bdc0809a1)
+   Found 10 legacy images
+   📄 4d408c68-b724-4a86-a005-3b9bdc0809a1-2fb5399d6a57edc22c37486ae4cbcd77-0.jpg → retreats/4d408c68-b724-4a86-a005-3b9bdc0809a1/image-0.jpg
+   ✅ Migrated successfully
+   📄 4d408c68-b724-4a86-a005-3b9bdc0809a1-2fb5399d6a57edc22c37486ae4cbcd77-1.jpg → retreats/4d408c68-b724-4a86-a005-3b9bdc0809a1/image-1.jpg
+   ✅ Migrated successfully
+   📄 4d408c68-b724-4a86-a005-3b9bdc0809a1-2fb5399d6a57edc22c37486ae4cbcd77-2.jpg → retreats/4d408c68-b724-4a86-a005-3b9bdc0809a1/image-2.jpg
+   ✅ Migrated successfully
+   📄 4d408c68-b724-4a86-a005-3b9bdc0809a1-2fb5399d6a57edc22c37486ae4cbcd77-3.jpg → retreats/4d408c68-b724-4a86-a005-3b9bdc0809a1/image-3.jpg
+   ✅ Migrated successfully
+   📄 4d408c68-b724-4a86-a005-3b9bdc0809a1-2fb5399d6a57edc22c37486ae4cbcd77-4.jpg → retreats/4d408c68-b724-4a86-a005-3b9bdc0809a1/image-4.jpg
+   ✅ Migrated successfully
+   📄 4d408c68-b724-4a86-a005-3b9bdc0809a1-2fb5399d6a57edc22c37486ae4cbcd77-5.jpg → retreats/4d408c68-b724-4a86-a005-3b9bdc0809a1/image-5.jpg
+   ✅ Migrated successfully
+   📄 4d408c68-b724-4a86-a005-3b9bdc0809a1-2fb5399d6a57edc22c37486ae4cbcd77-6.jpg → retreats/4d408c68-b724-4a86-a005-3b9bdc0809a1/image-6.jpg
+   ✅ Migrated successfully
+   📄 4d408c68-b724-4a86-a005-3b9bdc0809a1-2fb5399d6a57edc22c37486ae4cbcd77-7.jpg → retreats/4d408c68-b724-4a86-a005-3b9bdc0809a1/image-7.jpg
+   ✅ Migrated successfully
+   📄 4d408c68-b724-4a86-a005-3b9bdc0809a1-2fb5399d6a57edc22c37486ae4cbcd77-8.jpg → retreats/4d408c68-b724-4a86-a005-3b9bdc0809a1/image-8.jpg
+   ✅ Migrated successfully
+   📄 4d408c68-b724-4a86-a005-3b9bdc0809a1-2fb5399d6a57edc22c37486ae4cbcd77-9.jpg → retreats/4d408c68-b724-4a86-a005-3b9bdc0809a1/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Blooming Lotus Yoga Amlapura (506411ed-0b93-4ec1-bdd9-124b28439ace)
+   Found 1 legacy images
+   📄 506411ed-0b93-4ec1-bdd9-124b28439ace-20e0d04afb8390321b54c96df52c84ca-0.jpg → retreats/506411ed-0b93-4ec1-bdd9-124b28439ace/image-0.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Adikara Villa (50ccf23b-696a-40e7-ab71-9292170571e0)
+   Found 10 legacy images
+   📄 50ccf23b-696a-40e7-ab71-9292170571e0-ee66d0d41ba6d70629dcdbb8dced1f00-0.jpg → studios/50ccf23b-696a-40e7-ab71-9292170571e0/image-0.jpg
+   ✅ Migrated successfully
+   📄 50ccf23b-696a-40e7-ab71-9292170571e0-ee66d0d41ba6d70629dcdbb8dced1f00-1.jpg → studios/50ccf23b-696a-40e7-ab71-9292170571e0/image-1.jpg
+   ✅ Migrated successfully
+   📄 50ccf23b-696a-40e7-ab71-9292170571e0-ee66d0d41ba6d70629dcdbb8dced1f00-2.jpg → studios/50ccf23b-696a-40e7-ab71-9292170571e0/image-2.jpg
+   ✅ Migrated successfully
+   📄 50ccf23b-696a-40e7-ab71-9292170571e0-ee66d0d41ba6d70629dcdbb8dced1f00-3.jpg → studios/50ccf23b-696a-40e7-ab71-9292170571e0/image-3.jpg
+   ✅ Migrated successfully
+   📄 50ccf23b-696a-40e7-ab71-9292170571e0-ee66d0d41ba6d70629dcdbb8dced1f00-4.jpg → studios/50ccf23b-696a-40e7-ab71-9292170571e0/image-4.jpg
+   ✅ Migrated successfully
+   📄 50ccf23b-696a-40e7-ab71-9292170571e0-ee66d0d41ba6d70629dcdbb8dced1f00-5.jpg → studios/50ccf23b-696a-40e7-ab71-9292170571e0/image-5.jpg
+   ✅ Migrated successfully
+   📄 50ccf23b-696a-40e7-ab71-9292170571e0-ee66d0d41ba6d70629dcdbb8dced1f00-6.jpg → studios/50ccf23b-696a-40e7-ab71-9292170571e0/image-6.jpg
+   ✅ Migrated successfully
+   📄 50ccf23b-696a-40e7-ab71-9292170571e0-ee66d0d41ba6d70629dcdbb8dced1f00-7.jpg → studios/50ccf23b-696a-40e7-ab71-9292170571e0/image-7.jpg
+   ✅ Migrated successfully
+   📄 50ccf23b-696a-40e7-ab71-9292170571e0-ee66d0d41ba6d70629dcdbb8dced1f00-8.jpg → studios/50ccf23b-696a-40e7-ab71-9292170571e0/image-8.jpg
+   ✅ Migrated successfully
+   📄 50ccf23b-696a-40e7-ab71-9292170571e0-ee66d0d41ba6d70629dcdbb8dced1f00-9.jpg → studios/50ccf23b-696a-40e7-ab71-9292170571e0/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Bali Yogapeeth (5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f)
+   Found 6 legacy images
+   📄 5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f-c8e4d1e3878664e6bf3bd3edf0e5d04e-0.jpg → studios/5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f/image-0.jpg
+   ✅ Migrated successfully
+   📄 5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f-c8e4d1e3878664e6bf3bd3edf0e5d04e-1.jpg → studios/5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f/image-1.jpg
+   ✅ Migrated successfully
+   📄 5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f-c8e4d1e3878664e6bf3bd3edf0e5d04e-2.jpg → studios/5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f/image-2.jpg
+   ✅ Migrated successfully
+   📄 5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f-c8e4d1e3878664e6bf3bd3edf0e5d04e-3.jpg → studios/5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f/image-3.jpg
+   ✅ Migrated successfully
+   📄 5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f-c8e4d1e3878664e6bf3bd3edf0e5d04e-4.jpg → studios/5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f/image-4.jpg
+   ✅ Migrated successfully
+   📄 5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f-c8e4d1e3878664e6bf3bd3edf0e5d04e-5.jpg → studios/5289fa25-11c0-4a4d-9e5a-f7ae3bf4380f/image-5.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Zuna Yoga (4f5c5367-ee66-49c0-81e4-67f9bd337cf6)
+   Found 10 legacy images
+   📄 4f5c5367-ee66-49c0-81e4-67f9bd337cf6-646ff2717529b8b9a554f4c4af2d60ab-0.jpg → retreats/4f5c5367-ee66-49c0-81e4-67f9bd337cf6/image-0.jpg
+   ✅ Migrated successfully
+   📄 4f5c5367-ee66-49c0-81e4-67f9bd337cf6-646ff2717529b8b9a554f4c4af2d60ab-1.jpg → retreats/4f5c5367-ee66-49c0-81e4-67f9bd337cf6/image-1.jpg
+   ✅ Migrated successfully
+   📄 4f5c5367-ee66-49c0-81e4-67f9bd337cf6-646ff2717529b8b9a554f4c4af2d60ab-2.jpg → retreats/4f5c5367-ee66-49c0-81e4-67f9bd337cf6/image-2.jpg
+   ✅ Migrated successfully
+   📄 4f5c5367-ee66-49c0-81e4-67f9bd337cf6-646ff2717529b8b9a554f4c4af2d60ab-3.jpg → retreats/4f5c5367-ee66-49c0-81e4-67f9bd337cf6/image-3.jpg
+   ✅ Migrated successfully
+   📄 4f5c5367-ee66-49c0-81e4-67f9bd337cf6-646ff2717529b8b9a554f4c4af2d60ab-4.jpg → retreats/4f5c5367-ee66-49c0-81e4-67f9bd337cf6/image-4.jpg
+   ✅ Migrated successfully
+   📄 4f5c5367-ee66-49c0-81e4-67f9bd337cf6-646ff2717529b8b9a554f4c4af2d60ab-5.jpg → retreats/4f5c5367-ee66-49c0-81e4-67f9bd337cf6/image-5.jpg
+   ✅ Migrated successfully
+   📄 4f5c5367-ee66-49c0-81e4-67f9bd337cf6-646ff2717529b8b9a554f4c4af2d60ab-6.jpg → retreats/4f5c5367-ee66-49c0-81e4-67f9bd337cf6/image-6.jpg
+   ✅ Migrated successfully
+   📄 4f5c5367-ee66-49c0-81e4-67f9bd337cf6-646ff2717529b8b9a554f4c4af2d60ab-7.jpg → retreats/4f5c5367-ee66-49c0-81e4-67f9bd337cf6/image-7.jpg
+   ✅ Migrated successfully
+   📄 4f5c5367-ee66-49c0-81e4-67f9bd337cf6-646ff2717529b8b9a554f4c4af2d60ab-8.jpg → retreats/4f5c5367-ee66-49c0-81e4-67f9bd337cf6/image-8.jpg
+   ✅ Migrated successfully
+   📄 4f5c5367-ee66-49c0-81e4-67f9bd337cf6-646ff2717529b8b9a554f4c4af2d60ab-9.jpg → retreats/4f5c5367-ee66-49c0-81e4-67f9bd337cf6/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Ayuda Momnbaby (53794fd5-d651-48c7-9166-4af26779cb14)
+   Found 10 legacy images
+   📄 53794fd5-d651-48c7-9166-4af26779cb14-6f37af535a56c4a5cc5cdae681d94e58-0.jpg → studios/53794fd5-d651-48c7-9166-4af26779cb14/image-0.jpg
+   ✅ Migrated successfully
+   📄 53794fd5-d651-48c7-9166-4af26779cb14-6f37af535a56c4a5cc5cdae681d94e58-1.jpg → studios/53794fd5-d651-48c7-9166-4af26779cb14/image-1.jpg
+   ✅ Migrated successfully
+   📄 53794fd5-d651-48c7-9166-4af26779cb14-6f37af535a56c4a5cc5cdae681d94e58-2.jpg → studios/53794fd5-d651-48c7-9166-4af26779cb14/image-2.jpg
+   ✅ Migrated successfully
+   📄 53794fd5-d651-48c7-9166-4af26779cb14-6f37af535a56c4a5cc5cdae681d94e58-3.jpg → studios/53794fd5-d651-48c7-9166-4af26779cb14/image-3.jpg
+   ✅ Migrated successfully
+   📄 53794fd5-d651-48c7-9166-4af26779cb14-6f37af535a56c4a5cc5cdae681d94e58-4.jpg → studios/53794fd5-d651-48c7-9166-4af26779cb14/image-4.jpg
+   ✅ Migrated successfully
+   📄 53794fd5-d651-48c7-9166-4af26779cb14-6f37af535a56c4a5cc5cdae681d94e58-5.jpg → studios/53794fd5-d651-48c7-9166-4af26779cb14/image-5.jpg
+   ✅ Migrated successfully
+   📄 53794fd5-d651-48c7-9166-4af26779cb14-6f37af535a56c4a5cc5cdae681d94e58-6.jpg → studios/53794fd5-d651-48c7-9166-4af26779cb14/image-6.jpg
+   ✅ Migrated successfully
+   📄 53794fd5-d651-48c7-9166-4af26779cb14-6f37af535a56c4a5cc5cdae681d94e58-7.jpg → studios/53794fd5-d651-48c7-9166-4af26779cb14/image-7.jpg
+   ✅ Migrated successfully
+   📄 53794fd5-d651-48c7-9166-4af26779cb14-6f37af535a56c4a5cc5cdae681d94e58-8.jpg → studios/53794fd5-d651-48c7-9166-4af26779cb14/image-8.jpg
+   ✅ Migrated successfully
+   📄 53794fd5-d651-48c7-9166-4af26779cb14-6f37af535a56c4a5cc5cdae681d94e58-9.jpg → studios/53794fd5-d651-48c7-9166-4af26779cb14/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Healing Village Spa At Four Seasons Resort Bali At Jimbaran Bay (5706b551-b8b8-4b4e-8316-d22a645a701e)
+   Found 10 legacy images
+   📄 5706b551-b8b8-4b4e-8316-d22a645a701e-6597a1d911d619bdedff4a33394c9ad6-0.jpg → studios/5706b551-b8b8-4b4e-8316-d22a645a701e/image-0.jpg
+   ✅ Migrated successfully
+   📄 5706b551-b8b8-4b4e-8316-d22a645a701e-6597a1d911d619bdedff4a33394c9ad6-1.jpg → studios/5706b551-b8b8-4b4e-8316-d22a645a701e/image-1.jpg
+   ✅ Migrated successfully
+   📄 5706b551-b8b8-4b4e-8316-d22a645a701e-6597a1d911d619bdedff4a33394c9ad6-2.jpg → studios/5706b551-b8b8-4b4e-8316-d22a645a701e/image-2.jpg
+   ✅ Migrated successfully
+   📄 5706b551-b8b8-4b4e-8316-d22a645a701e-6597a1d911d619bdedff4a33394c9ad6-3.jpg → studios/5706b551-b8b8-4b4e-8316-d22a645a701e/image-3.jpg
+   ✅ Migrated successfully
+   📄 5706b551-b8b8-4b4e-8316-d22a645a701e-6597a1d911d619bdedff4a33394c9ad6-4.jpg → studios/5706b551-b8b8-4b4e-8316-d22a645a701e/image-4.jpg
+   ✅ Migrated successfully
+   📄 5706b551-b8b8-4b4e-8316-d22a645a701e-6597a1d911d619bdedff4a33394c9ad6-5.jpg → studios/5706b551-b8b8-4b4e-8316-d22a645a701e/image-5.jpg
+   ✅ Migrated successfully
+   📄 5706b551-b8b8-4b4e-8316-d22a645a701e-6597a1d911d619bdedff4a33394c9ad6-6.jpg → studios/5706b551-b8b8-4b4e-8316-d22a645a701e/image-6.jpg
+   ✅ Migrated successfully
+   📄 5706b551-b8b8-4b4e-8316-d22a645a701e-6597a1d911d619bdedff4a33394c9ad6-7.jpg → studios/5706b551-b8b8-4b4e-8316-d22a645a701e/image-7.jpg
+   ✅ Migrated successfully
+   📄 5706b551-b8b8-4b4e-8316-d22a645a701e-6597a1d911d619bdedff4a33394c9ad6-8.jpg → studios/5706b551-b8b8-4b4e-8316-d22a645a701e/image-8.jpg
+   ✅ Migrated successfully
+   📄 5706b551-b8b8-4b4e-8316-d22a645a701e-6597a1d911d619bdedff4a33394c9ad6-9.jpg → studios/5706b551-b8b8-4b4e-8316-d22a645a701e/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Power Of Now Oasis (55fa8d96-7b1e-4bac-a411-9a56140c1f9a)
+   Found 10 legacy images
+   📄 55fa8d96-7b1e-4bac-a411-9a56140c1f9a-13212767e1a734d165c092536abd9c32-0.jpg → studios/55fa8d96-7b1e-4bac-a411-9a56140c1f9a/image-0.jpg
+   ✅ Migrated successfully
+   📄 55fa8d96-7b1e-4bac-a411-9a56140c1f9a-13212767e1a734d165c092536abd9c32-1.jpg → studios/55fa8d96-7b1e-4bac-a411-9a56140c1f9a/image-1.jpg
+   ✅ Migrated successfully
+   📄 55fa8d96-7b1e-4bac-a411-9a56140c1f9a-13212767e1a734d165c092536abd9c32-2.jpg → studios/55fa8d96-7b1e-4bac-a411-9a56140c1f9a/image-2.jpg
+   ✅ Migrated successfully
+   📄 55fa8d96-7b1e-4bac-a411-9a56140c1f9a-13212767e1a734d165c092536abd9c32-3.jpg → studios/55fa8d96-7b1e-4bac-a411-9a56140c1f9a/image-3.jpg
+   ✅ Migrated successfully
+   📄 55fa8d96-7b1e-4bac-a411-9a56140c1f9a-13212767e1a734d165c092536abd9c32-4.jpg → studios/55fa8d96-7b1e-4bac-a411-9a56140c1f9a/image-4.jpg
+   ✅ Migrated successfully
+   📄 55fa8d96-7b1e-4bac-a411-9a56140c1f9a-13212767e1a734d165c092536abd9c32-5.jpg → studios/55fa8d96-7b1e-4bac-a411-9a56140c1f9a/image-5.jpg
+   ✅ Migrated successfully
+   📄 55fa8d96-7b1e-4bac-a411-9a56140c1f9a-13212767e1a734d165c092536abd9c32-6.jpg → studios/55fa8d96-7b1e-4bac-a411-9a56140c1f9a/image-6.jpg
+   ✅ Migrated successfully
+   📄 55fa8d96-7b1e-4bac-a411-9a56140c1f9a-13212767e1a734d165c092536abd9c32-7.jpg → studios/55fa8d96-7b1e-4bac-a411-9a56140c1f9a/image-7.jpg
+   ✅ Migrated successfully
+   📄 55fa8d96-7b1e-4bac-a411-9a56140c1f9a-13212767e1a734d165c092536abd9c32-8.jpg → studios/55fa8d96-7b1e-4bac-a411-9a56140c1f9a/image-8.jpg
+   ✅ Migrated successfully
+   📄 55fa8d96-7b1e-4bac-a411-9a56140c1f9a-13212767e1a734d165c092536abd9c32-9.jpg → studios/55fa8d96-7b1e-4bac-a411-9a56140c1f9a/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Tishe Yoga Body Movement Studio Cafe (56c3a106-f2b2-4898-9bba-03e2b83e955b)
+   Found 10 legacy images
+   📄 56c3a106-f2b2-4898-9bba-03e2b83e955b-2d945e1d1936fc575770e8dde3aae108-0.jpg → studios/56c3a106-f2b2-4898-9bba-03e2b83e955b/image-0.jpg
+   ✅ Migrated successfully
+   📄 56c3a106-f2b2-4898-9bba-03e2b83e955b-2d945e1d1936fc575770e8dde3aae108-1.jpg → studios/56c3a106-f2b2-4898-9bba-03e2b83e955b/image-1.jpg
+   ✅ Migrated successfully
+   📄 56c3a106-f2b2-4898-9bba-03e2b83e955b-2d945e1d1936fc575770e8dde3aae108-2.jpg → studios/56c3a106-f2b2-4898-9bba-03e2b83e955b/image-2.jpg
+   ✅ Migrated successfully
+   📄 56c3a106-f2b2-4898-9bba-03e2b83e955b-2d945e1d1936fc575770e8dde3aae108-3.jpg → studios/56c3a106-f2b2-4898-9bba-03e2b83e955b/image-3.jpg
+   ✅ Migrated successfully
+   📄 56c3a106-f2b2-4898-9bba-03e2b83e955b-2d945e1d1936fc575770e8dde3aae108-4.jpg → studios/56c3a106-f2b2-4898-9bba-03e2b83e955b/image-4.jpg
+   ✅ Migrated successfully
+   📄 56c3a106-f2b2-4898-9bba-03e2b83e955b-2d945e1d1936fc575770e8dde3aae108-5.jpg → studios/56c3a106-f2b2-4898-9bba-03e2b83e955b/image-5.jpg
+   ✅ Migrated successfully
+   📄 56c3a106-f2b2-4898-9bba-03e2b83e955b-2d945e1d1936fc575770e8dde3aae108-6.jpg → studios/56c3a106-f2b2-4898-9bba-03e2b83e955b/image-6.jpg
+   ✅ Migrated successfully
+   📄 56c3a106-f2b2-4898-9bba-03e2b83e955b-2d945e1d1936fc575770e8dde3aae108-7.jpg → studios/56c3a106-f2b2-4898-9bba-03e2b83e955b/image-7.jpg
+   ✅ Migrated successfully
+   📄 56c3a106-f2b2-4898-9bba-03e2b83e955b-2d945e1d1936fc575770e8dde3aae108-8.jpg → studios/56c3a106-f2b2-4898-9bba-03e2b83e955b/image-8.jpg
+   ✅ Migrated successfully
+   📄 56c3a106-f2b2-4898-9bba-03e2b83e955b-2d945e1d1936fc575770e8dde3aae108-9.jpg → studios/56c3a106-f2b2-4898-9bba-03e2b83e955b/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Guan Yin Yoga Shala (596bf31d-ed0f-4403-aa60-56fbabc70af3)
+   Found 10 legacy images
+   📄 596bf31d-ed0f-4403-aa60-56fbabc70af3-47bcb32631e77933abb4ab8003565b58-0.jpg → studios/596bf31d-ed0f-4403-aa60-56fbabc70af3/image-0.jpg
+   ✅ Migrated successfully
+   📄 596bf31d-ed0f-4403-aa60-56fbabc70af3-47bcb32631e77933abb4ab8003565b58-1.jpg → studios/596bf31d-ed0f-4403-aa60-56fbabc70af3/image-1.jpg
+   ✅ Migrated successfully
+   📄 596bf31d-ed0f-4403-aa60-56fbabc70af3-47bcb32631e77933abb4ab8003565b58-2.jpg → studios/596bf31d-ed0f-4403-aa60-56fbabc70af3/image-2.jpg
+   ✅ Migrated successfully
+   📄 596bf31d-ed0f-4403-aa60-56fbabc70af3-47bcb32631e77933abb4ab8003565b58-3.jpg → studios/596bf31d-ed0f-4403-aa60-56fbabc70af3/image-3.jpg
+   ✅ Migrated successfully
+   📄 596bf31d-ed0f-4403-aa60-56fbabc70af3-47bcb32631e77933abb4ab8003565b58-4.jpg → studios/596bf31d-ed0f-4403-aa60-56fbabc70af3/image-4.jpg
+   ✅ Migrated successfully
+   📄 596bf31d-ed0f-4403-aa60-56fbabc70af3-47bcb32631e77933abb4ab8003565b58-5.jpg → studios/596bf31d-ed0f-4403-aa60-56fbabc70af3/image-5.jpg
+   ✅ Migrated successfully
+   📄 596bf31d-ed0f-4403-aa60-56fbabc70af3-47bcb32631e77933abb4ab8003565b58-6.jpg → studios/596bf31d-ed0f-4403-aa60-56fbabc70af3/image-6.jpg
+   ✅ Migrated successfully
+   📄 596bf31d-ed0f-4403-aa60-56fbabc70af3-47bcb32631e77933abb4ab8003565b58-7.jpg → studios/596bf31d-ed0f-4403-aa60-56fbabc70af3/image-7.jpg
+   ✅ Migrated successfully
+   📄 596bf31d-ed0f-4403-aa60-56fbabc70af3-47bcb32631e77933abb4ab8003565b58-8.jpg → studios/596bf31d-ed0f-4403-aa60-56fbabc70af3/image-8.jpg
+   ✅ Migrated successfully
+   📄 596bf31d-ed0f-4403-aa60-56fbabc70af3-47bcb32631e77933abb4ab8003565b58-9.jpg → studios/596bf31d-ed0f-4403-aa60-56fbabc70af3/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Bliss Yoga Club (5c6502b5-b293-44a9-b6bc-f20d3eb17e8d)
+   Found 10 legacy images
+   📄 5c6502b5-b293-44a9-b6bc-f20d3eb17e8d-e191cf5e9d3374e963ce4f23599e02d6-0.jpg → studios/5c6502b5-b293-44a9-b6bc-f20d3eb17e8d/image-0.jpg
+   ✅ Migrated successfully
+   📄 5c6502b5-b293-44a9-b6bc-f20d3eb17e8d-e191cf5e9d3374e963ce4f23599e02d6-1.jpg → studios/5c6502b5-b293-44a9-b6bc-f20d3eb17e8d/image-1.jpg
+   ✅ Migrated successfully
+   📄 5c6502b5-b293-44a9-b6bc-f20d3eb17e8d-e191cf5e9d3374e963ce4f23599e02d6-2.jpg → studios/5c6502b5-b293-44a9-b6bc-f20d3eb17e8d/image-2.jpg
+   ✅ Migrated successfully
+   📄 5c6502b5-b293-44a9-b6bc-f20d3eb17e8d-e191cf5e9d3374e963ce4f23599e02d6-3.jpg → studios/5c6502b5-b293-44a9-b6bc-f20d3eb17e8d/image-3.jpg
+   ✅ Migrated successfully
+   📄 5c6502b5-b293-44a9-b6bc-f20d3eb17e8d-e191cf5e9d3374e963ce4f23599e02d6-4.jpg → studios/5c6502b5-b293-44a9-b6bc-f20d3eb17e8d/image-4.jpg
+   ✅ Migrated successfully
+   📄 5c6502b5-b293-44a9-b6bc-f20d3eb17e8d-e191cf5e9d3374e963ce4f23599e02d6-5.jpg → studios/5c6502b5-b293-44a9-b6bc-f20d3eb17e8d/image-5.jpg
+   ✅ Migrated successfully
+   📄 5c6502b5-b293-44a9-b6bc-f20d3eb17e8d-e191cf5e9d3374e963ce4f23599e02d6-6.jpg → studios/5c6502b5-b293-44a9-b6bc-f20d3eb17e8d/image-6.jpg
+   ✅ Migrated successfully
+   📄 5c6502b5-b293-44a9-b6bc-f20d3eb17e8d-e191cf5e9d3374e963ce4f23599e02d6-7.jpg → studios/5c6502b5-b293-44a9-b6bc-f20d3eb17e8d/image-7.jpg
+   ✅ Migrated successfully
+   📄 5c6502b5-b293-44a9-b6bc-f20d3eb17e8d-e191cf5e9d3374e963ce4f23599e02d6-8.jpg → studios/5c6502b5-b293-44a9-b6bc-f20d3eb17e8d/image-8.jpg
+   ✅ Migrated successfully
+   📄 5c6502b5-b293-44a9-b6bc-f20d3eb17e8d-e191cf5e9d3374e963ce4f23599e02d6-9.jpg → studios/5c6502b5-b293-44a9-b6bc-f20d3eb17e8d/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Bali Yoga Ashram Yoga Teacher Training In Bali (5746bd75-2d9a-4e54-91f6-6d0c148402b6)
+   Found 10 legacy images
+   📄 5746bd75-2d9a-4e54-91f6-6d0c148402b6-7be39bbe32dbca95bc508b3125868184-0.jpg → studios/5746bd75-2d9a-4e54-91f6-6d0c148402b6/image-0.jpg
+   ✅ Migrated successfully
+   📄 5746bd75-2d9a-4e54-91f6-6d0c148402b6-7be39bbe32dbca95bc508b3125868184-1.jpg → studios/5746bd75-2d9a-4e54-91f6-6d0c148402b6/image-1.jpg
+   ✅ Migrated successfully
+   📄 5746bd75-2d9a-4e54-91f6-6d0c148402b6-7be39bbe32dbca95bc508b3125868184-2.jpg → studios/5746bd75-2d9a-4e54-91f6-6d0c148402b6/image-2.jpg
+   ✅ Migrated successfully
+   📄 5746bd75-2d9a-4e54-91f6-6d0c148402b6-7be39bbe32dbca95bc508b3125868184-3.jpg → studios/5746bd75-2d9a-4e54-91f6-6d0c148402b6/image-3.jpg
+   ✅ Migrated successfully
+   📄 5746bd75-2d9a-4e54-91f6-6d0c148402b6-7be39bbe32dbca95bc508b3125868184-4.jpg → studios/5746bd75-2d9a-4e54-91f6-6d0c148402b6/image-4.jpg
+   ✅ Migrated successfully
+   📄 5746bd75-2d9a-4e54-91f6-6d0c148402b6-7be39bbe32dbca95bc508b3125868184-5.jpg → studios/5746bd75-2d9a-4e54-91f6-6d0c148402b6/image-5.jpg
+   ✅ Migrated successfully
+   📄 5746bd75-2d9a-4e54-91f6-6d0c148402b6-7be39bbe32dbca95bc508b3125868184-6.jpg → studios/5746bd75-2d9a-4e54-91f6-6d0c148402b6/image-6.jpg
+   ✅ Migrated successfully
+   📄 5746bd75-2d9a-4e54-91f6-6d0c148402b6-7be39bbe32dbca95bc508b3125868184-7.jpg → studios/5746bd75-2d9a-4e54-91f6-6d0c148402b6/image-7.jpg
+   ✅ Migrated successfully
+   📄 5746bd75-2d9a-4e54-91f6-6d0c148402b6-7be39bbe32dbca95bc508b3125868184-8.jpg → studios/5746bd75-2d9a-4e54-91f6-6d0c148402b6/image-8.jpg
+   ✅ Migrated successfully
+   📄 5746bd75-2d9a-4e54-91f6-6d0c148402b6-7be39bbe32dbca95bc508b3125868184-9.jpg → studios/5746bd75-2d9a-4e54-91f6-6d0c148402b6/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Bondalem Beach Club (5952cc53-9baa-416e-a8d5-19eb0b7f4f50)
+   Found 10 legacy images
+   📄 5952cc53-9baa-416e-a8d5-19eb0b7f4f50-830e8d4dd052789aa147ba08e2f40374-0.jpg → retreats/5952cc53-9baa-416e-a8d5-19eb0b7f4f50/image-0.jpg
+   ✅ Migrated successfully
+   📄 5952cc53-9baa-416e-a8d5-19eb0b7f4f50-830e8d4dd052789aa147ba08e2f40374-1.jpg → retreats/5952cc53-9baa-416e-a8d5-19eb0b7f4f50/image-1.jpg
+   ✅ Migrated successfully
+   📄 5952cc53-9baa-416e-a8d5-19eb0b7f4f50-830e8d4dd052789aa147ba08e2f40374-2.jpg → retreats/5952cc53-9baa-416e-a8d5-19eb0b7f4f50/image-2.jpg
+   ✅ Migrated successfully
+   📄 5952cc53-9baa-416e-a8d5-19eb0b7f4f50-830e8d4dd052789aa147ba08e2f40374-3.jpg → retreats/5952cc53-9baa-416e-a8d5-19eb0b7f4f50/image-3.jpg
+   ✅ Migrated successfully
+   📄 5952cc53-9baa-416e-a8d5-19eb0b7f4f50-830e8d4dd052789aa147ba08e2f40374-4.jpg → retreats/5952cc53-9baa-416e-a8d5-19eb0b7f4f50/image-4.jpg
+   ✅ Migrated successfully
+   📄 5952cc53-9baa-416e-a8d5-19eb0b7f4f50-830e8d4dd052789aa147ba08e2f40374-5.jpg → retreats/5952cc53-9baa-416e-a8d5-19eb0b7f4f50/image-5.jpg
+   ✅ Migrated successfully
+   📄 5952cc53-9baa-416e-a8d5-19eb0b7f4f50-830e8d4dd052789aa147ba08e2f40374-6.jpg → retreats/5952cc53-9baa-416e-a8d5-19eb0b7f4f50/image-6.jpg
+   ✅ Migrated successfully
+   📄 5952cc53-9baa-416e-a8d5-19eb0b7f4f50-830e8d4dd052789aa147ba08e2f40374-7.jpg → retreats/5952cc53-9baa-416e-a8d5-19eb0b7f4f50/image-7.jpg
+   ✅ Migrated successfully
+   📄 5952cc53-9baa-416e-a8d5-19eb0b7f4f50-830e8d4dd052789aa147ba08e2f40374-8.jpg → retreats/5952cc53-9baa-416e-a8d5-19eb0b7f4f50/image-8.jpg
+   ✅ Migrated successfully
+   📄 5952cc53-9baa-416e-a8d5-19eb0b7f4f50-830e8d4dd052789aa147ba08e2f40374-9.jpg → retreats/5952cc53-9baa-416e-a8d5-19eb0b7f4f50/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Island Garden Huts Yoga Shala (5c0e734a-fd6f-4b99-a413-1c8958b5fc29)
+   Found 10 legacy images
+   📄 5c0e734a-fd6f-4b99-a413-1c8958b5fc29-7854e45320ae4dab90a4b674c3b13ed1-0.jpg → studios/5c0e734a-fd6f-4b99-a413-1c8958b5fc29/image-0.jpg
+   ✅ Migrated successfully
+   📄 5c0e734a-fd6f-4b99-a413-1c8958b5fc29-7854e45320ae4dab90a4b674c3b13ed1-1.jpg → studios/5c0e734a-fd6f-4b99-a413-1c8958b5fc29/image-1.jpg
+   ✅ Migrated successfully
+   📄 5c0e734a-fd6f-4b99-a413-1c8958b5fc29-7854e45320ae4dab90a4b674c3b13ed1-2.jpg → studios/5c0e734a-fd6f-4b99-a413-1c8958b5fc29/image-2.jpg
+   ✅ Migrated successfully
+   📄 5c0e734a-fd6f-4b99-a413-1c8958b5fc29-7854e45320ae4dab90a4b674c3b13ed1-3.jpg → studios/5c0e734a-fd6f-4b99-a413-1c8958b5fc29/image-3.jpg
+   ✅ Migrated successfully
+   📄 5c0e734a-fd6f-4b99-a413-1c8958b5fc29-7854e45320ae4dab90a4b674c3b13ed1-4.jpg → studios/5c0e734a-fd6f-4b99-a413-1c8958b5fc29/image-4.jpg
+   ✅ Migrated successfully
+   📄 5c0e734a-fd6f-4b99-a413-1c8958b5fc29-7854e45320ae4dab90a4b674c3b13ed1-5.jpg → studios/5c0e734a-fd6f-4b99-a413-1c8958b5fc29/image-5.jpg
+   ✅ Migrated successfully
+   📄 5c0e734a-fd6f-4b99-a413-1c8958b5fc29-7854e45320ae4dab90a4b674c3b13ed1-6.jpg → studios/5c0e734a-fd6f-4b99-a413-1c8958b5fc29/image-6.jpg
+   ✅ Migrated successfully
+   📄 5c0e734a-fd6f-4b99-a413-1c8958b5fc29-7854e45320ae4dab90a4b674c3b13ed1-7.jpg → studios/5c0e734a-fd6f-4b99-a413-1c8958b5fc29/image-7.jpg
+   ✅ Migrated successfully
+   📄 5c0e734a-fd6f-4b99-a413-1c8958b5fc29-7854e45320ae4dab90a4b674c3b13ed1-8.jpg → studios/5c0e734a-fd6f-4b99-a413-1c8958b5fc29/image-8.jpg
+   ✅ Migrated successfully
+   📄 5c0e734a-fd6f-4b99-a413-1c8958b5fc29-7854e45320ae4dab90a4b674c3b13ed1-9.jpg → studios/5c0e734a-fd6f-4b99-a413-1c8958b5fc29/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Krishna Yoga Sadhana (5e60bcb5-c18e-4b3d-b0e2-2efac70bd4de)
+   Found 0 legacy images
+   ⚠️  No legacy images found
+
+📁 Migrating retreat: House Of Om Ceningan Yoga Teacher Training And Meditation (5d9ac9e9-137c-46cf-8605-18600c401c01)
+   Found 2 legacy images
+   📄 5d9ac9e9-137c-46cf-8605-18600c401c01-5d18d6dcaaf33ccf97a3d8496fb4d1b1-0.jpg → retreats/5d9ac9e9-137c-46cf-8605-18600c401c01/image-0.jpg
+   ✅ Migrated successfully
+   📄 5d9ac9e9-137c-46cf-8605-18600c401c01-5d18d6dcaaf33ccf97a3d8496fb4d1b1-1.jpg → retreats/5d9ac9e9-137c-46cf-8605-18600c401c01/image-1.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Deep Flow Training And Spa Blue Earth Village (5da45819-1dd4-4956-b922-b11642c07894)
+   Found 10 legacy images
+   📄 5da45819-1dd4-4956-b922-b11642c07894-e75b180f07a6d67257108b9570916394-0.jpg → studios/5da45819-1dd4-4956-b922-b11642c07894/image-0.jpg
+   ✅ Migrated successfully
+   📄 5da45819-1dd4-4956-b922-b11642c07894-e75b180f07a6d67257108b9570916394-1.jpg → studios/5da45819-1dd4-4956-b922-b11642c07894/image-1.jpg
+   ✅ Migrated successfully
+   📄 5da45819-1dd4-4956-b922-b11642c07894-e75b180f07a6d67257108b9570916394-2.jpg → studios/5da45819-1dd4-4956-b922-b11642c07894/image-2.jpg
+   ✅ Migrated successfully
+   📄 5da45819-1dd4-4956-b922-b11642c07894-e75b180f07a6d67257108b9570916394-3.jpg → studios/5da45819-1dd4-4956-b922-b11642c07894/image-3.jpg
+   ✅ Migrated successfully
+   📄 5da45819-1dd4-4956-b922-b11642c07894-e75b180f07a6d67257108b9570916394-4.jpg → studios/5da45819-1dd4-4956-b922-b11642c07894/image-4.jpg
+   ✅ Migrated successfully
+   📄 5da45819-1dd4-4956-b922-b11642c07894-e75b180f07a6d67257108b9570916394-5.jpg → studios/5da45819-1dd4-4956-b922-b11642c07894/image-5.jpg
+   ✅ Migrated successfully
+   📄 5da45819-1dd4-4956-b922-b11642c07894-e75b180f07a6d67257108b9570916394-6.jpg → studios/5da45819-1dd4-4956-b922-b11642c07894/image-6.jpg
+   ✅ Migrated successfully
+   📄 5da45819-1dd4-4956-b922-b11642c07894-e75b180f07a6d67257108b9570916394-7.jpg → studios/5da45819-1dd4-4956-b922-b11642c07894/image-7.jpg
+   ✅ Migrated successfully
+   📄 5da45819-1dd4-4956-b922-b11642c07894-e75b180f07a6d67257108b9570916394-8.jpg → studios/5da45819-1dd4-4956-b922-b11642c07894/image-8.jpg
+   ✅ Migrated successfully
+   📄 5da45819-1dd4-4956-b922-b11642c07894-e75b180f07a6d67257108b9570916394-9.jpg → studios/5da45819-1dd4-4956-b922-b11642c07894/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: The Shala Bali (5e240b51-099e-4818-8786-fd42dec7798f)
+   Found 10 legacy images
+   📄 5e240b51-099e-4818-8786-fd42dec7798f-99e25c450eac2b03bc536cd545d6babe-0.jpg → retreats/5e240b51-099e-4818-8786-fd42dec7798f/image-0.jpg
+   ✅ Migrated successfully
+   📄 5e240b51-099e-4818-8786-fd42dec7798f-99e25c450eac2b03bc536cd545d6babe-1.jpg → retreats/5e240b51-099e-4818-8786-fd42dec7798f/image-1.jpg
+   ✅ Migrated successfully
+   📄 5e240b51-099e-4818-8786-fd42dec7798f-99e25c450eac2b03bc536cd545d6babe-2.jpg → retreats/5e240b51-099e-4818-8786-fd42dec7798f/image-2.jpg
+   ✅ Migrated successfully
+   📄 5e240b51-099e-4818-8786-fd42dec7798f-99e25c450eac2b03bc536cd545d6babe-3.jpg → retreats/5e240b51-099e-4818-8786-fd42dec7798f/image-3.jpg
+   ✅ Migrated successfully
+   📄 5e240b51-099e-4818-8786-fd42dec7798f-99e25c450eac2b03bc536cd545d6babe-4.jpg → retreats/5e240b51-099e-4818-8786-fd42dec7798f/image-4.jpg
+   ✅ Migrated successfully
+   📄 5e240b51-099e-4818-8786-fd42dec7798f-99e25c450eac2b03bc536cd545d6babe-5.jpg → retreats/5e240b51-099e-4818-8786-fd42dec7798f/image-5.jpg
+   ✅ Migrated successfully
+   📄 5e240b51-099e-4818-8786-fd42dec7798f-99e25c450eac2b03bc536cd545d6babe-6.jpg → retreats/5e240b51-099e-4818-8786-fd42dec7798f/image-6.jpg
+   ✅ Migrated successfully
+   📄 5e240b51-099e-4818-8786-fd42dec7798f-99e25c450eac2b03bc536cd545d6babe-7.jpg → retreats/5e240b51-099e-4818-8786-fd42dec7798f/image-7.jpg
+   ✅ Migrated successfully
+   📄 5e240b51-099e-4818-8786-fd42dec7798f-99e25c450eac2b03bc536cd545d6babe-8.jpg → retreats/5e240b51-099e-4818-8786-fd42dec7798f/image-8.jpg
+   ✅ Migrated successfully
+   📄 5e240b51-099e-4818-8786-fd42dec7798f-99e25c450eac2b03bc536cd545d6babe-9.jpg → retreats/5e240b51-099e-4818-8786-fd42dec7798f/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Blooming Lotus Yoga Lovina (74908886-e254-4648-8965-72ef654e45cd)
+   Found 0 legacy images
+   ⚠️  No legacy images found
+
+📁 Migrating studio: Freediving Amed (5e9852f5-e62f-4eca-8cc0-44ca6fb93e69)
+   Found 10 legacy images
+   📄 5e9852f5-e62f-4eca-8cc0-44ca6fb93e69-651fb4d7c1f7bfcac851f8960fd0640a-0.jpg → studios/5e9852f5-e62f-4eca-8cc0-44ca6fb93e69/image-0.jpg
+   ✅ Migrated successfully
+   📄 5e9852f5-e62f-4eca-8cc0-44ca6fb93e69-651fb4d7c1f7bfcac851f8960fd0640a-1.jpg → studios/5e9852f5-e62f-4eca-8cc0-44ca6fb93e69/image-1.jpg
+   ✅ Migrated successfully
+   📄 5e9852f5-e62f-4eca-8cc0-44ca6fb93e69-651fb4d7c1f7bfcac851f8960fd0640a-2.jpg → studios/5e9852f5-e62f-4eca-8cc0-44ca6fb93e69/image-2.jpg
+   ✅ Migrated successfully
+   📄 5e9852f5-e62f-4eca-8cc0-44ca6fb93e69-651fb4d7c1f7bfcac851f8960fd0640a-3.jpg → studios/5e9852f5-e62f-4eca-8cc0-44ca6fb93e69/image-3.jpg
+   ✅ Migrated successfully
+   📄 5e9852f5-e62f-4eca-8cc0-44ca6fb93e69-651fb4d7c1f7bfcac851f8960fd0640a-4.jpg → studios/5e9852f5-e62f-4eca-8cc0-44ca6fb93e69/image-4.jpg
+   ✅ Migrated successfully
+   📄 5e9852f5-e62f-4eca-8cc0-44ca6fb93e69-651fb4d7c1f7bfcac851f8960fd0640a-5.jpg → studios/5e9852f5-e62f-4eca-8cc0-44ca6fb93e69/image-5.jpg
+   ✅ Migrated successfully
+   📄 5e9852f5-e62f-4eca-8cc0-44ca6fb93e69-651fb4d7c1f7bfcac851f8960fd0640a-6.jpg → studios/5e9852f5-e62f-4eca-8cc0-44ca6fb93e69/image-6.jpg
+   ✅ Migrated successfully
+   📄 5e9852f5-e62f-4eca-8cc0-44ca6fb93e69-651fb4d7c1f7bfcac851f8960fd0640a-7.jpg → studios/5e9852f5-e62f-4eca-8cc0-44ca6fb93e69/image-7.jpg
+   ✅ Migrated successfully
+   📄 5e9852f5-e62f-4eca-8cc0-44ca6fb93e69-651fb4d7c1f7bfcac851f8960fd0640a-8.jpg → studios/5e9852f5-e62f-4eca-8cc0-44ca6fb93e69/image-8.jpg
+   ✅ Migrated successfully
+   📄 5e9852f5-e62f-4eca-8cc0-44ca6fb93e69-651fb4d7c1f7bfcac851f8960fd0640a-9.jpg → studios/5e9852f5-e62f-4eca-8cc0-44ca6fb93e69/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Embodied Flow The Living Art Of Yoga (5f080260-19fe-473f-855e-00ed5242c902)
+   Found 10 legacy images
+   📄 5f080260-19fe-473f-855e-00ed5242c902-060a3ac4a2cde59dbd7cb95eb7d8e8ff-0.jpg → studios/5f080260-19fe-473f-855e-00ed5242c902/image-0.jpg
+   ✅ Migrated successfully
+   📄 5f080260-19fe-473f-855e-00ed5242c902-060a3ac4a2cde59dbd7cb95eb7d8e8ff-1.jpg → studios/5f080260-19fe-473f-855e-00ed5242c902/image-1.jpg
+   ✅ Migrated successfully
+   📄 5f080260-19fe-473f-855e-00ed5242c902-060a3ac4a2cde59dbd7cb95eb7d8e8ff-2.jpg → studios/5f080260-19fe-473f-855e-00ed5242c902/image-2.jpg
+   ✅ Migrated successfully
+   📄 5f080260-19fe-473f-855e-00ed5242c902-060a3ac4a2cde59dbd7cb95eb7d8e8ff-3.jpg → studios/5f080260-19fe-473f-855e-00ed5242c902/image-3.jpg
+   ✅ Migrated successfully
+   📄 5f080260-19fe-473f-855e-00ed5242c902-060a3ac4a2cde59dbd7cb95eb7d8e8ff-4.jpg → studios/5f080260-19fe-473f-855e-00ed5242c902/image-4.jpg
+   ✅ Migrated successfully
+   📄 5f080260-19fe-473f-855e-00ed5242c902-060a3ac4a2cde59dbd7cb95eb7d8e8ff-5.jpg → studios/5f080260-19fe-473f-855e-00ed5242c902/image-5.jpg
+   ✅ Migrated successfully
+   📄 5f080260-19fe-473f-855e-00ed5242c902-060a3ac4a2cde59dbd7cb95eb7d8e8ff-6.jpg → studios/5f080260-19fe-473f-855e-00ed5242c902/image-6.jpg
+   ✅ Migrated successfully
+   📄 5f080260-19fe-473f-855e-00ed5242c902-060a3ac4a2cde59dbd7cb95eb7d8e8ff-7.jpg → studios/5f080260-19fe-473f-855e-00ed5242c902/image-7.jpg
+   ✅ Migrated successfully
+   📄 5f080260-19fe-473f-855e-00ed5242c902-060a3ac4a2cde59dbd7cb95eb7d8e8ff-8.jpg → studios/5f080260-19fe-473f-855e-00ed5242c902/image-8.jpg
+   ✅ Migrated successfully
+   📄 5f080260-19fe-473f-855e-00ed5242c902-060a3ac4a2cde59dbd7cb95eb7d8e8ff-9.jpg → studios/5f080260-19fe-473f-855e-00ed5242c902/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Yoga Searcher (5fa3cae8-516b-4590-a6c3-59d9ab2091f5)
+   Found 10 legacy images
+   📄 5fa3cae8-516b-4590-a6c3-59d9ab2091f5-67efaac43c3f7e9de450824e189ca7f8-0.jpg → studios/5fa3cae8-516b-4590-a6c3-59d9ab2091f5/image-0.jpg
+   ✅ Migrated successfully
+   📄 5fa3cae8-516b-4590-a6c3-59d9ab2091f5-67efaac43c3f7e9de450824e189ca7f8-1.jpg → studios/5fa3cae8-516b-4590-a6c3-59d9ab2091f5/image-1.jpg
+   ✅ Migrated successfully
+   📄 5fa3cae8-516b-4590-a6c3-59d9ab2091f5-67efaac43c3f7e9de450824e189ca7f8-2.jpg → studios/5fa3cae8-516b-4590-a6c3-59d9ab2091f5/image-2.jpg
+   ✅ Migrated successfully
+   📄 5fa3cae8-516b-4590-a6c3-59d9ab2091f5-67efaac43c3f7e9de450824e189ca7f8-3.jpg → studios/5fa3cae8-516b-4590-a6c3-59d9ab2091f5/image-3.jpg
+   ✅ Migrated successfully
+   📄 5fa3cae8-516b-4590-a6c3-59d9ab2091f5-67efaac43c3f7e9de450824e189ca7f8-4.jpg → studios/5fa3cae8-516b-4590-a6c3-59d9ab2091f5/image-4.jpg
+   ✅ Migrated successfully
+   📄 5fa3cae8-516b-4590-a6c3-59d9ab2091f5-67efaac43c3f7e9de450824e189ca7f8-5.jpg → studios/5fa3cae8-516b-4590-a6c3-59d9ab2091f5/image-5.jpg
+   ✅ Migrated successfully
+   📄 5fa3cae8-516b-4590-a6c3-59d9ab2091f5-67efaac43c3f7e9de450824e189ca7f8-6.jpg → studios/5fa3cae8-516b-4590-a6c3-59d9ab2091f5/image-6.jpg
+   ✅ Migrated successfully
+   📄 5fa3cae8-516b-4590-a6c3-59d9ab2091f5-67efaac43c3f7e9de450824e189ca7f8-7.jpg → studios/5fa3cae8-516b-4590-a6c3-59d9ab2091f5/image-7.jpg
+   ✅ Migrated successfully
+   📄 5fa3cae8-516b-4590-a6c3-59d9ab2091f5-67efaac43c3f7e9de450824e189ca7f8-8.jpg → studios/5fa3cae8-516b-4590-a6c3-59d9ab2091f5/image-8.jpg
+   ✅ Migrated successfully
+   📄 5fa3cae8-516b-4590-a6c3-59d9ab2091f5-67efaac43c3f7e9de450824e189ca7f8-9.jpg → studios/5fa3cae8-516b-4590-a6c3-59d9ab2091f5/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Pelan Pelan Bali Surf And Yoga Retreat (6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb)
+   Found 10 legacy images
+   📄 6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb-d941aa6e99e6fd1b1ade33624ba24ea8-0.jpg → retreats/6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb/image-0.jpg
+   ✅ Migrated successfully
+   📄 6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb-d941aa6e99e6fd1b1ade33624ba24ea8-1.jpg → retreats/6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb/image-1.jpg
+   ✅ Migrated successfully
+   📄 6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb-d941aa6e99e6fd1b1ade33624ba24ea8-2.jpg → retreats/6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb/image-2.jpg
+   ✅ Migrated successfully
+   📄 6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb-d941aa6e99e6fd1b1ade33624ba24ea8-3.jpg → retreats/6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb/image-3.jpg
+   ✅ Migrated successfully
+   📄 6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb-d941aa6e99e6fd1b1ade33624ba24ea8-4.jpg → retreats/6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb/image-4.jpg
+   ✅ Migrated successfully
+   📄 6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb-d941aa6e99e6fd1b1ade33624ba24ea8-5.jpg → retreats/6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb/image-5.jpg
+   ✅ Migrated successfully
+   📄 6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb-d941aa6e99e6fd1b1ade33624ba24ea8-6.jpg → retreats/6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb/image-6.jpg
+   ✅ Migrated successfully
+   📄 6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb-d941aa6e99e6fd1b1ade33624ba24ea8-7.jpg → retreats/6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb/image-7.jpg
+   ✅ Migrated successfully
+   📄 6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb-d941aa6e99e6fd1b1ade33624ba24ea8-8.jpg → retreats/6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb/image-8.jpg
+   ✅ Migrated successfully
+   📄 6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb-d941aa6e99e6fd1b1ade33624ba24ea8-9.jpg → retreats/6168bf31-bb89-4ff8-a0e1-ae5484e1dcdb/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Yogaunion Shala (63b48f4c-ff8c-4b91-a17e-a1539a2572cc)
+   Found 10 legacy images
+   📄 63b48f4c-ff8c-4b91-a17e-a1539a2572cc-0c489ef2aa5e5707f99c19a03c6a3757-0.jpg → studios/63b48f4c-ff8c-4b91-a17e-a1539a2572cc/image-0.jpg
+   ✅ Migrated successfully
+   📄 63b48f4c-ff8c-4b91-a17e-a1539a2572cc-0c489ef2aa5e5707f99c19a03c6a3757-1.jpg → studios/63b48f4c-ff8c-4b91-a17e-a1539a2572cc/image-1.jpg
+   ✅ Migrated successfully
+   📄 63b48f4c-ff8c-4b91-a17e-a1539a2572cc-0c489ef2aa5e5707f99c19a03c6a3757-2.jpg → studios/63b48f4c-ff8c-4b91-a17e-a1539a2572cc/image-2.jpg
+   ✅ Migrated successfully
+   📄 63b48f4c-ff8c-4b91-a17e-a1539a2572cc-0c489ef2aa5e5707f99c19a03c6a3757-3.jpg → studios/63b48f4c-ff8c-4b91-a17e-a1539a2572cc/image-3.jpg
+   ✅ Migrated successfully
+   📄 63b48f4c-ff8c-4b91-a17e-a1539a2572cc-0c489ef2aa5e5707f99c19a03c6a3757-4.jpg → studios/63b48f4c-ff8c-4b91-a17e-a1539a2572cc/image-4.jpg
+   ✅ Migrated successfully
+   📄 63b48f4c-ff8c-4b91-a17e-a1539a2572cc-0c489ef2aa5e5707f99c19a03c6a3757-5.jpg → studios/63b48f4c-ff8c-4b91-a17e-a1539a2572cc/image-5.jpg
+   ✅ Migrated successfully
+   📄 63b48f4c-ff8c-4b91-a17e-a1539a2572cc-0c489ef2aa5e5707f99c19a03c6a3757-6.jpg → studios/63b48f4c-ff8c-4b91-a17e-a1539a2572cc/image-6.jpg
+   ✅ Migrated successfully
+   📄 63b48f4c-ff8c-4b91-a17e-a1539a2572cc-0c489ef2aa5e5707f99c19a03c6a3757-7.jpg → studios/63b48f4c-ff8c-4b91-a17e-a1539a2572cc/image-7.jpg
+   ✅ Migrated successfully
+   📄 63b48f4c-ff8c-4b91-a17e-a1539a2572cc-0c489ef2aa5e5707f99c19a03c6a3757-8.jpg → studios/63b48f4c-ff8c-4b91-a17e-a1539a2572cc/image-8.jpg
+   ✅ Migrated successfully
+   📄 63b48f4c-ff8c-4b91-a17e-a1539a2572cc-0c489ef2aa5e5707f99c19a03c6a3757-9.jpg → studios/63b48f4c-ff8c-4b91-a17e-a1539a2572cc/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Gravity Stretching Bali (63c02b23-3867-4068-81bd-5ab6d78125da)
+   Found 10 legacy images
+   📄 63c02b23-3867-4068-81bd-5ab6d78125da-6e9297e965812fc308f47917a091c545-0.jpg → studios/63c02b23-3867-4068-81bd-5ab6d78125da/image-0.jpg
+   ✅ Migrated successfully
+   📄 63c02b23-3867-4068-81bd-5ab6d78125da-6e9297e965812fc308f47917a091c545-1.jpg → studios/63c02b23-3867-4068-81bd-5ab6d78125da/image-1.jpg
+   ✅ Migrated successfully
+   📄 63c02b23-3867-4068-81bd-5ab6d78125da-6e9297e965812fc308f47917a091c545-2.jpg → studios/63c02b23-3867-4068-81bd-5ab6d78125da/image-2.jpg
+   ✅ Migrated successfully
+   📄 63c02b23-3867-4068-81bd-5ab6d78125da-6e9297e965812fc308f47917a091c545-3.jpg → studios/63c02b23-3867-4068-81bd-5ab6d78125da/image-3.jpg
+   ✅ Migrated successfully
+   📄 63c02b23-3867-4068-81bd-5ab6d78125da-6e9297e965812fc308f47917a091c545-4.jpg → studios/63c02b23-3867-4068-81bd-5ab6d78125da/image-4.jpg
+   ✅ Migrated successfully
+   📄 63c02b23-3867-4068-81bd-5ab6d78125da-6e9297e965812fc308f47917a091c545-5.jpg → studios/63c02b23-3867-4068-81bd-5ab6d78125da/image-5.jpg
+   ✅ Migrated successfully
+   📄 63c02b23-3867-4068-81bd-5ab6d78125da-6e9297e965812fc308f47917a091c545-6.jpg → studios/63c02b23-3867-4068-81bd-5ab6d78125da/image-6.jpg
+   ✅ Migrated successfully
+   📄 63c02b23-3867-4068-81bd-5ab6d78125da-6e9297e965812fc308f47917a091c545-7.jpg → studios/63c02b23-3867-4068-81bd-5ab6d78125da/image-7.jpg
+   ✅ Migrated successfully
+   📄 63c02b23-3867-4068-81bd-5ab6d78125da-6e9297e965812fc308f47917a091c545-8.jpg → studios/63c02b23-3867-4068-81bd-5ab6d78125da/image-8.jpg
+   ✅ Migrated successfully
+   📄 63c02b23-3867-4068-81bd-5ab6d78125da-6e9297e965812fc308f47917a091c545-9.jpg → studios/63c02b23-3867-4068-81bd-5ab6d78125da/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Yoga Shala Sumberkima Hill (6408b484-dad0-48a0-aac8-9c3533ae343d)
+   Found 1 legacy images
+   📄 6408b484-dad0-48a0-aac8-9c3533ae343d-568c1687cb30f2a3a69d4f9b3301fcce-0.jpg → studios/6408b484-dad0-48a0-aac8-9c3533ae343d/image-0.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Adhyaya (624be386-383a-4df5-b627-61b74365df73)
+   Found 10 legacy images
+   📄 624be386-383a-4df5-b627-61b74365df73-3b48cac48d72f8822c47e5cb06262513-0.jpg → retreats/624be386-383a-4df5-b627-61b74365df73/image-0.jpg
+   ✅ Migrated successfully
+   📄 624be386-383a-4df5-b627-61b74365df73-3b48cac48d72f8822c47e5cb06262513-1.jpg → retreats/624be386-383a-4df5-b627-61b74365df73/image-1.jpg
+   ✅ Migrated successfully
+   📄 624be386-383a-4df5-b627-61b74365df73-3b48cac48d72f8822c47e5cb06262513-2.jpg → retreats/624be386-383a-4df5-b627-61b74365df73/image-2.jpg
+   ✅ Migrated successfully
+   📄 624be386-383a-4df5-b627-61b74365df73-3b48cac48d72f8822c47e5cb06262513-3.jpg → retreats/624be386-383a-4df5-b627-61b74365df73/image-3.jpg
+   ✅ Migrated successfully
+   📄 624be386-383a-4df5-b627-61b74365df73-3b48cac48d72f8822c47e5cb06262513-4.jpg → retreats/624be386-383a-4df5-b627-61b74365df73/image-4.jpg
+   ✅ Migrated successfully
+   📄 624be386-383a-4df5-b627-61b74365df73-3b48cac48d72f8822c47e5cb06262513-5.jpg → retreats/624be386-383a-4df5-b627-61b74365df73/image-5.jpg
+   ✅ Migrated successfully
+   📄 624be386-383a-4df5-b627-61b74365df73-3b48cac48d72f8822c47e5cb06262513-6.jpg → retreats/624be386-383a-4df5-b627-61b74365df73/image-6.jpg
+   ✅ Migrated successfully
+   📄 624be386-383a-4df5-b627-61b74365df73-3b48cac48d72f8822c47e5cb06262513-7.jpg → retreats/624be386-383a-4df5-b627-61b74365df73/image-7.jpg
+   ✅ Migrated successfully
+   📄 624be386-383a-4df5-b627-61b74365df73-3b48cac48d72f8822c47e5cb06262513-8.jpg → retreats/624be386-383a-4df5-b627-61b74365df73/image-8.jpg
+   ✅ Migrated successfully
+   📄 624be386-383a-4df5-b627-61b74365df73-3b48cac48d72f8822c47e5cb06262513-9.jpg → retreats/624be386-383a-4df5-b627-61b74365df73/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Ubud Forest Wellness Resort And Retreats (676c903f-d086-40c1-b0af-de27bc68d65e)
+   Found 10 legacy images
+   📄 676c903f-d086-40c1-b0af-de27bc68d65e-d7e3e448d59a9f36bb0909ae5d02b961-0.jpg → retreats/676c903f-d086-40c1-b0af-de27bc68d65e/image-0.jpg
+   ✅ Migrated successfully
+   📄 676c903f-d086-40c1-b0af-de27bc68d65e-d7e3e448d59a9f36bb0909ae5d02b961-1.jpg → retreats/676c903f-d086-40c1-b0af-de27bc68d65e/image-1.jpg
+   ✅ Migrated successfully
+   📄 676c903f-d086-40c1-b0af-de27bc68d65e-d7e3e448d59a9f36bb0909ae5d02b961-2.jpg → retreats/676c903f-d086-40c1-b0af-de27bc68d65e/image-2.jpg
+   ✅ Migrated successfully
+   📄 676c903f-d086-40c1-b0af-de27bc68d65e-d7e3e448d59a9f36bb0909ae5d02b961-3.jpg → retreats/676c903f-d086-40c1-b0af-de27bc68d65e/image-3.jpg
+   ✅ Migrated successfully
+   📄 676c903f-d086-40c1-b0af-de27bc68d65e-d7e3e448d59a9f36bb0909ae5d02b961-4.jpg → retreats/676c903f-d086-40c1-b0af-de27bc68d65e/image-4.jpg
+   ✅ Migrated successfully
+   📄 676c903f-d086-40c1-b0af-de27bc68d65e-d7e3e448d59a9f36bb0909ae5d02b961-5.jpg → retreats/676c903f-d086-40c1-b0af-de27bc68d65e/image-5.jpg
+   ✅ Migrated successfully
+   📄 676c903f-d086-40c1-b0af-de27bc68d65e-d7e3e448d59a9f36bb0909ae5d02b961-6.jpg → retreats/676c903f-d086-40c1-b0af-de27bc68d65e/image-6.jpg
+   ✅ Migrated successfully
+   📄 676c903f-d086-40c1-b0af-de27bc68d65e-d7e3e448d59a9f36bb0909ae5d02b961-7.jpg → retreats/676c903f-d086-40c1-b0af-de27bc68d65e/image-7.jpg
+   ✅ Migrated successfully
+   📄 676c903f-d086-40c1-b0af-de27bc68d65e-d7e3e448d59a9f36bb0909ae5d02b961-8.jpg → retreats/676c903f-d086-40c1-b0af-de27bc68d65e/image-8.jpg
+   ✅ Migrated successfully
+   📄 676c903f-d086-40c1-b0af-de27bc68d65e-d7e3e448d59a9f36bb0909ae5d02b961-9.jpg → retreats/676c903f-d086-40c1-b0af-de27bc68d65e/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: The Freebird Studio (69849ba8-a883-46f4-91a6-53c80b2c7dd7)
+   Found 10 legacy images
+   📄 69849ba8-a883-46f4-91a6-53c80b2c7dd7-031c0c83cea113fe12c593fe69e3bc8b-0.jpg → studios/69849ba8-a883-46f4-91a6-53c80b2c7dd7/image-0.jpg
+   ✅ Migrated successfully
+   📄 69849ba8-a883-46f4-91a6-53c80b2c7dd7-031c0c83cea113fe12c593fe69e3bc8b-1.jpg → studios/69849ba8-a883-46f4-91a6-53c80b2c7dd7/image-1.jpg
+   ✅ Migrated successfully
+   📄 69849ba8-a883-46f4-91a6-53c80b2c7dd7-031c0c83cea113fe12c593fe69e3bc8b-2.jpg → studios/69849ba8-a883-46f4-91a6-53c80b2c7dd7/image-2.jpg
+   ✅ Migrated successfully
+   📄 69849ba8-a883-46f4-91a6-53c80b2c7dd7-031c0c83cea113fe12c593fe69e3bc8b-3.jpg → studios/69849ba8-a883-46f4-91a6-53c80b2c7dd7/image-3.jpg
+   ✅ Migrated successfully
+   📄 69849ba8-a883-46f4-91a6-53c80b2c7dd7-031c0c83cea113fe12c593fe69e3bc8b-4.jpg → studios/69849ba8-a883-46f4-91a6-53c80b2c7dd7/image-4.jpg
+   ✅ Migrated successfully
+   📄 69849ba8-a883-46f4-91a6-53c80b2c7dd7-031c0c83cea113fe12c593fe69e3bc8b-5.jpg → studios/69849ba8-a883-46f4-91a6-53c80b2c7dd7/image-5.jpg
+   ✅ Migrated successfully
+   📄 69849ba8-a883-46f4-91a6-53c80b2c7dd7-031c0c83cea113fe12c593fe69e3bc8b-6.jpg → studios/69849ba8-a883-46f4-91a6-53c80b2c7dd7/image-6.jpg
+   ✅ Migrated successfully
+   📄 69849ba8-a883-46f4-91a6-53c80b2c7dd7-031c0c83cea113fe12c593fe69e3bc8b-7.jpg → studios/69849ba8-a883-46f4-91a6-53c80b2c7dd7/image-7.jpg
+   ✅ Migrated successfully
+   📄 69849ba8-a883-46f4-91a6-53c80b2c7dd7-031c0c83cea113fe12c593fe69e3bc8b-8.jpg → studios/69849ba8-a883-46f4-91a6-53c80b2c7dd7/image-8.jpg
+   ✅ Migrated successfully
+   📄 69849ba8-a883-46f4-91a6-53c80b2c7dd7-031c0c83cea113fe12c593fe69e3bc8b-9.jpg → studios/69849ba8-a883-46f4-91a6-53c80b2c7dd7/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Kalapa Resort And Yoga Retreat (6908ed32-8d95-489e-9151-51e9a509db44)
+   Found 10 legacy images
+   📄 6908ed32-8d95-489e-9151-51e9a509db44-86d0df06261d3b5e1b6a344c82ca7689-0.jpg → retreats/6908ed32-8d95-489e-9151-51e9a509db44/image-0.jpg
+   ✅ Migrated successfully
+   📄 6908ed32-8d95-489e-9151-51e9a509db44-86d0df06261d3b5e1b6a344c82ca7689-1.jpg → retreats/6908ed32-8d95-489e-9151-51e9a509db44/image-1.jpg
+   ✅ Migrated successfully
+   📄 6908ed32-8d95-489e-9151-51e9a509db44-86d0df06261d3b5e1b6a344c82ca7689-2.jpg → retreats/6908ed32-8d95-489e-9151-51e9a509db44/image-2.jpg
+   ✅ Migrated successfully
+   📄 6908ed32-8d95-489e-9151-51e9a509db44-86d0df06261d3b5e1b6a344c82ca7689-3.jpg → retreats/6908ed32-8d95-489e-9151-51e9a509db44/image-3.jpg
+   ✅ Migrated successfully
+   📄 6908ed32-8d95-489e-9151-51e9a509db44-86d0df06261d3b5e1b6a344c82ca7689-4.jpg → retreats/6908ed32-8d95-489e-9151-51e9a509db44/image-4.jpg
+   ✅ Migrated successfully
+   📄 6908ed32-8d95-489e-9151-51e9a509db44-86d0df06261d3b5e1b6a344c82ca7689-5.jpg → retreats/6908ed32-8d95-489e-9151-51e9a509db44/image-5.jpg
+   ✅ Migrated successfully
+   📄 6908ed32-8d95-489e-9151-51e9a509db44-86d0df06261d3b5e1b6a344c82ca7689-6.jpg → retreats/6908ed32-8d95-489e-9151-51e9a509db44/image-6.jpg
+   ✅ Migrated successfully
+   📄 6908ed32-8d95-489e-9151-51e9a509db44-86d0df06261d3b5e1b6a344c82ca7689-7.jpg → retreats/6908ed32-8d95-489e-9151-51e9a509db44/image-7.jpg
+   ✅ Migrated successfully
+   📄 6908ed32-8d95-489e-9151-51e9a509db44-86d0df06261d3b5e1b6a344c82ca7689-8.jpg → retreats/6908ed32-8d95-489e-9151-51e9a509db44/image-8.jpg
+   ✅ Migrated successfully
+   📄 6908ed32-8d95-489e-9151-51e9a509db44-86d0df06261d3b5e1b6a344c82ca7689-9.jpg → retreats/6908ed32-8d95-489e-9151-51e9a509db44/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: The Mindful Life Practice Yoga Studio (69ec1c43-307f-4640-84fe-18f6ea27bb59)
+   Found 10 legacy images
+   📄 69ec1c43-307f-4640-84fe-18f6ea27bb59-d6c2803ebde4a3806655980b76d78f5d-0.jpg → studios/69ec1c43-307f-4640-84fe-18f6ea27bb59/image-0.jpg
+   ✅ Migrated successfully
+   📄 69ec1c43-307f-4640-84fe-18f6ea27bb59-d6c2803ebde4a3806655980b76d78f5d-1.jpg → studios/69ec1c43-307f-4640-84fe-18f6ea27bb59/image-1.jpg
+   ✅ Migrated successfully
+   📄 69ec1c43-307f-4640-84fe-18f6ea27bb59-d6c2803ebde4a3806655980b76d78f5d-2.jpg → studios/69ec1c43-307f-4640-84fe-18f6ea27bb59/image-2.jpg
+   ✅ Migrated successfully
+   📄 69ec1c43-307f-4640-84fe-18f6ea27bb59-d6c2803ebde4a3806655980b76d78f5d-3.jpg → studios/69ec1c43-307f-4640-84fe-18f6ea27bb59/image-3.jpg
+   ✅ Migrated successfully
+   📄 69ec1c43-307f-4640-84fe-18f6ea27bb59-d6c2803ebde4a3806655980b76d78f5d-4.jpg → studios/69ec1c43-307f-4640-84fe-18f6ea27bb59/image-4.jpg
+   ✅ Migrated successfully
+   📄 69ec1c43-307f-4640-84fe-18f6ea27bb59-d6c2803ebde4a3806655980b76d78f5d-5.jpg → studios/69ec1c43-307f-4640-84fe-18f6ea27bb59/image-5.jpg
+   ✅ Migrated successfully
+   📄 69ec1c43-307f-4640-84fe-18f6ea27bb59-d6c2803ebde4a3806655980b76d78f5d-6.jpg → studios/69ec1c43-307f-4640-84fe-18f6ea27bb59/image-6.jpg
+   ✅ Migrated successfully
+   📄 69ec1c43-307f-4640-84fe-18f6ea27bb59-d6c2803ebde4a3806655980b76d78f5d-7.jpg → studios/69ec1c43-307f-4640-84fe-18f6ea27bb59/image-7.jpg
+   ✅ Migrated successfully
+   📄 69ec1c43-307f-4640-84fe-18f6ea27bb59-d6c2803ebde4a3806655980b76d78f5d-8.jpg → studios/69ec1c43-307f-4640-84fe-18f6ea27bb59/image-8.jpg
+   ✅ Migrated successfully
+   📄 69ec1c43-307f-4640-84fe-18f6ea27bb59-d6c2803ebde4a3806655980b76d78f5d-9.jpg → studios/69ec1c43-307f-4640-84fe-18f6ea27bb59/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Yoga Class At Honeymoon Guest House (6ce433ab-94dc-4c3e-9c6e-5628841e07ab)
+   Found 10 legacy images
+   📄 6ce433ab-94dc-4c3e-9c6e-5628841e07ab-6ff1d68d2d5bc48dd758907c645e30b5-0.jpg → studios/6ce433ab-94dc-4c3e-9c6e-5628841e07ab/image-0.jpg
+   ✅ Migrated successfully
+   📄 6ce433ab-94dc-4c3e-9c6e-5628841e07ab-6ff1d68d2d5bc48dd758907c645e30b5-1.jpg → studios/6ce433ab-94dc-4c3e-9c6e-5628841e07ab/image-1.jpg
+   ✅ Migrated successfully
+   📄 6ce433ab-94dc-4c3e-9c6e-5628841e07ab-6ff1d68d2d5bc48dd758907c645e30b5-2.jpg → studios/6ce433ab-94dc-4c3e-9c6e-5628841e07ab/image-2.jpg
+   ✅ Migrated successfully
+   📄 6ce433ab-94dc-4c3e-9c6e-5628841e07ab-6ff1d68d2d5bc48dd758907c645e30b5-3.jpg → studios/6ce433ab-94dc-4c3e-9c6e-5628841e07ab/image-3.jpg
+   ✅ Migrated successfully
+   📄 6ce433ab-94dc-4c3e-9c6e-5628841e07ab-6ff1d68d2d5bc48dd758907c645e30b5-4.jpg → studios/6ce433ab-94dc-4c3e-9c6e-5628841e07ab/image-4.jpg
+   ✅ Migrated successfully
+   📄 6ce433ab-94dc-4c3e-9c6e-5628841e07ab-6ff1d68d2d5bc48dd758907c645e30b5-5.jpg → studios/6ce433ab-94dc-4c3e-9c6e-5628841e07ab/image-5.jpg
+   ✅ Migrated successfully
+   📄 6ce433ab-94dc-4c3e-9c6e-5628841e07ab-6ff1d68d2d5bc48dd758907c645e30b5-6.jpg → studios/6ce433ab-94dc-4c3e-9c6e-5628841e07ab/image-6.jpg
+   ✅ Migrated successfully
+   📄 6ce433ab-94dc-4c3e-9c6e-5628841e07ab-6ff1d68d2d5bc48dd758907c645e30b5-7.jpg → studios/6ce433ab-94dc-4c3e-9c6e-5628841e07ab/image-7.jpg
+   ✅ Migrated successfully
+   📄 6ce433ab-94dc-4c3e-9c6e-5628841e07ab-6ff1d68d2d5bc48dd758907c645e30b5-8.jpg → studios/6ce433ab-94dc-4c3e-9c6e-5628841e07ab/image-8.jpg
+   ✅ Migrated successfully
+   📄 6ce433ab-94dc-4c3e-9c6e-5628841e07ab-6ff1d68d2d5bc48dd758907c645e30b5-9.jpg → studios/6ce433ab-94dc-4c3e-9c6e-5628841e07ab/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Wana Ayu Jelijih (76006d07-14c8-4cf3-9f9a-0f863f6c8e24)
+   Found 10 legacy images
+   📄 76006d07-14c8-4cf3-9f9a-0f863f6c8e24-e7b898b3d6fc0d7ef7de92f12b98d01b-0.jpg → retreats/76006d07-14c8-4cf3-9f9a-0f863f6c8e24/image-0.jpg
+   ✅ Migrated successfully
+   📄 76006d07-14c8-4cf3-9f9a-0f863f6c8e24-e7b898b3d6fc0d7ef7de92f12b98d01b-1.jpg → retreats/76006d07-14c8-4cf3-9f9a-0f863f6c8e24/image-1.jpg
+   ✅ Migrated successfully
+   📄 76006d07-14c8-4cf3-9f9a-0f863f6c8e24-e7b898b3d6fc0d7ef7de92f12b98d01b-2.jpg → retreats/76006d07-14c8-4cf3-9f9a-0f863f6c8e24/image-2.jpg
+   ✅ Migrated successfully
+   📄 76006d07-14c8-4cf3-9f9a-0f863f6c8e24-e7b898b3d6fc0d7ef7de92f12b98d01b-3.jpg → retreats/76006d07-14c8-4cf3-9f9a-0f863f6c8e24/image-3.jpg
+   ✅ Migrated successfully
+   📄 76006d07-14c8-4cf3-9f9a-0f863f6c8e24-e7b898b3d6fc0d7ef7de92f12b98d01b-4.jpg → retreats/76006d07-14c8-4cf3-9f9a-0f863f6c8e24/image-4.jpg
+   ✅ Migrated successfully
+   📄 76006d07-14c8-4cf3-9f9a-0f863f6c8e24-e7b898b3d6fc0d7ef7de92f12b98d01b-5.jpg → retreats/76006d07-14c8-4cf3-9f9a-0f863f6c8e24/image-5.jpg
+   ✅ Migrated successfully
+   📄 76006d07-14c8-4cf3-9f9a-0f863f6c8e24-e7b898b3d6fc0d7ef7de92f12b98d01b-6.jpg → retreats/76006d07-14c8-4cf3-9f9a-0f863f6c8e24/image-6.jpg
+   ✅ Migrated successfully
+   📄 76006d07-14c8-4cf3-9f9a-0f863f6c8e24-e7b898b3d6fc0d7ef7de92f12b98d01b-7.jpg → retreats/76006d07-14c8-4cf3-9f9a-0f863f6c8e24/image-7.jpg
+   ✅ Migrated successfully
+   📄 76006d07-14c8-4cf3-9f9a-0f863f6c8e24-e7b898b3d6fc0d7ef7de92f12b98d01b-8.jpg → retreats/76006d07-14c8-4cf3-9f9a-0f863f6c8e24/image-8.jpg
+   ✅ Migrated successfully
+   📄 76006d07-14c8-4cf3-9f9a-0f863f6c8e24-e7b898b3d6fc0d7ef7de92f12b98d01b-9.jpg → retreats/76006d07-14c8-4cf3-9f9a-0f863f6c8e24/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: House Of Om Amertham Yoga Teacher Training Bali (6de6eb56-d322-4878-b873-b39ecff3401f)
+   Found 10 legacy images
+   📄 6de6eb56-d322-4878-b873-b39ecff3401f-2d4ba891aefe6dd5f6756ddf3092a187-0.jpg → studios/6de6eb56-d322-4878-b873-b39ecff3401f/image-0.jpg
+   ✅ Migrated successfully
+   📄 6de6eb56-d322-4878-b873-b39ecff3401f-2d4ba891aefe6dd5f6756ddf3092a187-1.jpg → studios/6de6eb56-d322-4878-b873-b39ecff3401f/image-1.jpg
+   ✅ Migrated successfully
+   📄 6de6eb56-d322-4878-b873-b39ecff3401f-2d4ba891aefe6dd5f6756ddf3092a187-2.jpg → studios/6de6eb56-d322-4878-b873-b39ecff3401f/image-2.jpg
+   ✅ Migrated successfully
+   📄 6de6eb56-d322-4878-b873-b39ecff3401f-2d4ba891aefe6dd5f6756ddf3092a187-3.jpg → studios/6de6eb56-d322-4878-b873-b39ecff3401f/image-3.jpg
+   ✅ Migrated successfully
+   📄 6de6eb56-d322-4878-b873-b39ecff3401f-2d4ba891aefe6dd5f6756ddf3092a187-4.jpg → studios/6de6eb56-d322-4878-b873-b39ecff3401f/image-4.jpg
+   ✅ Migrated successfully
+   📄 6de6eb56-d322-4878-b873-b39ecff3401f-2d4ba891aefe6dd5f6756ddf3092a187-5.jpg → studios/6de6eb56-d322-4878-b873-b39ecff3401f/image-5.jpg
+   ✅ Migrated successfully
+   📄 6de6eb56-d322-4878-b873-b39ecff3401f-2d4ba891aefe6dd5f6756ddf3092a187-6.jpg → studios/6de6eb56-d322-4878-b873-b39ecff3401f/image-6.jpg
+   ✅ Migrated successfully
+   📄 6de6eb56-d322-4878-b873-b39ecff3401f-2d4ba891aefe6dd5f6756ddf3092a187-7.jpg → studios/6de6eb56-d322-4878-b873-b39ecff3401f/image-7.jpg
+   ✅ Migrated successfully
+   📄 6de6eb56-d322-4878-b873-b39ecff3401f-2d4ba891aefe6dd5f6756ddf3092a187-8.jpg → studios/6de6eb56-d322-4878-b873-b39ecff3401f/image-8.jpg
+   ✅ Migrated successfully
+   📄 6de6eb56-d322-4878-b873-b39ecff3401f-2d4ba891aefe6dd5f6756ddf3092a187-9.jpg → studios/6de6eb56-d322-4878-b873-b39ecff3401f/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Yogic Life (707f03a8-7c9c-457d-b7bb-50685319284b)
+   Found 1 legacy images
+   📄 707f03a8-7c9c-457d-b7bb-50685319284b-5f73458842672a45a1909568572ec819-0.jpg → studios/707f03a8-7c9c-457d-b7bb-50685319284b/image-0.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: School Of Ascension (72097c87-de7f-4a53-9a94-824881a8f2ae)
+   Found 8 legacy images
+   📄 72097c87-de7f-4a53-9a94-824881a8f2ae-3d0f7ad34b1f90b2b9990749e113b00b-0.jpg → studios/72097c87-de7f-4a53-9a94-824881a8f2ae/image-0.jpg
+   ✅ Migrated successfully
+   📄 72097c87-de7f-4a53-9a94-824881a8f2ae-3d0f7ad34b1f90b2b9990749e113b00b-1.jpg → studios/72097c87-de7f-4a53-9a94-824881a8f2ae/image-1.jpg
+   ✅ Migrated successfully
+   📄 72097c87-de7f-4a53-9a94-824881a8f2ae-3d0f7ad34b1f90b2b9990749e113b00b-2.jpg → studios/72097c87-de7f-4a53-9a94-824881a8f2ae/image-2.jpg
+   ✅ Migrated successfully
+   📄 72097c87-de7f-4a53-9a94-824881a8f2ae-3d0f7ad34b1f90b2b9990749e113b00b-3.jpg → studios/72097c87-de7f-4a53-9a94-824881a8f2ae/image-3.jpg
+   ✅ Migrated successfully
+   📄 72097c87-de7f-4a53-9a94-824881a8f2ae-3d0f7ad34b1f90b2b9990749e113b00b-4.jpg → studios/72097c87-de7f-4a53-9a94-824881a8f2ae/image-4.jpg
+   ✅ Migrated successfully
+   📄 72097c87-de7f-4a53-9a94-824881a8f2ae-3d0f7ad34b1f90b2b9990749e113b00b-5.jpg → studios/72097c87-de7f-4a53-9a94-824881a8f2ae/image-5.jpg
+   ✅ Migrated successfully
+   📄 72097c87-de7f-4a53-9a94-824881a8f2ae-3d0f7ad34b1f90b2b9990749e113b00b-6.jpg → studios/72097c87-de7f-4a53-9a94-824881a8f2ae/image-6.jpg
+   ✅ Migrated successfully
+   📄 72097c87-de7f-4a53-9a94-824881a8f2ae-3d0f7ad34b1f90b2b9990749e113b00b-7.jpg → studios/72097c87-de7f-4a53-9a94-824881a8f2ae/image-7.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Anandam Yoga School Yoga Teacher Training Bali (6ebc67d5-661a-4a23-b2cc-da9886b9d14c)
+   Found 10 legacy images
+   📄 6ebc67d5-661a-4a23-b2cc-da9886b9d14c-52918884be169f973eef10c2d173586d-0.jpg → studios/6ebc67d5-661a-4a23-b2cc-da9886b9d14c/image-0.jpg
+   ✅ Migrated successfully
+   📄 6ebc67d5-661a-4a23-b2cc-da9886b9d14c-52918884be169f973eef10c2d173586d-1.jpg → studios/6ebc67d5-661a-4a23-b2cc-da9886b9d14c/image-1.jpg
+   ✅ Migrated successfully
+   📄 6ebc67d5-661a-4a23-b2cc-da9886b9d14c-52918884be169f973eef10c2d173586d-2.jpg → studios/6ebc67d5-661a-4a23-b2cc-da9886b9d14c/image-2.jpg
+   ✅ Migrated successfully
+   📄 6ebc67d5-661a-4a23-b2cc-da9886b9d14c-52918884be169f973eef10c2d173586d-3.jpg → studios/6ebc67d5-661a-4a23-b2cc-da9886b9d14c/image-3.jpg
+   ✅ Migrated successfully
+   📄 6ebc67d5-661a-4a23-b2cc-da9886b9d14c-52918884be169f973eef10c2d173586d-4.jpg → studios/6ebc67d5-661a-4a23-b2cc-da9886b9d14c/image-4.jpg
+   ✅ Migrated successfully
+   📄 6ebc67d5-661a-4a23-b2cc-da9886b9d14c-52918884be169f973eef10c2d173586d-5.jpg → studios/6ebc67d5-661a-4a23-b2cc-da9886b9d14c/image-5.jpg
+   ✅ Migrated successfully
+   📄 6ebc67d5-661a-4a23-b2cc-da9886b9d14c-52918884be169f973eef10c2d173586d-6.jpg → studios/6ebc67d5-661a-4a23-b2cc-da9886b9d14c/image-6.jpg
+   ✅ Migrated successfully
+   📄 6ebc67d5-661a-4a23-b2cc-da9886b9d14c-52918884be169f973eef10c2d173586d-7.jpg → studios/6ebc67d5-661a-4a23-b2cc-da9886b9d14c/image-7.jpg
+   ✅ Migrated successfully
+   📄 6ebc67d5-661a-4a23-b2cc-da9886b9d14c-52918884be169f973eef10c2d173586d-8.jpg → studios/6ebc67d5-661a-4a23-b2cc-da9886b9d14c/image-8.jpg
+   ✅ Migrated successfully
+   📄 6ebc67d5-661a-4a23-b2cc-da9886b9d14c-52918884be169f973eef10c2d173586d-9.jpg → studios/6ebc67d5-661a-4a23-b2cc-da9886b9d14c/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Shades Of Yoga Yoga Teacher Training Bali (730ef917-f5f8-46ad-86af-f99ba111aa23)
+   Found 10 legacy images
+   📄 730ef917-f5f8-46ad-86af-f99ba111aa23-fee29d8f1455dbb0310ae03a7f90f281-0.jpg → studios/730ef917-f5f8-46ad-86af-f99ba111aa23/image-0.jpg
+   ✅ Migrated successfully
+   📄 730ef917-f5f8-46ad-86af-f99ba111aa23-fee29d8f1455dbb0310ae03a7f90f281-1.jpg → studios/730ef917-f5f8-46ad-86af-f99ba111aa23/image-1.jpg
+   ✅ Migrated successfully
+   📄 730ef917-f5f8-46ad-86af-f99ba111aa23-fee29d8f1455dbb0310ae03a7f90f281-2.jpg → studios/730ef917-f5f8-46ad-86af-f99ba111aa23/image-2.jpg
+   ✅ Migrated successfully
+   📄 730ef917-f5f8-46ad-86af-f99ba111aa23-fee29d8f1455dbb0310ae03a7f90f281-3.jpg → studios/730ef917-f5f8-46ad-86af-f99ba111aa23/image-3.jpg
+   ✅ Migrated successfully
+   📄 730ef917-f5f8-46ad-86af-f99ba111aa23-fee29d8f1455dbb0310ae03a7f90f281-4.jpg → studios/730ef917-f5f8-46ad-86af-f99ba111aa23/image-4.jpg
+   ✅ Migrated successfully
+   📄 730ef917-f5f8-46ad-86af-f99ba111aa23-fee29d8f1455dbb0310ae03a7f90f281-5.jpg → studios/730ef917-f5f8-46ad-86af-f99ba111aa23/image-5.jpg
+   ✅ Migrated successfully
+   📄 730ef917-f5f8-46ad-86af-f99ba111aa23-fee29d8f1455dbb0310ae03a7f90f281-6.jpg → studios/730ef917-f5f8-46ad-86af-f99ba111aa23/image-6.jpg
+   ✅ Migrated successfully
+   📄 730ef917-f5f8-46ad-86af-f99ba111aa23-fee29d8f1455dbb0310ae03a7f90f281-7.jpg → studios/730ef917-f5f8-46ad-86af-f99ba111aa23/image-7.jpg
+   ✅ Migrated successfully
+   📄 730ef917-f5f8-46ad-86af-f99ba111aa23-fee29d8f1455dbb0310ae03a7f90f281-8.jpg → studios/730ef917-f5f8-46ad-86af-f99ba111aa23/image-8.jpg
+   ✅ Migrated successfully
+   📄 730ef917-f5f8-46ad-86af-f99ba111aa23-fee29d8f1455dbb0310ae03a7f90f281-9.jpg → studios/730ef917-f5f8-46ad-86af-f99ba111aa23/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Zen Resort Bali (73d0d3c4-2fad-4469-aebf-986dff816ac6)
+   Found 10 legacy images
+   📄 73d0d3c4-2fad-4469-aebf-986dff816ac6-4f6bd48352e995a627fb0f6cfe1a5094-0.jpg → studios/73d0d3c4-2fad-4469-aebf-986dff816ac6/image-0.jpg
+   ✅ Migrated successfully
+   📄 73d0d3c4-2fad-4469-aebf-986dff816ac6-4f6bd48352e995a627fb0f6cfe1a5094-1.jpg → studios/73d0d3c4-2fad-4469-aebf-986dff816ac6/image-1.jpg
+   ✅ Migrated successfully
+   📄 73d0d3c4-2fad-4469-aebf-986dff816ac6-4f6bd48352e995a627fb0f6cfe1a5094-2.jpg → studios/73d0d3c4-2fad-4469-aebf-986dff816ac6/image-2.jpg
+   ✅ Migrated successfully
+   📄 73d0d3c4-2fad-4469-aebf-986dff816ac6-4f6bd48352e995a627fb0f6cfe1a5094-3.jpg → studios/73d0d3c4-2fad-4469-aebf-986dff816ac6/image-3.jpg
+   ✅ Migrated successfully
+   📄 73d0d3c4-2fad-4469-aebf-986dff816ac6-4f6bd48352e995a627fb0f6cfe1a5094-4.jpg → studios/73d0d3c4-2fad-4469-aebf-986dff816ac6/image-4.jpg
+   ✅ Migrated successfully
+   📄 73d0d3c4-2fad-4469-aebf-986dff816ac6-4f6bd48352e995a627fb0f6cfe1a5094-5.jpg → studios/73d0d3c4-2fad-4469-aebf-986dff816ac6/image-5.jpg
+   ✅ Migrated successfully
+   📄 73d0d3c4-2fad-4469-aebf-986dff816ac6-4f6bd48352e995a627fb0f6cfe1a5094-6.jpg → studios/73d0d3c4-2fad-4469-aebf-986dff816ac6/image-6.jpg
+   ✅ Migrated successfully
+   📄 73d0d3c4-2fad-4469-aebf-986dff816ac6-4f6bd48352e995a627fb0f6cfe1a5094-7.jpg → studios/73d0d3c4-2fad-4469-aebf-986dff816ac6/image-7.jpg
+   ✅ Migrated successfully
+   📄 73d0d3c4-2fad-4469-aebf-986dff816ac6-4f6bd48352e995a627fb0f6cfe1a5094-8.jpg → studios/73d0d3c4-2fad-4469-aebf-986dff816ac6/image-8.jpg
+   ✅ Migrated successfully
+   📄 73d0d3c4-2fad-4469-aebf-986dff816ac6-4f6bd48352e995a627fb0f6cfe1a5094-9.jpg → studios/73d0d3c4-2fad-4469-aebf-986dff816ac6/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Suenyo Eco Retreat (7788cd19-494a-46af-a7d5-21775f12e360)
+   Found 10 legacy images
+   📄 7788cd19-494a-46af-a7d5-21775f12e360-7a15de8ad8f89036e359496105957819-0.jpg → retreats/7788cd19-494a-46af-a7d5-21775f12e360/image-0.jpg
+   ✅ Migrated successfully
+   📄 7788cd19-494a-46af-a7d5-21775f12e360-7a15de8ad8f89036e359496105957819-1.jpg → retreats/7788cd19-494a-46af-a7d5-21775f12e360/image-1.jpg
+   ✅ Migrated successfully
+   📄 7788cd19-494a-46af-a7d5-21775f12e360-7a15de8ad8f89036e359496105957819-2.jpg → retreats/7788cd19-494a-46af-a7d5-21775f12e360/image-2.jpg
+   ✅ Migrated successfully
+   📄 7788cd19-494a-46af-a7d5-21775f12e360-7a15de8ad8f89036e359496105957819-3.jpg → retreats/7788cd19-494a-46af-a7d5-21775f12e360/image-3.jpg
+   ✅ Migrated successfully
+   📄 7788cd19-494a-46af-a7d5-21775f12e360-7a15de8ad8f89036e359496105957819-4.jpg → retreats/7788cd19-494a-46af-a7d5-21775f12e360/image-4.jpg
+   ✅ Migrated successfully
+   📄 7788cd19-494a-46af-a7d5-21775f12e360-7a15de8ad8f89036e359496105957819-5.jpg → retreats/7788cd19-494a-46af-a7d5-21775f12e360/image-5.jpg
+   ✅ Migrated successfully
+   📄 7788cd19-494a-46af-a7d5-21775f12e360-7a15de8ad8f89036e359496105957819-6.jpg → retreats/7788cd19-494a-46af-a7d5-21775f12e360/image-6.jpg
+   ✅ Migrated successfully
+   📄 7788cd19-494a-46af-a7d5-21775f12e360-7a15de8ad8f89036e359496105957819-7.jpg → retreats/7788cd19-494a-46af-a7d5-21775f12e360/image-7.jpg
+   ✅ Migrated successfully
+   📄 7788cd19-494a-46af-a7d5-21775f12e360-7a15de8ad8f89036e359496105957819-8.jpg → retreats/7788cd19-494a-46af-a7d5-21775f12e360/image-8.jpg
+   ✅ Migrated successfully
+   📄 7788cd19-494a-46af-a7d5-21775f12e360-7a15de8ad8f89036e359496105957819-9.jpg → retreats/7788cd19-494a-46af-a7d5-21775f12e360/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Puri Bagus Candidasa Resort (7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0)
+   Found 10 legacy images
+   📄 7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0-588496d28bc002e8fba68778a98a6fc3-0.jpg → retreats/7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0/image-0.jpg
+   ✅ Migrated successfully
+   📄 7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0-588496d28bc002e8fba68778a98a6fc3-1.jpg → retreats/7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0/image-1.jpg
+   ✅ Migrated successfully
+   📄 7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0-588496d28bc002e8fba68778a98a6fc3-2.jpg → retreats/7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0/image-2.jpg
+   ✅ Migrated successfully
+   📄 7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0-588496d28bc002e8fba68778a98a6fc3-3.jpg → retreats/7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0/image-3.jpg
+   ✅ Migrated successfully
+   📄 7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0-588496d28bc002e8fba68778a98a6fc3-4.jpg → retreats/7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0/image-4.jpg
+   ✅ Migrated successfully
+   📄 7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0-588496d28bc002e8fba68778a98a6fc3-5.jpg → retreats/7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0/image-5.jpg
+   ✅ Migrated successfully
+   📄 7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0-588496d28bc002e8fba68778a98a6fc3-6.jpg → retreats/7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0/image-6.jpg
+   ✅ Migrated successfully
+   📄 7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0-588496d28bc002e8fba68778a98a6fc3-7.jpg → retreats/7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0/image-7.jpg
+   ✅ Migrated successfully
+   📄 7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0-588496d28bc002e8fba68778a98a6fc3-8.jpg → retreats/7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0/image-8.jpg
+   ✅ Migrated successfully
+   📄 7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0-588496d28bc002e8fba68778a98a6fc3-9.jpg → retreats/7972c8a9-84a5-4eeb-bb62-1b03b1ac72c0/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Villa Mantra Vegans (79e1be87-4a4b-4401-ae86-17fa107f0dcc)
+   Found 10 legacy images
+   📄 79e1be87-4a4b-4401-ae86-17fa107f0dcc-e7a74ef8c3342d2dd2ce623e7a5b474b-0.jpg → studios/79e1be87-4a4b-4401-ae86-17fa107f0dcc/image-0.jpg
+   ✅ Migrated successfully
+   📄 79e1be87-4a4b-4401-ae86-17fa107f0dcc-e7a74ef8c3342d2dd2ce623e7a5b474b-1.jpg → studios/79e1be87-4a4b-4401-ae86-17fa107f0dcc/image-1.jpg
+   ✅ Migrated successfully
+   📄 79e1be87-4a4b-4401-ae86-17fa107f0dcc-e7a74ef8c3342d2dd2ce623e7a5b474b-2.jpg → studios/79e1be87-4a4b-4401-ae86-17fa107f0dcc/image-2.jpg
+   ✅ Migrated successfully
+   📄 79e1be87-4a4b-4401-ae86-17fa107f0dcc-e7a74ef8c3342d2dd2ce623e7a5b474b-3.jpg → studios/79e1be87-4a4b-4401-ae86-17fa107f0dcc/image-3.jpg
+   ✅ Migrated successfully
+   📄 79e1be87-4a4b-4401-ae86-17fa107f0dcc-e7a74ef8c3342d2dd2ce623e7a5b474b-4.jpg → studios/79e1be87-4a4b-4401-ae86-17fa107f0dcc/image-4.jpg
+   ✅ Migrated successfully
+   📄 79e1be87-4a4b-4401-ae86-17fa107f0dcc-e7a74ef8c3342d2dd2ce623e7a5b474b-5.jpg → studios/79e1be87-4a4b-4401-ae86-17fa107f0dcc/image-5.jpg
+   ✅ Migrated successfully
+   📄 79e1be87-4a4b-4401-ae86-17fa107f0dcc-e7a74ef8c3342d2dd2ce623e7a5b474b-6.jpg → studios/79e1be87-4a4b-4401-ae86-17fa107f0dcc/image-6.jpg
+   ✅ Migrated successfully
+   📄 79e1be87-4a4b-4401-ae86-17fa107f0dcc-e7a74ef8c3342d2dd2ce623e7a5b474b-7.jpg → studios/79e1be87-4a4b-4401-ae86-17fa107f0dcc/image-7.jpg
+   ✅ Migrated successfully
+   📄 79e1be87-4a4b-4401-ae86-17fa107f0dcc-e7a74ef8c3342d2dd2ce623e7a5b474b-8.jpg → studios/79e1be87-4a4b-4401-ae86-17fa107f0dcc/image-8.jpg
+   ✅ Migrated successfully
+   📄 79e1be87-4a4b-4401-ae86-17fa107f0dcc-e7a74ef8c3342d2dd2ce623e7a5b474b-9.jpg → studios/79e1be87-4a4b-4401-ae86-17fa107f0dcc/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Yoga New Vision Teacher Training Ubud Bali (8036ace2-c007-4c53-9e96-656806b86e29)
+   Found 10 legacy images
+   📄 8036ace2-c007-4c53-9e96-656806b86e29-000d1e6f4e5ecfda393ed2ad56ede3fd-0.jpg → studios/8036ace2-c007-4c53-9e96-656806b86e29/image-0.jpg
+   ✅ Migrated successfully
+   📄 8036ace2-c007-4c53-9e96-656806b86e29-000d1e6f4e5ecfda393ed2ad56ede3fd-1.jpg → studios/8036ace2-c007-4c53-9e96-656806b86e29/image-1.jpg
+   ✅ Migrated successfully
+   📄 8036ace2-c007-4c53-9e96-656806b86e29-000d1e6f4e5ecfda393ed2ad56ede3fd-2.jpg → studios/8036ace2-c007-4c53-9e96-656806b86e29/image-2.jpg
+   ✅ Migrated successfully
+   📄 8036ace2-c007-4c53-9e96-656806b86e29-000d1e6f4e5ecfda393ed2ad56ede3fd-3.jpg → studios/8036ace2-c007-4c53-9e96-656806b86e29/image-3.jpg
+   ✅ Migrated successfully
+   📄 8036ace2-c007-4c53-9e96-656806b86e29-000d1e6f4e5ecfda393ed2ad56ede3fd-4.jpg → studios/8036ace2-c007-4c53-9e96-656806b86e29/image-4.jpg
+   ✅ Migrated successfully
+   📄 8036ace2-c007-4c53-9e96-656806b86e29-000d1e6f4e5ecfda393ed2ad56ede3fd-5.jpg → studios/8036ace2-c007-4c53-9e96-656806b86e29/image-5.jpg
+   ✅ Migrated successfully
+   📄 8036ace2-c007-4c53-9e96-656806b86e29-000d1e6f4e5ecfda393ed2ad56ede3fd-6.jpg → studios/8036ace2-c007-4c53-9e96-656806b86e29/image-6.jpg
+   ✅ Migrated successfully
+   📄 8036ace2-c007-4c53-9e96-656806b86e29-000d1e6f4e5ecfda393ed2ad56ede3fd-7.jpg → studios/8036ace2-c007-4c53-9e96-656806b86e29/image-7.jpg
+   ✅ Migrated successfully
+   📄 8036ace2-c007-4c53-9e96-656806b86e29-000d1e6f4e5ecfda393ed2ad56ede3fd-8.jpg → studios/8036ace2-c007-4c53-9e96-656806b86e29/image-8.jpg
+   ✅ Migrated successfully
+   📄 8036ace2-c007-4c53-9e96-656806b86e29-000d1e6f4e5ecfda393ed2ad56ede3fd-9.jpg → studios/8036ace2-c007-4c53-9e96-656806b86e29/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Yumi Iyengar Yoga Cempaka Studio (839ca39d-58c6-4eff-8aec-12f79977911d)
+   Found 10 legacy images
+   📄 839ca39d-58c6-4eff-8aec-12f79977911d-a43e03cbd1d93723711f508a703b27c3-0.jpg → studios/839ca39d-58c6-4eff-8aec-12f79977911d/image-0.jpg
+   ✅ Migrated successfully
+   📄 839ca39d-58c6-4eff-8aec-12f79977911d-a43e03cbd1d93723711f508a703b27c3-1.jpg → studios/839ca39d-58c6-4eff-8aec-12f79977911d/image-1.jpg
+   ✅ Migrated successfully
+   📄 839ca39d-58c6-4eff-8aec-12f79977911d-a43e03cbd1d93723711f508a703b27c3-2.jpg → studios/839ca39d-58c6-4eff-8aec-12f79977911d/image-2.jpg
+   ✅ Migrated successfully
+   📄 839ca39d-58c6-4eff-8aec-12f79977911d-a43e03cbd1d93723711f508a703b27c3-3.jpg → studios/839ca39d-58c6-4eff-8aec-12f79977911d/image-3.jpg
+   ✅ Migrated successfully
+   📄 839ca39d-58c6-4eff-8aec-12f79977911d-a43e03cbd1d93723711f508a703b27c3-4.jpg → studios/839ca39d-58c6-4eff-8aec-12f79977911d/image-4.jpg
+   ✅ Migrated successfully
+   📄 839ca39d-58c6-4eff-8aec-12f79977911d-a43e03cbd1d93723711f508a703b27c3-5.jpg → studios/839ca39d-58c6-4eff-8aec-12f79977911d/image-5.jpg
+   ✅ Migrated successfully
+   📄 839ca39d-58c6-4eff-8aec-12f79977911d-a43e03cbd1d93723711f508a703b27c3-6.jpg → studios/839ca39d-58c6-4eff-8aec-12f79977911d/image-6.jpg
+   ✅ Migrated successfully
+   📄 839ca39d-58c6-4eff-8aec-12f79977911d-a43e03cbd1d93723711f508a703b27c3-7.jpg → studios/839ca39d-58c6-4eff-8aec-12f79977911d/image-7.jpg
+   ✅ Migrated successfully
+   📄 839ca39d-58c6-4eff-8aec-12f79977911d-a43e03cbd1d93723711f508a703b27c3-8.jpg → studios/839ca39d-58c6-4eff-8aec-12f79977911d/image-8.jpg
+   ✅ Migrated successfully
+   📄 839ca39d-58c6-4eff-8aec-12f79977911d-a43e03cbd1d93723711f508a703b27c3-9.jpg → studios/839ca39d-58c6-4eff-8aec-12f79977911d/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Floating Leaf Eco Luxury Retreat (83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4)
+   Found 10 legacy images
+   📄 83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4-d3191d47a82a31c9704b20ff4f267642-0.jpg → studios/83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4/image-0.jpg
+   ✅ Migrated successfully
+   📄 83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4-d3191d47a82a31c9704b20ff4f267642-1.jpg → studios/83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4/image-1.jpg
+   ✅ Migrated successfully
+   📄 83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4-d3191d47a82a31c9704b20ff4f267642-2.jpg → studios/83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4/image-2.jpg
+   ✅ Migrated successfully
+   📄 83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4-d3191d47a82a31c9704b20ff4f267642-3.jpg → studios/83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4/image-3.jpg
+   ✅ Migrated successfully
+   📄 83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4-d3191d47a82a31c9704b20ff4f267642-4.jpg → studios/83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4/image-4.jpg
+   ✅ Migrated successfully
+   📄 83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4-d3191d47a82a31c9704b20ff4f267642-5.jpg → studios/83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4/image-5.jpg
+   ✅ Migrated successfully
+   📄 83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4-d3191d47a82a31c9704b20ff4f267642-6.jpg → studios/83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4/image-6.jpg
+   ✅ Migrated successfully
+   📄 83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4-d3191d47a82a31c9704b20ff4f267642-7.jpg → studios/83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4/image-7.jpg
+   ✅ Migrated successfully
+   📄 83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4-d3191d47a82a31c9704b20ff4f267642-8.jpg → studios/83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4/image-8.jpg
+   ✅ Migrated successfully
+   📄 83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4-d3191d47a82a31c9704b20ff4f267642-9.jpg → studios/83a6f6cd-eb1f-45c2-9d9f-5a2c2fd3ccb4/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Luna Sol Pilates Yoga (7f976546-762d-4e3f-a36e-0e00048f111c)
+   Found 10 legacy images
+   📄 7f976546-762d-4e3f-a36e-0e00048f111c-a2a2762e8a0e9469a98168c1243df088-0.jpg → studios/7f976546-762d-4e3f-a36e-0e00048f111c/image-0.jpg
+   ✅ Migrated successfully
+   📄 7f976546-762d-4e3f-a36e-0e00048f111c-a2a2762e8a0e9469a98168c1243df088-1.jpg → studios/7f976546-762d-4e3f-a36e-0e00048f111c/image-1.jpg
+   ✅ Migrated successfully
+   📄 7f976546-762d-4e3f-a36e-0e00048f111c-a2a2762e8a0e9469a98168c1243df088-2.jpg → studios/7f976546-762d-4e3f-a36e-0e00048f111c/image-2.jpg
+   ✅ Migrated successfully
+   📄 7f976546-762d-4e3f-a36e-0e00048f111c-a2a2762e8a0e9469a98168c1243df088-3.jpg → studios/7f976546-762d-4e3f-a36e-0e00048f111c/image-3.jpg
+   ✅ Migrated successfully
+   📄 7f976546-762d-4e3f-a36e-0e00048f111c-a2a2762e8a0e9469a98168c1243df088-4.jpg → studios/7f976546-762d-4e3f-a36e-0e00048f111c/image-4.jpg
+   ✅ Migrated successfully
+   📄 7f976546-762d-4e3f-a36e-0e00048f111c-a2a2762e8a0e9469a98168c1243df088-5.jpg → studios/7f976546-762d-4e3f-a36e-0e00048f111c/image-5.jpg
+   ✅ Migrated successfully
+   📄 7f976546-762d-4e3f-a36e-0e00048f111c-a2a2762e8a0e9469a98168c1243df088-6.jpg → studios/7f976546-762d-4e3f-a36e-0e00048f111c/image-6.jpg
+   ✅ Migrated successfully
+   📄 7f976546-762d-4e3f-a36e-0e00048f111c-a2a2762e8a0e9469a98168c1243df088-7.jpg → studios/7f976546-762d-4e3f-a36e-0e00048f111c/image-7.jpg
+   ✅ Migrated successfully
+   📄 7f976546-762d-4e3f-a36e-0e00048f111c-a2a2762e8a0e9469a98168c1243df088-8.jpg → studios/7f976546-762d-4e3f-a36e-0e00048f111c/image-8.jpg
+   ✅ Migrated successfully
+   📄 7f976546-762d-4e3f-a36e-0e00048f111c-a2a2762e8a0e9469a98168c1243df088-9.jpg → studios/7f976546-762d-4e3f-a36e-0e00048f111c/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Trimurti Yoga Bali (83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2)
+   Found 10 legacy images
+   📄 83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2-369003052333956ade1005cf6734fe9b-0.jpg → studios/83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2/image-0.jpg
+   ✅ Migrated successfully
+   📄 83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2-369003052333956ade1005cf6734fe9b-1.jpg → studios/83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2/image-1.jpg
+   ✅ Migrated successfully
+   📄 83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2-369003052333956ade1005cf6734fe9b-2.jpg → studios/83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2/image-2.jpg
+   ✅ Migrated successfully
+   📄 83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2-369003052333956ade1005cf6734fe9b-3.jpg → studios/83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2/image-3.jpg
+   ✅ Migrated successfully
+   📄 83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2-369003052333956ade1005cf6734fe9b-4.jpg → studios/83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2/image-4.jpg
+   ✅ Migrated successfully
+   📄 83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2-369003052333956ade1005cf6734fe9b-5.jpg → studios/83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2/image-5.jpg
+   ✅ Migrated successfully
+   📄 83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2-369003052333956ade1005cf6734fe9b-6.jpg → studios/83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2/image-6.jpg
+   ✅ Migrated successfully
+   📄 83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2-369003052333956ade1005cf6734fe9b-7.jpg → studios/83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2/image-7.jpg
+   ✅ Migrated successfully
+   📄 83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2-369003052333956ade1005cf6734fe9b-8.jpg → studios/83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2/image-8.jpg
+   ✅ Migrated successfully
+   📄 83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2-369003052333956ade1005cf6734fe9b-9.jpg → studios/83e9c4e7-d5fe-44d8-afd2-ecc68756b3c2/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: The Sol Bali (84b11ab5-4806-4592-a864-65268ce8a49c)
+   Found 10 legacy images
+   📄 84b11ab5-4806-4592-a864-65268ce8a49c-d793e7af76ff1b2438ab436565238477-0.jpg → retreats/84b11ab5-4806-4592-a864-65268ce8a49c/image-0.jpg
+   ✅ Migrated successfully
+   📄 84b11ab5-4806-4592-a864-65268ce8a49c-d793e7af76ff1b2438ab436565238477-1.jpg → retreats/84b11ab5-4806-4592-a864-65268ce8a49c/image-1.jpg
+   ✅ Migrated successfully
+   📄 84b11ab5-4806-4592-a864-65268ce8a49c-d793e7af76ff1b2438ab436565238477-2.jpg → retreats/84b11ab5-4806-4592-a864-65268ce8a49c/image-2.jpg
+   ✅ Migrated successfully
+   📄 84b11ab5-4806-4592-a864-65268ce8a49c-d793e7af76ff1b2438ab436565238477-3.jpg → retreats/84b11ab5-4806-4592-a864-65268ce8a49c/image-3.jpg
+   ✅ Migrated successfully
+   📄 84b11ab5-4806-4592-a864-65268ce8a49c-d793e7af76ff1b2438ab436565238477-4.jpg → retreats/84b11ab5-4806-4592-a864-65268ce8a49c/image-4.jpg
+   ✅ Migrated successfully
+   📄 84b11ab5-4806-4592-a864-65268ce8a49c-d793e7af76ff1b2438ab436565238477-5.jpg → retreats/84b11ab5-4806-4592-a864-65268ce8a49c/image-5.jpg
+   ✅ Migrated successfully
+   📄 84b11ab5-4806-4592-a864-65268ce8a49c-d793e7af76ff1b2438ab436565238477-6.jpg → retreats/84b11ab5-4806-4592-a864-65268ce8a49c/image-6.jpg
+   ✅ Migrated successfully
+   📄 84b11ab5-4806-4592-a864-65268ce8a49c-d793e7af76ff1b2438ab436565238477-7.jpg → retreats/84b11ab5-4806-4592-a864-65268ce8a49c/image-7.jpg
+   ✅ Migrated successfully
+   📄 84b11ab5-4806-4592-a864-65268ce8a49c-d793e7af76ff1b2438ab436565238477-8.jpg → retreats/84b11ab5-4806-4592-a864-65268ce8a49c/image-8.jpg
+   ✅ Migrated successfully
+   📄 84b11ab5-4806-4592-a864-65268ce8a49c-d793e7af76ff1b2438ab436565238477-9.jpg → retreats/84b11ab5-4806-4592-a864-65268ce8a49c/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Maja Spa (84132040-1903-4406-9bef-7181a6a7a0fe)
+   Found 10 legacy images
+   📄 84132040-1903-4406-9bef-7181a6a7a0fe-2f3a954065bbe4398ad805bad371ad62-0.jpg → studios/84132040-1903-4406-9bef-7181a6a7a0fe/image-0.jpg
+   ✅ Migrated successfully
+   📄 84132040-1903-4406-9bef-7181a6a7a0fe-2f3a954065bbe4398ad805bad371ad62-1.jpg → studios/84132040-1903-4406-9bef-7181a6a7a0fe/image-1.jpg
+   ✅ Migrated successfully
+   📄 84132040-1903-4406-9bef-7181a6a7a0fe-2f3a954065bbe4398ad805bad371ad62-2.jpg → studios/84132040-1903-4406-9bef-7181a6a7a0fe/image-2.jpg
+   ✅ Migrated successfully
+   📄 84132040-1903-4406-9bef-7181a6a7a0fe-2f3a954065bbe4398ad805bad371ad62-3.jpg → studios/84132040-1903-4406-9bef-7181a6a7a0fe/image-3.jpg
+   ✅ Migrated successfully
+   📄 84132040-1903-4406-9bef-7181a6a7a0fe-2f3a954065bbe4398ad805bad371ad62-4.jpg → studios/84132040-1903-4406-9bef-7181a6a7a0fe/image-4.jpg
+   ✅ Migrated successfully
+   📄 84132040-1903-4406-9bef-7181a6a7a0fe-2f3a954065bbe4398ad805bad371ad62-5.jpg → studios/84132040-1903-4406-9bef-7181a6a7a0fe/image-5.jpg
+   ✅ Migrated successfully
+   📄 84132040-1903-4406-9bef-7181a6a7a0fe-2f3a954065bbe4398ad805bad371ad62-6.jpg → studios/84132040-1903-4406-9bef-7181a6a7a0fe/image-6.jpg
+   ✅ Migrated successfully
+   📄 84132040-1903-4406-9bef-7181a6a7a0fe-2f3a954065bbe4398ad805bad371ad62-7.jpg → studios/84132040-1903-4406-9bef-7181a6a7a0fe/image-7.jpg
+   ✅ Migrated successfully
+   📄 84132040-1903-4406-9bef-7181a6a7a0fe-2f3a954065bbe4398ad805bad371ad62-8.jpg → studios/84132040-1903-4406-9bef-7181a6a7a0fe/image-8.jpg
+   ✅ Migrated successfully
+   📄 84132040-1903-4406-9bef-7181a6a7a0fe-2f3a954065bbe4398ad805bad371ad62-9.jpg → studios/84132040-1903-4406-9bef-7181a6a7a0fe/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: The Canggu Studio (84342dfc-3a7f-4196-b451-43a4cdd0236e)
+   Found 10 legacy images
+   📄 84342dfc-3a7f-4196-b451-43a4cdd0236e-37b6268a02ed999f09dce3bf8d60bf84-0.jpg → studios/84342dfc-3a7f-4196-b451-43a4cdd0236e/image-0.jpg
+   ✅ Migrated successfully
+   📄 84342dfc-3a7f-4196-b451-43a4cdd0236e-37b6268a02ed999f09dce3bf8d60bf84-1.jpg → studios/84342dfc-3a7f-4196-b451-43a4cdd0236e/image-1.jpg
+   ✅ Migrated successfully
+   📄 84342dfc-3a7f-4196-b451-43a4cdd0236e-37b6268a02ed999f09dce3bf8d60bf84-2.jpg → studios/84342dfc-3a7f-4196-b451-43a4cdd0236e/image-2.jpg
+   ✅ Migrated successfully
+   📄 84342dfc-3a7f-4196-b451-43a4cdd0236e-37b6268a02ed999f09dce3bf8d60bf84-3.jpg → studios/84342dfc-3a7f-4196-b451-43a4cdd0236e/image-3.jpg
+   ✅ Migrated successfully
+   📄 84342dfc-3a7f-4196-b451-43a4cdd0236e-37b6268a02ed999f09dce3bf8d60bf84-4.jpg → studios/84342dfc-3a7f-4196-b451-43a4cdd0236e/image-4.jpg
+   ✅ Migrated successfully
+   📄 84342dfc-3a7f-4196-b451-43a4cdd0236e-37b6268a02ed999f09dce3bf8d60bf84-5.jpg → studios/84342dfc-3a7f-4196-b451-43a4cdd0236e/image-5.jpg
+   ✅ Migrated successfully
+   📄 84342dfc-3a7f-4196-b451-43a4cdd0236e-37b6268a02ed999f09dce3bf8d60bf84-6.jpg → studios/84342dfc-3a7f-4196-b451-43a4cdd0236e/image-6.jpg
+   ✅ Migrated successfully
+   📄 84342dfc-3a7f-4196-b451-43a4cdd0236e-37b6268a02ed999f09dce3bf8d60bf84-7.jpg → studios/84342dfc-3a7f-4196-b451-43a4cdd0236e/image-7.jpg
+   ✅ Migrated successfully
+   📄 84342dfc-3a7f-4196-b451-43a4cdd0236e-37b6268a02ed999f09dce3bf8d60bf84-8.jpg → studios/84342dfc-3a7f-4196-b451-43a4cdd0236e/image-8.jpg
+   ✅ Migrated successfully
+   📄 84342dfc-3a7f-4196-b451-43a4cdd0236e-37b6268a02ed999f09dce3bf8d60bf84-9.jpg → studios/84342dfc-3a7f-4196-b451-43a4cdd0236e/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Yogafx Yoga Teacher Training (853c8f24-2702-41bd-9a73-d857ffb2fbd1)
+   Found 10 legacy images
+   📄 853c8f24-2702-41bd-9a73-d857ffb2fbd1-6afd997f7c0c2d90e27668cdcea65a47-0.jpg → studios/853c8f24-2702-41bd-9a73-d857ffb2fbd1/image-0.jpg
+   ✅ Migrated successfully
+   📄 853c8f24-2702-41bd-9a73-d857ffb2fbd1-6afd997f7c0c2d90e27668cdcea65a47-1.jpg → studios/853c8f24-2702-41bd-9a73-d857ffb2fbd1/image-1.jpg
+   ✅ Migrated successfully
+   📄 853c8f24-2702-41bd-9a73-d857ffb2fbd1-6afd997f7c0c2d90e27668cdcea65a47-2.jpg → studios/853c8f24-2702-41bd-9a73-d857ffb2fbd1/image-2.jpg
+   ✅ Migrated successfully
+   📄 853c8f24-2702-41bd-9a73-d857ffb2fbd1-6afd997f7c0c2d90e27668cdcea65a47-3.jpg → studios/853c8f24-2702-41bd-9a73-d857ffb2fbd1/image-3.jpg
+   ✅ Migrated successfully
+   📄 853c8f24-2702-41bd-9a73-d857ffb2fbd1-6afd997f7c0c2d90e27668cdcea65a47-4.jpg → studios/853c8f24-2702-41bd-9a73-d857ffb2fbd1/image-4.jpg
+   ✅ Migrated successfully
+   📄 853c8f24-2702-41bd-9a73-d857ffb2fbd1-6afd997f7c0c2d90e27668cdcea65a47-5.jpg → studios/853c8f24-2702-41bd-9a73-d857ffb2fbd1/image-5.jpg
+   ✅ Migrated successfully
+   📄 853c8f24-2702-41bd-9a73-d857ffb2fbd1-6afd997f7c0c2d90e27668cdcea65a47-6.jpg → studios/853c8f24-2702-41bd-9a73-d857ffb2fbd1/image-6.jpg
+   ✅ Migrated successfully
+   📄 853c8f24-2702-41bd-9a73-d857ffb2fbd1-6afd997f7c0c2d90e27668cdcea65a47-7.jpg → studios/853c8f24-2702-41bd-9a73-d857ffb2fbd1/image-7.jpg
+   ✅ Migrated successfully
+   📄 853c8f24-2702-41bd-9a73-d857ffb2fbd1-6afd997f7c0c2d90e27668cdcea65a47-8.jpg → studios/853c8f24-2702-41bd-9a73-d857ffb2fbd1/image-8.jpg
+   ✅ Migrated successfully
+   📄 853c8f24-2702-41bd-9a73-d857ffb2fbd1-6afd997f7c0c2d90e27668cdcea65a47-9.jpg → studios/853c8f24-2702-41bd-9a73-d857ffb2fbd1/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Pranava Yoga (85b78a90-0e3a-4ac6-a010-1bf1015ff676)
+   Found 10 legacy images
+   📄 85b78a90-0e3a-4ac6-a010-1bf1015ff676-b58edfdcc04de6458509fe495f39c213-0.jpg → studios/85b78a90-0e3a-4ac6-a010-1bf1015ff676/image-0.jpg
+   ✅ Migrated successfully
+   📄 85b78a90-0e3a-4ac6-a010-1bf1015ff676-b58edfdcc04de6458509fe495f39c213-1.jpg → studios/85b78a90-0e3a-4ac6-a010-1bf1015ff676/image-1.jpg
+   ✅ Migrated successfully
+   📄 85b78a90-0e3a-4ac6-a010-1bf1015ff676-b58edfdcc04de6458509fe495f39c213-2.jpg → studios/85b78a90-0e3a-4ac6-a010-1bf1015ff676/image-2.jpg
+   ✅ Migrated successfully
+   📄 85b78a90-0e3a-4ac6-a010-1bf1015ff676-b58edfdcc04de6458509fe495f39c213-3.jpg → studios/85b78a90-0e3a-4ac6-a010-1bf1015ff676/image-3.jpg
+   ✅ Migrated successfully
+   📄 85b78a90-0e3a-4ac6-a010-1bf1015ff676-b58edfdcc04de6458509fe495f39c213-4.jpg → studios/85b78a90-0e3a-4ac6-a010-1bf1015ff676/image-4.jpg
+   ✅ Migrated successfully
+   📄 85b78a90-0e3a-4ac6-a010-1bf1015ff676-b58edfdcc04de6458509fe495f39c213-5.jpg → studios/85b78a90-0e3a-4ac6-a010-1bf1015ff676/image-5.jpg
+   ✅ Migrated successfully
+   📄 85b78a90-0e3a-4ac6-a010-1bf1015ff676-b58edfdcc04de6458509fe495f39c213-6.jpg → studios/85b78a90-0e3a-4ac6-a010-1bf1015ff676/image-6.jpg
+   ✅ Migrated successfully
+   📄 85b78a90-0e3a-4ac6-a010-1bf1015ff676-b58edfdcc04de6458509fe495f39c213-7.jpg → studios/85b78a90-0e3a-4ac6-a010-1bf1015ff676/image-7.jpg
+   ✅ Migrated successfully
+   📄 85b78a90-0e3a-4ac6-a010-1bf1015ff676-b58edfdcc04de6458509fe495f39c213-8.jpg → studios/85b78a90-0e3a-4ac6-a010-1bf1015ff676/image-8.jpg
+   ✅ Migrated successfully
+   📄 85b78a90-0e3a-4ac6-a010-1bf1015ff676-b58edfdcc04de6458509fe495f39c213-9.jpg → studios/85b78a90-0e3a-4ac6-a010-1bf1015ff676/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Rumah Bahagia (8a6e41a3-0da5-45ad-904b-b31cea3ecfdd)
+   Found 0 legacy images
+   ⚠️  No legacy images found
+
+📁 Migrating studio: The Yoga Barn (86fa42d1-a309-40ad-9f6d-ee0b7621ef57)
+   Found 10 legacy images
+   📄 86fa42d1-a309-40ad-9f6d-ee0b7621ef57-3e16dc9a506a38f45908704209972760-0.jpg → studios/86fa42d1-a309-40ad-9f6d-ee0b7621ef57/image-0.jpg
+   ✅ Migrated successfully
+   📄 86fa42d1-a309-40ad-9f6d-ee0b7621ef57-3e16dc9a506a38f45908704209972760-1.jpg → studios/86fa42d1-a309-40ad-9f6d-ee0b7621ef57/image-1.jpg
+   ✅ Migrated successfully
+   📄 86fa42d1-a309-40ad-9f6d-ee0b7621ef57-3e16dc9a506a38f45908704209972760-2.jpg → studios/86fa42d1-a309-40ad-9f6d-ee0b7621ef57/image-2.jpg
+   ✅ Migrated successfully
+   📄 86fa42d1-a309-40ad-9f6d-ee0b7621ef57-3e16dc9a506a38f45908704209972760-3.jpg → studios/86fa42d1-a309-40ad-9f6d-ee0b7621ef57/image-3.jpg
+   ✅ Migrated successfully
+   📄 86fa42d1-a309-40ad-9f6d-ee0b7621ef57-3e16dc9a506a38f45908704209972760-4.jpg → studios/86fa42d1-a309-40ad-9f6d-ee0b7621ef57/image-4.jpg
+   ✅ Migrated successfully
+   📄 86fa42d1-a309-40ad-9f6d-ee0b7621ef57-3e16dc9a506a38f45908704209972760-5.jpg → studios/86fa42d1-a309-40ad-9f6d-ee0b7621ef57/image-5.jpg
+   ✅ Migrated successfully
+   📄 86fa42d1-a309-40ad-9f6d-ee0b7621ef57-3e16dc9a506a38f45908704209972760-6.jpg → studios/86fa42d1-a309-40ad-9f6d-ee0b7621ef57/image-6.jpg
+   ✅ Migrated successfully
+   📄 86fa42d1-a309-40ad-9f6d-ee0b7621ef57-3e16dc9a506a38f45908704209972760-7.jpg → studios/86fa42d1-a309-40ad-9f6d-ee0b7621ef57/image-7.jpg
+   ✅ Migrated successfully
+   📄 86fa42d1-a309-40ad-9f6d-ee0b7621ef57-3e16dc9a506a38f45908704209972760-8.jpg → studios/86fa42d1-a309-40ad-9f6d-ee0b7621ef57/image-8.jpg
+   ✅ Migrated successfully
+   📄 86fa42d1-a309-40ad-9f6d-ee0b7621ef57-3e16dc9a506a38f45908704209972760-9.jpg → studios/86fa42d1-a309-40ad-9f6d-ee0b7621ef57/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: World Peace Yoga School Bali (89674226-c9de-4385-acc0-e99aa04f32d2)
+   Found 10 legacy images
+   📄 89674226-c9de-4385-acc0-e99aa04f32d2-b1cad97c8ee708144b0c61a879efbec4-0.jpg → studios/89674226-c9de-4385-acc0-e99aa04f32d2/image-0.jpg
+   ✅ Migrated successfully
+   📄 89674226-c9de-4385-acc0-e99aa04f32d2-b1cad97c8ee708144b0c61a879efbec4-1.jpg → studios/89674226-c9de-4385-acc0-e99aa04f32d2/image-1.jpg
+   ✅ Migrated successfully
+   📄 89674226-c9de-4385-acc0-e99aa04f32d2-b1cad97c8ee708144b0c61a879efbec4-2.jpg → studios/89674226-c9de-4385-acc0-e99aa04f32d2/image-2.jpg
+   ✅ Migrated successfully
+   📄 89674226-c9de-4385-acc0-e99aa04f32d2-b1cad97c8ee708144b0c61a879efbec4-3.jpg → studios/89674226-c9de-4385-acc0-e99aa04f32d2/image-3.jpg
+   ✅ Migrated successfully
+   📄 89674226-c9de-4385-acc0-e99aa04f32d2-b1cad97c8ee708144b0c61a879efbec4-4.jpg → studios/89674226-c9de-4385-acc0-e99aa04f32d2/image-4.jpg
+   ✅ Migrated successfully
+   📄 89674226-c9de-4385-acc0-e99aa04f32d2-b1cad97c8ee708144b0c61a879efbec4-5.jpg → studios/89674226-c9de-4385-acc0-e99aa04f32d2/image-5.jpg
+   ✅ Migrated successfully
+   📄 89674226-c9de-4385-acc0-e99aa04f32d2-b1cad97c8ee708144b0c61a879efbec4-6.jpg → studios/89674226-c9de-4385-acc0-e99aa04f32d2/image-6.jpg
+   ✅ Migrated successfully
+   📄 89674226-c9de-4385-acc0-e99aa04f32d2-b1cad97c8ee708144b0c61a879efbec4-7.jpg → studios/89674226-c9de-4385-acc0-e99aa04f32d2/image-7.jpg
+   ✅ Migrated successfully
+   📄 89674226-c9de-4385-acc0-e99aa04f32d2-b1cad97c8ee708144b0c61a879efbec4-8.jpg → studios/89674226-c9de-4385-acc0-e99aa04f32d2/image-8.jpg
+   ✅ Migrated successfully
+   📄 89674226-c9de-4385-acc0-e99aa04f32d2-b1cad97c8ee708144b0c61a879efbec4-9.jpg → studios/89674226-c9de-4385-acc0-e99aa04f32d2/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Lotus Yoga Shala Acu Thai Ayurvedic Yoga Massage (897092dc-749d-4b2e-a424-adaf46a6b0cf)
+   Found 10 legacy images
+   📄 897092dc-749d-4b2e-a424-adaf46a6b0cf-67b831e168260444356d6254665a8437-0.jpg → studios/897092dc-749d-4b2e-a424-adaf46a6b0cf/image-0.jpg
+   ✅ Migrated successfully
+   📄 897092dc-749d-4b2e-a424-adaf46a6b0cf-67b831e168260444356d6254665a8437-1.jpg → studios/897092dc-749d-4b2e-a424-adaf46a6b0cf/image-1.jpg
+   ✅ Migrated successfully
+   📄 897092dc-749d-4b2e-a424-adaf46a6b0cf-67b831e168260444356d6254665a8437-2.jpg → studios/897092dc-749d-4b2e-a424-adaf46a6b0cf/image-2.jpg
+   ✅ Migrated successfully
+   📄 897092dc-749d-4b2e-a424-adaf46a6b0cf-67b831e168260444356d6254665a8437-3.jpg → studios/897092dc-749d-4b2e-a424-adaf46a6b0cf/image-3.jpg
+   ✅ Migrated successfully
+   📄 897092dc-749d-4b2e-a424-adaf46a6b0cf-67b831e168260444356d6254665a8437-4.jpg → studios/897092dc-749d-4b2e-a424-adaf46a6b0cf/image-4.jpg
+   ✅ Migrated successfully
+   📄 897092dc-749d-4b2e-a424-adaf46a6b0cf-67b831e168260444356d6254665a8437-5.jpg → studios/897092dc-749d-4b2e-a424-adaf46a6b0cf/image-5.jpg
+   ✅ Migrated successfully
+   📄 897092dc-749d-4b2e-a424-adaf46a6b0cf-67b831e168260444356d6254665a8437-6.jpg → studios/897092dc-749d-4b2e-a424-adaf46a6b0cf/image-6.jpg
+   ✅ Migrated successfully
+   📄 897092dc-749d-4b2e-a424-adaf46a6b0cf-67b831e168260444356d6254665a8437-7.jpg → studios/897092dc-749d-4b2e-a424-adaf46a6b0cf/image-7.jpg
+   ✅ Migrated successfully
+   📄 897092dc-749d-4b2e-a424-adaf46a6b0cf-67b831e168260444356d6254665a8437-8.jpg → studios/897092dc-749d-4b2e-a424-adaf46a6b0cf/image-8.jpg
+   ✅ Migrated successfully
+   📄 897092dc-749d-4b2e-a424-adaf46a6b0cf-67b831e168260444356d6254665a8437-9.jpg → studios/897092dc-749d-4b2e-a424-adaf46a6b0cf/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Shizaru Nusa Lembongan Coming Soon (8d336d36-f911-4494-ace5-617e8a22c196)
+   Found 1 legacy images
+   📄 8d336d36-f911-4494-ace5-617e8a22c196-6880c14a83b612fa881cf9c7bdfaced9-0.jpg → studios/8d336d36-f911-4494-ace5-617e8a22c196/image-0.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Ulaman Eco Luxury Resort (8c91fc7c-5fa2-40db-b548-bdc5f8895437)
+   Found 10 legacy images
+   📄 8c91fc7c-5fa2-40db-b548-bdc5f8895437-0a32a8f84a346d8e5b5a29bf59dc1166-0.jpg → retreats/8c91fc7c-5fa2-40db-b548-bdc5f8895437/image-0.jpg
+   ✅ Migrated successfully
+   📄 8c91fc7c-5fa2-40db-b548-bdc5f8895437-0a32a8f84a346d8e5b5a29bf59dc1166-1.jpg → retreats/8c91fc7c-5fa2-40db-b548-bdc5f8895437/image-1.jpg
+   ✅ Migrated successfully
+   📄 8c91fc7c-5fa2-40db-b548-bdc5f8895437-0a32a8f84a346d8e5b5a29bf59dc1166-2.jpg → retreats/8c91fc7c-5fa2-40db-b548-bdc5f8895437/image-2.jpg
+   ✅ Migrated successfully
+   📄 8c91fc7c-5fa2-40db-b548-bdc5f8895437-0a32a8f84a346d8e5b5a29bf59dc1166-3.jpg → retreats/8c91fc7c-5fa2-40db-b548-bdc5f8895437/image-3.jpg
+   ✅ Migrated successfully
+   📄 8c91fc7c-5fa2-40db-b548-bdc5f8895437-0a32a8f84a346d8e5b5a29bf59dc1166-4.jpg → retreats/8c91fc7c-5fa2-40db-b548-bdc5f8895437/image-4.jpg
+   ✅ Migrated successfully
+   📄 8c91fc7c-5fa2-40db-b548-bdc5f8895437-0a32a8f84a346d8e5b5a29bf59dc1166-5.jpg → retreats/8c91fc7c-5fa2-40db-b548-bdc5f8895437/image-5.jpg
+   ✅ Migrated successfully
+   📄 8c91fc7c-5fa2-40db-b548-bdc5f8895437-0a32a8f84a346d8e5b5a29bf59dc1166-6.jpg → retreats/8c91fc7c-5fa2-40db-b548-bdc5f8895437/image-6.jpg
+   ✅ Migrated successfully
+   📄 8c91fc7c-5fa2-40db-b548-bdc5f8895437-0a32a8f84a346d8e5b5a29bf59dc1166-7.jpg → retreats/8c91fc7c-5fa2-40db-b548-bdc5f8895437/image-7.jpg
+   ✅ Migrated successfully
+   📄 8c91fc7c-5fa2-40db-b548-bdc5f8895437-0a32a8f84a346d8e5b5a29bf59dc1166-8.jpg → retreats/8c91fc7c-5fa2-40db-b548-bdc5f8895437/image-8.jpg
+   ✅ Migrated successfully
+   📄 8c91fc7c-5fa2-40db-b548-bdc5f8895437-0a32a8f84a346d8e5b5a29bf59dc1166-9.jpg → retreats/8c91fc7c-5fa2-40db-b548-bdc5f8895437/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Udara Bali Yoga Detox Spa (8cd6515a-ed34-41ec-9fe0-183876ec7be1)
+   Found 10 legacy images
+   📄 8cd6515a-ed34-41ec-9fe0-183876ec7be1-bb0c738f20f01674934e6aef781b8b92-0.jpg → studios/8cd6515a-ed34-41ec-9fe0-183876ec7be1/image-0.jpg
+   ✅ Migrated successfully
+   📄 8cd6515a-ed34-41ec-9fe0-183876ec7be1-bb0c738f20f01674934e6aef781b8b92-1.jpg → studios/8cd6515a-ed34-41ec-9fe0-183876ec7be1/image-1.jpg
+   ✅ Migrated successfully
+   📄 8cd6515a-ed34-41ec-9fe0-183876ec7be1-bb0c738f20f01674934e6aef781b8b92-2.jpg → studios/8cd6515a-ed34-41ec-9fe0-183876ec7be1/image-2.jpg
+   ✅ Migrated successfully
+   📄 8cd6515a-ed34-41ec-9fe0-183876ec7be1-bb0c738f20f01674934e6aef781b8b92-3.jpg → studios/8cd6515a-ed34-41ec-9fe0-183876ec7be1/image-3.jpg
+   ✅ Migrated successfully
+   📄 8cd6515a-ed34-41ec-9fe0-183876ec7be1-bb0c738f20f01674934e6aef781b8b92-4.jpg → studios/8cd6515a-ed34-41ec-9fe0-183876ec7be1/image-4.jpg
+   ✅ Migrated successfully
+   📄 8cd6515a-ed34-41ec-9fe0-183876ec7be1-bb0c738f20f01674934e6aef781b8b92-5.jpg → studios/8cd6515a-ed34-41ec-9fe0-183876ec7be1/image-5.jpg
+   ✅ Migrated successfully
+   📄 8cd6515a-ed34-41ec-9fe0-183876ec7be1-bb0c738f20f01674934e6aef781b8b92-6.jpg → studios/8cd6515a-ed34-41ec-9fe0-183876ec7be1/image-6.jpg
+   ✅ Migrated successfully
+   📄 8cd6515a-ed34-41ec-9fe0-183876ec7be1-bb0c738f20f01674934e6aef781b8b92-7.jpg → studios/8cd6515a-ed34-41ec-9fe0-183876ec7be1/image-7.jpg
+   ✅ Migrated successfully
+   📄 8cd6515a-ed34-41ec-9fe0-183876ec7be1-bb0c738f20f01674934e6aef781b8b92-8.jpg → studios/8cd6515a-ed34-41ec-9fe0-183876ec7be1/image-8.jpg
+   ✅ Migrated successfully
+   📄 8cd6515a-ed34-41ec-9fe0-183876ec7be1-bb0c738f20f01674934e6aef781b8b92-9.jpg → studios/8cd6515a-ed34-41ec-9fe0-183876ec7be1/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Santhika Dream Hill Retreat Center (8da8611d-dfe3-4b93-8399-a55b46ff37a2)
+   Found 10 legacy images
+   📄 8da8611d-dfe3-4b93-8399-a55b46ff37a2-fbff41a9d4d83ac11de198d239d37879-0.jpg → retreats/8da8611d-dfe3-4b93-8399-a55b46ff37a2/image-0.jpg
+   ✅ Migrated successfully
+   📄 8da8611d-dfe3-4b93-8399-a55b46ff37a2-fbff41a9d4d83ac11de198d239d37879-1.jpg → retreats/8da8611d-dfe3-4b93-8399-a55b46ff37a2/image-1.jpg
+   ✅ Migrated successfully
+   📄 8da8611d-dfe3-4b93-8399-a55b46ff37a2-fbff41a9d4d83ac11de198d239d37879-2.jpg → retreats/8da8611d-dfe3-4b93-8399-a55b46ff37a2/image-2.jpg
+   ✅ Migrated successfully
+   📄 8da8611d-dfe3-4b93-8399-a55b46ff37a2-fbff41a9d4d83ac11de198d239d37879-3.jpg → retreats/8da8611d-dfe3-4b93-8399-a55b46ff37a2/image-3.jpg
+   ✅ Migrated successfully
+   📄 8da8611d-dfe3-4b93-8399-a55b46ff37a2-fbff41a9d4d83ac11de198d239d37879-4.jpg → retreats/8da8611d-dfe3-4b93-8399-a55b46ff37a2/image-4.jpg
+   ✅ Migrated successfully
+   📄 8da8611d-dfe3-4b93-8399-a55b46ff37a2-fbff41a9d4d83ac11de198d239d37879-5.jpg → retreats/8da8611d-dfe3-4b93-8399-a55b46ff37a2/image-5.jpg
+   ✅ Migrated successfully
+   📄 8da8611d-dfe3-4b93-8399-a55b46ff37a2-fbff41a9d4d83ac11de198d239d37879-6.jpg → retreats/8da8611d-dfe3-4b93-8399-a55b46ff37a2/image-6.jpg
+   ✅ Migrated successfully
+   📄 8da8611d-dfe3-4b93-8399-a55b46ff37a2-fbff41a9d4d83ac11de198d239d37879-7.jpg → retreats/8da8611d-dfe3-4b93-8399-a55b46ff37a2/image-7.jpg
+   ✅ Migrated successfully
+   📄 8da8611d-dfe3-4b93-8399-a55b46ff37a2-fbff41a9d4d83ac11de198d239d37879-8.jpg → retreats/8da8611d-dfe3-4b93-8399-a55b46ff37a2/image-8.jpg
+   ✅ Migrated successfully
+   📄 8da8611d-dfe3-4b93-8399-a55b46ff37a2-fbff41a9d4d83ac11de198d239d37879-9.jpg → retreats/8da8611d-dfe3-4b93-8399-a55b46ff37a2/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Cepik Villa Sidemen (8dda180e-7a05-4a96-9602-de8c421eb5a7)
+   Found 10 legacy images
+   📄 8dda180e-7a05-4a96-9602-de8c421eb5a7-3c74f31e5660f98650de1004de8a2e5a-0.jpg → studios/8dda180e-7a05-4a96-9602-de8c421eb5a7/image-0.jpg
+   ✅ Migrated successfully
+   📄 8dda180e-7a05-4a96-9602-de8c421eb5a7-3c74f31e5660f98650de1004de8a2e5a-1.jpg → studios/8dda180e-7a05-4a96-9602-de8c421eb5a7/image-1.jpg
+   ✅ Migrated successfully
+   📄 8dda180e-7a05-4a96-9602-de8c421eb5a7-3c74f31e5660f98650de1004de8a2e5a-2.jpg → studios/8dda180e-7a05-4a96-9602-de8c421eb5a7/image-2.jpg
+   ✅ Migrated successfully
+   📄 8dda180e-7a05-4a96-9602-de8c421eb5a7-3c74f31e5660f98650de1004de8a2e5a-3.jpg → studios/8dda180e-7a05-4a96-9602-de8c421eb5a7/image-3.jpg
+   ✅ Migrated successfully
+   📄 8dda180e-7a05-4a96-9602-de8c421eb5a7-3c74f31e5660f98650de1004de8a2e5a-4.jpg → studios/8dda180e-7a05-4a96-9602-de8c421eb5a7/image-4.jpg
+   ✅ Migrated successfully
+   📄 8dda180e-7a05-4a96-9602-de8c421eb5a7-3c74f31e5660f98650de1004de8a2e5a-5.jpg → studios/8dda180e-7a05-4a96-9602-de8c421eb5a7/image-5.jpg
+   ✅ Migrated successfully
+   📄 8dda180e-7a05-4a96-9602-de8c421eb5a7-3c74f31e5660f98650de1004de8a2e5a-6.jpg → studios/8dda180e-7a05-4a96-9602-de8c421eb5a7/image-6.jpg
+   ✅ Migrated successfully
+   📄 8dda180e-7a05-4a96-9602-de8c421eb5a7-3c74f31e5660f98650de1004de8a2e5a-7.jpg → studios/8dda180e-7a05-4a96-9602-de8c421eb5a7/image-7.jpg
+   ✅ Migrated successfully
+   📄 8dda180e-7a05-4a96-9602-de8c421eb5a7-3c74f31e5660f98650de1004de8a2e5a-8.jpg → studios/8dda180e-7a05-4a96-9602-de8c421eb5a7/image-8.jpg
+   ✅ Migrated successfully
+   📄 8dda180e-7a05-4a96-9602-de8c421eb5a7-3c74f31e5660f98650de1004de8a2e5a-9.jpg → studios/8dda180e-7a05-4a96-9602-de8c421eb5a7/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Life In Amed Bali Boutique Hotel (90815158-f225-40a6-a086-f9bf684fbeec)
+   Found 10 legacy images
+   📄 90815158-f225-40a6-a086-f9bf684fbeec-1db9c09f4d7cc361d265edd041dca60d-0.jpg → studios/90815158-f225-40a6-a086-f9bf684fbeec/image-0.jpg
+   ✅ Migrated successfully
+   📄 90815158-f225-40a6-a086-f9bf684fbeec-1db9c09f4d7cc361d265edd041dca60d-1.jpg → studios/90815158-f225-40a6-a086-f9bf684fbeec/image-1.jpg
+   ✅ Migrated successfully
+   📄 90815158-f225-40a6-a086-f9bf684fbeec-1db9c09f4d7cc361d265edd041dca60d-2.jpg → studios/90815158-f225-40a6-a086-f9bf684fbeec/image-2.jpg
+   ✅ Migrated successfully
+   📄 90815158-f225-40a6-a086-f9bf684fbeec-1db9c09f4d7cc361d265edd041dca60d-3.jpg → studios/90815158-f225-40a6-a086-f9bf684fbeec/image-3.jpg
+   ✅ Migrated successfully
+   📄 90815158-f225-40a6-a086-f9bf684fbeec-1db9c09f4d7cc361d265edd041dca60d-4.jpg → studios/90815158-f225-40a6-a086-f9bf684fbeec/image-4.jpg
+   ✅ Migrated successfully
+   📄 90815158-f225-40a6-a086-f9bf684fbeec-1db9c09f4d7cc361d265edd041dca60d-5.jpg → studios/90815158-f225-40a6-a086-f9bf684fbeec/image-5.jpg
+   ✅ Migrated successfully
+   📄 90815158-f225-40a6-a086-f9bf684fbeec-1db9c09f4d7cc361d265edd041dca60d-6.jpg → studios/90815158-f225-40a6-a086-f9bf684fbeec/image-6.jpg
+   ✅ Migrated successfully
+   📄 90815158-f225-40a6-a086-f9bf684fbeec-1db9c09f4d7cc361d265edd041dca60d-7.jpg → studios/90815158-f225-40a6-a086-f9bf684fbeec/image-7.jpg
+   ✅ Migrated successfully
+   📄 90815158-f225-40a6-a086-f9bf684fbeec-1db9c09f4d7cc361d265edd041dca60d-8.jpg → studios/90815158-f225-40a6-a086-f9bf684fbeec/image-8.jpg
+   ✅ Migrated successfully
+   📄 90815158-f225-40a6-a086-f9bf684fbeec-1db9c09f4d7cc361d265edd041dca60d-9.jpg → studios/90815158-f225-40a6-a086-f9bf684fbeec/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Studio Sweet Dance (91878540-11ab-4a0d-be6a-36aab2766428)
+   Found 9 legacy images
+   📄 91878540-11ab-4a0d-be6a-36aab2766428-2b4662b2303fe3f72b901548beeb687e-0.jpg → studios/91878540-11ab-4a0d-be6a-36aab2766428/image-0.jpg
+   ✅ Migrated successfully
+   📄 91878540-11ab-4a0d-be6a-36aab2766428-2b4662b2303fe3f72b901548beeb687e-1.jpg → studios/91878540-11ab-4a0d-be6a-36aab2766428/image-1.jpg
+   ✅ Migrated successfully
+   📄 91878540-11ab-4a0d-be6a-36aab2766428-2b4662b2303fe3f72b901548beeb687e-2.jpg → studios/91878540-11ab-4a0d-be6a-36aab2766428/image-2.jpg
+   ✅ Migrated successfully
+   📄 91878540-11ab-4a0d-be6a-36aab2766428-2b4662b2303fe3f72b901548beeb687e-3.jpg → studios/91878540-11ab-4a0d-be6a-36aab2766428/image-3.jpg
+   ✅ Migrated successfully
+   📄 91878540-11ab-4a0d-be6a-36aab2766428-2b4662b2303fe3f72b901548beeb687e-4.jpg → studios/91878540-11ab-4a0d-be6a-36aab2766428/image-4.jpg
+   ✅ Migrated successfully
+   📄 91878540-11ab-4a0d-be6a-36aab2766428-2b4662b2303fe3f72b901548beeb687e-5.jpg → studios/91878540-11ab-4a0d-be6a-36aab2766428/image-5.jpg
+   ✅ Migrated successfully
+   📄 91878540-11ab-4a0d-be6a-36aab2766428-2b4662b2303fe3f72b901548beeb687e-6.jpg → studios/91878540-11ab-4a0d-be6a-36aab2766428/image-6.jpg
+   ✅ Migrated successfully
+   📄 91878540-11ab-4a0d-be6a-36aab2766428-2b4662b2303fe3f72b901548beeb687e-7.jpg → studios/91878540-11ab-4a0d-be6a-36aab2766428/image-7.jpg
+   ✅ Migrated successfully
+   📄 91878540-11ab-4a0d-be6a-36aab2766428-2b4662b2303fe3f72b901548beeb687e-8.jpg → studios/91878540-11ab-4a0d-be6a-36aab2766428/image-8.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: YMB Yoga School In Bali (9060fe0c-c947-4556-b80f-1b3838945529)
+   Found 10 legacy images
+   📄 9060fe0c-c947-4556-b80f-1b3838945529-3c880070a9406d8c0e631318b6ce12c0-0.jpg → studios/9060fe0c-c947-4556-b80f-1b3838945529/image-0.jpg
+   ✅ Migrated successfully
+   📄 9060fe0c-c947-4556-b80f-1b3838945529-3c880070a9406d8c0e631318b6ce12c0-1.jpg → studios/9060fe0c-c947-4556-b80f-1b3838945529/image-1.jpg
+   ✅ Migrated successfully
+   📄 9060fe0c-c947-4556-b80f-1b3838945529-3c880070a9406d8c0e631318b6ce12c0-2.jpg → studios/9060fe0c-c947-4556-b80f-1b3838945529/image-2.jpg
+   ✅ Migrated successfully
+   📄 9060fe0c-c947-4556-b80f-1b3838945529-3c880070a9406d8c0e631318b6ce12c0-3.jpg → studios/9060fe0c-c947-4556-b80f-1b3838945529/image-3.jpg
+   ✅ Migrated successfully
+   📄 9060fe0c-c947-4556-b80f-1b3838945529-3c880070a9406d8c0e631318b6ce12c0-4.jpg → studios/9060fe0c-c947-4556-b80f-1b3838945529/image-4.jpg
+   ✅ Migrated successfully
+   📄 9060fe0c-c947-4556-b80f-1b3838945529-3c880070a9406d8c0e631318b6ce12c0-5.jpg → studios/9060fe0c-c947-4556-b80f-1b3838945529/image-5.jpg
+   ✅ Migrated successfully
+   📄 9060fe0c-c947-4556-b80f-1b3838945529-3c880070a9406d8c0e631318b6ce12c0-6.jpg → studios/9060fe0c-c947-4556-b80f-1b3838945529/image-6.jpg
+   ✅ Migrated successfully
+   📄 9060fe0c-c947-4556-b80f-1b3838945529-3c880070a9406d8c0e631318b6ce12c0-7.jpg → studios/9060fe0c-c947-4556-b80f-1b3838945529/image-7.jpg
+   ✅ Migrated successfully
+   📄 9060fe0c-c947-4556-b80f-1b3838945529-3c880070a9406d8c0e631318b6ce12c0-8.jpg → studios/9060fe0c-c947-4556-b80f-1b3838945529/image-8.jpg
+   ✅ Migrated successfully
+   📄 9060fe0c-c947-4556-b80f-1b3838945529-3c880070a9406d8c0e631318b6ce12c0-9.jpg → studios/9060fe0c-c947-4556-b80f-1b3838945529/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating studio: Chandra Yoga Bali (9246d1d1-155d-4206-9b72-7dec0044573d)
+   Found 10 legacy images
+   📄 9246d1d1-155d-4206-9b72-7dec0044573d-d9c6afc154023b71735590af54e36214-0.jpg → studios/9246d1d1-155d-4206-9b72-7dec0044573d/image-0.jpg
+   ✅ Migrated successfully
+   📄 9246d1d1-155d-4206-9b72-7dec0044573d-d9c6afc154023b71735590af54e36214-1.jpg → studios/9246d1d1-155d-4206-9b72-7dec0044573d/image-1.jpg
+   ✅ Migrated successfully
+   📄 9246d1d1-155d-4206-9b72-7dec0044573d-d9c6afc154023b71735590af54e36214-2.jpg → studios/9246d1d1-155d-4206-9b72-7dec0044573d/image-2.jpg
+   ✅ Migrated successfully
+   📄 9246d1d1-155d-4206-9b72-7dec0044573d-d9c6afc154023b71735590af54e36214-3.jpg → studios/9246d1d1-155d-4206-9b72-7dec0044573d/image-3.jpg
+   ✅ Migrated successfully
+   📄 9246d1d1-155d-4206-9b72-7dec0044573d-d9c6afc154023b71735590af54e36214-4.jpg → studios/9246d1d1-155d-4206-9b72-7dec0044573d/image-4.jpg
+   ✅ Migrated successfully
+   📄 9246d1d1-155d-4206-9b72-7dec0044573d-d9c6afc154023b71735590af54e36214-5.jpg → studios/9246d1d1-155d-4206-9b72-7dec0044573d/image-5.jpg
+   ✅ Migrated successfully
+   📄 9246d1d1-155d-4206-9b72-7dec0044573d-d9c6afc154023b71735590af54e36214-6.jpg → studios/9246d1d1-155d-4206-9b72-7dec0044573d/image-6.jpg
+   ✅ Migrated successfully
+   📄 9246d1d1-155d-4206-9b72-7dec0044573d-d9c6afc154023b71735590af54e36214-7.jpg → studios/9246d1d1-155d-4206-9b72-7dec0044573d/image-7.jpg
+   ✅ Migrated successfully
+   📄 9246d1d1-155d-4206-9b72-7dec0044573d-d9c6afc154023b71735590af54e36214-8.jpg → studios/9246d1d1-155d-4206-9b72-7dec0044573d/image-8.jpg
+   ✅ Migrated successfully
+   📄 9246d1d1-155d-4206-9b72-7dec0044573d-d9c6afc154023b71735590af54e36214-9.jpg → studios/9246d1d1-155d-4206-9b72-7dec0044573d/image-9.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Boutique Garden Bali (97d6036c-2107-4318-96ab-c11901e6391e)
+   Found 0 legacy images
+   ⚠️  No legacy images found
+
+📁 Migrating retreat: Windu Sara Murti (9845b950-5130-43cc-af80-d8676febe513)
+   Found 3 legacy images
+   📄 9845b950-5130-43cc-af80-d8676febe513-37b2042adfb6e1e631884a8fb61b06d0-0.jpg → retreats/9845b950-5130-43cc-af80-d8676febe513/image-0.jpg
+   ✅ Migrated successfully
+   📄 9845b950-5130-43cc-af80-d8676febe513-37b2042adfb6e1e631884a8fb61b06d0-1.jpg → retreats/9845b950-5130-43cc-af80-d8676febe513/image-1.jpg
+   ✅ Migrated successfully
+   📄 9845b950-5130-43cc-af80-d8676febe513-37b2042adfb6e1e631884a8fb61b06d0-2.jpg → retreats/9845b950-5130-43cc-af80-d8676febe513/image-2.jpg
+   ✅ Migrated successfully
+
+📁 Migrating retreat: Nandini Jungle By Hanging Gardens (96928f37-b985-453d-a2c9-9f7604e4c3df)
+   Found 10 legacy images
+   📄 96928f37-b985-453d-a2c9-9f7604e4c3df-fb8fa20175d540fd73c461b192f3b653-0.jpg → retreats/96928f37-b985-453d-a2c9-9f7604e4c3df/image-0.jpg
+   ✅ Migrated successfully
+   📄 96928f37-b985-453d-a2c9-9f7604e4c3df-fb8fa20175d540fd73c461b192f3b653-1.jpg → retreats/96928f37-b985-453d-a2c9-9f7604e4c3df/image-1.jpg
