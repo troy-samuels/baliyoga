@@ -5,11 +5,11 @@ import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 import { getAllRetreats } from "@/lib/supabase-server"
 import { LazySection } from "@/components/lazy-section"
 import { filterRetreats, getLocationDisplayName } from "@/lib/search-utils"
-import { MobileOptimizedSidebar } from "@/components/mobile-optimized-sidebar"
 import { FunctionalSearchBar } from "@/components/functional-search-bar"
 import { PopularitySortedGrid } from "@/components/popularity-sorted-grid"
 import { PopularityDemo } from "@/components/popularity-demo"
 import { CategorySchema } from "@/components/category-schema"
+import { RetreatsPageClient } from "@/components/retreats-page-client"
 
 export default async function RetreatsPage({
   searchParams,
@@ -23,26 +23,34 @@ export default async function RetreatsPage({
   const rating = typeof resolvedSearchParams.rating === "string" ? parseFloat(resolvedSearchParams.rating) : undefined;
   const reviews = typeof resolvedSearchParams.reviews === "string" ? parseInt(resolvedSearchParams.reviews) : undefined;
   const images = resolvedSearchParams.images === "true";
+  const duration = typeof resolvedSearchParams.duration === "string" ? resolvedSearchParams.duration : undefined;
+  const retreatType = typeof resolvedSearchParams.retreatType === "string" ? resolvedSearchParams.retreatType : undefined;
+  const accommodation = typeof resolvedSearchParams.accommodation === "string" ? resolvedSearchParams.accommodation : undefined;
+  const price = typeof resolvedSearchParams.price === "string" ? resolvedSearchParams.price : undefined;
 
   // Server-side data fetching with cached results
   const allRetreats = await getAllRetreats()
 
-  // Apply filters
-  const filteredRetreats = filterRetreats(allRetreats, {
+  // Apply basic filters for server-side rendering
+  const basicFilteredRetreats = filterRetreats(allRetreats, {
     query,
     location,
     type,
     rating,
     reviews,
     images,
+    duration,
+    retreatType,
+    accommodation,
+    price,
   })
 
-  const hasFilters = query || (location && location !== "all") || rating || reviews || images
+  const hasFilters = query || (location && location !== "all") || rating || reviews || images || duration || retreatType || accommodation || price
   const locationDisplay = location ? getLocationDisplayName(location) : null
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
-      <CategorySchema type="retreats" items={filteredRetreats} totalCount={allRetreats.length} />
+      <CategorySchema type="retreats" items={basicFilteredRetreats} totalCount={allRetreats.length} />
       <MobileOptimizedHeader />
 
       {/* Header */}
@@ -82,31 +90,12 @@ export default async function RetreatsPage({
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:py-12 md:px-6">
-        <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
-          {/* Left Sidebar Filters */}
-          <MobileOptimizedSidebar />
-
-          {/* Right Content Area */}
-          <div className="flex-1 space-y-6">
-            {/* Retreats Count */}
-            <div className="mb-2 sm:mb-4">
-              <p className="text-sm text-[#5d4c42] sm:text-base">
-                <span className="font-medium">{filteredRetreats.length}</span> retreats found
-                {hasFilters && (
-                  <span className="ml-2 text-xs text-[#5d4c42]/60">(filtered from {allRetreats.length} total)</span>
-                )}
-              </p>
-            </div>
-
-            {/* Retreats Grid with Popularity Sorting */}
-            <LazySection>
-              <PopularitySortedGrid items={filteredRetreats} type="retreat" />
-            </LazySection>
-          </div>
-        </div>
-      </div>
+      {/* Main Content with Enhanced Filtering */}
+      <RetreatsPageClient
+        allRetreats={allRetreats}
+        initialFilteredRetreats={basicFilteredRetreats}
+        hasFilters={hasFilters}
+      />
 
       <MobileOptimizedFooter />
       
