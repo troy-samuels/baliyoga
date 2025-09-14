@@ -176,8 +176,8 @@ export function SmartFilterSidebar({
     return (
       <div
         key={option.id}
-        className={`flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 ${
-          isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+        className={`flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 min-h-[44px] transition-colors ${
+          isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#a39188] focus:ring-opacity-50'
         } ${isSelected ? 'bg-[#f9f5f1] border border-[#e6ceb3]' : ''}`}
         onClick={() => {
           if (isDisabled) return
@@ -188,6 +188,22 @@ export function SmartFilterSidebar({
             handleSingleSelect(category.id, option.id)
           }
         }}
+        onKeyDown={(e) => {
+          if (isDisabled) return
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            if (category.multiSelect) {
+              handleMultiSelect(category.id, option.id)
+            } else {
+              handleSingleSelect(category.id, option.id)
+            }
+          }
+        }}
+        tabIndex={isDisabled ? -1 : 0}
+        role="button"
+        aria-pressed={isSelected}
+        aria-label={`${isSelected ? 'Unselect' : 'Select'} ${option.label} filter option`}
+        aria-disabled={isDisabled}
       >
         <div className="flex items-center space-x-3 flex-1 min-w-0">
           {category.multiSelect && (
