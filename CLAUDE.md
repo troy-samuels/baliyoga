@@ -5,15 +5,30 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 A Next.js 15 application for discovering yoga studios and retreats across Bali, evolving into a comprehensive wellness marketplace. Mobile-first design with SSR architecture, Supabase backend, and comprehensive filtering/search capabilities.
 
-**Strategic Goal**: Transform from high-quality directory into £100,000/month revenue marketplace through 4 phases:
-- **Phase 0 (Months 1-3)**: Foundation Excellence - 95% quality score, perfect UX
-- **Phase 1 (Months 4-6)**: Engagement & Analytics - Studio dashboards, community building  
-- **Phase 2 (Months 7-9)**: Premium Value - Monetization with clear ROI
-- **Phase 3 (Months 10-12)**: Full Marketplace - Complete ecosystem
+**Strategic Goal**: Transform from high-quality directory into £25,000/month sustainable revenue marketplace through realistic growth phases:
+- **Phase 0 (Months 1-12)**: Foundation Excellence - 95% quality score, subscription system
+- **Phase 1 (Months 4-18)**: Premium Engagement - Studio dashboards, analytics, services
+- **Phase 2 (Months 12-24)**: Revenue Optimization - Enhanced services, commission system
+- **Phase 3 (Months 18-36)**: Market Leadership - Complete ecosystem, expansion potential
 
-**Current Status**: Phase 0 completion ready with 450 profiles, 85.5% quality score, 63.8% email coverage, comprehensive information availability system implemented
+**Current Status**: Phase 0 subscription implementation complete with 450 profiles, 82.7% quality score, 42.4% email coverage, realistic $45/month premium tier deployed
 
 ## 🚀 Recent Feature Implementations
+
+### **Realistic Revenue Strategy Implementation (September 2025)**
+- **$45/Month Premium Subscription**: Market-appropriate pricing for Indonesian studios
+- **Premium Card Components**: Enhanced visual treatment with unlimited images, crown badges
+- **Priority Search Algorithm**: Premium studios get 50-point boost while maintaining quality relevance
+- **Subscription Infrastructure**: Complete TypeScript types, services, and utilities
+- **Revenue Projections**: Realistic £25,000/month target based on actual market conditions
+- **Mock Premium System**: Development framework for testing subscription features
+
+### **Premium Studio Features**
+- **Unlimited Image Display**: Image cycling functionality vs 3-image limit for free
+- **Enhanced Visual Treatment**: Amber/gold styling, crown badges, premium indicators
+- **Priority Search Placement**: Algorithm prioritizes premium while respecting quality
+- **Business Description Preview**: Only shown for premium subscribers
+- **Advanced Analytics Access**: Foundation for dashboard implementation
 
 ### **Information Availability System (September 2025)**
 - **Contact Information Filters**: Users can filter by phone, website, email, business description availability
@@ -85,9 +100,13 @@ Server Components (default) → Static Rendering → Client Hydration (minimal)
 - **No hydration mismatches** - Avoid `typeof window` checks, use proper loading states
 
 ### Key File Locations
-- **Types**: `lib/types.ts` - All TypeScript interfaces/types go here
-- **Database**: `lib/supabase-server.ts` - Server-side Supabase operations  
+- **Types**: `lib/types.ts` - All TypeScript interfaces/types including subscription models
+- **Database**: `lib/supabase-server.ts` - Server-side Supabase operations
+- **Premium Database**: `lib/premium-supabase-server.ts` - Subscription-aware data fetching
+- **Subscription Service**: `lib/subscription-service.ts` - Core subscription business logic
+- **Subscription Utils**: `lib/subscription-utils.ts` - Premium feature utilities and helpers
 - **Components**: `components/ui/` - Radix UI base components
+- **Premium Components**: `components/premium-mobile-card.tsx` - Enhanced premium card display
 - **Utils**: `lib/*-utils.ts` - Domain-specific utilities (slug, security, analytics, email)
 - **Routes**: `app/` - Next.js App Router structure
 - **Scripts**: `scripts/` - Data processing, enhancement, and quality scripts
@@ -99,6 +118,8 @@ Server Components (default) → Static Rendering → Client Hydration (minimal)
 - **Reviews table**: `reviews`
 
 **Phase 0 Additions:**
+- **Subscription system**: `subscription_plans`, `studio_subscriptions`, `subscription_analytics`
+- **Revenue tracking**: `booking_transactions`, `monthly_revenue_summaries`
 - **Blog system**: `blog_posts`, `blog_categories`
 - **User engagement**: `user_wishlists`, `search_queries`, `newsletter_subscribers`
 - **Quality tracking**: Add quality scoring columns to main table

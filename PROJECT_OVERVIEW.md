@@ -18,6 +18,9 @@
 
 ### Key Business Metrics
 - **450+ Verified Profiles** - Comprehensive database of yoga studios and retreats
+- **Realistic Revenue Target** - £25,000/month through $45 premium subscriptions
+- **Market-Appropriate Pricing** - Aligned with Indonesian economic conditions
+- **Subscription Infrastructure** - Complete premium tier implementation ready for launch
 - **42.4% Contact Coverage** - 191 profiles with verified email addresses (up from 28.4%)
 - **82.7% Quality Score** - Industry-leading data completeness and accuracy
 - **Mobile-First Design** - Optimized for travelers with limited connectivity
@@ -141,6 +144,8 @@ Built on modern, scalable technologies optimized for performance and SEO.
 - **Supabase** - PostgreSQL with real-time features, Row Level Security (RLS)
 - **Server Components** - Zero-JavaScript homepage, SSR-first architecture
 - **React Cache** - Server-side data caching and deduplication
+- **Subscription System** - Complete revenue management with premium features
+- **Premium Data Layer** - Subscription-aware queries and priority algorithms
 
 #### Frontend Technologies
 - **Tailwind CSS 3.4.17** - Utility-first styling

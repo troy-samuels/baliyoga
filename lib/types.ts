@@ -359,6 +359,132 @@ export interface RetreatCardProps extends BaseCardProps {
 // Export a union type for easy use
 export type CardProps = StudioCardProps | RetreatCardProps
 
+// Subscription types for studio revenue model
+export interface SubscriptionPlan {
+  id: string
+  name: string
+  description: string
+  price_usd: number
+  price_idr: number
+  billing_cycle: 'monthly' | 'yearly'
+  features: SubscriptionFeature[]
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface SubscriptionFeature {
+  id: string
+  name: string
+  description: string
+  category: 'listing' | 'analytics' | 'marketing' | 'support' | 'integration'
+  is_premium: boolean
+}
+
+export interface StudioSubscription {
+  id: string
+  studio_id: string
+  plan_id: string
+  status: SubscriptionStatus
+  current_period_start: string
+  current_period_end: string
+  stripe_subscription_id?: string
+  payment_method?: PaymentMethod
+  trial_ends_at?: string
+  cancelled_at?: string
+  created_at: string
+  updated_at: string
+}
+
+export type SubscriptionStatus =
+  | 'active'
+  | 'trialing'
+  | 'past_due'
+  | 'cancelled'
+  | 'expired'
+  | 'incomplete'
+
+export interface PaymentMethod {
+  type: 'card' | 'bank_transfer' | 'e_wallet'
+  last_digits?: string
+  brand?: string
+  country?: string
+}
+
+export interface SubscriptionAnalytics {
+  studio_id: string
+  period_start: string
+  period_end: string
+  profile_views: number
+  contact_clicks: number
+  website_clicks: number
+  phone_clicks: number
+  search_appearances: number
+  search_position_avg: number
+  booking_inquiries: number
+  conversion_rate: number
+  top_keywords: string[]
+  created_at: string
+}
+
+export interface StudioDashboardData {
+  subscription: StudioSubscription | null
+  analytics: SubscriptionAnalytics
+  profile_completion: number
+  recent_activities: DashboardActivity[]
+  notifications: DashboardNotification[]
+}
+
+export interface DashboardActivity {
+  id: string
+  type: 'profile_view' | 'contact_click' | 'booking_inquiry' | 'review_received'
+  description: string
+  timestamp: string
+  metadata?: Record<string, any>
+}
+
+export interface DashboardNotification {
+  id: string
+  type: 'info' | 'warning' | 'success' | 'error'
+  title: string
+  message: string
+  action_url?: string
+  action_text?: string
+  is_read: boolean
+  created_at: string
+}
+
+// Revenue tracking types
+export interface BookingTransaction {
+  id: string
+  studio_id: string
+  customer_email: string
+  service_type: 'drop_in' | 'package' | 'retreat' | 'teacher_training'
+  amount_usd: number
+  commission_rate: number
+  commission_amount: number
+  platform_fee: number
+  studio_payout: number
+  payment_status: 'pending' | 'completed' | 'failed' | 'refunded'
+  booking_date: string
+  service_date: string
+  created_at: string
+}
+
+export interface MonthlyRevenueSummary {
+  month: string
+  year: number
+  subscription_revenue: number
+  commission_revenue: number
+  service_revenue: number
+  total_revenue: number
+  active_subscribers: number
+  new_subscribers: number
+  churned_subscribers: number
+  total_bookings: number
+  average_booking_value: number
+}
+
 // Supabase specific types
 export interface SupabaseResponse<T = any> {
   data: T | null
