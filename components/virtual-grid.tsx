@@ -16,6 +16,13 @@ interface VirtualGridProps {
     price?: string
     phone_number?: string
     website?: string
+    business_description?: string
+    email?: string
+    instagram_url?: string
+    facebook_url?: string
+    whatsapp_number?: string
+    youtube_url?: string
+    tiktok_url?: string
   }>
   type: "studio" | "retreat"
   itemsPerPage?: number
@@ -51,6 +58,13 @@ export function VirtualGrid({ items, type, itemsPerPage = 20 }: VirtualGridProps
             price={item.price}
             phone_number={item.phone_number}
             website={item.website}
+            business_description={item.business_description}
+            email={item.email}
+            instagram_url={item.instagram_url}
+            facebook_url={item.facebook_url}
+            whatsapp_number={item.whatsapp_number}
+            youtube_url={item.youtube_url}
+            tiktok_url={item.tiktok_url}
           />
         ))}
       </div>

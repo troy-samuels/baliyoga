@@ -18,10 +18,7 @@ export default async function Home() {
       getFeaturedRetreats(4),
     ])
 
-    console.log('Homepage data loaded:', {
-      studiosCount: topStudios.length,
-      retreatsCount: topRetreats.length
-    })
+    // Homepage data loaded successfully
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">

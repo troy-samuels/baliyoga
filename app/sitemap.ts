@@ -149,7 +149,7 @@ async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   ]
 
-  console.log(`Generated sitemap with ${staticPages.length} static pages, ${studioPages.length} studios, ${retreatPages.length} retreats, ${claimPages.length} claim pages`)
+  // Generated sitemap successfully
 
   return [...staticPages, ...studioPages, ...retreatPages, ...claimPages]
 }

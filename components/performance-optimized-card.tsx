@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { MapPin, Phone, Globe } from "lucide-react"
+import { MapPin, Phone, Globe, Instagram, Facebook, MessageCircle, Youtube, Music, Mail, FileText } from "lucide-react"
 import { SimpleImage } from "./simple-image"
 import { WishlistHeart } from "./wishlist-heart"
 import { PopularityBadge } from "./popularity-badge"
@@ -22,6 +22,13 @@ interface CardProps {
   price?: string
   phone_number?: string
   website?: string
+  business_description?: string
+  email?: string
+  instagram_url?: string
+  facebook_url?: string
+  whatsapp_number?: string
+  youtube_url?: string
+  tiktok_url?: string
 }
 
 export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
@@ -38,6 +45,13 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
   price,
   phone_number,
   website,
+  business_description,
+  email,
+  instagram_url,
+  facebook_url,
+  whatsapp_number,
+  youtube_url,
+  tiktok_url,
 }: CardProps) {
   const href = `/${type}/${slug}`
 
@@ -54,6 +68,13 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
     price,
     phone_number,
     website,
+    business_description,
+    email,
+    instagram_url,
+    facebook_url,
+    whatsapp_number,
+    youtube_url,
+    tiktok_url,
   }
 
   return (
@@ -92,14 +113,67 @@ export const PerformanceOptimizedCard = memo(function PerformanceOptimizedCard({
             </div>
           )}
           
-          {/* Contact Information */}
-          {(phone_number || website) && (
-            <div className="mt-2 flex items-center gap-2 sm:gap-3 text-sm text-[#5d4c42]">
-              {phone_number && (
-                <Phone className="h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4" />
+          {/* Information Availability Indicators */}
+          {(phone_number?.trim() || website?.trim() || email?.trim() || business_description?.trim() ||
+            instagram_url?.trim() || facebook_url?.trim() || whatsapp_number?.trim() ||
+            youtube_url?.trim() || tiktok_url?.trim()) && (
+            <div className="mt-2 space-y-1">
+              {/* Contact Information Row */}
+              {(phone_number?.trim() || website?.trim() || email?.trim() || business_description?.trim()) && (
+                <div className="flex items-center gap-2 flex-wrap">
+                  {phone_number?.trim() && (
+                    <div className="rounded-full bg-[#e6ceb3] p-1" title="Phone available">
+                      <Phone className="h-3 w-3 text-[#5d4c42]" />
+                    </div>
+                  )}
+                  {website?.trim() && (
+                    <div className="rounded-full bg-[#e6ceb3] p-1" title="Website available">
+                      <Globe className="h-3 w-3 text-[#5d4c42]" />
+                    </div>
+                  )}
+                  {email?.trim() && (
+                    <div className="rounded-full bg-[#e6ceb3] p-1" title="Email available">
+                      <Mail className="h-3 w-3 text-[#5d4c42]" />
+                    </div>
+                  )}
+                  {business_description?.trim() && (
+                    <div className="rounded-full bg-[#e6ceb3] p-1" title="Description available">
+                      <FileText className="h-3 w-3 text-[#5d4c42]" />
+                    </div>
+                  )}
+                </div>
               )}
-              {website && (
-                <Globe className="h-3 w-3 flex-shrink-0 sm:h-4 sm:w-4" />
+
+              {/* Social Media Row */}
+              {(instagram_url?.trim() || facebook_url?.trim() || whatsapp_number?.trim() ||
+                youtube_url?.trim() || tiktok_url?.trim()) && (
+                <div className="flex items-center gap-2 flex-wrap">
+                  {instagram_url?.trim() && (
+                    <div className="rounded-full bg-[#e6ceb3] p-1" title="Instagram available">
+                      <Instagram className="h-3 w-3 text-[#5d4c42]" />
+                    </div>
+                  )}
+                  {facebook_url?.trim() && (
+                    <div className="rounded-full bg-[#e6ceb3] p-1" title="Facebook available">
+                      <Facebook className="h-3 w-3 text-[#5d4c42]" />
+                    </div>
+                  )}
+                  {whatsapp_number?.trim() && (
+                    <div className="rounded-full bg-[#e6ceb3] p-1" title="WhatsApp available">
+                      <MessageCircle className="h-3 w-3 text-[#5d4c42]" />
+                    </div>
+                  )}
+                  {youtube_url?.trim() && (
+                    <div className="rounded-full bg-[#e6ceb3] p-1" title="YouTube available">
+                      <Youtube className="h-3 w-3 text-[#5d4c42]" />
+                    </div>
+                  )}
+                  {tiktok_url?.trim() && (
+                    <div className="rounded-full bg-[#e6ceb3] p-1" title="TikTok available">
+                      <Music className="h-3 w-3 text-[#5d4c42]" />
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           )}

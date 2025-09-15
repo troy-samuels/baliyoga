@@ -119,6 +119,27 @@ export const PRICE_FILTERS: FilterOption[] = [
   { id: 'luxury', label: 'Luxury ($50+)', count: 20, description: 'Resort and luxury venues' }
 ]
 
+// Contact information availability filters
+export const CONTACT_INFO_FILTERS: FilterOption[] = [
+  { id: 'all', label: 'All Studios', count: 450 },
+  { id: 'has-phone', label: 'Has Phone Number', count: 385, quality: 'high', description: 'Direct phone contact available' },
+  { id: 'has-website', label: 'Has Website', count: 302, quality: 'high', description: 'Official website available' },
+  { id: 'has-email', label: 'Has Email Address', count: 287, quality: 'high', description: 'Email contact available' },
+  { id: 'has-description', label: 'Has Business Description', count: 270, quality: 'high', description: 'Detailed studio information' },
+  { id: 'complete-contact', label: 'Complete Contact Info', count: 245, quality: 'high', description: 'Phone, website, and email' }
+]
+
+// Social media availability filters
+export const SOCIAL_MEDIA_FILTERS: FilterOption[] = [
+  { id: 'all', label: 'All Studios', count: 450 },
+  { id: 'has-instagram', label: 'Has Instagram', count: 250, quality: 'high', description: 'Instagram profile available' },
+  { id: 'has-facebook', label: 'Has Facebook', count: 227, quality: 'high', description: 'Facebook page available' },
+  { id: 'has-whatsapp', label: 'Has WhatsApp', count: 345, quality: 'high', description: 'WhatsApp contact available' },
+  { id: 'has-youtube', label: 'Has YouTube', count: 85, description: 'YouTube channel available' },
+  { id: 'has-tiktok', label: 'Has TikTok', count: 45, description: 'TikTok profile available' },
+  { id: 'any-social-media', label: 'Any Social Media', count: 380, quality: 'high', description: 'At least one social platform' }
+]
+
 /**
  * Get all available filter categories
  */
@@ -137,6 +158,20 @@ export function getFilterCategories(): FilterCategory[] {
       icon: 'Star',
       options: QUALITY_FILTERS,
       multiSelect: false
+    },
+    {
+      id: 'contact-info',
+      label: 'Contact Information Available',
+      icon: 'Phone',
+      options: CONTACT_INFO_FILTERS,
+      multiSelect: true
+    },
+    {
+      id: 'social-media',
+      label: 'Social Media Available',
+      icon: 'Instagram',
+      options: SOCIAL_MEDIA_FILTERS,
+      multiSelect: true
     },
     {
       id: 'yoga-styles',
@@ -243,6 +278,46 @@ export function calculateFilterCounts(studios: Studio[]): {[categoryId: string]:
     // Quality (based on completion metrics)
     // This would need to be calculated based on profile completeness
     // For now, using static estimates
+
+    // Contact Information availability
+    if (studio.phone_number && studio.phone_number.trim()) {
+      counts['contact-info']['has-phone']++
+    }
+    if (studio.website && studio.website.trim()) {
+      counts['contact-info']['has-website']++
+    }
+    if (studio.email && studio.email.trim()) {
+      counts['contact-info']['has-email']++
+    }
+    if (studio.business_description && studio.business_description.trim()) {
+      counts['contact-info']['has-description']++
+    }
+    // Complete contact info (phone, website, and email)
+    if (studio.phone_number?.trim() && studio.website?.trim() && studio.email?.trim()) {
+      counts['contact-info']['complete-contact']++
+    }
+
+    // Social Media availability
+    if (studio.instagram_url && studio.instagram_url.trim()) {
+      counts['social-media']['has-instagram']++
+    }
+    if (studio.facebook_url && studio.facebook_url.trim()) {
+      counts['social-media']['has-facebook']++
+    }
+    if (studio.whatsapp_number && studio.whatsapp_number.trim()) {
+      counts['social-media']['has-whatsapp']++
+    }
+    if (studio.youtube_url && studio.youtube_url.trim()) {
+      counts['social-media']['has-youtube']++
+    }
+    if (studio.tiktok_url && studio.tiktok_url.trim()) {
+      counts['social-media']['has-tiktok']++
+    }
+    // Any social media (at least one platform)
+    if (studio.instagram_url?.trim() || studio.facebook_url?.trim() || studio.whatsapp_number?.trim() ||
+        studio.youtube_url?.trim() || studio.tiktok_url?.trim()) {
+      counts['social-media']['any-social-media']++
+    }
 
     // Features (based on profile analysis)
     const name = studio.name.toLowerCase()

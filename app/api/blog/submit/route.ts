@@ -98,12 +98,8 @@ export async function POST(request: Request) {
     saveSubmissions(submissions)
 
     // In a real app, you might want to send an email notification here
-    console.log("New blog submission received:", {
-      id: newSubmission.id,
-      title: newSubmission.title,
-      author: newSubmission.authorName,
-      wordCount: newSubmission.wordCount,
-    })
+    // New blog submission received - consider logging to analytics
+    // Submission details: id, title, author, wordCount
 
     return NextResponse.json({ success: true, id: newSubmission.id }, { status: 201 })
   } catch (error) {

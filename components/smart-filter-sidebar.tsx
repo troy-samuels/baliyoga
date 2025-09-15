@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { MapPin, DollarSign, Star, Hotel, Target, Check, X, Filter, Globe, Sparkles, Users } from "lucide-react"
+import { MapPin, DollarSign, Star, Hotel, Target, Check, X, Filter, Globe, Sparkles, Users, Phone, Instagram } from "lucide-react"
 import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
 import { Checkbox } from "./ui/checkbox"
@@ -30,12 +30,14 @@ interface SmartFilterSidebarProps {
 const CATEGORY_ICONS = {
   'location': MapPin,
   'quality': Star,
+  'contact-info': Phone,
+  'social-media': Instagram,
   'yoga-styles': Target,
   'amenities': Hotel,
   'languages': Globe,
   'features': Sparkles,
   'price': DollarSign
-}
+} as const
 
 export function SmartFilterSidebar({
   studios,
@@ -52,6 +54,8 @@ export function SmartFilterSidebar({
     query: searchParams.get('q') || '',
     location: searchParams.get('location') || 'all',
     quality: searchParams.get('quality') || 'all',
+    contactInfo: searchParams.get('contactInfo')?.split(',').filter(Boolean) || [],
+    socialMedia: searchParams.get('socialMedia')?.split(',').filter(Boolean) || [],
     yogaStyles: searchParams.get('yogaStyles')?.split(',').filter(Boolean) || [],
     amenities: searchParams.get('amenities')?.split(',').filter(Boolean) || [],
     languages: searchParams.get('languages')?.split(',').filter(Boolean) || [],
@@ -87,6 +91,8 @@ export function SmartFilterSidebar({
     if (newFilters.query) params.set('q', newFilters.query)
     if (newFilters.location && newFilters.location !== 'all') params.set('location', newFilters.location)
     if (newFilters.quality && newFilters.quality !== 'all') params.set('quality', newFilters.quality)
+    if (newFilters.contactInfo?.length) params.set('contactInfo', newFilters.contactInfo.join(','))
+    if (newFilters.socialMedia?.length) params.set('socialMedia', newFilters.socialMedia.join(','))
     if (newFilters.yogaStyles?.length) params.set('yogaStyles', newFilters.yogaStyles.join(','))
     if (newFilters.amenities?.length) params.set('amenities', newFilters.amenities.join(','))
     if (newFilters.languages?.length) params.set('languages', newFilters.languages.join(','))
@@ -129,6 +135,8 @@ export function SmartFilterSidebar({
       query: filters.query, // Keep search query
       location: 'all',
       quality: 'all',
+      contactInfo: [],
+      socialMedia: [],
       yogaStyles: [],
       amenities: [],
       languages: [],
@@ -143,6 +151,8 @@ export function SmartFilterSidebar({
     let count = 0
     if (filters.location !== 'all') count++
     if (filters.quality !== 'all') count++
+    if (filters.contactInfo?.length) count += filters.contactInfo.length
+    if (filters.socialMedia?.length) count += filters.socialMedia.length
     if (filters.yogaStyles?.length) count += filters.yogaStyles.length
     if (filters.amenities?.length) count += filters.amenities.length
     if (filters.languages?.length) count += filters.languages.length
@@ -257,6 +267,10 @@ export function SmartFilterSidebar({
         case 'price':
           const singleValue = filters[category.id as keyof SearchFilters] as string
           return singleValue === 'all' ? [] : [singleValue]
+        case 'contact-info':
+          return filters.contactInfo || []
+        case 'social-media':
+          return filters.socialMedia || []
         case 'yoga-styles':
           return filters.yogaStyles || []
         case 'amenities':

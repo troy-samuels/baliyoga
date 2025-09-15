@@ -7,6 +7,8 @@ export interface SearchFilters {
   images?: boolean
   // Enhanced filters
   quality?: string
+  contactInfo?: string[]
+  socialMedia?: string[]
   yogaStyles?: string[]
   amenities?: string[]
   languages?: string[]
@@ -117,6 +119,58 @@ export function filterStudios(studios: any[], filters: SearchFilters) {
     if (qualityFilter) {
       filtered = filtered.filter(qualityFilter)
     }
+  }
+
+  // Filter by contact information availability
+  if (filters.contactInfo && filters.contactInfo.length > 0) {
+    filtered = filtered.filter((studio) => {
+      return filters.contactInfo!.some(contactFilter => {
+        switch (contactFilter) {
+          case 'has-phone':
+            return Boolean(studio.phone_number?.trim())
+          case 'has-website':
+            return Boolean(studio.website?.trim())
+          case 'has-email':
+            return Boolean(studio.email?.trim())
+          case 'has-description':
+            return Boolean(studio.business_description?.trim())
+          case 'complete-contact':
+            return Boolean(studio.phone_number?.trim() && studio.website?.trim() && studio.email?.trim())
+          default:
+            return false
+        }
+      })
+    })
+  }
+
+  // Filter by social media availability
+  if (filters.socialMedia && filters.socialMedia.length > 0) {
+    filtered = filtered.filter((studio) => {
+      return filters.socialMedia!.some(socialFilter => {
+        switch (socialFilter) {
+          case 'has-instagram':
+            return Boolean(studio.instagram_url?.trim())
+          case 'has-facebook':
+            return Boolean(studio.facebook_url?.trim())
+          case 'has-whatsapp':
+            return Boolean(studio.whatsapp_number?.trim())
+          case 'has-youtube':
+            return Boolean(studio.youtube_url?.trim())
+          case 'has-tiktok':
+            return Boolean(studio.tiktok_url?.trim())
+          case 'any-social-media':
+            return Boolean(
+              studio.instagram_url?.trim() ||
+              studio.facebook_url?.trim() ||
+              studio.whatsapp_number?.trim() ||
+              studio.youtube_url?.trim() ||
+              studio.tiktok_url?.trim()
+            )
+          default:
+            return false
+        }
+      })
+    })
   }
 
   // Filter by yoga styles

@@ -17,6 +17,13 @@ export interface BaseItem {
     area: string
   }
   category: string
+  // Social Media Fields
+  instagram_url?: string
+  instagram_handle?: string
+  facebook_url?: string
+  tiktok_url?: string
+  youtube_url?: string
+  whatsapp_number?: string
   createdAt?: string
   updatedAt?: string
 }
@@ -74,6 +81,13 @@ export interface DatabaseStudio {
   price_range?: string
   opening_hours?: OpeningHours[] | null
   category_name?: string
+  // Social Media Fields
+  instagram_url?: string
+  instagram_handle?: string
+  facebook_url?: string
+  tiktok_url?: string
+  youtube_url?: string
+  whatsapp_number?: string
   created_at?: string
   updated_at?: string
 }
@@ -100,6 +114,13 @@ export interface DatabaseRetreat {
   certification_offered?: boolean
   level_requirements?: string[] | null
   category_name?: string
+  // Social Media Fields
+  instagram_url?: string
+  instagram_handle?: string
+  facebook_url?: string
+  tiktok_url?: string
+  youtube_url?: string
+  whatsapp_number?: string
   created_at?: string
   updated_at?: string
 }

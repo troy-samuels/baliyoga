@@ -74,7 +74,7 @@ export function PerformanceOptimizer() {
         new PerformanceObserver((list) => {
           const entries = list.getEntries()
           const lastEntry = entries[entries.length - 1]
-          console.log('LCP:', lastEntry.startTime)
+          // Performance metrics could be sent to analytics here
         }).observe({ entryTypes: ['largest-contentful-paint'] })
 
         // First Input Delay
@@ -83,7 +83,7 @@ export function PerformanceOptimizer() {
           entries.forEach(entry => {
             const performanceEntry = entry as any
             if (performanceEntry.processingStart) {
-              console.log('FID:', performanceEntry.processingStart - performanceEntry.startTime)
+              // FID metrics could be sent to analytics here
             }
           })
         }).observe({ entryTypes: ['first-input'] })
@@ -96,7 +96,7 @@ export function PerformanceOptimizer() {
               clsValue += (entry as any).value
             }
           }
-          console.log('CLS:', clsValue)
+          // CLS metrics could be sent to analytics here
         }).observe({ entryTypes: ['layout-shift'] })
       } catch (error) {
         console.warn('Performance observer error:', error)
