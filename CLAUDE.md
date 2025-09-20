@@ -194,8 +194,8 @@ NEXT_PUBLIC_GOOGLE_PLACES_API_KEY=your_places_key    # Business data enhancement
 RESEND_API_KEY=your_resend_key                      # Email delivery service
 NEWSLETTER_FROM_EMAIL=newsletter@baliyoga.com
 
-# Analytics & Monitoring  
-NEXT_PUBLIC_GA_TRACKING_ID=your_analytics_id
+# Analytics & Monitoring
+NEXT_PUBLIC_GA_ID=your_analytics_id
 SENTRY_DSN=your_sentry_dsn                          # Error tracking
 ```
 

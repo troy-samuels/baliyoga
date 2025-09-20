@@ -1,5 +1,5 @@
 // Google Analytics 4 implementation with privacy-first approach
-export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID
+export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-KXEWQGL8JY'
 
 // Check if GA is enabled - GA_ID must be present
 export const isAnalyticsEnabled = !!GA_TRACKING_ID

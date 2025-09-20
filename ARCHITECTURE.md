@@ -286,7 +286,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
 
 # Optional
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_maps_key
-NEXT_PUBLIC_GA_TRACKING_ID=your_analytics_id
+NEXT_PUBLIC_GA_ID=your_analytics_id
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
 
