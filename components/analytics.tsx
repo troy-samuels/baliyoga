@@ -4,12 +4,12 @@ import { useEffect, useState, Suspense } from 'react'
 import Script from 'next/script'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { 
-  pageview, 
-  GA_TRACKING_ID, 
-  isAnalyticsEnabled, 
-  hasConsent, 
-  grantConsent, 
+import {
+  pageview,
+  GA_TRACKING_ID,
+  isAnalyticsEnabled,
+  hasConsent,
+  grantConsent,
   denyConsent,
   trackStudioView,
   trackRetreatView,

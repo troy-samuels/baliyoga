@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Testing Tool - Bali Yoga</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f9f3e9;
+            color: #5d4c42;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Bali Yoga Analytics Testing Tool</h1>
+    <p>This tool helps verify that your Google Analytics (G-KXEWQGL8JY) is working correctly.</p>
+
+    <div class="test-section">
+        <h2>📊 Real-Time Analytics Check</h2>
+        <p>Before running tests, open Google Analytics in another tab:</p>
+        <div class="code-block">1. Go to analytics.google.com
+2. Navigate to Reports → Real-time → Overview
+3. Keep this tab open while testing</div>
+        <button onclick="checkGoogleAnalytics()">Open Google Analytics</button>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Automated Tests</h2>
+        <button onclick="runAllTests()">Run All Tests</button>
+        <button onclick="clearResults()">Clear Results</button>
+        <div id="test-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🎯 Manual Event Testing</h2>
+        <p>Test specific analytics events:</p>
+        <button onclick="testPageView()">Test Page View</button>
+        <button onclick="testCustomEvent()">Test Custom Event</button>
+        <button onclick="testStudioView()">Test Studio View</button>
+        <button onclick="testSearch()">Test Search Event</button>
+        <div id="event-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 Debug Information</h2>
+        <button onclick="showDebugInfo()">Show Debug Info</button>
+        <div id="debug-info"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📱 Consent Testing</h2>
+        <button onclick="testConsent()">Check Consent Status</button>
+        <button onclick="simulateConsent()">Grant Consent</button>
+        <button onclick="revokeConsent()">Revoke Consent</button>
+        <div id="consent-results"></div>
+    </div>
+
+    <script>
+        function addResult(containerId, message, type = 'info') {
+            const container = document.getElementById(containerId);
+            const result = document.createElement('div');
+            result.className = `test-result ${type}`;
+            result.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            container.appendChild(result);
+        }
+
+        function clearResults() {
+            ['test-results', 'event-results', 'debug-info', 'consent-results'].forEach(id => {
+                document.getElementById(id).innerHTML = '';
+            });
+        }
+
+        function checkGoogleAnalytics() {
+            window.open('https://analytics.google.com/analytics/web/', '_blank');
+            addResult('test-results', 'Google Analytics opened in new tab', 'info');
+        }
+
+        function runAllTests() {
+            clearResults();
+
+            // Test 1: Check if gtag exists
+            if (typeof window.gtag === 'function') {
+                addResult('test-results', '✅ Google Analytics gtag function is loaded', 'success');
+            } else {
+                addResult('test-results', '❌ Google Analytics gtag function is NOT loaded', 'error');
+            }
+
+            // Test 2: Check dataLayer
+            if (window.dataLayer && Array.isArray(window.dataLayer)) {
+                addResult('test-results', `✅ DataLayer exists with ${window.dataLayer.length} items`, 'success');
+            } else {
+                addResult('test-results', '❌ DataLayer is not available', 'error');
+            }
+
+            // Test 3: Check consent status
+            try {
+                const consent = localStorage.getItem('analytics_consent');
+                if (consent === 'granted') {
+                    addResult('test-results', '✅ Analytics consent is granted', 'success');
+                } else if (consent === 'denied') {
+                    addResult('test-results', '⚠️ Analytics consent is denied', 'warning');
+                } else {
+                    addResult('test-results', '⚠️ No consent decision recorded yet', 'warning');
+                }
+            } catch (error) {
+                addResult('test-results', `❌ Cannot access localStorage: ${error.message}`, 'error');
+            }
+
+            // Test 4: Check tracking ID
+            const expectedTrackingId = 'G-KXEWQGL8JY';
+            addResult('test-results', `ℹ️ Expected tracking ID: ${expectedTrackingId}`, 'info');
+
+            // Test 5: Check if script is loaded
+            const gaScript = document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${expectedTrackingId}"]`);
+            if (gaScript) {
+                addResult('test-results', '✅ Google Analytics script tag found', 'success');
+            } else {
+                addResult('test-results', '❌ Google Analytics script tag not found', 'error');
+            }
+
+            addResult('test-results', '🏁 All automated tests completed', 'info');
+        }
+
+        function testPageView() {
+            if (typeof window.gtag === 'function') {
+                window.gtag('config', 'G-KXEWQGL8JY', {
+                    page_title: 'Analytics Test Page',
+                    page_location: window.location.href
+                });
+                addResult('event-results', '✅ Page view event sent', 'success');
+            } else {
+                addResult('event-results', '❌ Cannot send page view - gtag not available', 'error');
+            }
+        }
+
+        function testCustomEvent() {
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', 'test_event', {
+                    event_category: 'Testing',
+                    event_label: 'Manual Test Tool',
+                    value: 1
+                });
+                addResult('event-results', '✅ Custom test event sent', 'success');
+            } else {
+                addResult('event-results', '❌ Cannot send event - gtag not available', 'error');
+            }
+        }
+
+        function testStudioView() {
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', 'view_studio', {
+                    event_category: 'Studio',
+                    event_label: 'Test Studio',
+                    studio_id: 'test-studio-123'
+                });
+                addResult('event-results', '✅ Studio view event sent', 'success');
+            } else {
+                addResult('event-results', '❌ Cannot send studio view - gtag not available', 'error');
+            }
+        }
+
+        function testSearch() {
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', 'search', {
+                    event_category: 'Search',
+                    event_label: 'test yoga studio',
+                    value: 5
+                });
+                addResult('event-results', '✅ Search event sent', 'success');
+            } else {
+                addResult('event-results', '❌ Cannot send search event - gtag not available', 'error');
+            }
+        }
+
+        function showDebugInfo() {
+            const debugContainer = document.getElementById('debug-info');
+            debugContainer.innerHTML = '';
+
+            const debugData = {
+                'User Agent': navigator.userAgent,
+                'URL': window.location.href,
+                'Referrer': document.referrer || 'Direct',
+                'Screen Size': `${screen.width}x${screen.height}`,
+                'Window Size': `${window.innerWidth}x${window.innerHeight}`,
+                'Language': navigator.language,
+                'Cookies Enabled': navigator.cookieEnabled,
+                'Local Storage Available': typeof(Storage) !== "undefined",
+                'gtag Available': typeof window.gtag === 'function',
+                'dataLayer Length': window.dataLayer ? window.dataLayer.length : 'Not available',
+                'Analytics Consent': localStorage.getItem('analytics_consent') || 'Not set'
+            };
+
+            for (const [key, value] of Object.entries(debugData)) {
+                const debugItem = document.createElement('div');
+                debugItem.className = 'test-result info';
+                debugItem.textContent = `${key}: ${value}`;
+                debugContainer.appendChild(debugItem);
+            }
+        }
+
+        function testConsent() {
+            try {
+                const consent = localStorage.getItem('analytics_consent');
+                addResult('consent-results', `Current consent status: ${consent || 'Not set'}`, 'info');
+            } catch (error) {
+                addResult('consent-results', `Cannot check consent: ${error.message}`, 'error');
+            }
+        }
+
+        function simulateConsent() {
+            try {
+                localStorage.setItem('analytics_consent', 'granted');
+                if (typeof window.gtag === 'function') {
+                    window.gtag('consent', 'update', {
+                        analytics_storage: 'granted',
+                        ad_storage: 'denied'
+                    });
+                    window.gtag('event', 'consent_granted', {
+                        event_category: 'Privacy',
+                        event_label: 'Analytics Consent Granted via Test Tool'
+                    });
+                }
+                addResult('consent-results', '✅ Consent granted and updated', 'success');
+            } catch (error) {
+                addResult('consent-results', `❌ Failed to grant consent: ${error.message}`, 'error');
+            }
+        }
+
+        function revokeConsent() {
+            try {
+                localStorage.setItem('analytics_consent', 'denied');
+                if (typeof window.gtag === 'function') {
+                    window.gtag('consent', 'update', {
+                        analytics_storage: 'denied',
+                        ad_storage: 'denied'
+                    });
+                }
+                addResult('consent-results', '✅ Consent revoked', 'warning');
+            } catch (error) {
+                addResult('consent-results', `❌ Failed to revoke consent: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-run basic tests when page loads
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                addResult('test-results', '🚀 Analytics testing tool loaded', 'info');
+                runAllTests();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

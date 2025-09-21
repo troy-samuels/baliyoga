@@ -10,6 +10,7 @@
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
+    "check-analytics": "node scripts/check-analytics-status.js",
     "import-csv": "node scripts/csv-import.js",
     "import-csv:help": "echo 'Usage: npm run import-csv <path-to-csv-file>'",
     "analyze-images": "npx tsx scripts/analyze-missing-images.ts",
