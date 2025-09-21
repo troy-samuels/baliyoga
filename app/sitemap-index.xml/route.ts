@@ -9,19 +9,19 @@ export async function GET() {
     <lastmod>${currentDate}</lastmod>
   </sitemap>
   <sitemap>
-    <loc>${baseUrl}/studios-sitemap.xml</loc>
+    <loc>${baseUrl}/sitemap-studios.xml</loc>
     <lastmod>${currentDate}</lastmod>
   </sitemap>
   <sitemap>
-    <loc>${baseUrl}/retreats-sitemap.xml</loc>
+    <loc>${baseUrl}/sitemap-retreats.xml</loc>
     <lastmod>${currentDate}</lastmod>
   </sitemap>
   <sitemap>
-    <loc>${baseUrl}/locations-sitemap.xml</loc>
+    <loc>${baseUrl}/sitemap-locations.xml</loc>
     <lastmod>${currentDate}</lastmod>
   </sitemap>
   <sitemap>
-    <loc>${baseUrl}/blog-sitemap.xml</loc>
+    <loc>${baseUrl}/sitemap-images.xml</loc>
     <lastmod>${currentDate}</lastmod>
   </sitemap>
 </sitemapindex>`

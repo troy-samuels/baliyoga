@@ -1,12 +1,13 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, MapPin, Phone, Globe, Calendar, Users, Star, Clock, DollarSign } from "lucide-react"
+import { ChevronLeft, MapPin, Phone, Globe, Calendar, Users, Star, Clock, DollarSign, Instagram, Facebook, MessageCircle, Youtube, Music } from "lucide-react"
 import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
 import GoogleMapWrapper from "@/components/google-maps-wrapper"
 import { WishlistHeartWrapper } from "@/components/wishlist-heart-wrapper"
 import { PopularityBadge } from "@/components/popularity-badge"
 import { ErrorHandledImage } from "@/components/error-handled-image"
+import { StructuredData } from "@/components/structured-data"
 import { HydrationSafeDate } from "@/lib/date-utils"
 import type { Retreat } from "@/lib/types"
 
@@ -31,6 +32,7 @@ export function RetreatDetailContent({ retreat }: RetreatDetailContentProps) {
 
   return (
     <div className="min-h-screen bg-[#f9f3e9]">
+      <StructuredData item={retreat} type="retreat" />
       <MobileOptimizedHeader />
       
       <main className="mx-auto max-w-7xl px-4 py-4 safe-left safe-right xs:py-6 sm:py-8 md:px-6">
@@ -292,6 +294,99 @@ export function RetreatDetailContent({ retreat }: RetreatDetailContentProps) {
                   )}
                 </div>
               </div>
+
+              {/* Social Media */}
+              {(retreat.instagram_url || retreat.facebook_url || retreat.youtube_url || retreat.tiktok_url || retreat.whatsapp_number) && (
+                <div className="rounded-xl bg-white p-4 shadow-sm border border-[#e6ceb3]/20">
+                  <h3 className="text-lg font-semibold text-[#5d4c42] mb-4">Connect</h3>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    {retreat.instagram_url && (
+                      <a
+                        href={retreat.instagram_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:shadow-md transition-all touch-manipulation min-h-[44px]"
+                        aria-label={`Follow ${retreat.name} on Instagram`}
+                      >
+                        <Instagram className="w-4 h-4 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs font-medium">Instagram</div>
+                          {retreat.instagram_handle && (
+                            <div className="text-xs opacity-90 truncate">
+                              {retreat.instagram_handle.startsWith('@') ? retreat.instagram_handle : `@${retreat.instagram_handle}`}
+                            </div>
+                          )}
+                        </div>
+                      </a>
+                    )}
+
+                    {retreat.facebook_url && (
+                      <a
+                        href={retreat.facebook_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-2 rounded-lg bg-[#1877F2] text-white hover:shadow-md transition-all touch-manipulation min-h-[44px]"
+                        aria-label={`Follow ${retreat.name} on Facebook`}
+                      >
+                        <Facebook className="w-4 h-4 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs font-medium">Facebook</div>
+                          <div className="text-xs opacity-90">Follow us</div>
+                        </div>
+                      </a>
+                    )}
+
+                    {retreat.whatsapp_number && (
+                      <a
+                        href={`https://wa.me/${retreat.whatsapp_number.replace(/[^\d]/g, '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-2 rounded-lg bg-[#25D366] text-white hover:shadow-md transition-all touch-manipulation min-h-[44px]"
+                        aria-label={`Message ${retreat.name} on WhatsApp`}
+                      >
+                        <MessageCircle className="w-4 h-4 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs font-medium">WhatsApp</div>
+                          <div className="text-xs opacity-90">Chat now</div>
+                        </div>
+                      </a>
+                    )}
+
+                    {retreat.youtube_url && (
+                      <a
+                        href={retreat.youtube_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-2 rounded-lg bg-[#FF0000] text-white hover:shadow-md transition-all touch-manipulation min-h-[44px]"
+                        aria-label={`Watch ${retreat.name} on YouTube`}
+                      >
+                        <Youtube className="w-4 h-4 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs font-medium">YouTube</div>
+                          <div className="text-xs opacity-90">Watch videos</div>
+                        </div>
+                      </a>
+                    )}
+
+                    {retreat.tiktok_url && (
+                      <a
+                        href={retreat.tiktok_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-2 rounded-lg bg-black text-white hover:shadow-md transition-all touch-manipulation min-h-[44px]"
+                        aria-label={`Follow ${retreat.name} on TikTok`}
+                      >
+                        <Music className="w-4 h-4 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs font-medium">TikTok</div>
+                          <div className="text-xs opacity-90">Follow</div>
+                        </div>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Pricing */}
               {retreat.price && (

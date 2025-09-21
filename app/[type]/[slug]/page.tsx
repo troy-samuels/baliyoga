@@ -4,7 +4,8 @@ import { StudioDetailContent } from '@/components/studio-detail-content'
 import { RetreatDetailContent } from '@/components/retreat-detail-content'
 import { getAllStudios, getAllRetreats, getStudioBySlug, getRetreatBySlug } from '@/lib/supabase-server'
 import type { Studio, Retreat } from '@/lib/supabase-server'
-import { getCanonicalUrl, isValidSlug, parseSlug, generateBreadcrumbs } from '@/lib/slug-utils'
+import { isValidSlug } from '@/lib/slug-utils'
+import { generateEnhancedMetadata } from '@/lib/enhanced-metadata'
 
 interface ItemDetailPageProps {
   params: Promise<{
@@ -33,15 +34,16 @@ export async function generateStaticParams() {
   return [...studioParams, ...retreatParams]
 }
 
-// Generate metadata for each item
+// Generate comprehensive metadata for each item
 export async function generateMetadata({ params }: ItemDetailPageProps): Promise<Metadata> {
   const { type, slug } = await params
-  
+
   // Validate slug format
   if (!isValidSlug(slug)) {
     return {
-      title: 'Page Not Found',
-      description: 'The requested page could not be found.',
+      title: 'Page Not Found | Bali Yoga',
+      description: 'The requested yoga studio or retreat page could not be found. Explore our collection of authentic yoga experiences in Bali.',
+      robots: { index: false, follow: false }
     }
   }
 
@@ -56,68 +58,22 @@ export async function generateMetadata({ params }: ItemDetailPageProps): Promise
     itemType = 'retreat'
   } else {
     return {
-      title: 'Page Not Found',
-      description: 'The requested page could not be found.',
+      title: 'Page Not Found | Bali Yoga',
+      description: 'The requested page could not be found. Discover authentic yoga studios and retreats in Bali.',
+      robots: { index: false, follow: false }
     }
   }
 
   if (!item) {
     return {
-      title: `${itemType === 'studio' ? 'Studio' : 'Retreat'} Not Found`,
-      description: `The requested yoga ${itemType} could not be found.`,
+      title: `${itemType === 'studio' ? 'Yoga Studio' : 'Yoga Retreat'} Not Found | Bali Yoga`,
+      description: `The requested yoga ${itemType} could not be found. Explore our curated collection of ${itemType === 'studio' ? 'yoga studios' : 'yoga retreats'} in Bali.`,
+      robots: { index: false, follow: false }
     }
   }
 
-  const title = itemType === 'studio' 
-    ? `${item.name} - Yoga Studio in ${item.location}, Bali`
-    : `${item.name} - Yoga Retreat in ${item.location}, Bali`
-  
-  const description = item.business_description 
-    ? `${item.business_description.substring(0, 150)}...` 
-    : `Experience authentic yoga at ${item.name} in ${item.location}, Bali. Rated ${item.rating}/5 stars with ${item.reviewCount} reviews.`
-
-  const keywords = [
-    item.name,
-    itemType === 'studio' ? 'yoga studio' : 'yoga retreat',
-    item.location,
-    'bali yoga',
-    'yoga classes',
-    'meditation'
-  ]
-
-  // Add type-specific keywords
-  if (itemType === 'studio' && 'styles' in item) {
-    keywords.push(...item.styles)
-  }
-
-  return {
-    title,
-    description,
-    keywords,
-    openGraph: {
-      title,
-      description,
-      type: 'website',
-      locale: 'en_US',
-      images: item.image ? [
-        {
-          url: item.image,
-          width: 1200,
-          height: 630,
-          alt: `${item.name} yoga ${itemType} in ${item.location}, Bali`,
-        }
-      ] : [],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: item.image ? [item.image] : [],
-    },
-    alternates: {
-      canonical: getCanonicalUrl(itemType, item.slug),
-    },
-  }
+  // Use enhanced metadata generation
+  return generateEnhancedMetadata({ item, type: itemType })
 }
 
 export default async function ItemDetailPage({ params }: ItemDetailPageProps) {
