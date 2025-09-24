@@ -501,3 +501,224 @@ export interface SupabaseTable {
   created_at: string
   updated_at?: string
 }
+
+// Affiliate tracking types for retreat marketplace transformation
+export interface AffiliatePartner {
+  id: string
+  name: string
+  slug: string
+  description: string
+  website_url: string
+  affiliate_url_template: string
+  commission_rate: number
+  cookie_duration_days: number
+  conversion_tracking_enabled: boolean
+  api_integration_enabled: boolean
+  status: 'active' | 'inactive' | 'pending'
+  created_at: string
+  updated_at: string
+}
+
+export interface AffiliateClick {
+  id: string
+  user_session_id?: string
+  affiliate_partner_id: string
+  retreat_id: string
+  referrer_url?: string
+  user_agent?: string
+  ip_address?: string
+  country_code?: string
+  utm_source?: string
+  utm_medium?: string
+  utm_campaign?: string
+  utm_content?: string
+  utm_term?: string
+  clicked_at: string
+}
+
+export interface AffiliateConversion {
+  id: string
+  click_id: string
+  affiliate_partner_id: string
+  retreat_id: string
+  conversion_type: 'booking' | 'inquiry' | 'signup' | 'purchase'
+  conversion_value: number
+  commission_amount: number
+  currency: string
+  external_booking_id?: string
+  customer_email?: string
+  booking_date?: string
+  retreat_start_date?: string
+  retreat_duration_days?: number
+  participants_count?: number
+  converted_at: string
+  verified_at?: string
+  status: 'pending' | 'confirmed' | 'rejected' | 'paid'
+}
+
+export interface AffiliateLink {
+  retreat_id: string
+  partner_id: string
+  tracking_url: string
+  utm_parameters: Record<string, string>
+  click_count: number
+  conversion_count: number
+  revenue_generated: number
+  last_clicked_at?: string
+  created_at: string
+  updated_at: string
+}
+
+// Enhanced retreat types for affiliate marketplace
+export interface EnhancedRetreat extends Retreat {
+  affiliate_enabled: boolean
+  affiliate_partners: AffiliatePartner[]
+  primary_booking_url?: string
+  secondary_booking_urls?: string[]
+  commission_rate_override?: number
+  min_booking_value?: number
+  availability_status: 'available' | 'limited' | 'sold_out' | 'not_available'
+  early_bird_discount?: {
+    percentage: number
+    valid_until: string
+  }
+  seasonal_pricing?: {
+    high_season_multiplier: number
+    low_season_multiplier: number
+  }
+}
+
+export interface RetreatBookingData {
+  retreat_id: string
+  partner_name: string
+  booking_url: string
+  price_range: string
+  availability: 'available' | 'limited' | 'sold_out'
+  commission_rate: number
+  special_offers?: string[]
+  last_updated: string
+}
+
+// Feature flags for gradual rollout
+export interface FeatureFlag {
+  id: string
+  name: string
+  key: string
+  description: string
+  enabled: boolean
+  rollout_percentage: number
+  user_segments?: string[]
+  environment: 'development' | 'staging' | 'production'
+  created_by: string
+  created_at: string
+  updated_at: string
+}
+
+export interface FeatureFlagEvaluation {
+  flag_key: string
+  enabled: boolean
+  user_id?: string
+  session_id?: string
+  evaluation_reason: 'flag_disabled' | 'rollout_percentage' | 'user_segment' | 'default'
+  evaluated_at: string
+}
+
+// Revenue attribution and analytics
+export interface RevenueAttribution {
+  conversion_id: string
+  touchpoints: AttributionTouchpoint[]
+  attribution_model: 'first_click' | 'last_click' | 'linear' | 'time_decay' | 'position_based'
+  attributed_revenue: number
+  attribution_breakdown: AttributionBreakdown[]
+  confidence_score: number
+  created_at: string
+}
+
+export interface AttributionTouchpoint {
+  id: string
+  channel: string
+  source: string
+  medium: string
+  campaign?: string
+  content?: string
+  timestamp: string
+  page_url: string
+  referrer_url?: string
+}
+
+export interface AttributionBreakdown {
+  touchpoint_id: string
+  channel: string
+  attributed_value: number
+  attribution_percentage: number
+}
+
+// Content management for retreat guides
+export interface RetreatGuide {
+  id: string
+  slug: string
+  title: string
+  excerpt: string
+  content: string
+  featured_image: string
+  location_focus: string[]
+  retreat_types: string[]
+  target_audience: string[]
+  seo_keywords: string[]
+  meta_description: string
+  author: string
+  published_date: string
+  last_updated: string
+  status: 'draft' | 'published' | 'archived'
+  view_count: number
+  engagement_score: number
+  affiliate_link_count: number
+  conversion_rate: number
+}
+
+export interface ContentPerformanceMetrics {
+  content_id: string
+  content_type: 'guide' | 'blog_post' | 'retreat_page' | 'landing_page'
+  page_views: number
+  unique_visitors: number
+  average_time_on_page: number
+  bounce_rate: number
+  affiliate_clicks: number
+  affiliate_conversions: number
+  revenue_generated: number
+  seo_ranking_position: number
+  period_start: string
+  period_end: string
+}
+
+// Email marketing and lead generation
+export interface EmailSubscriber {
+  id: string
+  email: string
+  first_name?: string
+  last_name?: string
+  subscription_source: string
+  interests: string[]
+  location?: string
+  subscription_date: string
+  last_engagement_date?: string
+  status: 'active' | 'unsubscribed' | 'bounced' | 'complained'
+  tags: string[]
+}
+
+export interface EmailCampaign {
+  id: string
+  name: string
+  subject_line: string
+  content_type: 'retreat_newsletter' | 'location_guide' | 'promotional' | 'welcome_series'
+  target_segments: string[]
+  retreat_focus?: string[]
+  send_date: string
+  sent_count: number
+  delivered_count: number
+  open_count: number
+  click_count: number
+  conversion_count: number
+  revenue_generated: number
+  status: 'draft' | 'scheduled' | 'sending' | 'sent' | 'cancelled'
+}
