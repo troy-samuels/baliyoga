@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useRef, useState, useCallback } from "react"
-import { MapPin, ExternalLink, AlertCircle } from "lucide-react"
+import { MapPin, ExternalLink, AlertCircle, Eye, X, Maximize2, Navigation } from "lucide-react"
+import { findBaliCoordinates, calculateDistance } from "@/lib/bali-coordinates"
 
 interface Coordinates {
   lat: number
@@ -85,6 +86,10 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null)
   const [isMounted, setIsMounted] = useState(false)
   const [usingFallbackLocation, setUsingFallbackLocation] = useState(false)
+  const [mapsUrl, setMapsUrl] = useState<string>('')
+  const [showPreview, setShowPreview] = useState(false)
+  const [streetViewUrl, setStreetViewUrl] = useState<string>('')
+  const [locationContext, setLocationContext] = useState<string>('')
 
   // Only initialize after component mounts (client-side only)
   useEffect(() => {
@@ -147,9 +152,75 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
     return 'Ubud, Bali, Indonesia'
   }
 
-  // Create Google Maps URL for external viewing
-  const searchQuery = buildGeocodingQuery(address, name, city)
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchQuery)}`
+  // Create coordinate-based Google Maps URL for external viewing
+  const createMapsUrl = useCallback((coords: Coordinates, locationName?: string): string => {
+    if (coords) {
+      // Use exact coordinates for precise location linking
+      const coordsUrl = `https://www.google.com/maps/@${coords.lat},${coords.lng},15z`
+      return coordsUrl
+    }
+    // Fallback to text search if no coordinates available
+    const searchQuery = buildGeocodingQuery(address, name, city)
+    const fallbackUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchQuery)}`
+    return fallbackUrl
+  }, [address, name, city])
+
+  // Create Street View URL for preview
+  const createStreetViewUrl = useCallback((coords: Coordinates): string => {
+    if (!coords) return ''
+    return `https://www.google.com/maps/@${coords.lat},${coords.lng},3a,75y,90h,90t/data=!3m1!1e3`
+  }, [])
+
+  // Generate location context description
+  const generateLocationContext = useCallback((coords: Coordinates, staticLocation?: any) => {
+    if (!coords) return ''
+
+    // If we have a static location with context
+    if (staticLocation) {
+      const contextMap: Record<string, string> = {
+        'ubud': 'Cultural heart of Bali, surrounded by rice terraces and traditional villages',
+        'canggu': 'Popular surf destination with black sand beaches and vibrant cafe culture',
+        'seminyak': 'Upscale beach area known for luxury resorts, fine dining and sunset beaches',
+        'sanur': 'Calm beach town perfect for families, with gentle waves and traditional charm',
+        'uluwatu': 'Dramatic clifftop location with world-class surf breaks and stunning ocean views',
+        'jimbaran': 'Peaceful bay area famous for fresh seafood and beautiful sunsets',
+        'denpasar': 'Bustling capital city with authentic local markets and cultural sites'
+      }
+
+      const key = staticLocation.name.toLowerCase()
+      for (const [locationKey, description] of Object.entries(contextMap)) {
+        if (key.includes(locationKey)) {
+          return description
+        }
+      }
+    }
+
+    // Calculate distances to major areas for context
+    const distances = [
+      { name: 'Ubud', coords: { lat: -8.5069, lng: 115.2625 } },
+      { name: 'Canggu', coords: { lat: -8.6481, lng: 115.1253 } },
+      { name: 'Seminyak', coords: { lat: -8.6914, lng: 115.1689 } }
+    ].map(area => ({
+      ...area,
+      distance: calculateDistance(coords.lat, coords.lng, area.coords.lat, area.coords.lng)
+    })).sort((a, b) => a.distance - b.distance)
+
+    const nearest = distances[0]
+    if (nearest.distance < 5) {
+      return `Located in the ${nearest.name} area, ${Math.round(nearest.distance * 10) / 10}km from center`
+    } else if (nearest.distance < 20) {
+      return `${Math.round(nearest.distance)}km from ${nearest.name}, in a quieter part of Bali`
+    } else {
+      return `Located in a peaceful area of Bali, away from the main tourist centers`
+    }
+  }, [])
+
+  // Initialize URLs once when component mounts
+  useEffect(() => {
+    const searchQuery = buildGeocodingQuery(address, name, city)
+    const fallbackUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchQuery)}`
+    setMapsUrl(fallbackUrl)
+  }, [address, name, city, buildGeocodingQuery])
 
   // Load Google Maps API
   const loadGoogleMaps = useCallback(async () => {
@@ -222,86 +293,144 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
     }
   }, [apiKey, hasValidApiKey, isMounted])
 
-  // Geocode address and create map
+  // Geocode address and create map with smart fallback
   const initializeMap = useCallback(async () => {
-    if (!window.google?.maps?.Geocoder || !mapRef.current || !isLoaded || !isMounted) {
+    if (!mapRef.current || !isLoaded || !isMounted) {
       return
     }
 
     try {
-      // Wait a bit to ensure Google Maps is fully loaded
-      await new Promise(resolve => setTimeout(resolve, 100))
-      
-      if (!window.google?.maps?.Geocoder) {
-        throw new Error('Google Maps Geocoder not available')
-      }
+      // First, try to find location using static Bali coordinates (fast and reliable)
+      const staticLocation = findBaliCoordinates(address || '', name || '', city || '')
 
-      const geocoder = new window.google.maps.Geocoder()
-      const query = buildGeocodingQuery(address, name, city)
-
-      // Enhanced debug logging for geocoding
-      if (process.env.NODE_ENV === 'development') {
-        console.log('🌍 Starting geocoding with query:', query)
-      }
-
-      // Geocode the address
-      geocoder.geocode({ address: query }, (results: any[], status: string) => {
-        let location: Coordinates
-        let usingFallback = false
-
-        if (process.env.NODE_ENV === 'development') {
-          console.log('🌍 Geocoding result:', {
-            status,
-            resultsCount: results?.length || 0,
-            firstResult: results?.[0]?.formatted_address,
-            firstResultGeometry: results?.[0]?.geometry?.location ? {
-              lat: results[0].geometry.location.lat(),
-              lng: results[0].geometry.location.lng()
-            } : null
-          })
+      if (staticLocation) {
+        const location: Coordinates = {
+          lat: staticLocation.lat,
+          lng: staticLocation.lng
         }
 
-        if (status === 'OK' && results && results[0]) {
-          location = {
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng()
-          }
-          setUsingFallbackLocation(false)
-          if (process.env.NODE_ENV === 'development') {
-            console.log('✅ Using geocoded location:', location)
-          }
-        } else {
-          // Fallback to Bali center coordinates
-          location = { lat: -8.4095, lng: 115.1889 }
-          usingFallback = true
-          setUsingFallbackLocation(true)
-          if (process.env.NODE_ENV === 'development') {
-            console.log('⚠️ Geocoding failed, using fallback location:', location, 'Status:', status)
-          }
+        if (process.env.NODE_ENV === 'development') {
+          console.log('📍 Using static coordinates for:', staticLocation.name, location)
         }
 
         setCoordinates(location)
-        createMap(location)
-      })
+        setUsingFallbackLocation(false)
+
+        // Update maps URL and preview data with exact coordinates
+        const newMapsUrl = createMapsUrl(location, staticLocation.name)
+        setMapsUrl(newMapsUrl)
+        setStreetViewUrl(createStreetViewUrl(location))
+        setLocationContext(generateLocationContext(location, staticLocation))
+
+        createMap(location, staticLocation.zoom)
+        return
+      }
+
+      // If no static location found AND Geocoder is available, try API geocoding
+      if (window.google?.maps?.Geocoder) {
+        // Wait a bit to ensure Google Maps is fully loaded
+        await new Promise(resolve => setTimeout(resolve, 100))
+
+        const geocoder = new window.google.maps.Geocoder()
+        const query = buildGeocodingQuery(address, name, city)
+
+        // Enhanced debug logging for geocoding
+        if (process.env.NODE_ENV === 'development') {
+          console.log('🌍 No static coordinates found, trying geocoding with query:', query)
+        }
+
+        // Geocode the address
+        geocoder.geocode({ address: query }, (results: any[], status: string) => {
+          let location: Coordinates
+
+          if (process.env.NODE_ENV === 'development') {
+            console.log('🌍 Geocoding result:', {
+              status,
+              resultsCount: results?.length || 0,
+              firstResult: results?.[0]?.formatted_address,
+              firstResultGeometry: results?.[0]?.geometry?.location ? {
+                lat: results[0].geometry.location.lat(),
+                lng: results[0].geometry.location.lng()
+              } : null
+            })
+          }
+
+          if (status === 'OK' && results && results[0]) {
+            location = {
+              lat: results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng()
+            }
+            setUsingFallbackLocation(false)
+            if (process.env.NODE_ENV === 'development') {
+              console.log('✅ Using geocoded location:', location)
+            }
+          } else {
+            // Final fallback to Bali center coordinates
+            location = { lat: -8.4095, lng: 115.1889 }
+            setUsingFallbackLocation(true)
+            if (process.env.NODE_ENV === 'development') {
+              console.log('⚠️ Geocoding failed, using center Bali:', location, 'Status:', status)
+            }
+          }
+
+          setCoordinates(location)
+
+          // Update maps URL and preview data with determined coordinates
+          const newMapsUrl = createMapsUrl(location, name)
+          setMapsUrl(newMapsUrl)
+          setStreetViewUrl(createStreetViewUrl(location))
+          setLocationContext(generateLocationContext(location))
+
+          createMap(location)
+        })
+      } else {
+        // No geocoder available, use center Bali
+        const fallbackLocation = { lat: -8.4095, lng: 115.1889 }
+        setUsingFallbackLocation(true)
+        setCoordinates(fallbackLocation)
+
+        // Update maps URL and preview data with fallback coordinates
+        const newMapsUrl = createMapsUrl(fallbackLocation, 'Bali')
+        setMapsUrl(newMapsUrl)
+        setStreetViewUrl(createStreetViewUrl(fallbackLocation))
+        setLocationContext('Located in beautiful Bali, Indonesia - tropical paradise island')
+
+        createMap(fallbackLocation)
+
+        if (process.env.NODE_ENV === 'development') {
+          console.log('⚠️ No geocoder available, using center Bali:', fallbackLocation)
+        }
+      }
     } catch (err) {
       console.error('Error initializing map:', err)
       // Use fallback coordinates instead of showing error
       const fallbackLocation = { lat: -8.4095, lng: 115.1889 }
       setUsingFallbackLocation(true)
       setCoordinates(fallbackLocation)
+
+      // Update maps URL and preview data with error fallback coordinates
+      const newMapsUrl = createMapsUrl(fallbackLocation, 'Bali')
+      setMapsUrl(newMapsUrl)
+      setStreetViewUrl(createStreetViewUrl(fallbackLocation))
+      setLocationContext('Located in beautiful Bali, Indonesia - tropical paradise island')
+
       createMap(fallbackLocation)
     }
-  }, [address, name, city, isLoaded, isMounted])
+  }, [address, name, city, isLoaded, isMounted, createMapsUrl, createStreetViewUrl, generateLocationContext])
 
   // Create the map instance
-  const createMap = useCallback((location: Coordinates) => {
+  const createMap = useCallback((location: Coordinates, customZoom?: number) => {
     if (!mapRef.current || !window.google || !isMounted) return
 
     try {
+      // Determine zoom level: custom > address-based > default
+      const zoomLevel = customZoom ||
+        (address ? MAP_CONFIG.zoom.withAddress : MAP_CONFIG.zoom.withoutAddress)
+
       // Create map
       const map = new window.google.maps.Map(mapRef.current, {
         center: location,
-        zoom: address ? MAP_CONFIG.zoom.withAddress : MAP_CONFIG.zoom.withoutAddress,
+        zoom: zoomLevel,
         styles: MAP_CONFIG.styles,
         ...MAP_CONFIG.defaultOptions
       })
@@ -321,13 +450,13 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
         }
       })
 
-      // Add click handlers
+      // Add click handlers for preview
       marker.addListener('click', () => {
-        window.open(mapsUrl, '_blank', 'noopener,noreferrer')
+        setShowPreview(true)
       })
 
       map.addListener('click', () => {
-        window.open(mapsUrl, '_blank', 'noopener,noreferrer')
+        setShowPreview(true)
       })
 
       mapInstanceRef.current = map
@@ -359,6 +488,22 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
     window.open(mapsUrl, '_blank', 'noopener,noreferrer')
   }, [mapsUrl])
 
+  // Handle preview modal
+  const handlePreviewClick = useCallback(() => {
+    setShowPreview(true)
+  }, [])
+
+  const handleClosePreview = useCallback(() => {
+    setShowPreview(false)
+  }, [])
+
+  // Handle Street View click
+  const handleStreetViewClick = useCallback(() => {
+    if (streetViewUrl) {
+      window.open(streetViewUrl, '_blank', 'noopener,noreferrer')
+    }
+  }, [streetViewUrl])
+
   // Don't render anything until mounted (prevents hydration mismatch)
   if (!isMounted) {
     return (
@@ -374,10 +519,10 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
   // Enhanced fallback component for when maps can't load
   const FallbackMap = () => (
     <div className={`w-full h-[180px] flex flex-col items-center justify-center bg-gradient-to-br from-[#e6ceb3] via-[#dcc5a8] to-[#d4c1a1] rounded-lg text-[#5d4c42] relative overflow-hidden cursor-pointer hover:from-[#d4c1a1] hover:to-[#c4b091] transition-all duration-300 shadow-sm hover:shadow-md ${className}`}
-         onClick={handleExternalClick}
+         onClick={handlePreviewClick}
          role="button"
          tabIndex={0}
-         onKeyDown={(e) => e.key === 'Enter' && handleExternalClick()}
+         onKeyDown={(e) => e.key === 'Enter' && handlePreviewClick()}
          aria-label={`View ${name} on Google Maps`}>
 
       {/* Enhanced background pattern */}
@@ -420,8 +565,8 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
         )}
 
         <div className="text-xs mt-3 flex items-center justify-center gap-1.5 opacity-90 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
-          <ExternalLink className="w-3 h-3" aria-hidden="true" />
-          Click to open in Google Maps
+          <Eye className="w-3 h-3" aria-hidden="true" />
+          Click to preview location
         </div>
       </div>
 
@@ -434,8 +579,82 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
   if (error || !hasValidApiKey) {
     return (
       <div className="w-full">
-        <h4 className="text-sm font-medium text-[#5d4c42] mb-2">Location</h4>
+        <div className="flex items-center justify-between mb-2">
+          <h4 className="text-sm font-medium text-[#5d4c42]">Location</h4>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handlePreviewClick}
+              className="text-xs text-[#5d4c42] hover:text-[#a39188] flex items-center gap-1 transition-colors touch-manipulation"
+              aria-label={`Preview ${name} location`}
+            >
+              <Eye className="w-3 h-3" aria-hidden="true" />
+              Preview
+            </button>
+            <button
+              onClick={handleExternalClick}
+              className="text-xs text-[#5d4c42] hover:text-[#a39188] flex items-center gap-1 transition-colors touch-manipulation"
+              aria-label={`Open ${name} in Google Maps`}
+            >
+              <ExternalLink className="w-3 h-3" aria-hidden="true" />
+              Open in Maps
+            </button>
+          </div>
+        </div>
         <FallbackMap />
+
+        {/* Enhanced Location Preview Modal for Fallback */}
+        {showPreview && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={handleClosePreview}>
+            <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-4 border-b border-gray-100">
+                <div>
+                  <h3 className="font-semibold text-lg text-[#5d4c42]">{name}</h3>
+                  <p className="text-sm text-[#5d4c42]/70">{city}, Bali, Indonesia</p>
+                </div>
+                <button
+                  onClick={handleClosePreview}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  aria-label="Close preview"
+                >
+                  <X className="w-5 h-5 text-[#5d4c42]" />
+                </button>
+              </div>
+
+              {/* Location Context */}
+              <div className="p-4 bg-gradient-to-r from-[#e6ceb3]/20 to-[#dcc5a8]/20">
+                <p className="text-sm text-[#5d4c42] leading-relaxed">
+                  🌴 Located in beautiful Bali, Indonesia - tropical paradise island known for its spiritual energy and stunning landscapes
+                </p>
+              </div>
+
+              {/* Interactive Buttons */}
+              <div className="p-4 space-y-3">
+                {/* Google Maps Button */}
+                <button
+                  onClick={handleExternalClick}
+                  className="w-full flex items-center justify-center gap-3 bg-[#5d4c42] text-white py-3 px-4 rounded-xl hover:bg-[#4a3e36] transition-colors font-medium"
+                >
+                  <Navigation className="w-4 h-4" />
+                  Open in Google Maps
+                  <ExternalLink className="w-4 h-4" />
+                </button>
+
+                {/* API Key Note */}
+                {error?.code === 'NO_API_KEY' && (
+                  <div className="text-xs text-[#5d4c42]/60 text-center pt-2 border-t border-gray-100">
+                    Interactive map features available with Google Maps API
+                  </div>
+                )}
+              </div>
+
+              {/* Quick Tips */}
+              <div className="p-4 bg-gray-50 text-xs text-[#5d4c42]/70">
+                💡 <strong>Tip:</strong> Click "Open in Google Maps" to see the exact location, get directions, and explore the area
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     )
   }
@@ -444,14 +663,24 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
     <div className="w-full">
       <div className="flex items-center justify-between mb-2">
         <h4 className="text-sm font-medium text-[#5d4c42]">Location</h4>
-        <button
-          onClick={handleExternalClick}
-          className="text-xs text-[#5d4c42] hover:text-[#a39188] flex items-center gap-1 transition-colors touch-manipulation"
-          aria-label={`Open ${name} in Google Maps`}
-        >
-          <ExternalLink className="w-3 h-3" aria-hidden="true" />
-          Open in Maps
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handlePreviewClick}
+            className="text-xs text-[#5d4c42] hover:text-[#a39188] flex items-center gap-1 transition-colors touch-manipulation"
+            aria-label={`Preview ${name} location`}
+          >
+            <Eye className="w-3 h-3" aria-hidden="true" />
+            Preview
+          </button>
+          <button
+            onClick={handleExternalClick}
+            className="text-xs text-[#5d4c42] hover:text-[#a39188] flex items-center gap-1 transition-colors touch-manipulation"
+            aria-label={`Open ${name} in Google Maps`}
+          >
+            <ExternalLink className="w-3 h-3" aria-hidden="true" />
+            Open in Maps
+          </button>
+        </div>
       </div>
       
       <div className={`relative w-full h-[180px] rounded-lg overflow-hidden border border-[#e6ceb3] bg-[#f5f5f5] ${className}`}>
@@ -476,7 +705,7 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
       </div>
       
       <div className="mt-2 text-xs text-[#5d4c42]/60 text-center">
-        Click map to open in Google Maps
+        Click map to preview location details
         {usingFallbackLocation && (
           <div className="mt-1 text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded">
             📍 Showing general Bali area - click for exact location
@@ -488,6 +717,74 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
           </span>
         )}
       </div>
+
+      {/* Enhanced Location Preview Modal */}
+      {showPreview && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={handleClosePreview}>
+          <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-100">
+              <div>
+                <h3 className="font-semibold text-lg text-[#5d4c42]">{name}</h3>
+                <p className="text-sm text-[#5d4c42]/70">{city}, Bali, Indonesia</p>
+              </div>
+              <button
+                onClick={handleClosePreview}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                aria-label="Close preview"
+              >
+                <X className="w-5 h-5 text-[#5d4c42]" />
+              </button>
+            </div>
+
+            {/* Location Context */}
+            {locationContext && (
+              <div className="p-4 bg-gradient-to-r from-[#e6ceb3]/20 to-[#dcc5a8]/20">
+                <p className="text-sm text-[#5d4c42] leading-relaxed">
+                  🌴 {locationContext}
+                </p>
+              </div>
+            )}
+
+            {/* Interactive Buttons */}
+            <div className="p-4 space-y-3">
+              {/* Google Maps Button */}
+              <button
+                onClick={handleExternalClick}
+                className="w-full flex items-center justify-center gap-3 bg-[#5d4c42] text-white py-3 px-4 rounded-xl hover:bg-[#4a3e36] transition-colors font-medium"
+              >
+                <Navigation className="w-4 h-4" />
+                Open in Google Maps
+                <ExternalLink className="w-4 h-4" />
+              </button>
+
+              {/* Street View Button */}
+              {streetViewUrl && (
+                <button
+                  onClick={handleStreetViewClick}
+                  className="w-full flex items-center justify-center gap-3 bg-blue-600 text-white py-3 px-4 rounded-xl hover:bg-blue-700 transition-colors font-medium"
+                >
+                  <Maximize2 className="w-4 h-4" />
+                  View Street Level
+                  <ExternalLink className="w-4 h-4" />
+                </button>
+              )}
+
+              {/* Coordinates Info (Development) */}
+              {coordinates && process.env.NODE_ENV === 'development' && (
+                <div className="text-xs text-[#5d4c42]/60 text-center pt-2 border-t border-gray-100">
+                  Coordinates: {coordinates.lat.toFixed(4)}, {coordinates.lng.toFixed(4)}
+                </div>
+              )}
+            </div>
+
+            {/* Quick Tips */}
+            <div className="p-4 bg-gray-50 text-xs text-[#5d4c42]/70">
+              💡 <strong>Tip:</strong> Use Street View to see the actual entrance and surroundings before visiting
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
