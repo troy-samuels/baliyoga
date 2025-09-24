@@ -87,6 +87,12 @@ export default function RootLayout({
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
+        <script
+          defer
+          data-website-id="68d3fce9cc708f179902907b"
+          data-domain="baliyoga.com"
+          src="https://datafa.st/js/script.js">
+        </script>
       </head>
       <body 
         className={`${raleway.className} antialiased bg-[#f9f3e9] text-[#5d4c42] min-h-screen`}
