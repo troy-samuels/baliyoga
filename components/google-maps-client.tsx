@@ -84,6 +84,7 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
   const [error, setError] = useState<GoogleMapError | null>(null)
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null)
   const [isMounted, setIsMounted] = useState(false)
+  const [usingFallbackLocation, setUsingFallbackLocation] = useState(false)
 
   // Only initialize after component mounts (client-side only)
   useEffect(() => {
@@ -92,20 +93,62 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
 
   // Get the API key
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-  const hasValidApiKey = apiKey && apiKey !== 'YOUR_GOOGLE_MAPS_API_KEY_HERE' && apiKey.startsWith('AIza')
+  const hasValidApiKey = apiKey &&
+    apiKey !== 'YOUR_GOOGLE_MAPS_API_KEY_HERE' &&
+    apiKey !== 'your_google_maps_api_key_here' &&
+    apiKey.length > 20 &&
+    (apiKey.startsWith('AIza') || apiKey.includes('key='))
   
-  // Debug logging (remove in production)
+  // Enhanced debug logging (remove in production)
   if (isMounted && process.env.NODE_ENV === 'development') {
     console.log('🗺️ Google Maps Debug:', {
       hasApiKey: !!apiKey,
       apiKeyStart: apiKey?.substring(0, 8),
       hasValidApiKey,
-      isMounted
+      isMounted,
+      isLoading,
+      isLoaded,
+      hasError: !!error,
+      errorCode: error?.code,
+      address: address || 'NO_ADDRESS',
+      name: name || 'NO_NAME', 
+      city: city || 'NO_CITY',
+      coordinates,
+      searchQuery: address || `${name}, ${city}, Bali, Indonesia`
     })
   }
 
+  // Build robust geocoding query
+  const buildGeocodingQuery = (address: string, name: string, city: string) => {
+    // Clean inputs
+    const cleanAddress = address?.trim()
+    const cleanName = name?.trim()
+    const cleanCity = city?.trim()
+
+    // Priority order: full address > name + city > name only
+    if (cleanAddress && cleanAddress.length > 5) {
+      // Add Bali, Indonesia if not already present
+      const lowerAddress = cleanAddress.toLowerCase()
+      if (!lowerAddress.includes('bali') && !lowerAddress.includes('indonesia')) {
+        return `${cleanAddress}, Bali, Indonesia`
+      }
+      return cleanAddress
+    }
+    
+    if (cleanName && cleanCity) {
+      return `${cleanName}, ${cleanCity}, Bali, Indonesia`
+    }
+    
+    if (cleanName) {
+      return `${cleanName}, Bali, Indonesia`
+    }
+    
+    // Last resort fallback
+    return 'Ubud, Bali, Indonesia'
+  }
+
   // Create Google Maps URL for external viewing
-  const searchQuery = address || `${name}, ${city}, Bali, Indonesia`
+  const searchQuery = buildGeocodingQuery(address, name, city)
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchQuery)}`
 
   // Load Google Maps API
@@ -194,20 +237,47 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
       }
 
       const geocoder = new window.google.maps.Geocoder()
-      const query = address || `${name}, ${city}, Bali, Indonesia`
+      const query = buildGeocodingQuery(address, name, city)
+
+      // Enhanced debug logging for geocoding
+      if (process.env.NODE_ENV === 'development') {
+        console.log('🌍 Starting geocoding with query:', query)
+      }
 
       // Geocode the address
       geocoder.geocode({ address: query }, (results: any[], status: string) => {
         let location: Coordinates
+        let usingFallback = false
+
+        if (process.env.NODE_ENV === 'development') {
+          console.log('🌍 Geocoding result:', {
+            status,
+            resultsCount: results?.length || 0,
+            firstResult: results?.[0]?.formatted_address,
+            firstResultGeometry: results?.[0]?.geometry?.location ? {
+              lat: results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng()
+            } : null
+          })
+        }
 
         if (status === 'OK' && results && results[0]) {
           location = {
             lat: results[0].geometry.location.lat(),
             lng: results[0].geometry.location.lng()
           }
+          setUsingFallbackLocation(false)
+          if (process.env.NODE_ENV === 'development') {
+            console.log('✅ Using geocoded location:', location)
+          }
         } else {
           // Fallback to Bali center coordinates
           location = { lat: -8.4095, lng: 115.1889 }
+          usingFallback = true
+          setUsingFallbackLocation(true)
+          if (process.env.NODE_ENV === 'development') {
+            console.log('⚠️ Geocoding failed, using fallback location:', location, 'Status:', status)
+          }
         }
 
         setCoordinates(location)
@@ -217,6 +287,7 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
       console.error('Error initializing map:', err)
       // Use fallback coordinates instead of showing error
       const fallbackLocation = { lat: -8.4095, lng: 115.1889 }
+      setUsingFallbackLocation(true)
       setCoordinates(fallbackLocation)
       createMap(fallbackLocation)
     }
@@ -300,41 +371,62 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
     )
   }
 
-  // Fallback component for when maps can't load
+  // Enhanced fallback component for when maps can't load
   const FallbackMap = () => (
-    <div className={`w-full h-[180px] flex flex-col items-center justify-center bg-gradient-to-br from-[#e6ceb3] to-[#d4c1a1] rounded-lg text-[#5d4c42] relative overflow-hidden cursor-pointer hover:from-[#d4c1a1] hover:to-[#c4b091] transition-colors ${className}`}
+    <div className={`w-full h-[180px] flex flex-col items-center justify-center bg-gradient-to-br from-[#e6ceb3] via-[#dcc5a8] to-[#d4c1a1] rounded-lg text-[#5d4c42] relative overflow-hidden cursor-pointer hover:from-[#d4c1a1] hover:to-[#c4b091] transition-all duration-300 shadow-sm hover:shadow-md ${className}`}
          onClick={handleExternalClick}
          role="button"
          tabIndex={0}
          onKeyDown={(e) => e.key === 'Enter' && handleExternalClick()}
          aria-label={`View ${name} on Google Maps`}>
-      
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-10" aria-hidden="true">
-        <div className="absolute top-4 left-4 w-16 h-16 border-2 border-[#5d4c42] rounded-full"></div>
-        <div className="absolute bottom-6 right-6 w-8 h-8 border-2 border-[#5d4c42] rounded-full"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 border border-[#5d4c42] rounded-full"></div>
+
+      {/* Enhanced background pattern */}
+      <div className="absolute inset-0 opacity-8" aria-hidden="true">
+        <div className="absolute top-3 left-3 w-12 h-12 border-2 border-[#5d4c42]/20 rounded-full animate-pulse"></div>
+        <div className="absolute bottom-4 right-4 w-6 h-6 border-2 border-[#5d4c42]/20 rounded-full animate-pulse animation-delay-500"></div>
+        <div className="absolute top-1/3 right-8 w-4 h-4 bg-[#5d4c42]/10 rounded-full animate-pulse animation-delay-1000"></div>
+        <div className="absolute bottom-1/3 left-6 w-8 h-8 border border-[#5d4c42]/15 rounded-full animate-pulse animation-delay-700"></div>
+
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: `linear-gradient(45deg, #5d4c42 25%, transparent 25%, transparent 75%, #5d4c42 75%),
+                           linear-gradient(45deg, #5d4c42 25%, transparent 25%, transparent 75%, #5d4c42 75%)`,
+          backgroundSize: '20px 20px',
+          backgroundPosition: '0 0, 10px 10px'
+        }}></div>
       </div>
-      
-      <div className="relative z-10 text-center">
-        <MapPin className="w-8 h-8 mx-auto mb-2 text-[#5d4c42]" aria-hidden="true" />
-        <div className="font-medium">{name}</div>
-        <div className="text-sm mt-1 opacity-80">{city}, Bali</div>
-        
-        {error && (
-          <div className="text-xs mt-2 bg-orange-100 text-orange-700 px-2 py-1 rounded flex items-center gap-1">
-            <AlertCircle className="w-3 h-3" aria-hidden="true" />
-            {error.code === 'NO_API_KEY' ? 'Maps API key missing' : 
-             error.code === 'TIMEOUT_ERROR' ? 'Maps failed to load' :
-             error.code === 'SCRIPT_LOAD_ERROR' ? 'Maps API error' : 'Map error'}
+
+      <div className="relative z-10 text-center px-4">
+        <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+          <MapPin className="w-8 h-8 text-[#5d4c42]" aria-hidden="true" />
+        </div>
+
+        <div className="font-semibold text-lg mb-1">{name}</div>
+        <div className="text-sm opacity-80 mb-3">{city}, Bali, Indonesia</div>
+
+        {error && error.code === 'NO_API_KEY' && (
+          <div className="text-xs mt-2 bg-white/30 backdrop-blur-sm text-[#5d4c42] px-3 py-1.5 rounded-full inline-flex items-center gap-1.5 border border-white/40">
+            <div className="w-2 h-2 bg-[#5d4c42]/60 rounded-full"></div>
+            Interactive map available with API key
           </div>
         )}
-        
-        <div className="text-xs mt-2 flex items-center justify-center gap-1 opacity-80">
+
+        {(!error || error.code !== 'NO_API_KEY') && (
+          <div className="text-xs mt-2 bg-white/30 backdrop-blur-sm text-[#5d4c42] px-3 py-1.5 rounded-full inline-flex items-center gap-1.5 border border-white/40">
+            <AlertCircle className="w-3 h-3" aria-hidden="true" />
+            {error?.code === 'TIMEOUT_ERROR' ? 'Map loading slowly' :
+             error?.code === 'SCRIPT_LOAD_ERROR' ? 'Interactive map unavailable' : 'Loading interactive map...'}
+          </div>
+        )}
+
+        <div className="text-xs mt-3 flex items-center justify-center gap-1.5 opacity-90 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
           <ExternalLink className="w-3 h-3" aria-hidden="true" />
-          Click to view on Google Maps
+          Click to open in Google Maps
         </div>
       </div>
+
+      {/* Subtle hover effect */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/0 via-transparent to-white/5 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
     </div>
   )
 
@@ -385,7 +477,12 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
       
       <div className="mt-2 text-xs text-[#5d4c42]/60 text-center">
         Click map to open in Google Maps
-        {coordinates && (
+        {usingFallbackLocation && (
+          <div className="mt-1 text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded">
+            📍 Showing general Bali area - click for exact location
+          </div>
+        )}
+        {coordinates && process.env.NODE_ENV === 'development' && (
           <span className="ml-2">
             ({coordinates.lat.toFixed(4)}, {coordinates.lng.toFixed(4)})
           </span>
