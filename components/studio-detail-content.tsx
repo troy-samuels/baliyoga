@@ -355,6 +355,7 @@ export function StudioDetailContent({ studio }: StudioDetailContentProps) {
                   address={studio.location_details.address}
                   name={studio.name}
                   city={studio.location}
+                  id={studio.id}
                 />
               </div>
             </div>

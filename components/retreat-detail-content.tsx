@@ -408,6 +408,7 @@ export function RetreatDetailContent({ retreat }: RetreatDetailContentProps) {
                   address={retreat.location_details.address}
                   name={retreat.name}
                   city={retreat.location}
+                  id={retreat.id}
                 />
               </div>
             </div>

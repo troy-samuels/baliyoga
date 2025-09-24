@@ -7,6 +7,7 @@ interface GoogleMapWrapperProps {
   address: string
   name: string
   city: string
+  id?: string // Studio/retreat ID for coordinate caching
   className?: string
 }
 

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState, useCallback } from "react"
 import { MapPin, ExternalLink, AlertCircle, Eye, X, Maximize2, Navigation } from "lucide-react"
 import { findBaliCoordinates, calculateDistance } from "@/lib/bali-coordinates"
+import { getCoordinates } from "@/lib/geocoding-service"
+import type { GeocodingResult } from "@/lib/geocoding-service"
 
 interface Coordinates {
   lat: number
@@ -13,6 +15,7 @@ interface GoogleMapClientProps {
   address: string
   name: string
   city: string
+  id?: string // Studio/retreat ID for database lookup
   className?: string
 }
 
@@ -76,7 +79,7 @@ const MAP_CONFIG = {
   }
 }
 
-export default function GoogleMapClient({ address, name, city, className }: GoogleMapClientProps) {
+export default function GoogleMapClient({ address, name, city, id, className }: GoogleMapClientProps) {
   const mapRef = useRef<HTMLDivElement>(null)
   const mapInstanceRef = useRef<any>(null)
   
@@ -293,117 +296,70 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
     }
   }, [apiKey, hasValidApiKey, isMounted])
 
-  // Geocode address and create map with smart fallback
+  // Get coordinates using smart geocoding service
   const initializeMap = useCallback(async () => {
     if (!mapRef.current || !isLoaded || !isMounted) {
       return
     }
 
     try {
-      // First, try to find location using static Bali coordinates (fast and reliable)
-      const staticLocation = findBaliCoordinates(address || '', name || '', city || '')
+      // Use the new geocoding service for intelligent coordinate resolution
+      const geocodingResult: GeocodingResult = await getCoordinates({
+        businessName: name || '',
+        address: address || '',
+        city: city || '',
+        id: id
+      })
 
-      if (staticLocation) {
-        const location: Coordinates = {
-          lat: staticLocation.lat,
-          lng: staticLocation.lng
-        }
+      const location: Coordinates = geocodingResult.coordinates
 
-        if (process.env.NODE_ENV === 'development') {
-          console.log('📍 Using static coordinates for:', staticLocation.name, location)
-        }
-
-        setCoordinates(location)
-        setUsingFallbackLocation(false)
-
-        // Update maps URL and preview data with exact coordinates
-        const newMapsUrl = createMapsUrl(location, staticLocation.name)
-        setMapsUrl(newMapsUrl)
-        setStreetViewUrl(createStreetViewUrl(location))
-        setLocationContext(generateLocationContext(location, staticLocation))
-
-        createMap(location, staticLocation.zoom)
-        return
-      }
-
-      // If no static location found AND Geocoder is available, try API geocoding
-      if (window.google?.maps?.Geocoder) {
-        // Wait a bit to ensure Google Maps is fully loaded
-        await new Promise(resolve => setTimeout(resolve, 100))
-
-        const geocoder = new window.google.maps.Geocoder()
-        const query = buildGeocodingQuery(address, name, city)
-
-        // Enhanced debug logging for geocoding
-        if (process.env.NODE_ENV === 'development') {
-          console.log('🌍 No static coordinates found, trying geocoding with query:', query)
-        }
-
-        // Geocode the address
-        geocoder.geocode({ address: query }, (results: any[], status: string) => {
-          let location: Coordinates
-
-          if (process.env.NODE_ENV === 'development') {
-            console.log('🌍 Geocoding result:', {
-              status,
-              resultsCount: results?.length || 0,
-              firstResult: results?.[0]?.formatted_address,
-              firstResultGeometry: results?.[0]?.geometry?.location ? {
-                lat: results[0].geometry.location.lat(),
-                lng: results[0].geometry.location.lng()
-              } : null
-            })
-          }
-
-          if (status === 'OK' && results && results[0]) {
-            location = {
-              lat: results[0].geometry.location.lat(),
-              lng: results[0].geometry.location.lng()
-            }
-            setUsingFallbackLocation(false)
-            if (process.env.NODE_ENV === 'development') {
-              console.log('✅ Using geocoded location:', location)
-            }
-          } else {
-            // Final fallback to Bali center coordinates
-            location = { lat: -8.4095, lng: 115.1889 }
-            setUsingFallbackLocation(true)
-            if (process.env.NODE_ENV === 'development') {
-              console.log('⚠️ Geocoding failed, using center Bali:', location, 'Status:', status)
-            }
-          }
-
-          setCoordinates(location)
-
-          // Update maps URL and preview data with determined coordinates
-          const newMapsUrl = createMapsUrl(location, name)
-          setMapsUrl(newMapsUrl)
-          setStreetViewUrl(createStreetViewUrl(location))
-          setLocationContext(generateLocationContext(location))
-
-          createMap(location)
+      if (process.env.NODE_ENV === 'development') {
+        console.log('🎯 Geocoding result:', {
+          source: geocodingResult.source,
+          fromCache: geocodingResult.fromCache,
+          confidence: geocodingResult.confidence,
+          coordinates: location,
+          geocodedAddress: geocodingResult.geocodedAddress
         })
-      } else {
-        // No geocoder available, use center Bali
-        const fallbackLocation = { lat: -8.4095, lng: 115.1889 }
-        setUsingFallbackLocation(true)
-        setCoordinates(fallbackLocation)
-
-        // Update maps URL and preview data with fallback coordinates
-        const newMapsUrl = createMapsUrl(fallbackLocation, 'Bali')
-        setMapsUrl(newMapsUrl)
-        setStreetViewUrl(createStreetViewUrl(fallbackLocation))
-        setLocationContext('Located in beautiful Bali, Indonesia - tropical paradise island')
-
-        createMap(fallbackLocation)
-
-        if (process.env.NODE_ENV === 'development') {
-          console.log('⚠️ No geocoder available, using center Bali:', fallbackLocation)
-        }
       }
+
+      setCoordinates(location)
+
+      // Determine if we're using a fallback location
+      const isUsingFallback = geocodingResult.source === 'fallback' ||
+                             geocodingResult.source === 'static_coordinates'
+      setUsingFallbackLocation(isUsingFallback)
+
+      // Update maps URL and preview data with exact coordinates
+      const newMapsUrl = createMapsUrl(location, name)
+      setMapsUrl(newMapsUrl)
+      setStreetViewUrl(createStreetViewUrl(location))
+
+      // Generate context based on source
+      let contextDescription = ''
+      if (geocodingResult.geocodedAddress) {
+        contextDescription = `Located at: ${geocodingResult.geocodedAddress}`
+      } else {
+        contextDescription = generateLocationContext(location)
+      }
+      setLocationContext(contextDescription)
+
+      // Determine appropriate zoom level based on source
+      let zoomLevel = MAP_CONFIG.zoom.withAddress
+      if (geocodingResult.source === 'google_geocoding' && geocodingResult.confidence && geocodingResult.confidence > 0.9) {
+        zoomLevel = 16 // High confidence = closer zoom
+      } else if (geocodingResult.source === 'static_coordinates') {
+        zoomLevel = 15 // Static coordinates = moderate zoom
+      } else if (geocodingResult.source === 'fallback') {
+        zoomLevel = MAP_CONFIG.zoom.withoutAddress // Fallback = wide zoom
+      }
+
+      createMap(location, zoomLevel)
+
     } catch (err) {
-      console.error('Error initializing map:', err)
-      // Use fallback coordinates instead of showing error
+      console.error('Error initializing map with geocoding service:', err)
+
+      // Final fallback if geocoding service fails entirely
       const fallbackLocation = { lat: -8.4095, lng: 115.1889 }
       setUsingFallbackLocation(true)
       setCoordinates(fallbackLocation)
@@ -414,9 +370,9 @@ export default function GoogleMapClient({ address, name, city, className }: Goog
       setStreetViewUrl(createStreetViewUrl(fallbackLocation))
       setLocationContext('Located in beautiful Bali, Indonesia - tropical paradise island')
 
-      createMap(fallbackLocation)
+      createMap(fallbackLocation, MAP_CONFIG.zoom.withoutAddress)
     }
-  }, [address, name, city, isLoaded, isMounted, createMapsUrl, createStreetViewUrl, generateLocationContext])
+  }, [address, name, city, id, isLoaded, isMounted, createMapsUrl, createStreetViewUrl, generateLocationContext])
 
   // Create the map instance
   const createMap = useCallback((location: Coordinates, customZoom?: number) => {

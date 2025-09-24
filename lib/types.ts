@@ -88,6 +88,13 @@ export interface DatabaseStudio {
   tiktok_url?: string
   youtube_url?: string
   whatsapp_number?: string
+  // Geocoding fields
+  latitude?: number
+  longitude?: number
+  geocoded_address?: string
+  geocoding_confidence?: number
+  coordinates_source?: 'google_geocoding' | 'static_coordinates' | 'manual_entry'
+  coordinates_updated_at?: string
   created_at?: string
   updated_at?: string
 }
@@ -121,6 +128,13 @@ export interface DatabaseRetreat {
   tiktok_url?: string
   youtube_url?: string
   whatsapp_number?: string
+  // Geocoding fields
+  latitude?: number
+  longitude?: number
+  geocoded_address?: string
+  geocoding_confidence?: number
+  coordinates_source?: 'google_geocoding' | 'static_coordinates' | 'manual_entry'
+  coordinates_updated_at?: string
   created_at?: string
   updated_at?: string
 }
