@@ -2,6 +2,44 @@ import type { Metadata } from 'next'
 import type { Studio, Retreat } from '@/lib/types'
 import { getCanonicalUrl } from '@/lib/slug-utils'
 
+/**
+ * Get location-specific postal codes for Bali areas
+ */
+function getLocationPostalCode(location: string): string {
+  const postalCodes: Record<string, string> = {
+    'Ubud': '80571',
+    'Canggu': '80361',
+    'Seminyak': '80361',
+    'Kuta': '80361',
+    'Sanur': '80228',
+    'Denpasar': '80113',
+    'Jimbaran': '80364',
+    'Uluwatu': '80364',
+    'Nusa Dua': '80363',
+    'Legian': '80361',
+    'Kerobokan': '80361',
+    'Umalas': '80361',
+    'Berawa': '80361',
+    'Echo Beach': '80361',
+    'Pererenan': '80351',
+    'Tabanan': '82161',
+    'Mengwi': '80351',
+    'Sukawati': '80582',
+    'Mas': '80571',
+    'Peliatan': '80571',
+    'Tegallalang': '80561',
+    'Payangan': '80572',
+    'Sidemen': '80864',
+    'Amed': '80852',
+    'Candidasa': '80851',
+    'Lovina': '81152',
+    'Munduk': '82161',
+    'Banjar': '81152'
+  }
+
+  return postalCodes[location] || '80361' // Default to general Bali postal code
+}
+
 interface EnhancedMetadataParams {
   item: Studio | Retreat
   type: 'studio' | 'retreat'
@@ -138,16 +176,27 @@ export function generateEnhancedMetadata({
       'max-image-preview': 'large',
       'max-snippet': -1,
       'max-video-preview': -1,
+      googlebot: 'index, follow, max-image-preview:large',
     },
     verification: {
       google: process.env.GOOGLE_SITE_VERIFICATION,
     },
     category: 'Health & Wellness',
-    classification: 'Yoga Studio',
+    classification: isStudio ? 'Yoga Studio' : 'Yoga Retreat Center',
     coverage: 'Worldwide',
     distribution: 'Global',
     rating: 'General',
     referrer: 'no-referrer-when-downgrade',
+    applicationName: 'Bali Yoga - Authentic Yoga Directory',
+    generator: 'Next.js 15',
+    creator: 'Bali Yoga Platform',
+    publisher: 'Bali Yoga',
+    formatDetection: {
+      telephone: true,
+      date: false,
+      address: true,
+      email: true,
+    },
   }
 
   return {
@@ -182,7 +231,7 @@ export function generateStructuredData(item: Studio | Retreat, type: 'studio' | 
 
   const baseStructuredData = {
     '@context': 'https://schema.org',
-    '@type': isStudio ? ['LocalBusiness', 'SportsActivityLocation', 'HealthAndBeautyBusiness'] : ['TouristAttraction', 'Event'],
+    '@type': isStudio ? ['LocalBusiness', 'SportsActivityLocation', 'HealthAndBeautyBusiness', 'Place'] : ['TouristAttraction', 'Event', 'Place'],
     '@id': `${baseUrl}/${isStudio ? 'studios' : 'retreats'}/${item.slug}`,
     name: item.name,
     description: item.business_description || `${isStudio ? 'Yoga studio' : 'Yoga retreat'} in ${item.location}, Bali offering authentic yoga experiences and wellness practices.`,
@@ -193,16 +242,18 @@ export function generateStructuredData(item: Studio | Retreat, type: 'studio' | 
         url: item.image,
         caption: `${item.name} - ${isStudio ? 'Yoga Studio' : 'Yoga Retreat'} in ${item.location}, Bali`,
         width: 1200,
-        height: 630
+        height: 630,
+        encodingFormat: 'image/jpeg'
       }
     ] : [],
     address: {
       '@type': 'PostalAddress',
       addressLocality: item.location,
       addressRegion: 'Bali',
-      addressCountry: 'Indonesia',
-      streetAddress: item.address || item.location,
-      postalCode: '80361', // General Bali postal code
+      addressCountry: 'ID',
+      addressCountryName: 'Indonesia',
+      streetAddress: item.address || `${item.location}, Bali`,
+      postalCode: getLocationPostalCode(item.location),
     },
     geo: item.latitude && item.longitude ? {
       '@type': 'GeoCoordinates',
@@ -210,6 +261,14 @@ export function generateStructuredData(item: Studio | Retreat, type: 'studio' | 
       longitude: item.longitude,
       '@context': 'https://schema.org'
     } : undefined,
+    areaServed: {
+      '@type': 'AdministrativeArea',
+      name: 'Bali',
+      containedInPlace: {
+        '@type': 'Country',
+        name: 'Indonesia'
+      }
+    },
     telephone: item.phone_number,
     email: item.email_address,
     sameAs: [
@@ -225,11 +284,48 @@ export function generateStructuredData(item: Studio | Retreat, type: 'studio' | 
       reviewCount: item.reviewCount || 1,
       bestRating: 5,
       worstRating: 1,
+      '@context': 'https://schema.org'
     } : undefined,
     priceRange: isStudio ? '$$' : '$$$',
-    currenciesAccepted: 'IDR, USD',
-    paymentAccepted: 'Cash, Credit Card, Bank Transfer',
+    currenciesAccepted: ['IDR', 'USD', 'EUR'],
+    paymentAccepted: ['Cash', 'Credit Card', 'Bank Transfer', 'PayPal'],
     hasMap: item.latitude && item.longitude ? `https://maps.google.com/?q=${item.latitude},${item.longitude}` : undefined,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${baseUrl}/${isStudio ? 'studios' : 'retreats'}/${item.slug}`,
+      url: `${baseUrl}/${isStudio ? 'studios' : 'retreats'}/${item.slug}`
+    },
+    potentialAction: [
+      {
+        '@type': 'ReserveAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: item.website || `${baseUrl}/${isStudio ? 'studios' : 'retreats'}/${item.slug}`,
+          actionPlatform: ['https://schema.org/DesktopWebPlatform', 'https://schema.org/MobileWebPlatform']
+        },
+        result: {
+          '@type': 'Reservation',
+          name: `${isStudio ? 'Yoga Class' : 'Retreat'} Reservation`
+        }
+      },
+      {
+        '@type': 'ViewAction',
+        target: [`${baseUrl}/${isStudio ? 'studios' : 'retreats'}/${item.slug}`],
+        name: `View ${item.name}`
+      }
+    ],
+    identifier: [
+      {
+        '@type': 'PropertyValue',
+        name: 'ID',
+        value: item.id
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Slug',
+        value: item.slug
+      }
+    ],
   }
 
   // Add individual reviews to structured data
@@ -290,7 +386,12 @@ export function generateStructuredData(item: Studio | Retreat, type: 'studio' | 
         },
         {
           '@type': 'LocationFeatureSpecification',
-          name: 'Meditation',
+          name: 'Meditation Sessions',
+          value: true
+        },
+        {
+          '@type': 'LocationFeatureSpecification',
+          name: 'Professional Yoga Instructors',
           value: true
         },
         {
@@ -298,12 +399,17 @@ export function generateStructuredData(item: Studio | Retreat, type: 'studio' | 
           name: 'Wellness Programs',
           value: true
         },
-        {
+        ...((item as Studio).amenities || []).map(amenity => ({
           '@type': 'LocationFeatureSpecification',
-          name: 'Professional Instructors',
+          name: amenity,
           value: true
-        }
-      ],
+        })),
+        ...((item as Studio).styles || []).map(style => ({
+          '@type': 'LocationFeatureSpecification',
+          name: `${style} Yoga Classes`,
+          value: true
+        }))
+      ].filter(Boolean),
       openingHours: item.opening_hours && Array.isArray(item.opening_hours)
         ? item.opening_hours.map((hours: any) => `${hours.day} ${hours.hours}`)
         : ['Mo-Su 06:00-20:00'], // Default hours if not specified
