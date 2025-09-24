@@ -93,6 +93,83 @@ export default function RootLayout({
           data-domain="baliyoga.com"
           src="https://datafa.st/js/script.js">
         </script>
+        {/* Analytics debugging script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Debug analytics loading
+              (function() {
+                console.log('🔍 Analytics Debug - Page loading...');
+                console.log('Domain:', window.location?.hostname || 'unknown');
+                console.log('URL:', window.location?.href || 'unknown');
+
+                // Check script loading with retries
+                let checkAttempts = 0;
+                const maxAttempts = 10;
+
+                function checkAnalytics() {
+                  checkAttempts++;
+
+                  // Check if datafa.st script is in DOM
+                  const scripts = document.querySelectorAll('script[src*="datafa.st"]');
+                  console.log('🔍 Check #' + checkAttempts + ' - Datafa.st scripts found:', scripts.length);
+
+                  // Check for various analytics globals that might be created
+                  const globals = ['plausible', 'gtag', 'ga', 'dataLayer', '_paq'];
+                  const foundGlobals = globals.filter(g => typeof window[g] !== 'undefined');
+
+                  if (foundGlobals.length > 0) {
+                    console.log('✅ Analytics globals found:', foundGlobals);
+                    // Try manual pageview
+                    if (typeof window.plausible !== 'undefined') {
+                      console.log('🚀 Triggering manual plausible pageview');
+                      try {
+                        window.plausible('pageview');
+                      } catch(e) {
+                        console.error('❌ Error triggering plausible:', e);
+                      }
+                    }
+                  } else if (checkAttempts < maxAttempts) {
+                    console.log('⏳ Analytics not ready, retrying in 1s...');
+                    setTimeout(checkAnalytics, 1000);
+                  } else {
+                    console.error('❌ Analytics failed to load after ' + maxAttempts + ' attempts');
+                    console.log('💡 Possible issues:');
+                    console.log('  - Ad blocker blocking the script');
+                    console.log('  - Network connectivity issues');
+                    console.log('  - Script loading from https://datafa.st/js/script.js failed');
+                    console.log('  - Website ID or domain mismatch');
+
+                    // Test network connectivity to datafa.st
+                    fetch('https://datafa.st/js/script.js')
+                      .then(response => {
+                        if (response.ok) {
+                          console.log('✅ Network connectivity to datafa.st is working');
+                          console.log('❓ Script loaded but analytics globals not found - possible configuration issue');
+                        } else {
+                          console.error('❌ HTTP error loading script:', response.status, response.statusText);
+                        }
+                      })
+                      .catch(err => {
+                        console.error('❌ Network error loading script:', err);
+                        console.log('💡 This could be due to:');
+                        console.log('  - CORS policy blocking the request');
+                        console.log('  - Ad blocker or privacy extension');
+                        console.log('  - Firewall or network restrictions');
+                      });
+                  }
+                }
+
+                // Start checking after DOM loads
+                if (document.readyState === 'loading') {
+                  document.addEventListener('DOMContentLoaded', checkAnalytics);
+                } else {
+                  checkAnalytics();
+                }
+              })();
+            `
+          }}
+        />
       </head>
       <body 
         className={`${raleway.className} antialiased bg-[#f9f3e9] text-[#5d4c42] min-h-screen`}
