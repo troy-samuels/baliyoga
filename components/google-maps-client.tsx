@@ -41,12 +41,17 @@ declare global {
   }
 }
 
-// Map configuration
+// Enhanced map configuration for mobile visibility
 const MAP_CONFIG = {
   zoom: {
-    withAddress: 15,
-    withoutAddress: 12
+    street_level: 18,        // For precise addresses - street level view
+    neighborhood: 16,        // For city-level coordinates
+    area_level: 14,          // For region-level fallbacks
+    mobile_optimal: 17,      // Sweet spot for mobile viewing
+    withAddress: 17,         // Updated from 15 for better visibility
+    withoutAddress: 14       // Updated from 12 for better context
   },
+  // Mobile-optimized styling for better visibility
   styles: [
     {
       "featureType": "poi",
@@ -64,18 +69,42 @@ const MAP_CONFIG = {
     },
     {
       "featureType": "landscape",
-      "stylers": [{ "color": "#f9f3e9" }]
+      "stylers": [{ "color": "#f5f1eb", "lightness": 5 }] // Slightly lighter for better contrast
     },
     {
       "featureType": "water",
-      "stylers": [{ "color": "#a39188" }]
+      "stylers": [{ "color": "#4A90E2", "saturation": 30 }] // Blue water for better visibility
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry",
+      "stylers": [{ "visibility": "on", "saturation": 10, "lightness": 20 }] // More visible roads
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [{ "color": "#f0ad4e", "visibility": "on" }] // Highlight major roads
+    },
+    {
+      "featureType": "administrative.locality",
+      "elementType": "labels.text",
+      "stylers": [{ "visibility": "on", "color": "#5d4c42" }] // Show area names
     }
   ],
+  // Mobile-optimized default options
   defaultOptions: {
     disableDefaultUI: true,
     zoomControl: true,
+    zoomControlOptions: {
+      position: 9 // TOP_RIGHT for better mobile accessibility
+    },
     scrollwheel: false,
-    gestureHandling: 'cooperative'
+    gestureHandling: 'cooperative',
+    clickableIcons: false,      // Prevent POI clicks from interfering
+    keyboardShortcuts: false,   // Focus on touch interaction
+    fullscreenControl: false,   // Use our custom fullscreen (Google Maps redirect)
+    streetViewControl: false,   // Use our custom street view button
+    mapTypeControl: false       // Keep interface clean
   }
 }
 
@@ -344,14 +373,21 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
       }
       setLocationContext(contextDescription)
 
-      // Determine appropriate zoom level based on source
-      let zoomLevel = MAP_CONFIG.zoom.withAddress
-      if (geocodingResult.source === 'google_geocoding' && geocodingResult.confidence && geocodingResult.confidence > 0.9) {
-        zoomLevel = 16 // High confidence = closer zoom
-      } else if (geocodingResult.source === 'static_coordinates') {
-        zoomLevel = 15 // Static coordinates = moderate zoom
+      // Smart zoom level calculation based on coordinate precision
+      let zoomLevel = MAP_CONFIG.zoom.mobile_optimal // Default mobile-optimized zoom
+
+      if (geocodingResult.source === 'google_geocoding') {
+        if (geocodingResult.confidence && geocodingResult.confidence > 0.9) {
+          zoomLevel = MAP_CONFIG.zoom.street_level // High confidence = street level
+        } else if (geocodingResult.confidence && geocodingResult.confidence > 0.7) {
+          zoomLevel = MAP_CONFIG.zoom.mobile_optimal // Good confidence = mobile optimal
+        } else {
+          zoomLevel = MAP_CONFIG.zoom.neighborhood // Lower confidence = wider view
+        }
+      } else if (geocodingResult.source === 'static_coordinates' || geocodingResult.source === 'database') {
+        zoomLevel = MAP_CONFIG.zoom.neighborhood // Static coordinates = neighborhood level
       } else if (geocodingResult.source === 'fallback') {
-        zoomLevel = MAP_CONFIG.zoom.withoutAddress // Fallback = wide zoom
+        zoomLevel = MAP_CONFIG.zoom.area_level // Fallback = area level for context
       }
 
       createMap(location, zoomLevel)
@@ -379,9 +415,11 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
     if (!mapRef.current || !window.google || !isMounted) return
 
     try {
-      // Determine zoom level: custom > address-based > default
+      // Enhanced zoom level determination with mobile optimization
       const zoomLevel = customZoom ||
-        (address ? MAP_CONFIG.zoom.withAddress : MAP_CONFIG.zoom.withoutAddress)
+        (address && address.length > 10 ? MAP_CONFIG.zoom.street_level :
+         address ? MAP_CONFIG.zoom.mobile_optimal :
+         MAP_CONFIG.zoom.neighborhood)
 
       // Create map
       const map = new window.google.maps.Map(mapRef.current, {
@@ -391,31 +429,91 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
         ...MAP_CONFIG.defaultOptions
       })
 
-      // Create marker
+      // Create high-visibility marker for mobile
       const marker = new window.google.maps.Marker({
         position: location,
         map: map,
         title: name,
         icon: {
-          path: window.google.maps.SymbolPath.CIRCLE,
-          scale: 8,
-          fillColor: '#5d4c42',
-          fillOpacity: 1,
-          strokeColor: '#ffffff',
-          strokeWeight: 2
+          path: 'M12,2C8.13,2 5,5.13 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9C19,5.13 15.87,2 12,2M12,7A2,2 0 0,1 14,9A2,2 0 0,1 12,11A2,2 0 0,1 10,9A2,2 0 0,1 12,7Z', // Modern pin shape
+          fillColor: '#FF4444',      // High-contrast red for visibility
+          fillOpacity: 0.9,
+          strokeColor: '#FFFFFF',    // White border for definition
+          strokeWeight: 3,           // Thicker border
+          scale: 1.8,                // Larger size for mobile visibility
+          anchor: new window.google.maps.Point(12, 22), // Anchor at pin tip
+          labelOrigin: new window.google.maps.Point(12, 9)
+        },
+        animation: window.google.maps.Animation.DROP, // Animated drop for attention
+        zIndex: 1000 // Always on top
+      })
+
+      // Add a subtle pulsing circle around the marker for extra visibility
+      const pulseCircle = new window.google.maps.Circle({
+        strokeColor: '#FF4444',
+        strokeOpacity: 0.3,
+        strokeWeight: 2,
+        fillColor: '#FF4444',
+        fillOpacity: 0.1,
+        map: map,
+        center: location,
+        radius: 50, // 50 meter radius
+        zIndex: 999
+      })
+
+      // Add info window that shows on marker click
+      const infoWindow = new window.google.maps.InfoWindow({
+        content: `
+          <div style="padding: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+            <div style="font-weight: 600; color: #5d4c42; margin-bottom: 4px;">${name}</div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 8px;">${city}, Bali, Indonesia</div>
+            <button onclick="window.open('${mapsUrl}', '_blank')"
+                    style="background: #5d4c42; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">
+              Open in Google Maps
+            </button>
+          </div>
+        `,
+        maxWidth: 250
+      })
+
+      // Enhanced click handlers for better mobile UX
+      marker.addListener('click', (event) => {
+        // Prevent event from bubbling to map
+        event.stop()
+        infoWindow.open(map, marker)
+        // Show preview modal for additional options after brief delay
+        setTimeout(() => setShowPreview(true), 500)
+      })
+
+      // Click map background to show preview modal
+      map.addListener('click', (event) => {
+        // Close any open info windows and show preview
+        infoWindow.close()
+        setShowPreview(true)
+      })
+
+      // Add touch-friendly zoom gesture hints for mobile
+      map.addListener('zoom_changed', () => {
+        const currentZoom = map.getZoom()
+        if (currentZoom < MAP_CONFIG.zoom.area_level) {
+          // If zoomed out too far, show hint
+          setTimeout(() => {
+            const hint = document.createElement('div')
+            hint.innerHTML = '📍 Zoom in to see exact location'
+            hint.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);color:white;padding:8px 12px;border-radius:20px;font-size:12px;z-index:1000;pointer-events:none;'
+            mapRef.current?.appendChild(hint)
+            setTimeout(() => hint.remove(), 2000)
+          }, 100)
         }
       })
 
-      // Add click handlers for preview
-      marker.addListener('click', () => {
-        setShowPreview(true)
-      })
+      // Store references for cleanup
+      mapInstanceRef.current = { map, marker, infoWindow, pulseCircle }
 
-      map.addListener('click', () => {
-        setShowPreview(true)
-      })
-
-      mapInstanceRef.current = map
+      // Store map reference (will be updated by marker creation)
+      if (!mapInstanceRef.current) {
+        mapInstanceRef.current = { map }
+      }
     } catch (err) {
       console.error('Error creating map:', err)
       setError({
@@ -472,9 +570,9 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
     )
   }
 
-  // Enhanced fallback component for when maps can't load
+  // Enhanced fallback component with better mobile UX
   const FallbackMap = () => (
-    <div className={`w-full h-[180px] flex flex-col items-center justify-center bg-gradient-to-br from-[#e6ceb3] via-[#dcc5a8] to-[#d4c1a1] rounded-lg text-[#5d4c42] relative overflow-hidden cursor-pointer hover:from-[#d4c1a1] hover:to-[#c4b091] transition-all duration-300 shadow-sm hover:shadow-md ${className}`}
+    <div className={`w-full h-[180px] flex flex-col items-center justify-center bg-gradient-to-br from-[#e6ceb3] via-[#dcc5a8] to-[#d4c1a1] rounded-lg text-[#5d4c42] relative overflow-hidden cursor-pointer hover:from-[#d4c1a1] hover:to-[#c4b091] transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98] ${className}`}
          onClick={handlePreviewClick}
          role="button"
          tabIndex={0}
@@ -639,7 +737,11 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
         </div>
       </div>
       
-      <div className={`relative w-full h-[180px] rounded-lg overflow-hidden border border-[#e6ceb3] bg-[#f5f5f5] ${className}`}>
+      <div className={`relative w-full h-[180px] rounded-lg overflow-hidden border border-[#e6ceb3] bg-[#f5f5f5] shadow-sm hover:shadow-md transition-shadow duration-200 ${className}`}>
+        {/* Tap hint overlay for better UX */}
+        <div className="absolute top-2 left-2 z-20 bg-white/90 backdrop-blur-sm text-[#5d4c42] text-xs px-2 py-1 rounded-full shadow-sm opacity-80 hover:opacity-100 transition-opacity pointer-events-none">
+          📍 Tap to explore
+        </div>
         {/* Loading state */}
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-[#e6ceb3] z-10">
@@ -660,17 +762,34 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
         />
       </div>
       
-      <div className="mt-2 text-xs text-[#5d4c42]/60 text-center">
-        Click map to preview location details
-        {usingFallbackLocation && (
-          <div className="mt-1 text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded">
-            📍 Showing general Bali area - click for exact location
+      {/* Enhanced location context with visual feedback */}
+      <div className="mt-2 space-y-1">
+        <div className="text-xs text-[#5d4c42]/60 text-center">
+          {usingFallbackLocation ? (
+            <div className="flex items-center justify-center gap-1 text-amber-600">
+              <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
+              Showing general area - tap for precise location
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-1 text-green-600">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              Exact location • Tap map for directions
+            </div>
+          )}
+        </div>
+
+        {/* Location confidence indicator */}
+        {coordinates && (
+          <div className="flex items-center justify-center text-xs text-[#5d4c42]/50">
+            {locationContext && (
+              <span className="truncate max-w-[200px]">{locationContext}</span>
+            )}
+            {process.env.NODE_ENV === 'development' && (
+              <span className="ml-2 font-mono text-[10px]">
+                ({coordinates.lat.toFixed(4)}, {coordinates.lng.toFixed(4)})
+              </span>
+            )}
           </div>
-        )}
-        {coordinates && process.env.NODE_ENV === 'development' && (
-          <span className="ml-2">
-            ({coordinates.lat.toFixed(4)}, {coordinates.lng.toFixed(4)})
-          </span>
         )}
       </div>
 
