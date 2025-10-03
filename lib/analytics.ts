@@ -4,17 +4,14 @@ export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-KXEWQGL8JY'
 // Check if GA is enabled - GA_ID must be present
 export const isAnalyticsEnabled = !!GA_TRACKING_ID
 
-// Track page views
+// Track page views (GA4 SPA-friendly)
 export const pageview = (url: string) => {
-  if (!isAnalyticsEnabled || typeof window === 'undefined') return
-  
+  if (!isAnalyticsEnabled || typeof window === 'undefined' || typeof window.gtag !== 'function') return
+
   try {
-    window.gtag('config', GA_TRACKING_ID!, {
+    window.gtag('event', 'page_view', {
       page_location: url,
-      // Privacy-first settings
-      anonymize_ip: true,
-      allow_google_signals: false,
-      allow_ad_personalization_signals: false,
+      page_title: typeof document !== 'undefined' ? document.title : undefined,
     })
   } catch (error) {
     console.warn('Error tracking pageview:', error)

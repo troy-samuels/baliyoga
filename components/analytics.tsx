@@ -53,6 +53,17 @@ export function Analytics() {
 
   return (
     <>
+      {/* Early gtag stub to buffer events before external script loads */}
+      <Script
+        id="gtag-stub"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+          `,
+        }}
+      />
       {/* Google Analytics Global Site Tag (gtag.js) */}
       <Script
         strategy="afterInteractive"
