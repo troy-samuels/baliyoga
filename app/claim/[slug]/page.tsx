@@ -1,8 +1,8 @@
 import { createServerClient } from "@/lib/supabase"
 import { ClaimForm } from "./claim-form"
 
-export default async function ClaimPage({ params }: { params: { slug: string } }) {
-  const { slug } = params
+export default async function ClaimPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
   // Fetch business info from Supabase
   const supabase = createServerClient()
   const { data, error } = await supabase

@@ -37,7 +37,7 @@ export function StructuredData({ item, type, reviews }: StructuredDataProps) {
         name: `Where exactly is ${item.name} located in Bali?`,
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `${item.name} is located in ${item.location}, Bali, Indonesia. ${item.address ? `The full address is ${item.address}.` : ''} ${item.latitude && item.longitude ? `GPS coordinates: ${item.latitude}, ${item.longitude}` : ''}`
+          text: `${item.name} is located in ${item.location}, Bali, Indonesia. ${item.location_details?.address ? `The full address is ${item.location_details.address}.` : ''} ${item.latitude && item.longitude ? `GPS coordinates: ${item.latitude}, ${item.longitude}` : ''}`
         }
       },
       {

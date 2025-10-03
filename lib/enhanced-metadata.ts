@@ -173,7 +173,7 @@ export function generateEnhancedMetadata({
     robots: {
       index: true,
       follow: true,
-      'max-image-preview': 'large',
+      'max-image-preview': 'large' as const,
       'max-snippet': -1,
       'max-video-preview': -1,
       googlebot: 'index, follow, max-image-preview:large',
@@ -182,11 +182,7 @@ export function generateEnhancedMetadata({
       google: process.env.GOOGLE_SITE_VERIFICATION,
     },
     category: 'Health & Wellness',
-    classification: isStudio ? 'Yoga Studio' : 'Yoga Retreat Center',
-    coverage: 'Worldwide',
-    distribution: 'Global',
-    rating: 'General',
-    referrer: 'no-referrer-when-downgrade',
+    referrer: 'no-referrer-when-downgrade' as const,
     applicationName: 'Bali Yoga - Authentic Yoga Directory',
     generator: 'Next.js 15',
     creator: 'Bali Yoga Platform',
@@ -211,8 +207,10 @@ export function generateEnhancedMetadata({
     other: {
       'geo.region': 'ID-BA',
       'geo.placename': item.location,
-      'geo.position': item.latitude && item.longitude ? `${item.latitude};${item.longitude}` : undefined,
-      'ICBM': item.latitude && item.longitude ? `${item.latitude}, ${item.longitude}` : undefined,
+      ...(item.latitude && item.longitude ? {
+        'geo.position': `${item.latitude};${item.longitude}`,
+        'ICBM': `${item.latitude}, ${item.longitude}`
+      } : {}),
       'business-type': businessType,
       'business-location': `${item.location}, Bali, Indonesia`,
       'price-range': isStudio ? '$$' : '$$$',
@@ -252,7 +250,7 @@ export function generateStructuredData(item: Studio | Retreat, type: 'studio' | 
       addressRegion: 'Bali',
       addressCountry: 'ID',
       addressCountryName: 'Indonesia',
-      streetAddress: item.address || `${item.location}, Bali`,
+      streetAddress: item.location_details?.address || `${item.location}, Bali`,
       postalCode: getLocationPostalCode(item.location),
     },
     geo: item.latitude && item.longitude ? {
@@ -410,7 +408,7 @@ export function generateStructuredData(item: Studio | Retreat, type: 'studio' | 
           value: true
         }))
       ].filter(Boolean),
-      openingHours: item.opening_hours && Array.isArray(item.opening_hours)
+      openingHours: 'opening_hours' in item && item.opening_hours && Array.isArray(item.opening_hours)
         ? item.opening_hours.map((hours: any) => `${hours.day} ${hours.hours}`)
         : ['Mo-Su 06:00-20:00'], // Default hours if not specified
       review: reviewsSchema,
@@ -445,9 +443,9 @@ export function generateStructuredData(item: Studio | Retreat, type: 'studio' | 
       },
       review: reviewsSchema,
       knowsAbout: ['Yoga Retreats', 'Wellness Tourism', 'Spiritual Transformation', 'Meditation Retreats'],
-      startDate: item.start_date,
-      endDate: item.end_date,
-      duration: item.duration || 'P7D' // Default 7 days if not specified
+      startDate: 'start_date' in item ? item.start_date : undefined,
+      endDate: 'end_date' in item ? item.end_date : undefined,
+      duration: ('duration' in item ? item.duration : undefined) || 'P7D' // Default 7 days if not specified
     }
   }
 }

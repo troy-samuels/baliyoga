@@ -248,16 +248,4 @@ export function mockStudioPremiumStatus(studioId: string): boolean {
   return hash % 3 === 0
 }
 
-export {
-  checkStudioPremiumStatus,
-  enrichStudioWithPremiumStatus,
-  enrichStudiosWithPremiumStatus,
-  calculatePriorityScore,
-  sortStudiosByPriority,
-  filterStudiosBySubscription,
-  getPremiumFeatureLimits,
-  hasFeatureAccess,
-  formatSubscriptionStatus,
-  calculateRevenueImpact,
-  mockStudioPremiumStatus
-}
+// All functions already exported individually above

@@ -1,20 +1,18 @@
-// Define StudioProfile type
-type StudioProfile = {
-  id: number
-  name: string
+// Define StudioProfile type based on core Studio type
+import type { Studio } from '@/lib/types'
+
+type StudioProfile = Studio & {
+  // Optional fields that may exist on some data shapes
   city?: string
   address?: string
   email_address?: string
-  phone_number?: string
-  website?: string
   instagram_handle?: string
   facebook_url?: string
   whatsapp_number?: string
-  business_description?: string
   enrichment_score?: number
   yoga_styles?: string[]
-  amenities?: string[]
   drop_in_price_usd?: number
+  // Additional boolean flags used by filters
   beach_proximity?: boolean
   jungle_setting?: boolean
   mountain_view?: boolean
@@ -30,6 +28,7 @@ type StudioProfile = {
   sound_healing?: boolean
   spa?: boolean
   pool?: boolean
+  // Computed intelligence bucket
   computed?: any
 }
 

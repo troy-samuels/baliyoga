@@ -304,7 +304,7 @@ function isBusinessEmail(email: string): boolean {
 }
 
 function getEmailProvider(domain: string): string {
-  const providers = {
+  const providers: Record<string, string> = {
     'gmail.com': 'Gmail',
     'yahoo.com': 'Yahoo',
     'hotmail.com': 'Hotmail',
@@ -312,7 +312,7 @@ function getEmailProvider(domain: string): string {
     'icloud.com': 'iCloud',
     'protonmail.com': 'ProtonMail'
   }
-  
+
   return providers[domain.toLowerCase()] || 'Custom'
 }
 
@@ -353,7 +353,7 @@ function extractDomainFromUrl(url: string): string | null {
   }
 }
 
-export {
+export type {
   EmailExtractionResult,
   EmailValidationResult
 }

@@ -5,7 +5,7 @@
 
 import { cache } from 'react'
 import { createServerClient } from './supabase'
-import { transformStudio, transformRetreat } from './supabase-data-utils'
+import { transformStudio, transformRetreat } from './supabase-server'
 import {
   enrichStudiosWithPremiumStatus,
   sortStudiosByPriority,
@@ -49,7 +49,10 @@ export const getAllStudiosWithPremiumPriority = cache(async (): Promise<Array<St
     }))
 
     // Apply premium priority sorting
-    const sortedStudios = sortStudiosByPriority(studiosWithPremiumStatus)
+    const sortedStudios = sortStudiosByPriority(studiosWithPremiumStatus) as Array<Studio & {
+      isPremium: boolean
+      priorityScore?: number
+    }>
 
     const premiumCount = sortedStudios.filter(s => s.isPremium).length
     const freeCount = sortedStudios.length - premiumCount
@@ -169,7 +172,10 @@ export const searchStudiosWithPremiumPriority = cache(async (
     }
 
     // Re-sort by priority after filtering (important for search results)
-    const sortedResults = sortStudiosByPriority(studios)
+    const sortedResults = sortStudiosByPriority(studios) as Array<Studio & {
+      isPremium: boolean
+      priorityScore?: number
+    }>
 
     console.log(`📊 Search results: ${sortedResults.length} studios found`)
     console.log(`💎 Premium results: ${sortedResults.filter(s => s.isPremium).length} premium studios`)
@@ -249,13 +255,3 @@ export const getPremiumSubscriptionAnalytics = cache(async (): Promise<{
     }
   }
 })
-
-// Export all the enhanced functions
-export {
-  getAllStudiosWithPremiumPriority,
-  getFeaturedStudiosWithPremiumPriority,
-  getStudioBySlugWithPremiumStatus,
-  searchStudiosWithPremiumPriority,
-  getStudiosBySubscriptionTier,
-  getPremiumSubscriptionAnalytics
-}

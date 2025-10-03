@@ -37,10 +37,10 @@ ${Array.from(locationCounts.entries()).map(([location, counts]) => {
   const totalCount = counts.studios + counts.retreats
 
   const priority = (() => {
-    if (isPopular && totalCount >= 10) return '0.9'
-    if (isPopular || totalCount >= 5) return '0.8'
-    if (totalCount >= 3) return '0.7'
-    return '0.6'
+    if (isPopular && totalCount >= 10) return 0.9
+    if (isPopular || totalCount >= 5) return 0.8
+    if (totalCount >= 3) return 0.7
+    return 0.6
   })()
 
   // Generate URLs for location-based pages
@@ -52,7 +52,7 @@ ${Array.from(locationCounts.entries()).map(([location, counts]) => {
     <loc>${baseUrl}/studios/${locationSlug}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>${priority}</priority>
+    <priority>${priority.toFixed(1)}</priority>
   </url>`)
   }
 
@@ -61,7 +61,7 @@ ${Array.from(locationCounts.entries()).map(([location, counts]) => {
     <loc>${baseUrl}/retreats/${locationSlug}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>${priority}</priority>
+    <priority>${priority.toFixed(1)}</priority>
   </url>`)
   }
 
@@ -70,7 +70,7 @@ ${Array.from(locationCounts.entries()).map(([location, counts]) => {
     <loc>${baseUrl}/locations/${locationSlug}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>${Math.max(0.6, priority - 0.1)}</priority>
+    <priority>${Math.max(0.6, priority - 0.1).toFixed(1)}</priority>
   </url>`)
 
   return urls.join('\n')
@@ -89,5 +89,5 @@ ${Array.from(locationCounts.entries()).map(([location, counts]) => {
 export const GET = withCache(
   generateLocationsSitemap,
   'locations-sitemap',
-  { ttl: 3600 } // 1 hour cache
+  { revalidate: 3600, tags: ['locations-sitemap'] } // 1 hour cache
 )

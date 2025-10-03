@@ -229,8 +229,8 @@ export function calculateFilterCounts(studios: Studio[]): {[categoryId: string]:
 
   // Count based on actual studio data
   studios.forEach(studio => {
-    // Location counts (based on city/location field)
-    const location = (studio.location || studio.city || '').toLowerCase()
+    // Location counts (based on location field)
+    const location = (studio.location || '').toLowerCase()
     if (location.includes('seminyak') || location.includes('canggu') || location.includes('uluwatu') || location.includes('denpasar') || location.includes('badung')) {
       counts.location['south-bali']++
     } else if (location.includes('ubud') || location.includes('gianyar')) {
@@ -245,9 +245,9 @@ export function calculateFilterCounts(studios: Studio[]): {[categoryId: string]:
       counts.location['islands']++
     }
 
-    // Yoga styles (from standardized yoga_styles field)
-    if (studio.yoga_styles && Array.isArray(studio.yoga_styles)) {
-      studio.yoga_styles.forEach((style: string) => {
+    // Yoga styles (from standardized styles field)
+    if (studio.styles && Array.isArray(studio.styles)) {
+      studio.styles.forEach((style: string) => {
         const styleId = style.toLowerCase().replace(/\s+/g, '-')
         if (counts['yoga-styles'][styleId] !== undefined) {
           counts['yoga-styles'][styleId]++
@@ -286,14 +286,14 @@ export function calculateFilterCounts(studios: Studio[]): {[categoryId: string]:
     if (studio.website && studio.website.trim()) {
       counts['contact-info']['has-website']++
     }
-    if (studio.email && studio.email.trim()) {
+    if (studio.email_address && studio.email_address.trim()) {
       counts['contact-info']['has-email']++
     }
     if (studio.business_description && studio.business_description.trim()) {
       counts['contact-info']['has-description']++
     }
     // Complete contact info (phone, website, and email)
-    if (studio.phone_number?.trim() && studio.website?.trim() && studio.email?.trim()) {
+    if (studio.phone_number?.trim() && studio.website?.trim() && studio.email_address?.trim()) {
       counts['contact-info']['complete-contact']++
     }
 
@@ -321,7 +321,7 @@ export function calculateFilterCounts(studios: Studio[]): {[categoryId: string]:
 
     // Features (based on profile analysis)
     const name = studio.name.toLowerCase()
-    const description = (studio.description || studio.business_description || '').toLowerCase()
+    const description = (studio.business_description || '').toLowerCase()
 
     if (name.includes('teacher') || name.includes('training') || name.includes('certification') || name.includes('yttc')) {
       counts.features['teacher-training']++
@@ -372,4 +372,3 @@ export function getPopularFilters(): FilterOption[] {
   ]
 }
 
-export type { FilterOption, FilterCategory }

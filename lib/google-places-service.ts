@@ -297,13 +297,17 @@ export class GooglePlacesYogaService {
    */
   async validateImageUrl(imageUrl: string): Promise<boolean> {
     try {
-      const response = await fetch(imageUrl, { 
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 5000)
+
+      const response = await fetch(imageUrl, {
         method: 'HEAD',
-        timeout: 5000 // 5 second timeout
+        signal: controller.signal
       })
-      
-      return response.ok && response.headers.get('content-type')?.startsWith('image/')
-      
+
+      clearTimeout(timeoutId)
+      return response.ok && (response.headers.get('content-type')?.startsWith('image/') || false)
+
     } catch (error) {
       console.warn('Image validation failed:', imageUrl, error)
       return false
@@ -315,9 +319,14 @@ export class GooglePlacesYogaService {
    */
   async downloadImage(imageUrl: string): Promise<Buffer | null> {
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000)
+
       const response = await fetch(imageUrl, {
-        timeout: 10000 // 10 second timeout
+        signal: controller.signal
       })
+
+      clearTimeout(timeoutId)
 
       if (!response.ok) {
         throw new Error(`Image download failed: ${response.status}`)

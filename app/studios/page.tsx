@@ -38,7 +38,9 @@ export default async function StudiosPage({
     images,
   })
 
-  const hasFilters = query || (location && location !== "all") || rating || reviews || images
+  const hasFilters = Boolean(
+    query || (location && location !== "all") || rating || reviews || images
+  )
   const locationDisplay = location ? getLocationDisplayName(location) : null
 
   return (

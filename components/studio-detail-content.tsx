@@ -352,7 +352,7 @@ export function StudioDetailContent({ studio }: StudioDetailContentProps) {
               {/* Map */}
               <div className="rounded-xl bg-white p-4 shadow-sm border border-[#e6ceb3]/20">
                 <GoogleMapWrapper
-                  address={studio.location_details.address}
+                  address={studio.location_details?.address || ''}
                   name={studio.name}
                   city={studio.location}
                   id={studio.id}

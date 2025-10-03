@@ -32,6 +32,12 @@ declare global {
         Map: new (element: HTMLElement, options: any) => any
         Marker: new (options: any) => any
         Geocoder: new () => any
+        Circle: new (options: any) => any
+        InfoWindow: new (options: any) => any
+        Point: new (x: number, y: number) => any
+        Animation: {
+          DROP: any
+        }
         SymbolPath: {
           CIRCLE: any
         }
@@ -495,7 +501,7 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
       })
 
       // Enhanced click handlers for better mobile UX
-      marker.addListener('click', (event) => {
+      marker.addListener('click', (event: any) => {
         // Prevent event from bubbling to map
         event.stop()
         infoWindow.open(map, marker)
@@ -504,7 +510,7 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
       })
 
       // Click map background to show preview modal
-      map.addListener('click', (event) => {
+      map.addListener('click', (event: any) => {
         // Close any open info windows and show preview
         infoWindow.close()
         setShowPreview(true)

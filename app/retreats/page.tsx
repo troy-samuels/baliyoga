@@ -45,7 +45,9 @@ export default async function RetreatsPage({
     price,
   })
 
-  const hasFilters = query || (location && location !== "all") || rating || reviews || images || duration || retreatType || accommodation || price
+  const hasFilters = Boolean(
+    query || (location && location !== "all") || rating || reviews || images || duration || retreatType || accommodation || price
+  )
   const locationDisplay = location ? getLocationDisplayName(location) : null
 
   return (

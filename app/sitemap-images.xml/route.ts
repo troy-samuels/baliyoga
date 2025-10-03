@@ -104,5 +104,5 @@ ${images.map(img => `  <url>
 export const GET = withCache(
   generateImagesSitemap,
   'images-sitemap',
-  { ttl: 3600 } // 1 hour cache
+  { revalidate: 3600, tags: ['images-sitemap'] } // 1 hour cache
 )

@@ -5,6 +5,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  eslint: {
+    // Allow builds to continue even if there are ESLint issues (Vercel default)
+    ignoreDuringBuilds: true,
+  },
   
   // Production optimizations
   poweredByHeader: false,

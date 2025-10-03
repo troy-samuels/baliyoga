@@ -60,5 +60,5 @@ ${retreats.map(retreat => {
 export const GET = withCache(
   generateRetreatsSitemap,
   'retreats-sitemap',
-  { ttl: 1800 } // 30 minutes cache
+  { revalidate: 1800, tags: ['retreats-sitemap'] } // 30 minutes cache
 )

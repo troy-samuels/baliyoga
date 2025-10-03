@@ -79,7 +79,7 @@ export class FeatureFlagService {
 
   private loadFlags(): FeatureFlagConfig {
     // In development, load from environment variables or use defaults
-    const flagOverrides: Partial<FeatureFlagConfig> = {}
+    const flagOverrides: Record<string, any> = {}
 
     // Check for environment variable overrides
     Object.keys(DEFAULT_FLAGS).forEach(flagKey => {
@@ -94,7 +94,7 @@ export class FeatureFlagService {
       }
     })
 
-    return { ...DEFAULT_FLAGS, ...flagOverrides }
+    return { ...DEFAULT_FLAGS, ...flagOverrides } as FeatureFlagConfig
   }
 
   /**

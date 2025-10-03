@@ -29,7 +29,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 
 
 // Transform database studio to app studio
-function transformStudio(dbStudio: DatabaseStudio): Studio {
+export function transformStudio(dbStudio: DatabaseStudio): Studio {
   const location = dbStudio.city || 'Bali'
   const slug = generateSlug(dbStudio.name, location, 'studio')
   
@@ -79,7 +79,7 @@ function transformStudio(dbStudio: DatabaseStudio): Studio {
 }
 
 // Transform database retreat to app retreat
-function transformRetreat(dbRetreat: DatabaseRetreat): Retreat {
+export function transformRetreat(dbRetreat: DatabaseRetreat): Retreat {
   const location = dbRetreat.city || 'Bali'
   const slug = generateSlug(dbRetreat.name, location, 'retreat')
   

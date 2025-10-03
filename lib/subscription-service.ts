@@ -475,15 +475,4 @@ export async function calculateRevenueProjection(): Promise<{
   }
 }
 
-export {
-  SUBSCRIPTION_PLANS,
-  createStudioSubscription,
-  getStudioSubscription,
-  hasStudioPremiumFeatures,
-  updateSubscriptionStatus,
-  recordStudioAnalytics,
-  getStudioDashboardData,
-  recordBookingTransaction,
-  getMonthlyRevenueSummary,
-  calculateRevenueProjection
-}
+// All functions already exported individually above

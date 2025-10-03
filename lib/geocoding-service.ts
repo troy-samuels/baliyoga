@@ -78,14 +78,15 @@ export class GeocodingService {
       if (address && address.length > 5 && googleMapsApiKey) {
         const geocodingResult = await this.geocodeWithGoogle(businessName, address, city)
         if (geocodingResult) {
-          // Cache the result if we have an ID
-          if (id) {
-            await this.cacheCoordinates(id, geocodingResult)
-          }
-          return {
+          const result = {
             ...geocodingResult,
             fromCache: false
           }
+          // Cache the result if we have an ID
+          if (id) {
+            await this.cacheCoordinates(id, result)
+          }
+          return result
         }
       }
 
@@ -350,5 +351,5 @@ export const geocodingService = GeocodingService.getInstance()
 export const getCoordinates = (location: LocationData): Promise<GeocodingResult> =>
   geocodingService.getCoordinates(location)
 
-export const getCacheStats = (): Promise<ReturnType<GeocodingService['getCacheStats']>> =>
+export const getCacheStats = () =>
   geocodingService.getCacheStats()

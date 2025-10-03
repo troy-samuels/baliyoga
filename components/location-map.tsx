@@ -17,6 +17,12 @@ declare global {
         Map: new (element: HTMLElement, options: any) => any
         Marker: new (options: any) => any
         Geocoder: new () => any
+        Circle: new (options: any) => any
+        InfoWindow: new (options: any) => any
+        Point: new (x: number, y: number) => any
+        Animation: {
+          DROP: any
+        }
         SymbolPath: {
           CIRCLE: any
         }

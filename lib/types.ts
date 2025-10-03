@@ -24,6 +24,10 @@ export interface BaseItem {
   tiktok_url?: string
   youtube_url?: string
   whatsapp_number?: string
+  // Geocoding fields
+  latitude?: number
+  longitude?: number
+  email_address?: string
   createdAt?: string
   updatedAt?: string
 }
@@ -202,10 +206,18 @@ export interface BlogPost {
   featured_image?: string
   tags: string[]
   category: string
+  categories?: string[]
   meta_description?: string
+  metaTitle?: string
+  metaDescription?: string
+  keywords?: string[]
   read_time: number
   is_published: boolean
   view_count: number
+  featured?: boolean
+  publishDate?: string
+  updatedAt?: string
+  featuredImage?: string
   created_at: string
   updated_at: string
 }
@@ -680,6 +692,9 @@ export interface RetreatGuide {
   target_audience: string[]
   seo_keywords: string[]
   meta_description: string
+  metaTitle?: string
+  metaDescription?: string
+  keywords?: string[]
   author: string
   published_date: string
   last_updated: string
@@ -688,6 +703,12 @@ export interface RetreatGuide {
   engagement_score: number
   affiliate_link_count: number
   conversion_rate: number
+  tags?: string[]
+  categories?: string[]
+  featured?: boolean
+  publishDate?: string
+  updatedAt?: string
+  featuredImage?: string
 }
 
 export interface ContentPerformanceMetrics {

@@ -405,7 +405,7 @@ export function RetreatDetailContent({ retreat }: RetreatDetailContentProps) {
               {/* Map */}
               <div className="rounded-xl bg-white p-4 shadow-sm border border-[#e6ceb3]/20">
                 <GoogleMapWrapper
-                  address={retreat.location_details.address}
+                  address={retreat.location_details?.address || ''}
                   name={retreat.name}
                   city={retreat.location}
                   id={retreat.id}

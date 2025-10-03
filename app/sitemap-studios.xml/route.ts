@@ -51,5 +51,5 @@ ${studios.map(studio => {
 export const GET = withCache(
   generateStudiosSitemap,
   'studios-sitemap',
-  { ttl: 1800 } // 30 minutes cache
+  { revalidate: 1800, tags: ['studios-sitemap'] } // 30 minutes cache
 )

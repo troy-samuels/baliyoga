@@ -71,7 +71,7 @@ export class ContentService {
     try {
       if (fs.existsSync(this.blogDataPath)) {
         const data = fs.readFileSync(this.blogDataPath, 'utf8')
-        return JSON.parse(data).filter((post: BlogPost) => post.status === 'published')
+        return JSON.parse(data).filter((post: BlogPost) => post.is_published === true)
       }
     } catch (error) {
       console.error('Error loading blog posts:', error)
@@ -115,7 +115,7 @@ export class ContentService {
    */
   getBlogPostsByCategory(category: string): BlogPost[] {
     const posts = this.getBlogPosts()
-    return posts.filter(post => post.categories?.includes(category))
+    return posts.filter(post => post.category === category)
   }
 
   /**
@@ -233,7 +233,7 @@ export class ContentService {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://baliyoga.com'
     const isGuide = 'location_focus' in content
 
-    const structuredData = {
+    const structuredData: any = {
       '@context': 'https://schema.org',
       '@type': 'Article',
       headline: content.title,
