@@ -117,6 +117,7 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
   const [error, setError] = useState<GoogleMapError | null>(null)
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null)
   const [isMounted, setIsMounted] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
   const [usingFallbackLocation, setUsingFallbackLocation] = useState(false)
   const [mapsUrl, setMapsUrl] = useState<string>('')
   const [showPreview, setShowPreview] = useState(false)
@@ -126,6 +127,23 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
   // Only initialize after component mounts (client-side only)
   useEffect(() => {
     setIsMounted(true)
+  }, [])
+
+  // Observe visibility to lazy-load Maps only when needed
+  useEffect(() => {
+    if (!mapRef.current) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '200px' }
+    )
+    observer.observe(mapRef.current)
+    return () => observer.disconnect()
   }, [])
 
   // Get the API key
@@ -256,7 +274,7 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
 
   // Load Google Maps API
   const loadGoogleMaps = useCallback(async () => {
-    if (!isMounted || !hasValidApiKey) {
+    if (!isMounted || !hasValidApiKey || !isVisible) {
       setError({
         code: 'NO_API_KEY',
         message: 'Google Maps API key not configured'
@@ -294,7 +312,7 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
       }
 
       const script = document.createElement('script')
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=geometry&callback=${callbackName}&loading=async`
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=${callbackName}&loading=async`
       script.async = true
       script.defer = true
 
@@ -323,7 +341,7 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
       })
       setIsLoading(false)
     }
-  }, [apiKey, hasValidApiKey, isMounted])
+  }, [apiKey, hasValidApiKey, isMounted, isVisible])
 
   // Get coordinates using smart geocoding service
   const initializeMap = useCallback(async () => {
@@ -525,17 +543,17 @@ export default function GoogleMapClient({ address, name, city, id, className }: 
 
   // Load Google Maps on component mount (client-side only)
   useEffect(() => {
-    if (isMounted) {
+    if (isMounted && isVisible) {
       loadGoogleMaps()
     }
-  }, [loadGoogleMaps, isMounted])
+  }, [loadGoogleMaps, isMounted, isVisible])
 
   // Initialize map when loaded
   useEffect(() => {
-    if (isLoaded && !error && isMounted) {
+    if (isLoaded && !error && isMounted && isVisible) {
       initializeMap()
     }
-  }, [isLoaded, error, initializeMap, isMounted])
+  }, [isLoaded, error, initializeMap, isMounted, isVisible])
 
   // Handle external link click
   const handleExternalClick = useCallback(() => {

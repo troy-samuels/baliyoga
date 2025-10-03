@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server"
 
+export const runtime = 'edge'
+
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024 // 5MB
 const CACHE_DURATION = 60 * 60 * 24 * 365 // 1 year in seconds
 const ALLOWED_DOMAINS = [

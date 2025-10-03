@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
@@ -338,9 +339,9 @@ function CurrentWeekSection({
               <Card key={item.id} className="border border-yellow-200 bg-yellow-50">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
+                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0 relative">
                       {item.image && (
-                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        <Image src={item.image} alt={item.name} fill sizes="64px" className="object-cover" />
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -400,12 +401,14 @@ function FeaturedPoolSection({
         <Card key={listing.id} className={listing.is_eligible ? '' : 'opacity-60'}>
           <CardContent className="p-4">
             <div className="flex items-start gap-4">
-              <div className="w-20 h-20 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
+              <div className="w-20 h-20 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0 relative">
                 {listing.item_data.image && (
-                  <img 
+                  <Image 
                     src={listing.item_data.image} 
                     alt={listing.item_data.name} 
-                    className="w-full h-full object-cover" 
+                    fill
+                    sizes="80px"
+                    className="object-cover" 
                   />
                 )}
               </div>

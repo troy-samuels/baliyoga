@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Raleway, Cormorant_Garamond } from "next/font/google"
+import Script from "next/script"
 import "./globals.css"
 import { ClientProviders } from "@/components/client-providers"
 
@@ -87,12 +88,17 @@ export default function RootLayout({
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-        <script
-          defer
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
+        <link rel="preconnect" href="https://region1.google-analytics.com" crossOrigin="" />
+        <link rel="preconnect" href="https://zioqkkdhvgrkznxyxtik.supabase.co" crossOrigin="" />
+        <link rel="preconnect" href="https://maps.googleapis.com" crossOrigin="" />
+        <link rel="preconnect" href="https://maps.gstatic.com" crossOrigin="" />
+        <Script
+          src="https://datafa.st/js/script.js"
+          strategy="afterInteractive"
           data-website-id="68d3fce9cc708f179902907b"
           data-domain="baliyoga.com"
-          src="https://datafa.st/js/script.js">
-        </script>
+        />
         {/* Analytics debugging script */}
         <script
           dangerouslySetInnerHTML={{
