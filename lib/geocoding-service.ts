@@ -31,6 +31,7 @@ export interface GeocodingResult {
   confidence?: number
   source: 'database' | 'google_geocoding' | 'static_coordinates' | 'fallback'
   fromCache: boolean
+  updatedAt?: string
 }
 
 export interface LocationData {
@@ -64,12 +65,37 @@ export class GeocodingService {
       if (id) {
         const cachedResult = await this.getCachedCoordinates(id)
         if (cachedResult) {
+          const shouldRefresh = this.shouldRefreshCache(
+            cachedResult.geocoding_confidence,
+            cachedResult.coordinates_updated_at
+          )
+          if (!shouldRefresh) {
+            return {
+              coordinates: { lat: cachedResult.latitude, lng: cachedResult.longitude },
+              geocodedAddress: cachedResult.geocoded_address,
+              confidence: cachedResult.geocoding_confidence,
+              source: (cachedResult.coordinates_source as GeocodingResult['source']) || 'database',
+              fromCache: true,
+              updatedAt: cachedResult.coordinates_updated_at
+            }
+          }
+          // If refresh is needed, we still return cached immediately for UX,
+          // and fire-and-forget an async refresh to update the DB
+          ;(async () => {
+            if (address && address.length > 5 && googleMapsApiKey) {
+              const refreshed = await this.geocodeWithGoogle(businessName, address, city)
+              if (refreshed) {
+                await this.cacheCoordinates(id, { ...refreshed, fromCache: false })
+              }
+            }
+          })().catch(() => {})
           return {
             coordinates: { lat: cachedResult.latitude, lng: cachedResult.longitude },
             geocodedAddress: cachedResult.geocoded_address,
             confidence: cachedResult.geocoding_confidence,
             source: (cachedResult.coordinates_source as GeocodingResult['source']) || 'database',
-            fromCache: true
+            fromCache: true,
+            updatedAt: cachedResult.coordinates_updated_at
           }
         }
       }
@@ -148,11 +174,12 @@ export class GeocodingService {
     geocoded_address?: string
     geocoding_confidence?: number
     coordinates_source?: string
+    coordinates_updated_at?: string
   } | null> {
     try {
       const { data, error } = await supabase
         .from('v3_bali_yoga_studios_and_retreats')
-        .select('latitude, longitude, geocoded_address, geocoding_confidence, coordinates_source')
+        .select('latitude, longitude, geocoded_address, geocoding_confidence, coordinates_source, coordinates_updated_at')
         .eq('id', id)
         .single()
 
@@ -247,6 +274,23 @@ export class GeocodingService {
     query += ', Bali, Indonesia'
 
     return query
+  }
+
+  /**
+   * Decide whether cached coordinates should be refreshed
+   */
+  private shouldRefreshCache(confidence?: number, updatedAt?: string): boolean {
+    const minConfidence = 0.78
+    if (typeof confidence === 'number' && confidence < minConfidence) return true
+    if (!updatedAt) return false
+    try {
+      const last = new Date(updatedAt).getTime()
+      if (Number.isNaN(last)) return false
+      const ageDays = (Date.now() - last) / (1000 * 60 * 60 * 24)
+      return ageDays > 180 // refresh after ~6 months
+    } catch {
+      return false
+    }
   }
 
   /**
