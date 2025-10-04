@@ -95,6 +95,7 @@ export function MapPreview(props: MapPreviewProps) {
               setHadError(true)
             }
           }}
+          referrerPolicy="origin"
           loading="lazy"
           decoding="async"
         />
