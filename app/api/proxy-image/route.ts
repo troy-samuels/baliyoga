@@ -47,9 +47,14 @@ export async function GET(request: Request) {
   }
 
   try {
+    const forwardedProto = (request.headers.get('x-forwarded-proto') || 'https').split(',')[0].trim()
+    const forwardedHost = (request.headers.get('x-forwarded-host') || request.headers.get('host') || '').split(',')[0].trim()
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+    const referer = siteUrl || (forwardedHost ? `${forwardedProto}://${forwardedHost}` : undefined)
     const response = await fetch(imageUrl, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        ...(referer ? { Referer: referer } : {})
       }
     })
     
