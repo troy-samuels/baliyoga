@@ -51,9 +51,21 @@ function buildStaticMapSrc({ name, city, lat, lng, address }: MapPreviewProps): 
 export function MapPreview(props: MapPreviewProps) {
   const href = useMemo(() => buildMapsUrl(props), [props])
   const [hadError, setHadError] = useState(false)
+  const [tryProxy, setTryProxy] = useState(false)
   const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
   const hasKey = typeof key === 'string' && key.length > 20
-  const src = useMemo(() => buildStaticMapSrc(props), [props])
+  const directSrc = useMemo(() => {
+    const base = buildStaticMapSrc(props)
+    // base currently points to proxy; derive direct URL for first attempt
+    try {
+      const url = new URL(base, typeof window !== 'undefined' ? window.location.origin : 'http://localhost')
+      const raw = url.searchParams.get('url')
+      return raw ? decodeURIComponent(raw) : base
+    } catch {
+      return base
+    }
+  }, [props])
+  const proxySrc = useMemo(() => buildStaticMapSrc(props), [props])
 
   const Fallback = (
     <div className="relative w-full h-[180px] flex items-center justify-center bg-[#e6ceb3] text-[#5d4c42]">
@@ -73,10 +85,16 @@ export function MapPreview(props: MapPreviewProps) {
         Fallback
       ) : (
         <img
-          src={src}
+          src={tryProxy ? proxySrc : directSrc}
           alt={`${props.name} location preview`}
           className="w-full h-[180px] object-cover"
-          onError={() => setHadError(true)}
+          onError={() => {
+            if (!tryProxy) {
+              setTryProxy(true)
+            } else {
+              setHadError(true)
+            }
+          }}
           loading="lazy"
           decoding="async"
         />
