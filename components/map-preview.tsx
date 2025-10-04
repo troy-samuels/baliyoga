@@ -1,6 +1,7 @@
 "use client"
 
-import Image from "next/image"
+import { useState, useMemo } from "react"
+import { MapPin } from "lucide-react"
 
 interface MapPreviewProps {
   name: string
@@ -45,8 +46,17 @@ function buildStaticMapSrc({ name, city, lat, lng, address }: MapPreviewProps): 
 }
 
 export function MapPreview(props: MapPreviewProps) {
-  const href = buildMapsUrl(props)
-  const src = buildStaticMapSrc(props)
+  const href = useMemo(() => buildMapsUrl(props), [props])
+  const [hadError, setHadError] = useState(false)
+  const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+  const hasKey = typeof key === 'string' && key.length > 20
+  const src = useMemo(() => buildStaticMapSrc(props), [props])
+
+  const Fallback = (
+    <div className="relative w-full h-[180px] flex items-center justify-center bg-[#e6ceb3] text-[#5d4c42]">
+      <MapPin className="w-6 h-6 opacity-80" />
+    </div>
+  )
 
   return (
     <a
@@ -56,15 +66,18 @@ export function MapPreview(props: MapPreviewProps) {
       className={`block rounded-lg overflow-hidden border border-[#e6ceb3] bg-[#f5f5f5] hover:shadow-sm transition-shadow ${props.className || ''}`}
       aria-label={`Open ${props.name} location in Google Maps`}
     >
-      <div className="relative w-full" style={{ height: 180 }}>
-        <Image
+      {hadError || !hasKey ? (
+        Fallback
+      ) : (
+        <img
           src={src}
           alt={`${props.name} location preview`}
-          fill
-          sizes="(max-width: 768px) 100vw, 360px"
-          className="object-cover"
+          className="w-full h-[180px] object-cover"
+          onError={() => setHadError(true)}
+          loading="lazy"
+          decoding="async"
         />
-      </div>
+      )}
     </a>
   )
 }

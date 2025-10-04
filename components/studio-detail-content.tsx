@@ -9,12 +9,20 @@ import { PopularityBadge } from "@/components/popularity-badge"
 import { ErrorHandledImage } from "@/components/error-handled-image"
 import { StructuredData } from "@/components/structured-data"
 import type { Studio } from "@/lib/types"
+import { getCoordinates } from "@/lib/geocoding-service"
 
 interface StudioDetailContentProps {
   studio: Studio
 }
 
-export function StudioDetailContent({ studio }: StudioDetailContentProps) {
+export async function StudioDetailContent({ studio }: StudioDetailContentProps) {
+  // Resolve and cache coordinates server-side (graceful fallback inside service)
+  const coords = await getCoordinates({
+    businessName: studio.name,
+    address: studio.location_details?.address,
+    city: studio.location,
+    id: studio.id,
+  })
   const wishlistItem = {
     id: studio.id,
     name: studio.name,
@@ -355,6 +363,8 @@ export function StudioDetailContent({ studio }: StudioDetailContentProps) {
                   name={studio.name}
                   city={studio.location}
                   address={studio.location_details?.address}
+                  lat={coords.coordinates.lat}
+                  lng={coords.coordinates.lng}
                   className="w-full"
                 />
               </div>

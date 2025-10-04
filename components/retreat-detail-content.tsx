@@ -9,13 +9,20 @@ import { PopularityBadge } from "@/components/popularity-badge"
 import { ErrorHandledImage } from "@/components/error-handled-image"
 import { StructuredData } from "@/components/structured-data"
 import { HydrationSafeDate } from "@/lib/date-utils"
+import { getCoordinates } from "@/lib/geocoding-service"
 import type { Retreat } from "@/lib/types"
 
 interface RetreatDetailContentProps {
   retreat: Retreat
 }
 
-export function RetreatDetailContent({ retreat }: RetreatDetailContentProps) {
+export async function RetreatDetailContent({ retreat }: RetreatDetailContentProps) {
+  const coords = await getCoordinates({
+    businessName: retreat.name,
+    address: retreat.location_details?.address,
+    city: retreat.location,
+    id: retreat.id,
+  })
   const wishlistItem = {
     id: retreat.id,
     name: retreat.name,
@@ -408,6 +415,8 @@ export function RetreatDetailContent({ retreat }: RetreatDetailContentProps) {
                   name={retreat.name}
                   city={retreat.location}
                   address={retreat.location_details?.address}
+                  lat={coords.coordinates.lat}
+                  lng={coords.coordinates.lng}
                   className="w-full"
                 />
               </div>
