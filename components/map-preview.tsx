@@ -17,7 +17,8 @@ function buildMapsUrl({ name, city, lat, lng, address }: MapPreviewProps): strin
   if (typeof lat === 'number' && typeof lng === 'number') {
     return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`
   }
-  const query = address && address.length > 5 ? address : `${name}, ${city}, Bali, Indonesia`
+  // Name-first lookup to match your requirement
+  const query = `${name}, Bali, Indonesia`
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`
 }
 
@@ -36,8 +37,8 @@ function buildStaticMapSrc({ name, city, lat, lng, address }: MapPreviewProps): 
     centerParam = `${lat},${lng}`
     markerParam = `markers=color:${markerColor}|${lat},${lng}`
   } else {
-    // Bias to Indonesia to help Google resolve
-    const query = address && address.length > 5 ? `${address}, Bali, Indonesia` : `${name}, ${city}, Bali, Indonesia`
+    // Name-first preview when coordinates are not cached
+    const query = `${name}, Bali, Indonesia`
     centerParam = encodeURIComponent(query)
     markerParam = `markers=color:${markerColor}|${encodeURIComponent(query)}`
   }
