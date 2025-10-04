@@ -24,8 +24,9 @@ function buildMapsUrl({ name, city, lat, lng, address }: MapPreviewProps): strin
 // Build a Static Maps URL and route it through the existing proxy for CSP/cache benefits
 function buildStaticMapSrc({ name, city, lat, lng, address }: MapPreviewProps): string {
   const base = 'https://maps.googleapis.com/maps/api/staticmap'
-  const size = '640x360'
-  const zoom = 15
+  // Keep effective resolution within free-tier 640x640 (size * scale)
+  const size = '320x160'
+  const zoom = 16
   const scale = 2
   const markerColor = '0x5d4c42'
   let centerParam = ''
@@ -35,12 +36,13 @@ function buildStaticMapSrc({ name, city, lat, lng, address }: MapPreviewProps): 
     centerParam = `${lat},${lng}`
     markerParam = `markers=color:${markerColor}|${lat},${lng}`
   } else {
-    const query = address && address.length > 5 ? address : `${name}, ${city}, Bali, Indonesia`
+    // Bias to Indonesia to help Google resolve
+    const query = address && address.length > 5 ? `${address}, Bali, Indonesia` : `${name}, ${city}, Bali, Indonesia`
     centerParam = encodeURIComponent(query)
     markerParam = `markers=color:${markerColor}|${encodeURIComponent(query)}`
   }
 
-  const raw = `${base}?center=${centerParam}&zoom=${zoom}&size=${size}&scale=${scale}&${markerParam}&maptype=roadmap&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}`
+  const raw = `${base}?center=${centerParam}&zoom=${zoom}&size=${size}&scale=${scale}&${markerParam}&maptype=roadmap&region=ID&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}`
   // Use proxy-image route for delivery
   return `/api/proxy-image?url=${encodeURIComponent(raw)}`
 }
