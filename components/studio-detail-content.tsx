@@ -3,7 +3,7 @@ import Link from "next/link"
 import { ChevronLeft, MapPin, Phone, Globe, Clock, Users, Star, Instagram, Facebook, MessageCircle, Youtube, Music } from "lucide-react"
 import { MobileOptimizedHeader } from "@/components/mobile-optimized-header"
 import { MobileOptimizedFooter } from "@/components/mobile-optimized-footer"
-import GoogleMapWrapper from "@/components/google-maps-wrapper"
+import { MapPreview } from "@/components/map-preview"
 import { WishlistHeartWrapper } from "@/components/wishlist-heart-wrapper"
 import { PopularityBadge } from "@/components/popularity-badge"
 import { ErrorHandledImage } from "@/components/error-handled-image"
@@ -351,11 +351,11 @@ export function StudioDetailContent({ studio }: StudioDetailContentProps) {
 
               {/* Map */}
               <div className="rounded-xl bg-white p-4 shadow-sm border border-[#e6ceb3]/20">
-                <GoogleMapWrapper
-                  address={studio.location_details?.address || ''}
+                <MapPreview
                   name={studio.name}
                   city={studio.location}
-                  id={studio.id}
+                  address={studio.location_details?.address}
+                  className="w-full"
                 />
               </div>
             </div>
