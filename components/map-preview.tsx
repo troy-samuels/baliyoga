@@ -51,7 +51,6 @@ function buildStaticMapSrc({ name, city, lat, lng, address }: MapPreviewProps): 
 
 export function MapPreview(props: MapPreviewProps) {
   const href = useMemo(() => buildMapsUrl(props), [props])
-  const [hadError, setHadError] = useState(false)
   const [tryProxy, setTryProxy] = useState(false)
   const [useEmbed, setUseEmbed] = useState(false)
   const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
@@ -83,7 +82,7 @@ export function MapPreview(props: MapPreviewProps) {
       className={`block rounded-lg overflow-hidden border border-[#e6ceb3] bg-[#f5f5f5] hover:shadow-sm transition-shadow ${props.className || ''}`}
       aria-label={`Open ${props.name} location in Google Maps`}
     >
-      {useEmbed ? (
+      {useEmbed || !hasKey ? (
         <div className="relative w-full h-[180px]">
           <iframe
             title={`${props.name} map preview`}
@@ -93,8 +92,6 @@ export function MapPreview(props: MapPreviewProps) {
             loading="lazy"
           />
         </div>
-      ) : hadError || !hasKey ? (
-        Fallback
       ) : (
         <img
           src={tryProxy ? proxySrc : directSrc}

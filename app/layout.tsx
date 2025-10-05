@@ -93,6 +93,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://zioqkkdhvgrkznxyxtik.supabase.co" crossOrigin="" />
         <link rel="preconnect" href="https://maps.googleapis.com" crossOrigin="" />
         <link rel="preconnect" href="https://maps.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://www.google.com" crossOrigin="" />
         <Script
           src="https://datafa.st/js/script.js"
           strategy="afterInteractive"
