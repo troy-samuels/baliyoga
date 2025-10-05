@@ -43,7 +43,8 @@ function buildStaticMapSrc({ name, city, lat, lng, address }: MapPreviewProps): 
     markerParam = `markers=color:${markerColor}|${encodeURIComponent(query)}`
   }
 
-  const raw = `${base}?center=${centerParam}&zoom=${zoom}&size=${size}&scale=${scale}&${markerParam}&maptype=roadmap&region=ID&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}`
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY || ''
+  const raw = `${base}?center=${centerParam}&zoom=${zoom}&size=${size}&scale=${scale}&${markerParam}&maptype=roadmap&region=ID&key=${apiKey}`
   // Use proxy-image route for delivery
   return `/api/proxy-image?url=${encodeURIComponent(raw)}`
 }
