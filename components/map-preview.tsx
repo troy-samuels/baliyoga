@@ -93,9 +93,9 @@ export function MapPreview(props: MapPreviewProps) {
       className={`block rounded-lg overflow-hidden border border-[#e6ceb3] bg-[#f5f5f5] hover:shadow-sm transition-shadow ${props.className || ''}`}
       aria-label={`Open ${props.name} location in Google Maps`}
     >
-      {useEmbed || !hasKey ? (
-        <div className="relative w-full h-[180px]">
-          {(() => {
+      <div className="relative w-full h-[180px]">
+        {useEmbed || !hasKey ? (
+          (() => {
             const embedKey = (process.env.NEXT_PUBLIC_GOOGLE_EMBED_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY || '').trim()
             const q = encodeURIComponent(`${props.name}, Bali, Indonesia`)
             const src = embedKey
@@ -106,30 +106,34 @@ export function MapPreview(props: MapPreviewProps) {
                 title={`${props.name} map preview`}
                 src={src}
                 className="w-full h-full"
-                style={{ border: 0, filter: 'grayscale(10%) saturate(80%)', pointerEvents: 'none' as any }}
+                style={{ border: 0, pointerEvents: 'none' as any }}
                 loading="lazy"
               />
             )
-          })()}
-        </div>
-      ) : (
-        <img
-          src={tryProxy ? proxySrc : directSrc}
-          alt={`${props.name} location preview`}
-          className="w-full h-[180px] object-cover"
-          onError={() => {
-            if (!tryProxy) {
-              setTryProxy(true)
-            } else {
-              // As a last resort, fall back to an embed that doesn't require a Static Maps key
-              setUseEmbed(true)
-            }
-          }}
-          referrerPolicy="origin"
-          loading="lazy"
-          decoding="async"
+          })()
+        ) : (
+          <img
+            src={tryProxy ? proxySrc : directSrc}
+            alt={`${props.name} location preview`}
+            className="w-full h-full object-cover"
+            onError={() => {
+              if (!tryProxy) {
+                setTryProxy(true)
+              } else {
+                setUseEmbed(true)
+              }
+            }}
+            referrerPolicy="origin"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
+        {/* Brand tint overlay for consistent palette */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ backgroundColor: '#f9f3e9', mixBlendMode: 'multiply' as any, opacity: 0.15 }}
         />
-      )}
+      </div>
     </a>
   )
 }
