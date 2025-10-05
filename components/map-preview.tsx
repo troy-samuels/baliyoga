@@ -53,6 +53,7 @@ export function MapPreview(props: MapPreviewProps) {
   const href = useMemo(() => buildMapsUrl(props), [props])
   const [hadError, setHadError] = useState(false)
   const [tryProxy, setTryProxy] = useState(false)
+  const [useEmbed, setUseEmbed] = useState(false)
   const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
   const hasKey = typeof key === 'string' && key.length > 20
   const directSrc = useMemo(() => {
@@ -82,7 +83,17 @@ export function MapPreview(props: MapPreviewProps) {
       className={`block rounded-lg overflow-hidden border border-[#e6ceb3] bg-[#f5f5f5] hover:shadow-sm transition-shadow ${props.className || ''}`}
       aria-label={`Open ${props.name} location in Google Maps`}
     >
-      {hadError || !hasKey ? (
+      {useEmbed ? (
+        <div className="relative w-full h-[180px]">
+          <iframe
+            title={`${props.name} map preview`}
+            src={`https://www.google.com/maps?q=${encodeURIComponent(`${props.name}, Bali, Indonesia`)}&output=embed&hl=en`}
+            className="w-full h-full"
+            style={{ border: 0, pointerEvents: 'none' as any }}
+            loading="lazy"
+          />
+        </div>
+      ) : hadError || !hasKey ? (
         Fallback
       ) : (
         <img
@@ -93,7 +104,8 @@ export function MapPreview(props: MapPreviewProps) {
             if (!tryProxy) {
               setTryProxy(true)
             } else {
-              setHadError(true)
+              // As a last resort, fall back to an embed that doesn't require a Static Maps key
+              setUseEmbed(true)
             }
           }}
           referrerPolicy="origin"
