@@ -44,6 +44,7 @@ function buildStaticMapSrc({ name, city, lat, lng, address }: MapPreviewProps): 
   }
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY || ''
+  const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID
   // Styled Static Map to better match brand colors (limited by Static Maps styling)
   const styleParams = [
     'style=feature:poi|visibility:off',
@@ -53,7 +54,8 @@ function buildStaticMapSrc({ name, city, lat, lng, address }: MapPreviewProps): 
     'style=feature:water|element:geometry|color:0xa39188',
     'style=feature:road|element:geometry|color:0xe6ceb3'
   ].join('&')
-  const raw = `${base}?center=${centerParam}&zoom=${zoom}&size=${size}&scale=${scale}&${markerParam}&maptype=roadmap&region=ID&${styleParams}&key=${apiKey}`
+  const mapIdParam = mapId ? `&map_id=${encodeURIComponent(mapId)}` : ''
+  const raw = `${base}?center=${centerParam}&zoom=${zoom}&size=${size}&scale=${scale}&${markerParam}&maptype=roadmap&region=ID&${styleParams}${mapIdParam}&key=${apiKey}`
   // Use proxy-image route for delivery
   return `/api/proxy-image?url=${encodeURIComponent(raw)}`
 }
@@ -93,13 +95,22 @@ export function MapPreview(props: MapPreviewProps) {
     >
       {useEmbed || !hasKey ? (
         <div className="relative w-full h-[180px]">
-          <iframe
-            title={`${props.name} map preview`}
-            src={`https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent((process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY || ''))}&q=${encodeURIComponent(`${props.name}, Bali, Indonesia`)}&maptype=roadmap&zoom=16`}
-            className="w-full h-full"
-            style={{ border: 0, filter: 'grayscale(10%) saturate(80%)', pointerEvents: 'none' as any }}
-            loading="lazy"
-          />
+          {(() => {
+            const embedKey = (process.env.NEXT_PUBLIC_GOOGLE_EMBED_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY || '').trim()
+            const q = encodeURIComponent(`${props.name}, Bali, Indonesia`)
+            const src = embedKey
+              ? `https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent(embedKey)}&q=${q}&maptype=roadmap&zoom=16`
+              : `https://www.google.com/maps?q=${q}&output=embed&hl=en`
+            return (
+              <iframe
+                title={`${props.name} map preview`}
+                src={src}
+                className="w-full h-full"
+                style={{ border: 0, filter: 'grayscale(10%) saturate(80%)', pointerEvents: 'none' as any }}
+                loading="lazy"
+              />
+            )
+          })()}
         </div>
       ) : (
         <img
