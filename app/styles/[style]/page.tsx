@@ -260,9 +260,9 @@ export default async function StylePage({ params }: StylePageProps) {
                 type="studio"
                 phone_number={studio.phone_number}
                 website={studio.website}
-                email={studio.email}
-                instagram={studio.instagram}
-                facebook={studio.facebook}
+                email={studio.email_address}
+                instagram_url={studio.instagram_url}
+                facebook_url={studio.facebook_url}
                 featured={false}
               />
             ))}
