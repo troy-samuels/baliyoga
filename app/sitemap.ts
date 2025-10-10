@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next"
 import { getAllStudios, getAllRetreats } from "@/lib/supabase-server"
 import { withCache, CACHE_CONFIG } from "@/lib/cache-utils"
 import { ROUTE_PATTERNS, generateSitemapEntry, getCanonicalUrl } from "@/lib/slug-utils"
+import { GUIDE_SLUGS } from "@/lib/guide-data"
+import { YOGA_STYLE_SLUGS } from "@/lib/yoga-styles-data"
+import { POPULAR_LOCATIONS } from "@/lib/location-data"
 
 // Cached sitemap generation function
 async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
@@ -131,7 +134,45 @@ async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
     )
   })
 
-  // Future: Add location and type-based routes here when needed
+  // Guide pages - high SEO value comprehensive content
+  const guidePages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/guides`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    ...GUIDE_SLUGS.map((slug) => ({
+      url: `${baseUrl}/guides/${slug}`,
+      lastModified: currentDate,
+      changeFrequency: "weekly" as const,
+      priority: 0.85, // High priority - comprehensive SEO content
+    }))
+  ]
+
+  // Yoga style pages - category pages with filtered studios
+  const stylePages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/styles`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    ...YOGA_STYLE_SLUGS.map((slug) => ({
+      url: `${baseUrl}/styles/${slug}`,
+      lastModified: currentDate,
+      changeFrequency: "weekly" as const,
+      priority: 0.85, // High priority - category pages with rich content
+    }))
+  ]
+
+  // Location pages - existing pages now in sitemap
+  const locationPages: MetadataRoute.Sitemap = POPULAR_LOCATIONS.map((location) => ({
+    url: `${baseUrl}/locations/${location}`,
+    lastModified: currentDate,
+    changeFrequency: "weekly" as const,
+    priority: 0.85, // High priority - location landing pages
+  }))
 
   // Claim pages for each listing
   const claimPages: MetadataRoute.Sitemap = [
@@ -151,7 +192,15 @@ async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Generated sitemap successfully
 
-  return [...staticPages, ...studioPages, ...retreatPages, ...claimPages]
+  return [
+    ...staticPages,
+    ...guidePages,
+    ...stylePages,
+    ...locationPages,
+    ...studioPages,
+    ...retreatPages,
+    ...claimPages
+  ]
 }
 
 // Export cached sitemap function
